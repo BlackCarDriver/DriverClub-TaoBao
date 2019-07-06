@@ -1,0 +1,145 @@
+<nav class="navbar navbar-inverse head nomarbot">
+  <a class="navbar-brand marright" routerLink="/homepage">
+      <span class="glyphicon glyphicon-globe " aria-hidden="true"></span>
+       BlackCarDriver.cn
+  </a>
+  <div class="container-fluid"> 
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          <li><a class="navbar-brand nav-chose" routerLink="/homepage">交易区</a></li>
+          <li><a class="navbar-brand" routerLink="/chat">讨论区</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+          <li><a routerLink="/about">关于本站</a></li> 
+          <li><a id="singin" (click)="showsinginbox()">登录/注册</a></li> 
+        <li class="dropdown" id="userbox">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="user-toggle">
+            <span class="glyphicon glyphicon-user"></span> {{username}}<span class="caret"></span>
+          </a>
+          
+          <ul class="dropdown-menu nopad"  id="shortmsg">
+              <div class="user">
+                  <img  src={{usermsg.imgurl}} class="headimg" >
+                  <h4><a routerLink="/personal">{{username}}</a></h4>
+                  <div class="mesage">
+                     <dl>
+                         <dt>我的等级：<a class="msgval">{{usermsg.grade}}</a></dt>
+                         <dt>我的积分：<a class="msgval">{{usermsg.score}}</a></dt>
+                         <dt>未读消息：<a class="msgval">{{usermsg.message}}</a></dt>
+                         <dt>商品数量：<a class="msgval">{{usermsg.goods}}</a></dt>
+                         <dt>上次登录：<a class="msgval">{{usermsg.lastime}}</a></dt>
+                     </dl>
+                  </div>
+                  <!-- <a class="block" routerLink="/personal"><span class="glyphicon glyphicon-home" ></span> 个人中心</a> -->
+                  <a class="block" (click)="logout()"><span class="glyphicon glyphicon-log-out" ></span> 退出登录</a>
+              </div>
+          </ul>
+          
+        </li>
+        
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+<!--模态框-->
+<div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content sethigth">
+      <div class="modal-body">
+          <div>
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">登录</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">注册</a></li>
+              </ul>
+              
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home"><!--singin tagbox-->
+                  <h3 style="margin-left:160px">登录</h3>
+                  <div class="login-center">
+                    <div class="login-center-input">
+                        <span class="glyphicon glyphicon-user"></span>
+                        <input id="loginname" class="inputbox" type="text" name="" value="" placeholder="请输入您的用户名">  
+                        <div class="warm" id="loginnamew"></div>            
+                    </div>
+                  </div>
+                  <div class="login-center">
+                    <div class="login-center-input">
+                        <span class="glyphicon glyphicon-lock"></span>
+                        <input id="loginpassword" type="password" class="inputbox" name="" value="" placeholder="请输入您的密码">
+                        <div class="warm" id="loginpasswordw"></div>
+                      </div>
+                  </div>
+                  <div class="login-center">
+                    <input class="checkbox1" type="checkbox" name="remember" id="remember" checked="checked"><span class="taller">记住密码</span>
+                    <span><a class="floatright" (click)="seecookie()" >忘记密码</a></span><br>
+                    <button type="button" class="loginbutton" (click)="loging()">登录</button>
+                    
+                    <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">返回</button> -->
+                  </div>
+                </div>
+
+                <div role="tabpanel" class="tab-pane" id="profile"> <!--注册 tagbox-->
+                    <h3 style="margin-left:160px">注册</h3>
+                    <div class="login-center">
+                      <div class="login-center-input">
+                          <span class="glyphicon glyphicon-user"></span>
+                          <input id="regname" class="inputbox" type="text" value="" placeholder="为你的账号起一个名字" >              
+                          <div class="warm" id="regnamew"></div>
+                        </div>
+                    </div>
+                    <div class="login-center">
+                    <div class="login-center-input">
+                        <span class="glyphicon glyphicon-lock"></span>
+                        <input id="regpasw1" class="inputbox" type="password"  value="" placeholder="设置你的登录密码" >    
+                        <div class="warm" id="regpasw1w"></div>          
+                    </div>
+                    </div>
+                    <div class="login-center">
+                        <div class="login-center-input">
+                            <span class="glyphicon glyphicon-lock"></span>
+                            <input id="regpasw2" type="password" class="inputbox" value="" placeholder="重新确认账号密码" >
+                            <div class="warm" id="regpasw2w"></div>
+                      </div>
+                      </div>
+                      <div class="login-center">
+                          <div class="login-center-input">
+                              <span class="glyphicon glyphicon-envelope"></span>
+                              <input id="regemail" class="inputbox emailbox"  value="" placeholder="输入获取验证码的邮箱" >
+                              <div class="warm" id="regemailw"></div>
+                              <span>
+                                <a id="getcode" (click)="confirm()">获取验证码</a>
+                                <a id="getcode2"  class="hidden">已发送</a>
+                              </span>
+                            </div>
+                      </div>
+                      <div class="login-center hidden" id="codebox">
+                          <div class="login-center-input">
+                              <span class="glyphicon glyphicon-ok-circle"></span>
+                              <input id="regcode" class="inputbox"  value="" placeholder="输入验证码" >
+                              <div class="warm" id="regcodew"></div>
+                          </div>
+                      </div>
+                      <div class="login-center">
+                        <button id="registerbtn" (click)="confirmcode()" type="button" class="disablebtn" disabled="disabled">注册</button>
+                      </div>
+                   
+                </div>
+              </div>
+            </div>
+            
+      </div>
+     
+    </div>
+  </div>
+</div>
+<!--模态框结束-->

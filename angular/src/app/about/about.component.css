@@ -1,0 +1,17 @@
+#right{
+    height: 700px;
+    width: 105%;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 0 20px rgba(50,50,50,0.1);
+    background-color: #fff;
+    position: relative;
+    overflow-y: scroll;
+}
+#left li{
+    width: 90%;
+}
+.text-box{
+    overflow: hidden;
+
+}

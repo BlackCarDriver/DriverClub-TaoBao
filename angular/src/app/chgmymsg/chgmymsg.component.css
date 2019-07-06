@@ -1,0 +1,113 @@
+.msghead{
+    height: 100px;
+    margin: 10px;
+    background: #fff;
+    margin: 20px 150px;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+    border-left: 10px solid rgba(51, 122, 183, 0.32);
+}
+.headimg{
+    height: 100%;
+}
+.path .breadcrumb{
+    margin: 5px 0px 0px 80px;
+    padding: 0px;
+}
+.img1{
+    height: 70px;
+    width: 70px;
+    margin: 13px;
+    border-radius: 60px;
+}
+.username h3{
+    color: #f2cf2e;
+}
+.usersign p{
+    font-size: 600;
+}
+.msghead .btn{
+    margin: 10px 0px 20px 0px;
+    float: right;
+}
+.msgbox1{
+    min-height: 30px;
+    margin: 10px 150px;
+    padding: 5px 20px;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    border-radius: 4px;
+}
+.msgboxhead{
+    border-bottom: 1px solid #d4d4d4;
+
+}
+.msgboxhead h4{
+    color: #333;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 22px;
+    display: inline-block;
+}
+.userid{
+    margin-left: 30px;
+    font-size: 14px;
+    color: #888;
+}
+.msgboxhead .btn{
+    width: 60px;
+    float: right;
+    height: 30px;
+    margin: 4px 10px;
+    font-weight: 500;
+}
+.information{
+    padding-bottom: 20px;
+}
+.information dl{
+    font-size: 14px;
+    height: 30px;
+    margin: 15px;
+}
+
+.information dt{
+    float: left;
+    width: 118px;
+    font-weight: 500;
+    text-align: right;
+    line-height: 30px;
+    margin-right: 10px;
+}
+
+.info_name{
+    color: #333;
+}
+.info_val{
+    border: 1px solid #ddd;
+    color: #34495e;
+    font-size: 14px;
+    padding: 8px 5px 7px;
+    width: 248px;
+    height: 30px;
+    border-radius: 3px;
+}
+.sexalbtn{
+    color: #fff;
+    display: inline-block;
+    width: 80px;
+    text-align: center;
+    border-radius: 3px;
+    height: 30px;
+    line-height: 30px;
+    margin-left: 20px;
+}
+.isnot{
+    background-color: #888!important;
+}
+#boybtn{
+    background-color: #71dd5d;
+ 
+}
+#girlbtn{
+    background-color: #ff3086;
+}

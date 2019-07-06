@@ -1,0 +1,114 @@
+<app-navig></app-navig>
+<div class="container">
+
+    <div class="row path">
+        <ol class="breadcrumb">
+            <li><a routerLink="/homepage">交易区</a></li>
+            <li><a routerLink="/personal">我的主页</a></li>
+            <li class="active">修改信息</li>
+        </ol>
+    </div>
+
+  <!--第一行-->
+    <div class="row msghead">
+      <div class="col-md-2 headimg">
+         <img src={{headimgurl}} class="img1">
+      </div>
+      <div class="col-md-7">
+            <div class="row username"><h3>{{username}}</h3></div>
+            <div class="row usersign"><p>{{sign}}</p></div>
+      </div>
+      <div class="col-md-3">
+          <input type="file" class="hidden" id="uploadheadimg">
+          <button id="upload" class="hidden" (click)="upload()"></button>
+          <button class="btn btn-info" (click)="selectImg()"><span class="glyphicon glyphicon-camera"></span> 修改头像</button>
+      </div>
+    </div>
+    <div class="row msgbox1 basemsg">
+        <div class="msgboxhead">
+            <h4>基本信息</h4>
+            <span class="userid">( ID: {{userid}} )</span>
+            <button class="btn btn-info" (click)="ChangeBaseMsg()">保存</button>
+            <button class="btn btn-default hidden" (click)="ClearBaseMsg()" id="cancel1">取消</button>
+        </div>
+        <div class="information">
+            <dl>
+                <dt>我的昵称</dt>
+                <dd class="info_name">
+                <input id="myname" type="text" class="info_val baseinput" placeholder={{username}}>
+                </dd>
+            </dl>
+            <dl>
+                <dt>我的性别</dt>
+                <dd class="info_name">
+                    <a class="sexalbtn" id="boybtn" (click)="setboy(1)">BOY</a>
+                    <a class="sexalbtn isnot" id="girlbtn" (click)="setboy(0)">GIRL</a>
+                </dd>
+            </dl>
+            <dl>
+                <dt>个性签名</dt>
+                <dd class="info_name">
+                <input id="mysign" type="text" class="info_val baseinput" placeholder={{sign}}>
+                </dd>
+            </dl>
+            <dl>
+                <dt>所在年级</dt>
+                <dd class="info_name">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{grade}} <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li (click)="setgrade(2013)"><a>2013</a></li>
+                            <li (click)="setgrade(2014)"><a>2014</a></li>
+                            <li (click)="setgrade(2015)"><a>2015</a></li>
+                            <li (click)="setgrade(2016)"><a>2016</a></li>
+                            <li (click)="setgrade(2017)"><a>2017</a></li>
+                            <li (click)="setgrade(2018)"><a>2018</a></li>
+                            <li (click)="setgrade(2019)"><a>2019</a></li>
+                        </ul>
+                    </div>
+                </dd>
+            </dl>
+            <dl>
+                <dt>所属学院</dt>
+                <dd class="info_name">
+                <input id="mycolleage" type="text" class="info_val" placeholder={{colleage}}>
+                </dd>
+            </dl>
+        </div>
+
+    </div>
+
+    <div class="row msgbox1 basemsg2">
+        <div class="msgboxhead">
+            <h4>联系方式</h4>
+            <span class="userid">(以下信息只能被已注册的用户看见)</span>
+            <button class="btn btn-info" (click)="ChangeContact()">保存</button>
+            <button id="cancel2" class="btn btn-default hidden" (click)="ClearContactMsg()">取消</button>
+        </div>
+        <div class="information">
+            <dl>
+                <dt>邮箱地址</dt>
+                <dd class="info_name">
+                <input id="myemail" type="text" class="info_val contactinput" placeholder={{email}}>
+                </dd>
+            </dl>
+            <dl>
+                <dt>QQ号码</dt>
+                <dd class="info_name">
+                <input id="myqq" type="text" class="info_val contactinput" placeholder={{qq}}>
+                </dd>
+            </dl>
+            <dl>
+                <dt>手机号码</dt>
+                <dd class="info_name">
+                <input id="myphone" type="text" class="info_val contactinput" placeholder={{phone}}>
+                </dd>
+            </dl>
+
+        </div>
+    </div>
+
+</div>
+<app-footer></app-footer>

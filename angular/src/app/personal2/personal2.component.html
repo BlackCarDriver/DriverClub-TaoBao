@@ -1,0 +1,144 @@
+<app-navig></app-navig>
+
+
+  <div class="container">
+
+    <div class="col-md-2"></div>
+
+    <div class="col-md-8 ">
+            <div class="row path">
+                    <ol class="breadcrumb">
+                        <li><a href="#">我的主页</a></li>
+                        <li class="active">blackcardriver</li>
+                    </ol>
+            </div>
+        
+        <div class="message">
+              <!--头像 + 名字 + 个性签名 部分-->
+              <div class="row msg1">
+                    <div class="col-sm-3 head-img-box">
+                        <img src="https://gocn.vip/uploads/avatar/000/00/72/71_avatar_max.jpg" alt="head-img" class="head-img">     
+                    </div>
+                    <!--person mesage simple descripb-->
+                    <div class="col-sm-9 myname">
+                        <h3 class="name">BlackCarDriver</h3>
+                        <button type="button" class="btn btn-info sendmsg" data-toggle="modal" data-target=".bs-example-modal-sm">
+                                <span class="glyphicon glyphicon-comment"></span>发私信
+                        </button>
+                        <!--模态框-->
+                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content send-text-box">
+                                    <textarea type="text" class="form-control" placeholder="这里输入你想发送的私信..."></textarea>
+                                    <button type="button"class="btn btn-info">发送私信</button>
+                                </div>
+                            </div>
+                        </div>
+                        <h2 class="sign">欢迎来到BlackCarDriver.cn</h2>
+                    </div>
+              </div>
+              <!--小图标行-->
+              <div class="row msg2">
+                    <span class="ico1"><i class="glyphicon glyphicon-king"></i> 等级 :{{data.leave}}</span>
+                    <span class="ico1"><i class="glyphicon glyphicon-piggy-bank"></i> 积分 : {{data.sorce}}</span>
+                    <span class="ico1"><i class="glyphicon glyphicon glyphicon-stats"></i> 排名 :{{data.rank}} </span>
+                    <span class="ico1"><i class="glyphicon glyphicon-heart"></i> 被关注: {{data.becare}} </span>
+                    <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞:  {{data.like}}</span>
+              </div>
+              <!--信息主体-->
+              <div class="row swicth-box">  
+  
+            <!--基本信息 page-->
+            <div class="panel panel-info my-panel">
+                                      <div class="panel-heading"><span class="glyphicon glyphicon-th-list"> </span> 基本信息
+                                      </div>
+                                         <div class="panel-body">
+                                               
+                                             <div class="row msg-box">
+                                                 <div class="col-md-2 msg">司机ID</div>
+                                                 <div class="col-md-10 describ"> {{data.userid}}</div>
+                                             </div>
+                 
+                                               <div class="row msg-box">
+                                                   <div class="col-md-2 msg">账号昵称</div>
+                                                   <div class="col-md-10 describ"> {{data.username}}</div>
+                                               </div>
+                 
+                                               <div class="row msg-box">
+                                                 <div class="col-md-2 msg">个性签名</div>
+                                                 <div class="col-md-10 describ"> {{data.sign}}</div>
+                                               </div>
+                 
+                                               <div class="row msg-box">
+                                                 <div class="col-md-2 msg">性别</div>
+                                                 <div class="col-md-10 describ"> {{data.usersex}}</div>
+                                               </div> 
+                 
+                                               <div class="row msg-box">
+                                                 <div class="col-md-2 msg">年级</div>
+                                                 <div class="col-md-10 describ"> {{data.grade}}</div>
+                                               </div>
+                 
+                                               <div class="row msg-box">
+                                                 <div class="col-md-2 msg">学院</div>
+                                                 <div class="col-md-10 describ"> {{data.colleage}} </div>
+                                               </div>
+                                           </div>    
+            </div>  
+  
+            <!--联系方式 page-->
+            <div class="panel panel-info my-panel">
+                <div class="panel-heading"><span class="glyphicon glyphicon-phone"> </span> 联系方式</div>
+                <div class="panel-body">
+                    <div class="row msg-box">
+                        <div class="col-md-2 msg">手机号码</div>
+                        <div class="col-md-10 describ">{{data.phone}} </div>
+                    </div>
+                    <div class="row msg-box">
+                        <div class="col-md-2 msg">QQ</div>
+                        <div class="col-md-10 describ">{{data.qq}} </div>
+                    </div>
+                    <div class="row msg-box">
+                        <div class="col-md-2 msg">邮箱</div>
+                        <div class="col-md-10 describ">{{data.email}} </div>
+                    </div>
+                </div>                   
+            </div>
+  
+            <!--统计数据 page-->
+            <div class="panel panel-info my-panel">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-stats"> </span>其他数据
+                </div>
+                <div class="panel-body">
+                    <div class="row msg-box">
+                    <div class="col-md-2 msg">上次登录</div>
+                    <div class="col-md-10 describ">{{data.lasttime}}</div>
+                </div>
+                <div class="row msg-box">
+                    <div class="col-md-2 msg">商品数量</div>
+                     <div class="col-md-10 describ">{{data.goodsnum}}</div>
+                </div>
+                <div class="row msg-box">
+                        <div class="col-md-2 msg">交易成功数</div>
+                        <div class="col-md-10 describ">{{data.scuess}}</div>
+                    </div>  
+                    <div class="row msg-box">
+                        <div class="col-md-2 msg">主页访问量</div>
+                        <div class="col-md-10 describ">{{data.visnum}}</div>
+                    </div> 
+                </div>                                         
+                                  
+            </div>
+  
+             </div>
+        </div>
+          
+    </div>
+
+    <div class="col-md-2"></div>
+
+  </div><!--cotainer-->
+
+
+<app-footer></app-footer>

@@ -1,0 +1,286 @@
+.container-fluid{
+    margin: 20px 5%;
+}
+.path .breadcrumb{
+    margin: 0px 0px 5px 30px;
+    padding: 4px;
+}
+.full{
+    margin: 0px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    background-color: #f3f3f3;
+}
+.main-body{
+    margin: 0 15px;
+    background-color: #fff;
+    border: 2px solid #e6e6e6;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: block;
+}
+.head-sign{
+    position: relative;
+    color: #03A9F4;
+    top: 10px;
+}
+.msg1{
+    height: 140px;
+    margin: 6px 0px;
+    border-bottom: 1px solid #cac8c8;
+}
+.msg1 .head-img-box{
+    text-align: center;
+}
+.msg1 .head-img{
+    height: 120px;
+    width: 120px;
+    border-radius: 120px;
+    margin: 10px auto;
+    border: 1px solid #e6e6e6;
+}
+.msg1 .myname{
+    padding:10px;
+}
+
+.msg2{
+    height: 40px;
+    margin: 3px;
+    /* border-bottom: 1px solid #cac8c8; */
+}
+.left-box{
+    border-right: 1px solid #e6e6e6;
+}
+.right_box{
+    height: 100%;
+}
+.swicth-box{
+    margin: 0px 20px;
+}
+
+.right-box-son{
+    min-height: 30px;
+    margin: 10px 15px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.see-num{
+    color:#428bca;
+    font-weight: 600;
+}
+/* =================================商品展示样式2 */
+.goods-box{
+    width: 150px;
+    height: 200px;
+    float: left;
+    margin: 0px 30px 30px 0px;
+
+    overflow: hidden;
+    background-color: #f1ebeb;
+}
+.goods-img{
+    border: #eee 1px solid;
+    width: 150px;
+    height: 150px;
+}
+.goods-dsc{
+    height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 140px;
+    margin: 2px;
+
+}
+.goods-dsc a{
+    color: #177ad1;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: auto;
+}
+.goods-box .price{
+    color: #428bca;
+    font-weight: 700;
+    font-family: verdana,arial;
+    text-align: center;
+}
+.goods-box .price p{
+    margin: 5px 5px;
+}
+/* ===========================================我的消息展示样式 */
+.mymsg{
+    height: 80px;
+    margin: 20px 20px 10px;
+    font-size: 14px;
+    color: #999;
+    border-radius: 4px;
+    border: 1px solid #E5E5E5;
+    background: #FAFAFA;
+}
+.mymsg .msg-img-box{
+    text-align: center;
+    height: 100%;
+    background-color: #e6e6e6;
+}
+.msg-img-box img{
+    height: 65px;
+    width: 65px;
+    border-radius: 65px;
+    margin: 8px;
+}
+.msg-text-box .msg-head{
+    height: 30px;
+    overflow: hidden;
+}
+.msg-text-box .heading{
+    color: #177ad1;
+    font-size: 1.3em;
+    height: 30px;
+    padding: 2px 25px;
+    white-space:nowrap;
+    cursor: auto;
+}
+.heading p{
+    font-weight: 600;
+    line-height: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.msg-text-box span{
+    margin-right: 10px;
+}
+.msg-head .col-sm-3{
+    white-space:nowrap;
+    padding: 2px 2px 2px 10px;
+}
+.msg-head .col-sm-3 p{
+    margin: 2px;
+    line-height: 30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.msg-text-box .msg-body{
+    color: #555;
+    height: 38px;
+    padding: 0px 15px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.msg-body p{
+    line-height: 19px;
+}
+
+/* ===================== 临时样式 */
+
+.textcenter{
+    text-align: center;
+}
+/* ======================公用样式 */
+.button1{
+    width: 70px;
+    height: 30px;
+    margin: 5px 10px;
+}
+.ico1{
+    margin-left: 25px;
+    float: left;
+    margin-top: 10px;
+    color: #877b7b;
+}
+.float-left-blue{
+    color:#428bca;
+    float:left;
+    padding-left: 0px;
+    padding-right: 0px; 
+}
+.float-right-blue{
+    color:#428bca;
+    float: right;
+    text-align: right;
+}
+.mun-ico{
+    display: inline-block;
+    padding: 2px 6px;
+    background: #ccc;
+    background-color: rgb(204, 204, 204);
+    background-color: rgb(204, 204, 204);
+    min-width: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #fff;
+    background-color: #7f9495;
+    border-radius: 10px;
+    line-height: 1;
+}
+.headimg-list{
+    float: left;
+    padding: 4px;
+    margin-top: 6px;
+}
+.headimg-list .headimg{
+    width: 50px;
+    height: 50px;
+    overflow: hidden;
+    margin: 4px;
+    border-radius: 55px;
+    margin: 2px;;
+    border: 1px solid rgb(247, 239, 239);
+    /* background-color: rgb(145, 91, 91); */
+    display: inline-block;
+}
+
+.my-panel{
+    margin: 20px;
+}
+
+.tab-pane:focus{
+  outline: none;
+}
+.msg-box{
+    margin: 1px;
+    padding-left: 10px;
+    margin-top: 4px;
+}
+.msg{
+    font-weight: 500;
+    color: #555;
+}
+.describ{
+    font-weight: 600;
+    color: #337ab7;
+}
+
+/* =========================本站排名榜 */
+.rank-list{
+    border: 1px solid #e6e6e6;
+    margin-top: 30px;
+    overflow: hidden;
+}
+.rank-list h3{
+    font-size: 13px;
+    color: #3d3d3d;
+    background: #f5f5f5;
+    padding: 0 16px;
+    margin-top: 0px;
+    height: 38px;
+    line-height: 38px;
+    font-weight: 600;
+}
+.rank-list ul{
+    width: 0px;
+    padding-left: 0px;
+}
+.rank-list span{
+    width: 60px;
+    float: left;
+    padding-left: 20px;
+    font-weight: 600;
+    color: #c88326;
+}
+.rank-list li{
+    font-size: 15px;
+    color: #858585;
+
+
+}

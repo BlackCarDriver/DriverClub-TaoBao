@@ -1,0 +1,76 @@
+.main-body, .head-row{
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    padding-top: 25px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+.nopadbtm{
+    margin-bottom: 0px;
+}
+.head-picture{
+    height: 170px;
+    width: 170px;
+    border: 1px solid rgba(142, 137, 137, 0.25);
+    margin-bottom: 20px;
+    margin-left: 20px;
+    padding: 0px;
+}
+.head-picture img{
+    height: 100%;
+    width:100%;
+}
+.table2{
+    position: relative;
+    top: -21px;
+}
+.goodtag{
+    display:inline-block;
+    margin-left: 10px;
+    margin-bottom: 4px;
+}
+.price{
+    color: #ff6104;
+    font-weight: 600;
+    font-size: 2em;
+    width: 150px;
+}
+.price p{
+    display: inline-block;
+}
+.my-tr .val{
+    width: 40px;
+}
+.tittle{
+    color: rgba(255, 16, 4, 0.71);
+    top: -10px;
+    position: relative;
+    font-size: 2.4em;
+    font-weight: 600;
+}
+.btn-list button{
+    margin-left: 20px;
+    width: 90px;
+}
+.textpage{
+    padding: 30px;
+}
+.send-text-box{
+    width: 400px;
+    height: 200px;
+    padding: 6px;
+    background-color: aliceblue;
+}
+.send-text-box textarea {
+    height: 150px;
+}
+.send-text-box button{
+    float: right;
+    margin: 4px 10px;
+    height: 30px;
+}
+.title2{
+    padding: 30px;
+    font-size: 1.3em;
+    overflow: hidden;
+}

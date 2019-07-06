@@ -1,0 +1,82 @@
+<app-navig></app-navig>
+
+<div class="container"><!--路径导航-->
+  <div class="row">
+    <ol class="breadcrumb nopadbtm">
+      <li><a href="#">首页</a></li>
+      <li class="active"><a href="#">商品11220</a></li>
+    </ol>
+  </div>
+</div>
+
+<div class="container head-row">
+    <div class="col-sm-3 head-picture">
+        <img src={{data1.imgurl}} alt="head-image of goods">
+    </div>
+    <div class="col-sm-4"> 
+      <table class="table table-bordered">
+          <tr class="my-tr">
+            <th class="val"><span class="glyphicon glyphicon-user"></span></th>
+            <th><p class="goodtag">{{data1.owner}}</p></th>
+          </tr>
+          <tr class="my-tr">
+            <th class="val"><span class="glyphicon glyphicon-calendar"></span></th>
+            <th><p class="goodtag">{{data1.date}}</p></th>
+          </tr>
+      </table>
+      <table class="table table-bordered table2">
+          <tr class="my-tr">
+            <th class="val"><span class="glyphicon glyphicon-eye-open"></span></th>
+            <th><p class="goodtag">{{data2.see}}</p></th>
+            <th class="val"><span class="glyphicon glyphicon-comment"></span></th>
+            <th><p class="goodtag">{{data2.talk}}</p></th>
+          </tr>
+          <tr class="my-tr">
+            <th class="val"><span class="glyphicon glyphicon-thumbs-up"></span></th>
+            <th><p class="goodtag">{{data2.like}}</p></th>
+            <th class="val"><span class="glyphicon glyphicon-heart"></span></th>
+            <th><p class="goodtag">{{data2.collect}}</p></th>
+          </tr>
+      </table>
+    </div>
+    <div class="col-sm-5">
+      <div class="row">
+          <div class="col-sm-3 price">
+              <span class="glyphicon glyphicon-yen"></span>
+              <p>{{data1.price}}</p>
+          </div>
+          <div class="col-sm-7">
+            <p class="tittle">{{data1.gname}}</p>
+          </div>
+      </div>
+      <div class="row btn-list">
+          <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-heart"></span> 收藏</button>
+          <button type="button" class="btn btn-info"><span class="glyphicon glyphicon-thumbs-up"></span> 点赞</button>
+          <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-sm">
+            <span class="glyphicon glyphicon-comment"></span> 发私信
+          </button>
+          <!--模态框-->
+          <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content send-text-box">
+                    <textarea type="text" class="form-control" placeholder="这里输入你想发送的私信..."></textarea>
+                    <button type="button"class="btn btn-info">发送私信</button>
+                </div>
+              </div>
+          </div>
+      
+      </div>
+      <div class="row title2">
+        <p>{{data1.title}}</p>
+      </div>
+    </div>
+</div>
+
+
+<div class="container main-body textpage" id="text-targer"> <!--textpage-->
+<!--the following is adding -->  
+
+<!--the adding contain is over !-->
+</div>
+
+<app-footer></app-footer>

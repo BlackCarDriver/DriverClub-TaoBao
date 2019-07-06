@@ -1,0 +1,273 @@
+<app-navig></app-navig>
+
+<div class="full">
+<div class="container-fluid">
+        <div class="row path">
+                <ol class="breadcrumb">
+               <li><a href="#">交易区</a></li>
+                <li class="active">我的主页</li>
+            </ol>
+        </div>
+
+    <div class="row main-body">
+      <div class="col-md-9 left-box">
+            <!--头像 + 名字 + 个性签名 部分-->
+            <div class="row msg1">
+                <div class="col-sm-3 head-img-box">
+                    <img src={{msg.imgurl}}  alt="head-img" class="head-img"> 
+                </div>
+                <!--person mesage simple descripb-->
+                <div class="col-sm-7 myname">
+                    <h3 class="name">BlackCarDriver</h3>
+                    <h4 class="head-sign">Welcome to BlackCaDriver.cn!!!</h4>
+                </div>
+                <div class="col-sm-2">
+                        <a class="btn btn-primary btn-sm button1" routerLink="/changemsg">修改信息</a>
+                        <a class="btn btn-info btn-sm button1" routerLink="/uploadgoods">上传商品</a>
+                </div>
+            </div><!--msg1-->
+         
+            <!--小图标行-->
+          <div class="row msg2">
+                <span class="ico1"><i class="glyphicon glyphicon-king"></i> 等级 : {{msg.leave}}</span>
+                <span class="ico1"><i class="glyphicon glyphicon-piggy-bank"></i> 积分 : {{msg.sorce}}</span>
+                <span class="ico1"><i class="glyphicon glyphicon glyphicon-stats"></i> 排名 : {{msg.rank}}</span>
+                <span class="ico1"><i class="glyphicon glyphicon-heart"></i> 被关注: {{msg.becare}}</span>
+                <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞: {{msg.like}}</span>
+          </div><!--msg2-->
+
+          <!--tab box-->
+          <div class="tabbable" id="tabs-727927">
+          <div class="row swicth-box">
+            
+             <!--tab-->
+              <ul class="nav nav-tabs">
+                  <li class="active"><a  data-toggle="tab" href="#panel-xxxs">详细信息</a></li>
+                  <li><a  data-toggle="tab" href="#panel-mygoods">我的商品</a></li>
+                  <li><a  data-toggle="tab" href="#panel-shouchang">我的收藏</a></li>
+                  <li><a  data-toggle="tab" href="#panel-mymsg">我的消息</a></li>
+              </ul>
+
+              <!-- contant-->
+              <div class="tab-content">
+
+                <!-- 详细信息tag box -->
+                <div class="tab-pane  active" id="panel-xxxs">
+                    
+                    <!--基本信息 page-->
+                    <div class="panel panel-info my-panel">
+                      <div class="panel-heading"><span class="glyphicon glyphicon-th-list"> </span> 基本信息</div>
+                        <div class="panel-body">
+                              
+                            <div class="row msg-box">
+                                <div class="col-md-2 msg">司机ID</div>
+                                <div class="col-md-10 describ">{{msg.userid}}</div>
+                            </div>
+
+                              <div class="row msg-box">
+                                  <div class="col-md-2 msg">账号昵称</div>
+                                  <div class="col-md-10 describ">{{msg.username}}</div>
+                              </div>
+
+                              <div class="row msg-box">
+                                <div class="col-md-2 msg">个性签名</div>
+                                <div class="col-md-10 describ">{{msg.sign}}</div>
+                              </div>
+
+                              <div class="row msg-box">
+                                <div class="col-md-2 msg">性别</div>
+                                <div class="col-md-10 describ">{{msg.usersex}}</div>
+                              </div> 
+
+                              <div class="row msg-box">
+                                <div class="col-md-2 msg">年级</div>
+                                <div class="col-md-10 describ">{{msg.grade}}</div>
+                              </div>
+
+                              <div class="row msg-box">
+                                <div class="col-md-2 msg">学院</div>
+                                <div class="col-md-10 describ">{{msg.colleage}}</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--联系方式 page-->
+                    <div class="panel panel-info my-panel">
+                            <div class="panel-heading"><span class="glyphicon glyphicon-phone"> </span> 联系方式</div>
+                              <div class="panel-body">
+                                <div class="row msg-box">
+                                  <div class="col-md-2 msg">手机号码</div>
+                                  <div class="col-md-10 describ">{{msg.phone}}</div>
+                                </div>
+                                <div class="row msg-box">
+                                  <div class="col-md-2 msg">QQ</div>
+                                  <div class="col-md-10 describ">{{msg.qq}}</div>
+                                </div>
+                                <div class="row msg-box">
+                                  <div class="col-md-2 msg">邮箱</div>
+                                  <div class="col-md-10 describ">{{msg.email}}</div>
+                                </div>
+
+                              </div>
+                    </div>
+                    <!--统计数据 page-->
+                    <div class="panel panel-info my-panel">
+                        <div class="panel-heading"><span class="glyphicon glyphicon-stats"> </span> 其他数据</div>
+                            <div class="panel-body">
+                                <div class="row msg-box">
+                                    <div class="col-md-2 msg">上次登录</div>
+                                    <div class="col-md-10 describ">{{msg.lasttime}}</div>
+                                </div>
+                                <div class="row msg-box">
+                                    <div class="col-md-2 msg">商品数量</div>
+                                    <div class="col-md-10 describ">{{msg.goodsnum}}</div>
+                                </div>
+                                <div class="row msg-box">
+                                    <div class="col-md-2 msg">交易成功数</div>
+                                    <div class="col-md-10 describ">{{msg.scuess}}</div>
+                                </div>  
+                                <div class="row msg-box">
+                                    <div class="col-md-2 msg">主页访问量</div>
+                                    <div class="col-md-10 describ">{{msg.visnum}}</div>
+                                </div> 
+                        
+                            </div>
+                    </div>
+
+                </div>
+
+                 <!--我的商品 tag box-->
+                <div class="tab-pane" id="panel-mygoods">
+                    <ul class="good-list" >
+
+                        <li class="goods-box" *ngFor="let rows of mygoodslist">
+                            <img src={{rows.imgurl}} alt="" class="goods-img">
+                                <div class="goods-dsc">
+                                <a class="goods-dsc">{{rows.describ}}}</a>
+                                </div>
+                            <div class="price"><p><span>￥</span>{{rows.price}}</p></div>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!--我的收藏 tag box-->
+                <div class="tab-pane" id="panel-shouchang">
+                    <ul class="good-list">
+
+                        <li class="goods-box"  *ngFor="let rows of mycollectlist">
+                            <img src={{rows.imgurl}} alt="" class="goods-img">
+                                <div class="goods-dsc">
+                                <a class="goods-dsc">{{rows.describ}}}</a>
+                                </div>
+                                <div class="price"><p><span>￥</span>{{rows.price}}</p></div>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!--我的消息 tag box-->
+                <div class="tab-pane" id="panel-mymsg">
+
+                    <div class="row mymsg" *ngFor="let rows of mymessagelist">
+                        <div class="col-sm-2 msg-img-box">
+                            <img src={{rows.senderimgurl}} >
+                        </div>
+                        <div class="col-sm-10 msg-text-box">
+                            <div class="row msg-head">
+                                <div class="col-sm-6 heading">
+                                    <p>{{rows.title}}</p>
+                                </div>   
+                                <div class="col-sm-3">                               
+                                    <p> <span class="glyphicon glyphicon-user"></span>{{rows.sendername}}</p>
+                                </div>
+                                <div class="col-sm-3">
+                                    <p><span class="glyphicon glyphicon-time"></span>{{rows.time}}</p>
+                                </div>
+                            </div>
+                            <div class="row msg-body">
+                                <p>{{rows.describ}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+      
+            
+             
+                <!--分页框-->
+                  <div class="row textcenter">
+                        <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                  <li>
+                                    <a href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <li><a href="#">1</a></li>
+                                  <li><a href="#">2</a></li>
+                                  <li><a href="#">3</a></li>
+                                  <li><a href="#">4</a></li>
+                                  <li><a href="#">5</a></li>
+                                  <li>
+                                    <a href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                        </nav>
+                  </div>
+
+                </div>
+
+                
+              </div><!--tab content-->
+          </div><!--row switch box-->
+      </div>
+            
+      </div><!--col md 9 is over-->
+<!-- ============================================= -->
+      <div class="col-md-3 right_box hidden-xs hidden-sm">
+          <div class="right-box-son">
+            <div class="row">              
+                <div class="col-md-6 float-left-blue">关注我的: <span class="mun-ico">{{msg.becare}}</span></div>
+                <div class="col-md-6 float-right-blue">更多<span class="glyphicon glyphicon-chevron-right"></span></div>
+            </div>
+              <div class="row">
+                  <ul class="headimg-list" >
+                      <li class="headimg" *ngFor="let rows of icare">
+                          <a  routerLink="/personals"><img src={{rows.imgurl}}  title={{rows.username}}></a>
+                      </li>
+                  </ul>
+              </div>
+          </div><!--box son 1 -->
+          <div class="right-box-son">
+                <div class="row">              
+                    <div class="col-md-6 float-left-blue">我关注的: <span class="mun-ico">{{msg.care}}</span></div>
+                    <div class="col-md-6 float-right-blue">更多<span class="glyphicon glyphicon-chevron-right"></span></div>
+                </div>
+                  <div class="row">
+                      <ul class="headimg-list">
+                          <li class="headimg" *ngFor="let rows of carei">
+                              <a href="#"><img src={{rows.imgurl}} title={{rows.username}}></a>
+                          </li>
+                      </ul>
+                  </div>
+          </div><!--right box son 2-->
+          <div class="right-box-son see-num">
+              <p><span class="glyphicon glyphicon-eye-open"></span> 主页访问量:1223</p>
+          </div>
+          <!--榜单-->
+          <div class="right-box-son rank-list">
+              <h3>用户排名榜</h3>
+              <ul *ngFor="let rows of hero" >
+                  <li><span>{{rows.rank}}</span><p>{{rows.name}}</p></li>
+              </ul>
+          </div>
+
+      </div>
+<!-- ============================================= -->
+  </div><!--row main bod-->
+</div><!--cotainer-->
+</div><!--full-->
+
+<app-footer></app-footer>

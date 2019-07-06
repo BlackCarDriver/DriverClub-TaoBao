@@ -1,0 +1,117 @@
+/* ==================================================用户信息下拉框 */
+.user{
+    width: 188px;
+    background-color: rgb(245, 245, 245);
+    text-align: center;
+    padding: 10px 0px 5px 0px;
+}
+.headimg{
+    width: 60px;
+    height: 60px;
+    margin: auto;
+    border-radius: 95px;
+    background-color: #222b33;
+}
+.user h4{
+    color: #44484b;
+    margin: 3px auto;
+}
+.mesage{
+    width: 180px;
+    height: 140px;
+    margin: 10px 0px;
+    background: #f5f5f5;
+    margin: 15px 0px 0px 0px;
+}
+.msgval{
+    font-weight: 600;
+    padding-left:15px;
+}
+.mesage dt{
+    text-align: left;
+    margin: 3px 5px 3px 5px;
+    font-size: 1.1em;
+    border-bottom: 1px solid #337ab7;
+    width: 100%;
+    font-weight: 500;
+    color: #777;
+}
+.mesage dt span{
+    color: #3b3532;
+}
+#seeting{
+    float: left;
+    color: red;
+}
+.dropddown{
+    transition: display 2s;
+}
+
+.dropdown-menu {
+    padding: 0px;
+    overflow: hidden;
+}
+.block{
+    display: block;
+    margin: 2px;
+}
+/* =================================================注册登录框 */
+.sethigth{
+    width: 450px;
+    padding-bottom: 20px;
+}
+.clearfix{
+    background: #313131;
+    padding: 20px 0px 0px 0px;
+    margin-top: 35px;
+    width: 100%;
+    text-align: center;
+    color: #aaa;
+    font-size: 14px;
+}
+.login-center {
+    width: 400px;
+    box-sizing: border-box;
+    padding: 0 40px;
+    margin: 20px 10px 10px 20px;
+}
+.inputbox{
+    height: 30px;
+    width: 260px;
+    border: 1px solid #337ab7;
+    border-radius: 2px;
+    margin-left: 10px;
+}
+
+.checkbox1{
+    margin-right:5px;
+    width:15px;
+    height: 15px;
+    display: inline-block;
+}
+.taller{
+    position: relative;
+    bottom: 3px;
+}
+.emailbox{
+    width:190px;
+    margin-right: 5px;
+}
+
+.warm{
+    color: red;
+    left: 20%;
+    position: absolute;
+}
+.disablebtn{
+    width: 280px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 10px;
+    cursor: not-allowed;
+    background: rgb(113, 175, 183);
+    text-align: center;
+    border-radius: 5px;
+    margin: 0 auto;
+    color: #ffffff;
+}

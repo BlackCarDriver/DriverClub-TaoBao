@@ -1,0 +1,151 @@
+<app-navig></app-navig>
+
+<div class="container" class="main-body">
+
+<div class=" search-div  marbotn">
+
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-md-3 h100px "></div>
+        <div class="col-md-6 col-sm-8 h100px nopad">
+          <div class="seach-box">
+            <input type="text" class="inputbox" placeholder="搜索商品...">
+            <button class="inputbtn" type="button">
+              <span class="glyphicon glyphicon-search"></span>
+            </button>  
+          </div><!--search-box over-->
+      </div>
+      <div class="hidden-xs col-sm-2 col-md-3 h100px"></div>
+    </div>  <!--row  search is over-->
+
+    <div class="row"><!--type of goods-->
+        <div class="goodtype">
+            <a class="typelink" data-toggle="collapse" (click)="collapse('#study')">
+              学习用品
+            </a>
+            <a class="typelink" data-toggle="collapse"  (click)="collapse('#sport')" >
+              体育用品
+            </a>
+            <a class="typelink" data-toggle="collapse" (click)="collapse('#daliy')" >
+              生活用品
+            </a>
+            <a class="typelink" data-toggle="collapse"(click)="collapse('#electri')" >
+              电子产品
+            </a>
+            <a class="typelink" data-toggle="collapse" (click)="collapse('#diy')" >
+              手工diy
+            </a>
+            <a class="typelink" data-toggle="collapse"(click)="collapse('#virtual')">
+              虚拟商品
+            </a>
+            <a class="typelink" data-toggle="collapse" (click)="collapse('#other')" >
+              其他
+            </a>
+
+            <div class="collapse" id="study" >
+              <div class="well well2">
+                 <a  class="goodstype"  *ngFor="let row of studytype">{{row.name}}({{row.num}})</a>
+              </div>
+            </div>
+            
+            <div class="collapse" id="sport" >
+                <div class="well well2">
+                   <a  class="goodstype"  *ngFor="let row of sporttype">{{row.name}}({{row.num}})</a>
+                </div>
+            </div>
+
+            <div class="collapse" id="daliy" >
+                <div class="well well2">
+                   <a  class="goodstype"  *ngFor="let row of daliytype">{{row.name}}({{row.num}})</a>
+                </div>
+            </div>
+
+            <div class="collapse" id="electri" >
+                <div class="well well2">
+                   <a  class="goodstype"  *ngFor="let row of electritype">{{row.name}}({{row.num}})</a>
+                </div>
+            </div>
+            <div class="collapse" id="diy" >
+                <div class="well well2">
+                   <a  class="goodstype"  *ngFor="let row of diytype">{{row.name}}({{row.num}})</a>
+                </div>
+            </div>
+
+            <div class="collapse" id="virtual" >
+                <div class="well well2">
+                   <a  class="goodstype"  *ngFor="let row of virtualtype">{{row.name}}({{row.num}})</a>
+                </div>
+            </div>
+
+            <div class="collapse" id="other" >
+                <div class="well well2">
+                   <a  class="goodstype"  *ngFor="let row of othertype">{{row.name}}({{row.num}})</a>
+                </div>
+            </div>
+
+          
+      </div><!--row goodtype is over-->
+
+    </div> <!--row type is over-->
+
+</div><!--container-fulid is over-->
+
+<div class=" goods-area green martop">
+      <div class="row goodrow"><!--goods list-->
+          <div class="goods-box" *ngFor="let goods of goodsarray">
+            <div class="goods-box2" routerLink="/goodsdetail">
+              <img class="img-thumbnail" src={{goods.imgurl}}>
+              <div class="row">
+                <p class="good-title">{{goods.title}}</p>
+              </div>
+              <div class="row">
+                  <div class="row"><a class="good-user"><span class="glyphicon glyphicon-user"></span>{{goods.owner}}</a></div>
+              </div>
+              <div class="row">
+                  <div class="col-sm-6">
+                    <div class="row"><p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{goods.date}}</p></div>
+                  </div>
+                  <div class="col-sm-6">
+                    <p class="good-price"><span class="glyphicon glyphicon-yen"></span>{{goods.price}}</p>
+                  </div>
+              </div>
+              
+            </div><!--goods-box2 end-->
+          </div><!--good-box end-->
+      </div>
+      <br><br>  
+</div><!--container goods-show is over -->
+
+<div class="m-page hidden-xs">
+              <div class="wraper">
+                <div class="inner">
+                  <ul class="items">
+                      <li class="item prev">
+                          <span>上一页</span>
+                      </li>
+                      <li class="item active">
+                          <span class="num">1</span>
+                      </li>
+                      <li class="item">
+                            <a class="num">2</a>
+                      </li>
+                      <li class="item">
+                            <a class="num">3</a>
+                      </li>
+                      <li class="item next">
+                        <a class="num"><span>下一页</span></a>
+                      </li>
+                  </ul>
+                  <div class="form  hidden-sm">
+                    <div class="total">共 3 页 </div>
+                    <span class="text">到第</span>
+                    <input class="input" type="number">
+                    <span class="text">页</span>
+                    <span class="btn" >确定</span>
+                  </div>
+                </div>
+              </div>
+</div><!--pagebox over-->
+
+</div>
+
+<app-footer></app-footer>

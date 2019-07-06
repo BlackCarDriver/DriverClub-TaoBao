@@ -1,0 +1,218 @@
+/* You can add global styles to this file, and also import other style files */
+html{
+    margin-top:8.59375%; 
+    position:relative;
+    display: block;
+    overflow-x: hidden;
+    color: #222;
+    font: 14px/1.5 tahoma,arial,"Microsoft YaHei";
+    background-color: #f5f6f7;
+    margin: 0px;
+    padding: 0px;
+}
+body {
+
+    background-color: #f3f3f3;
+    font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
+}
+img{
+    height: 100%;
+    width: 100%;
+}
+
+
+
+
+/* ==========================收藏样式============================ */
+.inlink{
+    display: inline-block;
+}
+.checkbox1{
+    margin-right:5px;
+    width:15px;
+    height: 15px;
+    display: inline-block;
+}
+
+.inputbox{
+    padding-left: 15px;
+    color: #333333;
+    width: 500px;
+    border-radius: 30px 0px 0px 30px;
+    border: 3px solid #337ab7;
+    height: 40px;
+}
+.inputbox:focus{
+    box-shadow: none;
+    border-radius: 30px 0px 0px 30px;
+    border: 3px solid #337ab7;
+}
+.inputbtn{
+    width: 70px;
+    height: 40px;
+    border: 3px solid #337ab7;
+    border-radius: 0px 30px 30px 0px;
+    background-color: #337ab7;
+    color: white;
+    font-size: 1.2em;
+}
+
+.loginbutton{
+    width: 280px;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 10px;
+    background-color: dodgerblue;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 5px;
+    margin: 0 auto;
+    color: white;
+}
+.floatcenter{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.floatright{
+    margin-right: 50px;
+    float: right;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+
+/* ============================================== */
+
+
+
+
+
+
+.head{
+    border-bottom: 1px solid #303030;
+    color: #aaa;
+    border-radius: 0px;
+    background: #313131;
+}
+a{
+    display:inline-block;
+}
+a:hover{
+    cursor: pointer;
+    text-decoration : none ;
+}
+.norad{
+    border-radius: 0px;
+}
+.nopadtop{
+    padding-top: 0px;
+    margin-top: 0px;
+}
+.nomarbot{
+    margin: 0px;
+}
+.closebot{
+   bottom: 5px;
+   margin-bottom: 5px;
+}
+.nav-chose{
+    border-bottom: 7px solid #17a2e7;
+}
+.marright{
+    margin-right: 30px;
+}
+.marbotn{
+    margin-bottom: 10px;
+}
+.martop{
+    margin-top: 10px;
+}
+.green{
+    background-color: rgb(196, 207, 196);
+}
+.yellow{
+    background-color: rgb(110, 110, 89);
+}
+.h100px{
+    height: 100px;
+}
+.blue{
+    background-color: rgb(156, 160, 160);
+}
+.alicen{
+    text-align: center;
+}
+
+.heifull{
+    height: 100%;
+}
+.pad0px{
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+/* ================================================== */
+.main-footer {
+    background: #202020;
+    padding: 35px 0 0;
+    color: #959595;
+    box-sizing: border-box;
+    border-bottom: 1px solid #303030;
+}
+.widget .title:after {
+    content: "";
+    width: 90px;
+    height: 1px;
+    background: #337ab7;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+}
+.main-footer .widget .tag-cloud a {
+    border: 1px solid #494747;
+}
+.main-footer .widget {
+    padding: 0 30px;
+    box-sizing: border-box;
+    text-align: initial;
+}
+.widget .tag-cloud a {
+    border: 1px solid #ebebeb;
+    padding: 2px 7px;
+    color: #959595;
+    line-height: 1.5em;
+    display: inline-block;
+    margin: 0 7px 7px 0;
+    -webkit-transition: all .2s ease;
+    -o-transition: all .2s ease;
+    transition: all .2s ease;
+    text-decoration: none;
+}
+.title {
+    font-weight: 500;
+    line-height: 1.1;
+    font-size: 18px;
+    margin-top: 0;
+    padding-bottom: 7px;
+    border-bottom: 1px solid #ebebeb;
+    margin-bottom: 21px;
+    position: relative;
+}
+.copyright {
+    background: #111;
+    font-size: 13px;
+    text-align: center;
+    color: #555;
+    padding-top: 14px;
+    padding-bottom: 20px;
+    border-top: 1px solid #303030;
+}
+.copyright a {
+    color: #555;
+    background-color: transparent;
+    font-size: 13px;
+    text-align: center;
+}

@@ -1,0 +1,108 @@
+<app-navig></app-navig>
+
+<div class="container">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active">上传商品</li>
+        </ol>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <div class="row   mainbody">
+            <!--预览效果-->
+            <div class="col-md-6">
+                    <span class="label  label-primary yulan">预览效果</span>
+                    <div class="goods-box">
+                        <img class="img-thumbnail" src={{headImgUrl}}>
+                        <p class="good-title">{{title}}</p>
+                            <a class="good-user"><span class="glyphicon glyphicon-user"></span> {{username}}</a>
+                            <p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{date}}</p>
+                            <p class="good-price"><span class="glyphicon glyphicon-yen"></span>{{price}}</p>
+                    </div><!--goods-box2 end-->       
+                    <strong class="warning">{{warnmsg}}</strong>    
+            </div>
+            <!--封面设置-->
+            <div class="col-md-6 h260px">
+                <div class="panel panel-primary">
+                    <div class="panel-heading" >基本设置</div>
+                     <dl class="setting-box">
+                                    <dt>
+                                    <input type="file" class="hidden" id="upload">
+                                    <button class="btn btn-default" id="heading" (click)="selectImg()">选择封面</button>
+                                    <button id="uploadbtn" class="hidden" (click)="uploadcover()"></button>
+                                    <span id="filename"></span>
+                                    </dt>
+                                    <dt>封面标题</dt>
+                                    <dd><input [(ngModel)]="title" type="text" id="title"></dd>
+                                    <dt>出售价格</dt>
+                                    <dd><input [(ngModel)]="price" type="number" class="price"></dd>
+                                    <dt>
+                                        <div class="btn-group">
+                                             <button type="button" id="btn-type" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" >
+                                              物品分类 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="btn-type" >
+                                                <li (click)="selecttype('学习用品',0)"><a>学习用品</a></li>
+                                                <li (click)="selecttype('体育用品',1)"><a>体育用品</a></li>
+                                                <li (click)="selecttype('生活用品',2)"><a>生活用品</a></li>
+                                                <li (click)="selecttype('电子产品',3)"><a>电子产品</a></li>
+                                                <li (click)="selecttype('手工diy',4)"><a>手工diy</a></li>
+                                                <li (click)="selecttype('虚拟商品',5)"><a>虚拟商品</a></li>
+                                                 <li (click)="selecttype('其他',6)"><a>其他</a></li>
+                                            </ul>
+                                        </div><!--btn-group-->
+                                        <div class="btn-group" *ngIf="usenewtag==false">
+                                            <button type="button" id="subtype" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" >
+                                            物品标签 <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                               <li *ngFor="let rows of typelist" (click)="GetSubType(rows.name)"><a>{{rows.name}}</a></li>
+                                               <li  (click)="GetSubType('新标签')"><a>添加新标签</a></li>
+                                            </ul>
+                                        </div><!--btn-group-->
+                                        <div *ngIf="usenewtag==true" id="newtypediv">
+                                            <input id="newtypeinput" placeholder="新标签名">
+                                        </div>
+                                    </dt>
+                                    
+                     </dl>
+                    </div><!--pannel-->  
+            </div>
+        </div>    
+        </div>
+        <!--规则说明-->
+        <div class="col-md-5 upload-rule" > 
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>上传规则</div>
+                <div class="panel-body ">
+                    <ul class="list-group">
+                        <li class="list-group-item">封面图片应低于100kb,展示页面的总大小应低于300kb</li>
+                        <li class="list-group-item">一经发包含影响恶劣的信息,将作删除商品或封号处理</li>
+                        <li class="list-group-item">请设置适当的价格，标题和标签,发现有意乱填将作删除处理</li>
+                        <li class="list-group-item">商品卖出后，请及时到管理页面对此商品进行下架操作</li>
+                        <li class="list-group-item">展示商品的顺序将以上传者等级作为第一排序依据</li>
+                        <li class="list-group-item">本站不保证你上传的商品信息长期存在</li>
+                    </ul>
+                </div>
+                </div>
+        </div>
+    </div>
+    
+    <div class="row editer">
+        <div id="summernote"></div>
+    </div>
+    <!--提交行-->
+    <div class="row">
+        <span id="uploadcheck">
+            <input id="check" type="checkbox">
+            我已了解并同意上传规则
+        </span>
+    </div>
+    <div class="row upload_row">
+        <button type="button" id="uploadbtn" class="btn btn-info" (click)="Upload()">上传商品</button>
+    </div>
+    
+</div>
+<app-footer></app-footer>

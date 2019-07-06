@@ -1,0 +1,213 @@
+#singin{
+    background: #ff411c;
+    border-radius: 20px;
+    color: #fff;
+    line-height: 24px;
+    padding: 2px 0;
+    margin-top: 12px;
+    margin-left: 10px;
+    padding: 2px 20px 0 20px;
+}
+#singin:hover {
+    background: #fe6000;
+}
+.search-div{
+    background-color: #f5f5f5;
+}
+.seach-box{
+    position: relative;
+    width: 100%;
+    min-width: 600px;
+    top: 25px;
+}
+.main-body{
+    min-height: 400px;
+}
+.goodtype{
+    width: 100%;
+    height: auto;
+    text-align: center;
+    background-color: rgb(245, 245, 245);
+}
+/* 商品大分类连接 */
+.typelink{
+    height: 30px;
+    line-height: 30px;
+    margin:0px 25px 0px 25px;
+    font-size: 17px;
+    font-weight: 600;
+}
+.typelink:hover{
+    border-bottom: 4px solid rgb(106, 146, 207);
+}
+.well2{
+    padding: 5px 20px;
+    background-color: #337ab7;
+}
+.goods-area{
+    padding: 5px;
+    box-shadow: 0 0 20px rgba(50,50,50,0.1);
+    background-color: #fff;
+    margin: 0px 7%;
+}
+.goodrow{
+    margin:5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.goods-box{
+    float: left;
+    text-align: center;
+    margin: 1px 15px 20px 15px;
+}
+.goods-box2{
+    height: 255px;
+    width: 200px;
+    border: 1px solid #ccc;
+    background-color: #ffffff;
+    font-size: 1.1em;
+    color: rgb(156, 173, 173);
+    overflow: hidden;
+}
+.goods-box2:hover{
+    border: 1px solid #337ab7;
+}
+.goods-box2 img{
+    height: 76%;
+    padding: 0px;
+    border-radius: 0px;
+}
+.goodstype{
+    margin: 5px 15px;
+    line-height: 15px;
+    color: white;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+.good-title{
+    height: 21px;
+    line-height: 21px;
+    margin: 0px 19px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #337ab7;
+}
+.good-user{
+    float: left;
+    margin-left: 35px;
+    margin-bottom: 4px;
+    font-size: 0.9em;
+    overflow: hidden;
+    color: #999;
+}
+.good-date{
+    margin-left: 20px;
+    font-size: 0.8em;
+}
+.good-price{
+    color: orangered;
+    font-size: 1.3em;
+    font-weight: 600;
+    /* margin-top: 0px; */
+    margin: 0px;
+    position: relative;
+    bottom: 10px;
+    right: 5px;
+}
+.page-box{
+    text-align: center;
+}
+
+/* =================================== 公用样式 */
+.nopad{
+    padding: 0px; 
+    text-align: center;
+}
+
+
+/* =============================================淘宝翻页框 */
+.m-page {
+    position: relative;
+    margin-top: 20px;
+    padding: 10px 0;
+}
+.m-page .wraper {
+    display: block;
+    float: left;
+    margin-left: 50%;
+}
+.m-page .inner {
+    float: left;
+    margin-left: -50%;
+}
+.m-page .active, .m-page .active:hover {
+    position: relative;
+    background: #f40;
+    color: #fff;
+    border-color: #f40;
+    cursor: default;
+}
+
+.m-page a:focus, .m-page a:hover {
+    color: #f40;
+}
+.m-page .items {
+    float: left;
+}
+.m-page .item {
+    position: relative;
+    float: left;
+    margin-left: 3px;
+    width: 35px;
+    border: solid 1px #ededed;
+    height: 35px;
+    color: #3e3e3e;
+    text-align: center;
+    line-height: 35px;
+    cursor: pointer;
+} 
+.m-page .next, .m-page .prev {
+    width: 70px;
+    font-weight: 400;
+}
+.m-page .item .num {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+}
+.m-page .total {
+    margin-left: 10px;
+    margin-right: 10px;
+    float: left;
+    line-height: 37px;
+}
+.m-page .form {
+    float: left;
+}
+.m-page .text {
+    float: left;
+    line-height: 37px;
+}
+.m-page .input {
+    width: 40px;
+    border: solid 1px #ededed;
+    height: 21px;
+    text-align: center;
+    margin-top: 7px;
+    float: left;
+    color: #999;
+}
+.m-page .btn {
+    height: 21px;
+    width: 43px;
+    border-radius: 2px;
+    border: solid 1px #ededed;
+    text-align: center;
+    line-height: 21px;
+    margin-top: 4px;
+    padding: 1px;
+}
+/* ==================================================== */

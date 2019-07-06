@@ -1,0 +1,51 @@
+.message{
+    background-color: #fff;
+    border: 2px solid #e6e6e6;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: block;
+    padding: 10px 40px 10px 40px;
+    margin-bottom: 10px;
+}
+.msg1{
+    height: 150px;
+}
+.msg2{
+    height: 30px;
+}
+.sign{
+    color: #FFC107;
+    font-size: x-large;
+}
+.ico1{
+    margin: 0px 10px;
+    color: #607D8B;
+}
+.head-img{
+    width: 120px;
+    height: 120px;
+    border-radius: 120px;
+}
+
+.name{
+    width: 60%;
+    display: inline-block;
+}
+.sendmsg{
+    float: right;
+    margin: 20px;
+}
+.send-text-box{
+    width: 400px;
+    height: 200px;
+    padding: 6px;
+    background-color: aliceblue;
+}
+.send-text-box textarea {
+    height: 150px;
+}
+.send-text-box button{
+    float: right;
+    margin: 4px 10px;
+    height: 30px;
+}
