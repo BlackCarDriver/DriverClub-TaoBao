@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonalExpend , Goods2,MyMessage, Rank,User  } from '../struct';
+import { UserMessage , GoodsShort, MyMessage, Rank,User  } from '../struct';
 import { ServerService } from '../server.service';
 declare let $: any;
 
@@ -8,12 +8,14 @@ declare let $: any;
   templateUrl: './personal.component.html',
   styleUrls: ['./personal.component.css']
 })
+
 export class PersonalComponent implements OnInit {
   username = "123456";
   key = "itisuserkey..";
-  msg = new PersonalExpend(); //基本信息
-  mygoodslist = Goods2[100];      //我的商品
-  mycollectlist = Goods2[100];    //我收藏的商品
+
+  msg = new UserMessage(); //基本信息
+  mygoodslist = GoodsShort[100];      //我的商品
+  mycollectlist = GoodsShort[100];    //我收藏的商品
   mymessagelist = MyMessage[100]; //我的消息
   hero = Rank[20];             //等级排行榜
   icare = User[100];   //我关注的和关注我的

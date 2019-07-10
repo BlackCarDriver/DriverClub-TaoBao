@@ -43,42 +43,42 @@
 
             <div class="collapse" id="study" >
               <div class="well well2">
-                 <a  class="goodstype"  *ngFor="let row of studytype">{{row.name}}({{row.num}})</a>
+                 <a  class="goodstype"  *ngFor="let row of studytype">{{row.tag}}({{row.number}})</a>
               </div>
             </div>
             
             <div class="collapse" id="sport" >
                 <div class="well well2">
-                   <a  class="goodstype"  *ngFor="let row of sporttype">{{row.name}}({{row.num}})</a>
+                   <a  class="goodstype"  *ngFor="let row of sporttype">{{row.tag}}({{row.number}})</a>
                 </div>
             </div>
 
             <div class="collapse" id="daliy" >
                 <div class="well well2">
-                   <a  class="goodstype"  *ngFor="let row of daliytype">{{row.name}}({{row.num}})</a>
+                   <a  class="goodstype"  *ngFor="let row of daliytype">{{row.tag}}({{row.number}})</a>
                 </div>
             </div>
 
             <div class="collapse" id="electri" >
                 <div class="well well2">
-                   <a  class="goodstype"  *ngFor="let row of electritype">{{row.name}}({{row.num}})</a>
+                   <a  class="goodstype"  *ngFor="let row of electritype">{{row.tag}}({{row.number}})</a>
                 </div>
             </div>
             <div class="collapse" id="diy" >
                 <div class="well well2">
-                   <a  class="goodstype"  *ngFor="let row of diytype">{{row.name}}({{row.num}})</a>
+                   <a  class="goodstype"  *ngFor="let row of diytype">{{row.tag}}({{row.number}})</a>
                 </div>
             </div>
 
             <div class="collapse" id="virtual" >
                 <div class="well well2">
-                   <a  class="goodstype"  *ngFor="let row of virtualtype">{{row.name}}({{row.num}})</a>
+                   <a  class="goodstype"  *ngFor="let row of virtualtype">{{row.tag}}({{row.number}})</a>
                 </div>
             </div>
 
             <div class="collapse" id="other" >
                 <div class="well well2">
-                   <a  class="goodstype"  *ngFor="let row of othertype">{{row.name}}({{row.num}})</a>
+                   <a  class="goodstype"  *ngFor="let row of othertype">{{row.tag}}({{row.number}})</a>
                 </div>
             </div>
 
@@ -93,16 +93,16 @@
       <div class="row goodrow"><!--goods list-->
           <div class="goods-box" *ngFor="let goods of goodsarray">
             <div class="goods-box2" routerLink="/goodsdetail">
-              <img class="img-thumbnail" src={{goods.imgurl}}>
+              <img class="img-thumbnail" src={{goods.headimg}}>
               <div class="row">
                 <p class="good-title">{{goods.title}}</p>
               </div>
               <div class="row">
-                  <div class="row"><a class="good-user"><span class="glyphicon glyphicon-user"></span>{{goods.owner}}</a></div>
+                  <div class="row"><a class="good-user"><span class="glyphicon glyphicon-user"></span>{{goods.userid}}</a></div>
               </div>
               <div class="row">
                   <div class="col-sm-6">
-                    <div class="row"><p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{goods.date}}</p></div>
+                    <div class="row"><p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{goods.time}}</p></div>
                   </div>
                   <div class="col-sm-6">
                     <p class="good-price"><span class="glyphicon glyphicon-yen"></span>{{goods.price}}</p>

@@ -11,31 +11,31 @@
 
 <div class="container head-row">
     <div class="col-sm-3 head-picture">
-        <img src={{data1.imgurl}} alt="head-image of goods">
+        <img src={{goodsdt.headimg}} alt="head-image of goods">
     </div>
     <div class="col-sm-4"> 
       <table class="table table-bordered">
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-user"></span></th>
-            <th><p class="goodtag">{{data1.owner}}</p></th>
+            <th><p class="goodtag">{{goodsdt.userid}}</p></th>
           </tr>
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-calendar"></span></th>
-            <th><p class="goodtag">{{data1.date}}</p></th>
+            <th><p class="goodtag">{{goodsdt.time}}</p></th>
           </tr>
       </table>
       <table class="table table-bordered table2">
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-eye-open"></span></th>
-            <th><p class="goodtag">{{data2.see}}</p></th>
+            <th><p class="goodtag">{{goodsdt.visit}}</p></th>
             <th class="val"><span class="glyphicon glyphicon-comment"></span></th>
-            <th><p class="goodtag">{{data2.talk}}</p></th>
+            <th><p class="goodtag">{{goodsdt.talk}}</p></th>
           </tr>
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-thumbs-up"></span></th>
-            <th><p class="goodtag">{{data2.like}}</p></th>
+            <th><p class="goodtag">{{goodsdt.like}}</p></th>
             <th class="val"><span class="glyphicon glyphicon-heart"></span></th>
-            <th><p class="goodtag">{{data2.collect}}</p></th>
+            <th><p class="goodtag">{{goodsdt.collect}}</p></th>
           </tr>
       </table>
     </div>
@@ -43,10 +43,10 @@
       <div class="row">
           <div class="col-sm-3 price">
               <span class="glyphicon glyphicon-yen"></span>
-              <p>{{data1.price}}</p>
+              <p>{{goodsdt.price}}</p>
           </div>
           <div class="col-sm-7">
-            <p class="tittle">{{data1.gname}}</p>
+            <p class="tittle">{{goodsdt.name}}</p>
           </div>
       </div>
       <div class="row btn-list">
@@ -67,7 +67,7 @@
       
       </div>
       <div class="row title2">
-        <p>{{data1.title}}</p>
+        <p>{{goodsdt.title}}</p>
       </div>
     </div>
 </div>

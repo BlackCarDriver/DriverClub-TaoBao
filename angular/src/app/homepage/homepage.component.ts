@@ -16,10 +16,11 @@ declare let $ : any;
 })
 
 export class HomepageComponent implements OnInit {
-
-  //the data need to map on html file
-   goodsarray = HomePageGoods[100];  
+  //商品主页封面列表
+  goodsarray = HomePageGoods[100];  
+  //商品类型
    typearray = GoodsType[10];
+   //商品类型对应的标签
    studytype = GoodSubType[100];
    sporttype = GoodSubType[100];
    daliytype = GoodSubType[100];
@@ -38,15 +39,14 @@ export class HomepageComponent implements OnInit {
     this.GetType();
     this.set_mainbody_height();
   }
-
-
+  //获得在主页中显示的一页商品列表的数据
   GetGoods(){
-    this.server.GetHomePageGoods("haha",11).subscribe(
+    this.server.GetHomePageGoods("placeholder ",11).subscribe(
       result => {
           this.goodsarray = result;
       })
   }
-
+  //获得商品的各个类型中包含的标签列表
   GetType(){
     this.server. GetHomePageType().subscribe(
       result => {

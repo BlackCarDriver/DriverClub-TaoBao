@@ -14,7 +14,7 @@
             <!--头像 + 名字 + 个性签名 部分-->
             <div class="row msg1">
                 <div class="col-sm-3 head-img-box">
-                    <img src={{msg.imgurl}}  alt="head-img" class="head-img"> 
+                    <img src={{msg.headimg}}  alt="head-img" class="head-img"> 
                 </div>
                 <!--person mesage simple descripb-->
                 <div class="col-sm-7 myname">
@@ -30,7 +30,7 @@
             <!--小图标行-->
           <div class="row msg2">
                 <span class="ico1"><i class="glyphicon glyphicon-king"></i> 等级 : {{msg.leave}}</span>
-                <span class="ico1"><i class="glyphicon glyphicon-piggy-bank"></i> 积分 : {{msg.sorce}}</span>
+                <span class="ico1"><i class="glyphicon glyphicon-piggy-bank"></i> 积分 : {{msg.credits}}</span>
                 <span class="ico1"><i class="glyphicon glyphicon glyphicon-stats"></i> 排名 : {{msg.rank}}</span>
                 <span class="ico1"><i class="glyphicon glyphicon-heart"></i> 被关注: {{msg.becare}}</span>
                 <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞: {{msg.like}}</span>
@@ -61,12 +61,12 @@
                               
                             <div class="row msg-box">
                                 <div class="col-md-2 msg">司机ID</div>
-                                <div class="col-md-10 describ">{{msg.userid}}</div>
+                                <div class="col-md-10 describ">{{msg.id}}</div>
                             </div>
 
                               <div class="row msg-box">
                                   <div class="col-md-2 msg">账号昵称</div>
-                                  <div class="col-md-10 describ">{{msg.username}}</div>
+                                  <div class="col-md-10 describ">{{msg.name}}</div>
                               </div>
 
                               <div class="row msg-box">
@@ -76,12 +76,12 @@
 
                               <div class="row msg-box">
                                 <div class="col-md-2 msg">性别</div>
-                                <div class="col-md-10 describ">{{msg.usersex}}</div>
+                                <div class="col-md-10 describ">{{msg.sex}}</div>
                               </div> 
 
                               <div class="row msg-box">
-                                <div class="col-md-2 msg">年级</div>
-                                <div class="col-md-10 describ">{{msg.grade}}</div>
+                                <div class="col-md-2 msg">专业</div><!--不显示-->
+                                <div class="col-md-10 describ">{{msg.major}}</div>
                               </div>
 
                               <div class="row msg-box">
@@ -105,7 +105,7 @@
                                 </div>
                                 <div class="row msg-box">
                                   <div class="col-md-2 msg">邮箱</div>
-                                  <div class="col-md-10 describ">{{msg.email}}</div>
+                                  <div class="col-md-10 describ">{{msg.emails}}</div>
                                 </div>
 
                               </div>
@@ -128,7 +128,7 @@
                                 </div>  
                                 <div class="row msg-box">
                                     <div class="col-md-2 msg">主页访问量</div>
-                                    <div class="col-md-10 describ">{{msg.visnum}}</div>
+                                    <div class="col-md-10 describ">{{msg.visit}}</div>
                                 </div> 
                         
                             </div>
@@ -141,9 +141,9 @@
                     <ul class="good-list" >
 
                         <li class="goods-box" *ngFor="let rows of mygoodslist">
-                            <img src={{rows.imgurl}} alt="" class="goods-img">
+                            <img src={{rows.headimg}} alt="" class="goods-img">
                                 <div class="goods-dsc">
-                                <a class="goods-dsc">{{rows.describ}}}</a>
+                                <a class="goods-dsc">{{rows.title}}}</a>
                                 </div>
                             <div class="price"><p><span>￥</span>{{rows.price}}</p></div>
                         </li>
@@ -156,9 +156,9 @@
                     <ul class="good-list">
 
                         <li class="goods-box"  *ngFor="let rows of mycollectlist">
-                            <img src={{rows.imgurl}} alt="" class="goods-img">
+                            <img src={{rows.headimg}} alt="" class="goods-img">
                                 <div class="goods-dsc">
-                                <a class="goods-dsc">{{rows.describ}}}</a>
+                                <a class="goods-dsc">{{rows.title}}}</a>
                                 </div>
                                 <div class="price"><p><span>￥</span>{{rows.price}}</p></div>
                         </li>
@@ -176,7 +176,7 @@
                         <div class="col-sm-10 msg-text-box">
                             <div class="row msg-head">
                                 <div class="col-sm-6 heading">
-                                    <p>{{rows.title}}</p>
+                                    <p>{{rows.senderid}}</p>    <!--暂时没有标题-->
                                 </div>   
                                 <div class="col-sm-3">                               
                                     <p> <span class="glyphicon glyphicon-user"></span>{{rows.sendername}}</p>
@@ -186,7 +186,7 @@
                                 </div>
                             </div>
                             <div class="row msg-body">
-                                <p>{{rows.describ}}</p>
+                                <p>{{rows.content}}</p>
                             </div>
                         </div>
                     </div>

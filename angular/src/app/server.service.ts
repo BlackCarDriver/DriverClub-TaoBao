@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import {  HomePageGoods , GoodsType,GoodsState,UploadGoods,PersonalExpend } from '../app/struct';
+import {  HomePageGoods , GoodsType,GoodsDetail,UploadGoods,UserMessage } from '../app/struct';
 import {  account1, account2, UserShort} from '../app/struct';
 import { PersonalBase} from '../app/struct';
-import { post } from 'selenium-webdriver/http';
-import { JsonpCallbackContext } from '@angular/common/http/src/jsonp';
-// import { ConsoleReporter } from 'jasmine';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +11,7 @@ export class ServerService {
 
   //important config !!!
 //本地开发配置
- private addr: string  = "http://localhost:8090"
+ private addr: string  = "http://localhost:4747"
  //服务器配置
   // private addr: string  = "https://www.blackcardriver.cn/server"
   constructor( 
@@ -98,30 +94,28 @@ GetUserShort(name:string){
 }
 
   GetHomePageGoods(tag : string, index : number){
-      var url = this.addr + "/data";
-      return this.http.get<HomePageGoods[]>(url);
+      var url = this.addr + "/homepage/goodsdata";
+      var postdata = {goodstag:tag, goodsindex:index};
+      return this.http.post<HomePageGoods[]>(url, postdata);
   }
 
   GetHomePageType(){
-    var url = this.addr + "/data2";
+    var url = this.addr + "/homepage/goodstypemsg";
     return this.http.get<GoodsType[]>(url);
   }
 
   //get homepagegoods-struct data
-  GetGoodsDetail_1(id:number){
-      var url = this.addr+"/getmsg/goods/souce?tag=base&goodsid="+id;
-      return this.http.get<HomePageGoods>(url);
+  GetGoodsDetail(id:number){
+      var url = this.addr+"/goodsdetail?id="+id;
+      return this.http.get<GoodsDetail>(url);
   }
 
-  GetGoodsDetail_2(id:number){
-    var url = this.addr+"/getmsg/goods/souce?tag=state&goodsid="+id;
-      return this.http.get<GoodsState>(url);
-  }
-
-  GetGoodsDetail_3(id:number){
-    var url =  this.addr+"/getmsg/goods/souce?tag=text&goodsid="+id;
+  GetGoodsDetail2(id:number){
+    //这里打算用nginx返回json格式的商品描述文件
+    var url =  this.addr+"/goodsdescribe/"+id;
     return this.http.get<string>(url);
   }
+
   //upload goods message to server
   UploadGoods(goods:string){
     var postdata = {goodsdata:goods};
@@ -179,7 +173,7 @@ GetUserShort(name:string){
   //get message of personal2 page
   GetOtherMsg(userid:string){
     var url = this.addr+"/getmsg/othermsg?id="+userid;
-    return this.http.get<PersonalExpend>(url);
+    return this.http.get<UserMessage>(url);
   }
   //login function used in naving
   Login(data:account2){

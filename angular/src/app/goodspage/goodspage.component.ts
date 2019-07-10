@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HomePageGoods,GoodsState } from'../struct';
+import {HomePageGoods,GoodsDetail } from'../struct';
 import{ServerService} from'../server.service';
 
 @Component({
@@ -9,9 +9,8 @@ import{ServerService} from'../server.service';
 })
 export class GoodspageComponent implements OnInit {
   //一个类不可以只声明，然后直接用，否则出现undefine error
-  data1 = new HomePageGoods;
-  data2 = new GoodsState;
-  data3 = "";
+  goodsdt = new GoodsDetail;
+  goodsds = "";
 
   constructor(private server : ServerService) { }
   ngOnInit() {
@@ -19,18 +18,15 @@ export class GoodspageComponent implements OnInit {
   } 
 
   getItPage(id:number){
-    this.server.GetGoodsDetail_1(id).subscribe(
-      result=>{this.data1 = result;}
+    this.server.GetGoodsDetail(id).subscribe(
+      result=>{this.goodsdt = result;}
     )
-    this.server.GetGoodsDetail_2(id).subscribe(
-      result=>{this.data2 = result;}
-    )
-    this.server.GetGoodsDetail_3(id).subscribe(
+    //获取描述商品的文件
+    this.server.GetGoodsDetail2(id).subscribe(
       result=>{
-        this.data3=result;
-        $("#text-targer").html(this.data3);
-      }
-      )
+        this.goodsds=result;
+        $("#text-targer").html(this.goodsds);
+      })
   }
 
 }
