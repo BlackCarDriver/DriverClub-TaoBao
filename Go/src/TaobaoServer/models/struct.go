@@ -82,6 +82,10 @@ var MockGoodsDetail = GoodsDetail{
 }
 
 //########################################## 个人详情页结构体和模拟数据 #################################################
+type PersonalPostBody struct {
+	Name string `json:"name"`
+	Tag  string `json:"tag"`
+}
 
 type UserMessage struct {
 	Headimg  string `json:"headimg"`
@@ -108,24 +112,79 @@ type UserMessage struct {
 }
 
 type GoodsShort struct {
-	Id      string  `json:"id"`
 	Headimg string  `json:"headimg"`
+	Id      string  `json:"id"`
 	Name    string  `json:"name"`
 	Title   string  `json:"title"`
 	Price   float64 `json:"price"`
 }
 
+//数据库未有title
 type MyMessage struct {
-	Senderid   string `json:"senderid"`
-	Sendername string `json:"sendername"`
-	Content    string `json:"content"`
-	Time       string `json:"time"`
+	Time    string `json:"time"`
+	Name    string `json:"name"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+	Headimg string `json:"headimg"`
 }
 
 type User struct {
 	Id2     string `json:"id2"`
 	Name    string `json:"name"`
 	Headimg string `json:"headimg"`
+}
+
+type Rank struct {
+	Rank   int64  `json:"rank"`
+	Name   string `json:"name"`
+	Userid string `json:"userid"`
+}
+
+type UserShort struct {
+	Headimg string `json:"headimg"`
+	Name    string `json:"name"`
+	Id      string `json:"id"`
+}
+
+var MockUserMessage = UserMessage{
+	"https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
+	"BlackCarDriver", "id123345", "sexboy", "sign:it is sing",
+	"grad2015", "collect:计算机学院", "major:计算机", "emils:123123123.com",
+	"Qq123213213213", "phone2134213213", 123, 1234, 12, 321, 2134, 4545,
+	3453, 56756, 6789, 55,
+}
+
+var MockGoodsShort = []GoodsShort{
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 123.123},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 0.9},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 14},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 123},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 13},
+}
+
+var MockMyMessage = []MyMessage{
+	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+}
+
+var MockRank = []Rank{
+	{1, "Driver", "12322"}, {2, "DDridd", "123222"}, {3, "openid", "123421"},
+}
+
+var MockCare = [2][]UserShort{
+	{{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+	},
+	{
+		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
+	},
 }
 
 //########################################## 修改信息页面数据结构和模拟数据 #################################################

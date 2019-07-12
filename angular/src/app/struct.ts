@@ -84,15 +84,16 @@ export class GoodsShort{
 
 //个人主页里面的我的消息
 export class MyMessage{
-    senderid:string;
-    sendername:string;      //(precial)
-    content:string;
+    title:string;
     time:string;
+    name:string;      //(precial)
+    headimg:string;
+    content:string;
 }
 
 //我关注的和关注我的用户列表
 export class User{
-    id2:string;
+    id:string;
     name:string;    
     headimg:string; 
 }
@@ -111,8 +112,6 @@ export class PersonalBase{
     qq:string ;
     phone:string;
 }
-
-
 
 
 //用户排名数据元素

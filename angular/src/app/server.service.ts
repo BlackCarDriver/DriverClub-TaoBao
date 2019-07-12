@@ -17,7 +17,33 @@ export class ServerService {
   constructor( 
     private http: HttpClient
   ){ }
- 
+
+ //=====================  重做  =====================================================================
+//获取主页商品列表
+ GetHomePageGoods(tag : string, index : number){
+  var url = this.addr + "/homepage/goodsdata";
+  var postdata = {goodstag:tag, goodsindex:index};
+  return this.http.post<HomePageGoods[]>(url, JSON.stringify(postdata));
+}
+//主页商品类型和标签列表数据
+GetHomePageType(){
+  var url = this.addr + "/homepage/goodstypemsg";
+  return this.http.get<GoodsType[]>(url);
+}
+
+//获取商品参数数据
+GetGoodsDetail(id:number){
+    var url = this.addr+"/goodsdetail?id="+id;
+    return this.http.get<GoodsDetail>(url);
+}
+
+//个人主页里得到各种信息
+GetMyMsg(username:string, tag:string){
+    var url = this.addr + "/personal/data"; 
+    var data = {tag:tag, name:username};
+    return this.http.post<any>(url,data); 
+}
+
 // ==========================  the following function is related to cookie ==================================  
 
 //use to make the cookie cant be undestant directly
@@ -93,23 +119,6 @@ GetUserShort(name:string){
   return this.http.post<UserShort>(url,postdata,{withCredentials: true});
 }
 
-  GetHomePageGoods(tag : string, index : number){
-      var url = this.addr + "/homepage/goodsdata";
-      var postdata = {goodstag:tag, goodsindex:index};
-      return this.http.post<HomePageGoods[]>(url, postdata);
-  }
-
-  GetHomePageType(){
-    var url = this.addr + "/homepage/goodstypemsg";
-    return this.http.get<GoodsType[]>(url);
-  }
-
-  //get homepagegoods-struct data
-  GetGoodsDetail(id:number){
-      var url = this.addr+"/goodsdetail?id="+id;
-      return this.http.get<GoodsDetail>(url);
-  }
-
   GetGoodsDetail2(id:number){
     //这里打算用nginx返回json格式的商品描述文件
     var url =  this.addr+"/goodsdescribe/"+id;
@@ -164,12 +173,7 @@ GetUserShort(name:string){
       var url = this.addr + "/updata/mymessage/contactmsg"; 
       return this.http.post<number>(url,data);
   }
-  //get message of personal in pereesonal page
-  GetMyMsg(username:string, key:string, tag:string){
-      var url = this.addr + "/getmsg/personal/mymessage"; 
-      var data = {tag:tag, name:username, key:key};
-      return this.http.post<any>(url,data); 
-  }
+
   //get message of personal2 page
   GetOtherMsg(userid:string){
     var url = this.addr+"/getmsg/othermsg?id="+userid;

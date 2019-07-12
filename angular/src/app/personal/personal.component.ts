@@ -24,49 +24,47 @@ export class PersonalComponent implements OnInit {
 
   ngOnInit() {
     // this.username = this.server.Getusername();
-    // this.getmymsg();
-    // this.getmymgoods();
-    // this.getmycollect();
-    // this.getmymessage();
-    // this.getrank();
-    // this.getcare();
-    // console.log(this.msg);
+    this.getmymsg();
+    this.getmymgoods();
+    this.getmycollect();
+    this.getmymessage();
+    this.getrank();
+    this.getcare();
   }
 
   //获取详细信息
   getmymsg(){
-    this.server.GetMyMsg(this.username,this.key,"mymsg").subscribe(result=>{
+    this.server.GetMyMsg(this.username,"mymsg").subscribe(result=>{
       this.msg = result;
-      console.log("result:", result);
     });
   }
    //获取我的商品信息
   getmymgoods(){
-    this.server.GetMyMsg(this.username,this.key,"mygoods").subscribe(result=>{
+    this.server.GetMyMsg(this.username,"mygoods").subscribe(result=>{
       this.mygoodslist = result;
     });
   }
   //获取我的收藏数据
   getmycollect(){
-    this.server.GetMyMsg(this.username,this.key,"mycollect").subscribe(result=>{
+    this.server.GetMyMsg(this.username,"mycollect").subscribe(result=>{
       this.mycollectlist = result;
     });
   }
   //获取我的消息数据
   getmymessage(){
-    this.server.GetMyMsg(this.username,this.key,"message").subscribe(result=>{
+    this.server.GetMyMsg(this.username,"message").subscribe(result=>{
       this.mymessagelist = result;
   });
   }
   //获取用户等级排行数据
   getrank(){
-    this.server.GetMyMsg(this.username,this.key,"rank").subscribe(result=>{
+    this.server.GetMyMsg(this.username,"rank").subscribe(result=>{
       this.hero = result;
   });
   }
    //获取用户等级排行数据
    getcare(){
-    this.server.GetMyMsg(this.username,this.key,"care").subscribe(result=>{
+    this.server.GetMyMsg(this.username,"mycare").subscribe(result=>{
       this.icare = result[0];
       this.carei = result[1];
   });

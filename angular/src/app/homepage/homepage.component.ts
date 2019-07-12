@@ -65,16 +65,15 @@ set_mainbody_height(){
   var hight=  $(window).height();
   $(".main-body").css("min-height",hight-240+"px")
 }
-
-    
-  collapse(id:string){
+ 
+collapse(id:string){
     $('.collapse').collapse('hide');
     $(id).collapse('show');
-  }
+}
 
-  showsinginbox(){
+showsinginbox(){
     $("#exampleModal").modal('show');
-  }
+}
   
 
 }

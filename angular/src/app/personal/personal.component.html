@@ -19,7 +19,7 @@
                 <!--person mesage simple descripb-->
                 <div class="col-sm-7 myname">
                     <h3 class="name">BlackCarDriver</h3>
-                    <h4 class="head-sign">Welcome to BlackCaDriver.cn!!!</h4>
+                    <h4 class="head-sign">{{msg.sign}}</h4>
                 </div>
                 <div class="col-sm-2">
                         <a class="btn btn-primary btn-sm button1" routerLink="/changemsg">修改信息</a>
@@ -171,15 +171,15 @@
 
                     <div class="row mymsg" *ngFor="let rows of mymessagelist">
                         <div class="col-sm-2 msg-img-box">
-                            <img src={{rows.senderimgurl}} >
+                            <img src={{rows.headimg}} >
                         </div>
                         <div class="col-sm-10 msg-text-box">
                             <div class="row msg-head">
                                 <div class="col-sm-6 heading">
-                                    <p>{{rows.senderid}}</p>    <!--暂时没有标题-->
+                                    <p>{{rows.id}}</p>    <!--暂时没有标题-->
                                 </div>   
                                 <div class="col-sm-3">                               
-                                    <p> <span class="glyphicon glyphicon-user"></span>{{rows.sendername}}</p>
+                                    <p> <span class="glyphicon glyphicon-user"></span>{{rows.name}}</p>
                                 </div>
                                 <div class="col-sm-3">
                                     <p><span class="glyphicon glyphicon-time"></span>{{rows.time}}</p>
@@ -235,7 +235,7 @@
               <div class="row">
                   <ul class="headimg-list" >
                       <li class="headimg" *ngFor="let rows of icare">
-                          <a  routerLink="/personals"><img src={{rows.imgurl}}  title={{rows.username}}></a>
+                          <a  routerLink="/personals"><img src={{rows.headimg}}  title={{rows.name}}></a>
                       </li>
                   </ul>
               </div>
@@ -248,13 +248,13 @@
                   <div class="row">
                       <ul class="headimg-list">
                           <li class="headimg" *ngFor="let rows of carei">
-                              <a href="#"><img src={{rows.imgurl}} title={{rows.username}}></a>
+                              <a href="#"><img src={{rows.headimg}} title={{rows.name}}></a>
                           </li>
                       </ul>
                   </div>
           </div><!--right box son 2-->
           <div class="right-box-son see-num">
-              <p><span class="glyphicon glyphicon-eye-open"></span> 主页访问量:1223</p>
+              <p><span class="glyphicon glyphicon-eye-open"></span> 主页访问量:{{msg.visit}}</p>
           </div>
           <!--榜单-->
           <div class="right-box-son rank-list">

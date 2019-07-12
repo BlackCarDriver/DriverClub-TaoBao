@@ -20,6 +20,9 @@ type GoodsTypeController struct {
 type GoodsDetailController struct {
 	beego.Controller
 }
+type PersonalDataController struct {
+	beego.Controller
+}
 
 //自带例子
 func (this *MainController) Get() {
@@ -53,4 +56,45 @@ func (this *GoodsDetailController) Get() {
 	//需要从数据库获取真实数据返回
 	this.Data["json"] = &models.MockGoodsDetail
 	this.ServeJSON()
+}
+
+//个人详情页面信息获取接口
+func (this *PersonalDataController) Post() {
+	postBody := models.PersonalPostBody{}
+	var err error
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		return
+	}
+	userName := postBody.Name
+	dataTag := postBody.Tag
+	if userName == "" || dataTag == "" {
+		return
+	}
+	fmt.Println(userName, " -------------- ", dataTag)
+	switch dataTag {
+	case "mymsg":
+		this.Data["json"] = &models.MockUserMessage
+		this.ServeJSON()
+		return
+	case "mygoods":
+		this.Data["json"] = &models.MockGoodsShort
+		this.ServeJSON()
+		return
+	case "mycollect":
+		this.Data["json"] = &models.MockGoodsShort
+		this.ServeJSON()
+		return
+	case "message":
+		this.Data["json"] = &models.MockMyMessage
+		this.ServeJSON()
+		return
+	case "rank":
+		this.Data["json"] = &models.MockRank
+		this.ServeJSON()
+		return
+	case "mycare":
+		this.Data["json"] = &models.MockCare
+		this.ServeJSON()
+		return
+	}
 }

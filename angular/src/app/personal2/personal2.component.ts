@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PersonalExpend } from '../struct';
+import { UserMessage } from '../struct';
 import { ServerService } from '../server.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ServerService } from '../server.service';
 })
 export class Personal2Component implements OnInit {
 
-  data = new PersonalExpend();
+  data = new UserMessage();
 
   constructor(private server : ServerService) { }
 
