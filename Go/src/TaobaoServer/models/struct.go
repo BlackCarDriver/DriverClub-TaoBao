@@ -25,8 +25,8 @@ type GoodsType struct {
 
 //分类中的标签
 type GoodsSubType struct {
-	Tag string `json:"tag"`
-	int int64  `json:"int"`
+	Tag    string `json:"tag"`
+	Number int64  `json:"number"`
 }
 
 //首页封面 模拟数据
@@ -52,6 +52,22 @@ var MockTypeData = []GoodsType{
 	{"other", []GoodsSubType{{"water", 111}, {"ruler", 123}, {"cap", 123}}},
 }
 
+//########################################## 导航栏 #################################################
+
+type MyStatus struct {
+	Headimg    string `json:"headimg"`
+	Leave      int    `json:"leave"`
+	Credits    int    `json:"credits"`
+	MessageNUm int    `json:"messagenum"`
+	GoodsNum   int    `json:"goodsnum"`
+	Lasttime   string `json:"lasttime"`
+}
+
+var MockMystatus = MyStatus{
+	"https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
+	122, 123213, 11, 33, "2019-22-22",
+}
+
 //########################################## 商品详情页面结构体和模拟数据 #################################################
 
 type GoodsDetail struct {
@@ -68,7 +84,12 @@ type GoodsDetail struct {
 	Collect int     `json:"collect"`
 }
 
-var MockGoodsDetail = GoodsDetail{
+type GoodsPostBody struct {
+	GoodId   int    `json:"goodid"`
+	DataType string `json:"datatype"`
+}
+
+var MockGoodsMessage = GoodsDetail{
 	Headimg: "https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
 	Userid:  "123456",
 	Time:    "2019-22-22",
@@ -188,3 +209,50 @@ var MockCare = [2][]UserShort{
 }
 
 //########################################## 修改信息页面数据结构和模拟数据 #################################################
+
+type UpdeteMsg struct {
+	UpdataType string `json:"updatatype"`
+	Name       string `json:"name"`
+	Sex        string `json:"sex"`
+	Sign       string `json:"sign"`
+	Grade      string `json:"grade"`
+	Colleage   string `json:"colleage"`
+	Major      string `json:"major"`
+	Emails     string `json:"emails"`
+	Qq         string `json:"qq"`
+	Phone      string `json:"phone"`
+}
+
+type UpdateResult struct {
+	Status   int    `json:"status"`
+	Describe string `json:"describe"`
+}
+
+var MockUpdateResult = UpdateResult{
+	100, "Scuess!!!",
+}
+
+//########################################## 上传商品页面数据结构和模拟数据 #################################################
+
+type UpLoadResult struct {
+	Status   int    `json:"status"`
+	Describe string `json:"describe"`
+	ImgUrl   string `json:"imgurl"`
+}
+
+type UploadGoodsData struct {
+	Username   string `json:"username"`
+	Title      string `json:"title"`
+	Date       string `json:"date"`
+	Price      int    `json:"price"`
+	Imgurl     string `json:"imgurl"`
+	Type       string `json:"type"`
+	Tag        string `json:"tag"`
+	Usenewtag  bool   `json:"usenewtag"`
+	Newtagname string `json:"newtagname"`
+	Text       string `json:"text"`
+}
+
+var MockUpLoadResult = UpLoadResult{
+	101, "成功上传！", "https://tb1.bdstatic.com/tb/电视剧.jpg",
+}

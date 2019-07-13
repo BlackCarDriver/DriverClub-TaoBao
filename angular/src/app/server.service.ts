@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {  HomePageGoods , GoodsType,GoodsDetail,UploadGoods,UserMessage } from '../app/struct';
-import {  account1, account2, UserShort} from '../app/struct';
+import {  HomePageGoods , GoodsType,UploadAnyResult,UploadIImgResult,UploadGoods,UserMessage } from '../app/struct';
+import {  account1, account2, MyStatus} from '../app/struct';
 import { PersonalBase} from '../app/struct';
 @Injectable({
   providedIn: 'root'
@@ -31,18 +31,41 @@ GetHomePageType(){
   return this.http.get<GoodsType[]>(url);
 }
 
-//获取商品参数数据
-GetGoodsDetail(id:number){
-    var url = this.addr+"/goodsdetail?id="+id;
-    return this.http.get<GoodsDetail>(url);
+//商品详情页面获取数据接口
+GetGoodsDeta(id:number, type:string){
+    var url = this.addr+"/goodsdeta";
+    var data = {goodid:id, datatype:type}
+    return this.http.post<any>(url,JSON.stringify(data));
 }
 
-//个人主页里得到各种信息
+//个人主页里得到各种信息的数据接口
 GetMyMsg(username:string, tag:string){
     var url = this.addr + "/personal/data"; 
     var data = {tag:tag, name:username};
     return this.http.post<any>(url,data); 
 }
+
+//导航栏得到用户的数据
+GetNavigUser(username:string){
+  var url = this.addr + "/personal/data";
+  var postdata = {name:username, tag:"naving"};
+  return this.http.post<MyStatus>(url, JSON.stringify(postdata), {withCredentials: true});
+}
+
+//上传商品
+  UploadGoodsData(data:UploadGoods){
+    var url = this.addr + "/upload/newgoods"; 
+    return this.http.post<UploadAnyResult>(url,data);
+  }
+
+  //上传图片到服务器得到一个访问这个图片的的url
+  UploadImg(username:string , img:any){
+    var postdata = new FormData();
+    postdata.append("name", username);
+    postdata.append("file",img)
+    var url = this.addr + "/upload/images"; 
+    return this.http.post<UploadIImgResult>(url,postdata);
+  }     
 
 // ==========================  the following function is related to cookie ==================================  
 
@@ -113,17 +136,6 @@ ChangeComfirmCode(na :string){
   return this.http.post<number>(url, data,{withCredentials: true});
 }
 
-GetUserShort(name:string){
-  var postdata = {name : name};
-  var url = this.addr + "/getmsg/usershort";
-  return this.http.post<UserShort>(url,postdata,{withCredentials: true});
-}
-
-  GetGoodsDetail2(id:number){
-    //这里打算用nginx返回json格式的商品描述文件
-    var url =  this.addr+"/goodsdescribe/"+id;
-    return this.http.get<string>(url);
-  }
 
   //upload goods message to server
   UploadGoods(goods:string){
@@ -132,32 +144,8 @@ GetUserShort(name:string){
     return this.http.post<string>(
       url,postdata);
   }
-  //upload head-img of goods to server and receive an imgurl
-  UploadCover(username:string , img:any){
-    var postdata = new FormData();
-    postdata.append("name", username);
-    postdata.append("file",img)
-    var url = this.addr + "/upload/cover"; 
-    return this.http.post<string>(
-      url,postdata
-    );
-  }     
- //upload head-img of user to server and receive an imgurl
- UploadHeadImg(username:string , img:any){
-    var postdata = new FormData();
-    postdata.append("name", username);
-    postdata.append("file",img)
-    var url = this.addr + "/upload/headimg"; 
-    return this.http.post<string>(
-      url,postdata
-    );
-  }
 
-  //upload goods describe to server host used by upload goods page
-  UploadGoodsData(data:UploadGoods){
-    var url = this.addr + "/upload/upload/goodsdata"; 
-    return this.http.post<number>(url,data);
-  }
+
   //get usermsg in chgmymsg page
   Getmymsg(id:string){
     var url = this.addr+"/getmsg/usermsg?id="+id;

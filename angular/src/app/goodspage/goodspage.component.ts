@@ -18,11 +18,11 @@ export class GoodspageComponent implements OnInit {
   } 
 
   getItPage(id:number){
-    this.server.GetGoodsDetail(id).subscribe(
+    this.server.GetGoodsDeta(id, "message").subscribe(
       result=>{this.goodsdt = result;}
     )
     //获取描述商品的文件
-    this.server.GetGoodsDetail2(id).subscribe(
+    this.server.GetGoodsDeta(id, "detail").subscribe(
       result=>{
         this.goodsds=result;
         $("#text-targer").html(this.goodsds);

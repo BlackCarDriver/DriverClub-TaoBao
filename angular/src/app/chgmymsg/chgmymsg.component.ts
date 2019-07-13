@@ -126,8 +126,8 @@ export class ChgmymsgComponent implements OnInit {
   upload(){
     var imgfiles = $("#uploadheadimg").prop('files');
     console.log(imgfiles[0]);
-    this.server.UploadHeadImg(this.username,imgfiles[0]).subscribe(result=>{
-      this.headimgurl = result;
+    this.server.UploadImg(this.username,imgfiles[0]).subscribe(result=>{
+      this.headimgurl = result.imgurl;
       alert(result);
     });
   }

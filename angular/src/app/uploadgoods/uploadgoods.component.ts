@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ServerService} from '../server.service';
-import { headersToString } from 'selenium-webdriver/http';
-import {  HomePageGoods,GoodsType,GoodSubType, UploadGoods } from '../struct';
-import { flatten } from '@angular/compiler';
-
+import {  UploadAnyResult,GoodsType,GoodSubType, UploadGoods } from '../struct';
+import { elementStyleProp } from '@angular/core/src/render3';
 declare var $: any;
 
 
@@ -160,8 +158,13 @@ export class UploadgoodsComponent implements OnInit {
       alert("开始上传");
       console.log(data);
       this.server.UploadGoodsData(data).subscribe(
-        result=>{alert(result);}
-      )
+        result=>{
+          if(result.status > 0) {
+            alert("上传成功！")
+          }else{
+            alert(result.describe);
+          }
+        });
     }else{
       alert("商品描述有误，请继续完善");
     }
@@ -184,10 +187,12 @@ export class UploadgoodsComponent implements OnInit {
   uploadcover(){
     var files = $("#upload").prop('files');
     console.log(files[0]);
-    this.server.UploadCover("testcover",files[0]).subscribe(
+    this.server.UploadImg("uploadname",files[0]).subscribe(
     result=>{
-      if(result != null){
-        this.headImgUrl = result;
+      if(result.status > 0){
+          this.headImgUrl = result.imgurl;
+      }else{
+        console.log(result.describe);
       }
     }
   )}

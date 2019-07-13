@@ -98,7 +98,39 @@ export class User{
     headimg:string; 
 }
 
+
+//#########################  uploadgoods ######################################################
+
+
+//长传商品页面上传的信息
+export class UploadGoods{
+    username: string;
+    title:string;
+    date :string ;
+    price:number;
+    imgurl:string;
+    type:string;
+    tag:string;
+    usenewtag:boolean = false;
+    newtagname:string ;
+    text:string;
+}
+
+//上传图片返回的结果
+export class UploadIImgResult{
+    status:number;
+    describe:string;
+    imgurl:string;
+}
+
+//上传数据返回结果
+export class UploadAnyResult {
+    status:number;
+    describe:string;
+}
+
 //#########################  修改个人信息页面 ######################################################
+
 
 //个人信息设置页上传的信息数据
 export class PersonalBase{
@@ -122,32 +154,16 @@ export class Rank{
 }
 
 
-
-
 //首页-个人信息下拉框
-export class UserShort{
-    imgurl :string ;
-    grade : number ;
-    score : number ;
-    message:number ;
-    goods:number ;
-    lastime:string ;
+export class MyStatus{
+    headimg :string ;
+    leave : number ;
+    credits : number ;
+    messagenum:number ;    //precial
+    goodsnum:number ;      //pricial
+    lasttime:string ;    
 }
 
-
-//长传商品页面上传的信息
-export class UploadGoods{
-    username: string;
-    title:string;
-    date :string ;
-    price:number;
-    imgurl:string;
-    type:string;
-    tag:string;
-    usenewtag:boolean = false;
-    newtagname:string ;
-    text:string;
-}
 
 
 //注册账号需要用到的用户信息

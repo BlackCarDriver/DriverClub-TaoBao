@@ -1,6 +1,6 @@
 import { Component, OnInit, Testability } from '@angular/core';
 import { ServerService } from '../server.service';
-import {  account1, account2, UserShort} from '../struct';
+import {  account1, account2, MyStatus} from '../struct';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
@@ -36,7 +36,7 @@ export class NavigComponent implements OnInit {
   data1 = new account1();
   data2 = new account2();
   username = "";
-  usermsg = new  UserShort();
+  usermsg = new  MyStatus();
   constructor(
     // private localdata: LocalStorage,
     private server : ServerService
@@ -269,7 +269,8 @@ checkSignin(){
 //load username from cookie if it is not empty then
 //hide the login box, and show the user message box and require user short data
 setstate(){
-  this.username = this.server.Getusername();
+  // this.username = this.server.Getusername();
+  this.username = "blackcardriver"
   if(this.username != ""){
     $("#singin").addClass("hidden");
     $("#userbox").removeClass("hidden");
@@ -288,18 +289,18 @@ seecookie(){
 //get short message of user from server
 getusershort(){
   if( this.server.checkTimeTag("dvurst")==false ){  //two minue pass
-    console.log("take usermsg form server");
-    this.server.GetUserShort(this.username).subscribe(result=>{
+    // console.log("take usermsg form server");
+      this.server.GetNavigUser(this.username).subscribe(result=>{
       this.usermsg=result;
-      this.server.setLocalStorge("dvleus",this.usermsg);
-      this.server.setTimeTag("dvurst",120);
+      //this.server.setLocalStorge("dvleus",this.usermsg);
+      //this.server.setTimeTag("dvurst",120);
     });
    // this.changecode(); <====
   }else{  
-    console.log("take usermsg form localhost");
+    // console.log("take usermsg form localhost");
     this.usermsg=this.server.getLocalStorge("dvleus");
   }
-  console.log("usermsg : ",this.usermsg);
+  // console.log("usermsg : ",this.usermsg);
 }
 
 //clear all cookie
@@ -330,3 +331,4 @@ changecode(){
 
 }
 
+//====================================================================
