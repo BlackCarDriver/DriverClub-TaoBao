@@ -170,14 +170,6 @@ export class UploadgoodsComponent implements OnInit {
     }
   }
 
-//获得富文本编辑框的内容
-  test(){
-    var goodsdata = $('#summernote').summernote('code');
-    this.server.UploadGoods(goodsdata).subscribe(
-      ressult=>{console.log(ressult);}
-    )
-  }
-
 //点击选择封面后激活input标签选择文件
   selectImg(){
     $("#upload").trigger("click");

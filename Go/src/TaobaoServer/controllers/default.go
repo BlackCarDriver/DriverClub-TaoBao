@@ -12,9 +12,6 @@ const (
 	imgPath = `E:\tempfile\taobaosource\`
 )
 
-type MainController struct {
-	beego.Controller
-}
 type HPGoodsController struct {
 	beego.Controller
 }
@@ -40,11 +37,8 @@ type UploadImagesController struct {
 	beego.Controller
 }
 
-//自带例子
-func (this *MainController) Get() {
-	this.Data["Website"] = "beego.me"
-	this.Data["Email"] = "astaxie@gmail.com"
-	this.TplName = "index.tpl"
+type EntranceController struct {
+	beego.Controller
 }
 
 //主页商品封面数据
@@ -118,26 +112,31 @@ func (this *PersonalDataController) Post() {
 		this.Data["json"] = &models.MockCare
 	case "naving":
 		this.Data["json"] = &models.MockMystatus
+	case "othermsg":
+		this.Data["json"] = &models.MockUserMessage
+	case "setdata":
+		this.Data["json"] = &models.MockUserSetData
+
 	}
 	this.ServeJSON()
 }
 
-//更新个人信息
+//更新信息接口
 func (this *UpdataMsgController) Post() {
-	postBody := models.UpdeteMsg{}
+	postBody := models.UpdateBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		return
 	}
-	updateType := postBody.UpdataType
-	switch updateType {
-	case "basemsg":
+	updateTag := postBody.Tag
+	switch updateTag {
+	case "MyBaseMessage":
 		fmt.Println("Updata base message ...")
 		this.Data["json"] = &models.MockUpdateResult
-	case "connect":
+	case "MyConnectMessage":
 		fmt.Println("Updata connect ways...")
 		this.Data["json"] = &models.MockUpdateResult
-	case "headimg":
+	case "MyHeadImage":
 		fmt.Println("Updata head img ...")
 		this.Data["json"] = &models.MockUpdateResult
 	}
@@ -169,5 +168,25 @@ func (this *UploadImagesController) Post() {
 		return
 	}
 	this.Data["json"] = &models.MockUpLoadResult
+	this.ServeJSON()
+}
+
+//登录，注册， 更换验证码， 获取验证码
+func (this *EntranceController) Post() {
+	postBody := models.EntranceBody{}
+	var err error
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		return
+	}
+	updateTag := postBody.Tag
+	switch updateTag {
+	case "login":
+		fmt.Println("user login ...")
+	case "CheckRegister":
+		fmt.Println("CheckRegister...")
+	case "confirmcode":
+		fmt.Println("confirmcode...")
+	}
+	this.Data["json"] = &models.MockRequireResult
 	this.ServeJSON()
 }

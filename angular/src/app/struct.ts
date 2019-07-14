@@ -24,8 +24,6 @@ export class GoodSubType{
     number: number;
 }
 
-
-
 //#########################  goodsdetail  ######################################################
 
 //商品详情页需要的数据
@@ -98,6 +96,12 @@ export class User{
     headimg:string; 
 }
 
+//用户排名数据元素
+export class Rank{
+    rank:number;
+    name:string;
+    userid:string;
+}
 
 //#########################  uploadgoods ######################################################
 
@@ -129,29 +133,30 @@ export class UploadAnyResult {
     describe:string;
 }
 
-//#########################  修改个人信息页面 ######################################################
+//#########################  chgmymsg ######################################################
 
 
 //个人信息设置页上传的信息数据
-export class PersonalBase{
-    username:string;
-    userid:string ;
-    usersex:string ;
+export class PersonalSetting{
+    headimg:string;
+    name:string;
+    id:string ;
+    sex:string ;
     sign:string ;
     grade:string;
     colleage:string ;
-    email:string ;
+    emails:string ;
     qq:string ;
     phone:string;
 }
-
-
-//用户排名数据元素
-export class Rank{
-    rank:number;
-    name:string;
-    userid:string;
+//上传数据返回结果
+export class UpdateResult {
+    status:number;
+    describe:string;
 }
+
+//#########################  naving ######################################################
+
 
 
 //首页-个人信息下拉框
@@ -164,17 +169,21 @@ export class MyStatus{
     lasttime:string ;    
 }
 
-
-
-//注册账号需要用到的用户信息
-export class account1{
+//注册账号发送数据
+export class RegisterData {
     name:string;
     password:string;
     email:string;
     code:string;
 }
-//登录账号信息
-export class account2{
+
+//登录账号发送数据
+export class LoginData{
     name:string;
     password:string;
+}
+
+export class RequertResult {
+    status:number;
+    describe:string;
 }

@@ -9,7 +9,7 @@
             <div class="row path">
                     <ol class="breadcrumb">
                         <li><a href="#">我的主页</a></li>
-                        <li class="active">blackcardriver</li>
+                        <li class="active">{{data.name}}</li>
                     </ol>
             </div>
         
@@ -21,7 +21,7 @@
                     </div>
                     <!--person mesage simple descripb-->
                     <div class="col-sm-9 myname">
-                        <h3 class="name">BlackCarDriver</h3>
+                        <h3 class="name">{{data.name}}</h3>
                         <button type="button" class="btn btn-info sendmsg" data-toggle="modal" data-target=".bs-example-modal-sm">
                                 <span class="glyphicon glyphicon-comment"></span>发私信
                         </button>
@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 class="sign">欢迎来到BlackCarDriver.cn</h2>
+                        <h2 class="sign">{{data.sign}}</h2>
                     </div>
               </div>
               <!--小图标行-->
@@ -56,12 +56,12 @@
                                                
                                              <div class="row msg-box">
                                                  <div class="col-md-2 msg">司机ID</div>
-                                                 <div class="col-md-10 describ"> {{data.userid}}</div>
+                                                 <div class="col-md-10 describ"> {{data.id}}</div>
                                              </div>
                  
                                                <div class="row msg-box">
                                                    <div class="col-md-2 msg">账号昵称</div>
-                                                   <div class="col-md-10 describ"> {{data.username}}</div>
+                                                   <div class="col-md-10 describ"> {{data.name}}</div>
                                                </div>
                  
                                                <div class="row msg-box">
@@ -71,7 +71,7 @@
                  
                                                <div class="row msg-box">
                                                  <div class="col-md-2 msg">性别</div>
-                                                 <div class="col-md-10 describ"> {{data.usersex}}</div>
+                                                 <div class="col-md-10 describ"> {{data.sex}}</div>
                                                </div> 
                  
                                                <div class="row msg-box">
@@ -100,7 +100,7 @@
                     </div>
                     <div class="row msg-box">
                         <div class="col-md-2 msg">邮箱</div>
-                        <div class="col-md-10 describ">{{data.email}} </div>
+                        <div class="col-md-10 describ">{{data.emails}} </div>
                     </div>
                 </div>                   
             </div>
@@ -125,7 +125,7 @@
                     </div>  
                     <div class="row msg-box">
                         <div class="col-md-2 msg">主页访问量</div>
-                        <div class="col-md-10 describ">{{data.visnum}}</div>
+                        <div class="col-md-10 describ">{{data.visit}}</div>
                     </div> 
                 </div>                                         
                                   

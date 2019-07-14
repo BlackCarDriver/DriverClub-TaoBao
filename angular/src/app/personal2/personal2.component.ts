@@ -19,8 +19,7 @@ export class Personal2Component implements OnInit {
 
   //获取页面数据
   getOtherMsg(){
-    this.server.GetOtherMsg("12345").subscribe(result=>{
-      console.log(result);
+    this.server.GetMyMsg("12345", "othermsg").subscribe(result=>{
       this.data = result;
     });
   }
