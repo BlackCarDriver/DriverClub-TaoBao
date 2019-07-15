@@ -145,7 +145,7 @@ export class UploadgoodsComponent implements OnInit {
     }
     if (this.checkData()==true){
       var data = new  UploadGoods();
-      data.username = "blackcardriver";
+      data.userid = "blackcardriver";
       data.title = this.title;
       data.date = this.date;
       data.price = this.price;
@@ -155,11 +155,9 @@ export class UploadgoodsComponent implements OnInit {
       data.newtagname = this.newtagname;
       data.imgurl = this.headImgUrl;
       data.text = this.godostext;
-      alert("开始上传");
-      console.log(data);
       this.server.UploadGoodsData(data).subscribe(
         result=>{
-          if(result.status > 0) {
+          if(result.status >= 0) {
             alert("上传成功！")
           }else{
             alert(result.describe);
@@ -178,16 +176,15 @@ export class UploadgoodsComponent implements OnInit {
 //将input选中的图片发送到服务端，获得一个链接
   uploadcover(){
     var files = $("#upload").prop('files');
-    console.log(files[0]);
     this.server.UploadImg("uploadname",files[0]).subscribe(
     result=>{
-      if(result.status > 0){
+      if(result.status >= 0){
           this.headImgUrl = result.imgurl;
       }else{
-        console.log(result.describe);
+        alert(result.describe);
       }
     }
-  )}
+  )};
 
   //选择分类后记录这个值并更新到按钮显示
  selecttype(type:string,index:number){
@@ -196,6 +193,7 @@ export class UploadgoodsComponent implements OnInit {
    this.typelist = this.typearray[index].list;
    this.usenewtag = false;
  }
+ 
  //选择子分类后将子分类显示到按钮
   GetSubType(type:string){
       $("#subtype").html(type+" <span class='caret'>")

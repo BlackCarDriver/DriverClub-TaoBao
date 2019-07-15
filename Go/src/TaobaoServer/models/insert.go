@@ -1,0 +1,56 @@
+package models
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/astaxie/beego/orm"
+)
+
+//一些数据库默认值
+const (
+	dfUserHeadimg = `https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a`
+	dfUserName    = `尊贵的用户`
+	dfGoodHeadimg = `https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/c62bcfccb5b0b9b7c8cbc132?t=1526199816`
+)
+
+//创建用户账号
+//id自动生成,注意在调用此函数前需要确保name,password,email非空
+func CreateAccount(user RegisterData) error {
+	o := orm.NewOrm()
+	userNumber := CountUser() + 1
+	t := time.Now()
+	userid := fmt.Sprintf("%02d%02d%04d", t.Year()%100, t.Month(), userNumber)
+	rawSeter := o.Raw("insert into t_user(id, email, password, name, headimg) values(?,?,?,?,?)",
+		userid, user.Email, user.Password, user.Name, dfUserHeadimg)
+	_, err := rawSeter.Exec()
+	return err
+}
+
+//创建商品
+func CreateGoods(goods UploadGoodsData) error {
+	o := orm.NewOrm()
+	var err error
+	goodsNumber := CountGoods() + 1
+	t := time.Now()
+	goodsid := fmt.Sprintf("%02d%02d%02d%04d", t.Year()%100, t.Month(), t.Day(), goodsNumber)
+	insertGoods := o.Raw("insert into t_goods(id, name, title, type, tag, price, file, headimg)values(?,?,?,?,?,?,?,?)",
+		goodsid, goods.Name, goods.Title, goods.Type, goods.Tag, goods.Price, goods.Text, goods.Imgurl)
+	insertUpload := o.Raw("insert into t_upload(userid, goodsid) values(?, ?)", goods.UserId, goodsid)
+
+	err = o.Begin()
+	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	_, err1 := insertGoods.Exec()
+	_, err2 := insertUpload.Exec()
+	if err1 != nil || err2 != nil {
+		fmt.Println("Need to Rollback!! ", err1, "  ", err2)
+		err = o.Rollback()
+	} else {
+		fmt.Println("Create Goods Scuueed!!")
+		err = o.Commit()
+	}
+	return err
+}

@@ -27,7 +27,7 @@ export class GoodSubType{
 //#########################  goodsdetail  ######################################################
 
 //商品详情页需要的数据
-export class GoodsDetail{
+export class GoodsDetail {
     headimg:string;
     userid:string;     //到时需要变成用户名
     time:string;
@@ -108,7 +108,7 @@ export class Rank{
 
 //长传商品页面上传的信息
 export class UploadGoods{
-    username: string;
+    userid: string;
     title:string;
     date :string ;
     price:number;

@@ -64,8 +64,8 @@ UploadImg(username:string , img:any){
     postdata.append("name", username);
     postdata.append("file",img)
     var url = this.addr + "/upload/images"; 
-    return this.http.post<UploadIImgResult>(url,JSON.stringify(postdata));
-}     
+    return this.http.post<UploadIImgResult>(url,postdata);
+} 
 
 //更新信息接口
 UpdateMessage(userid:string, tag:string, data:any){
@@ -86,7 +86,7 @@ Entrance(userid:string, tag:string, data:any){
 
 //use to make the cookie can't be undestant directly
 encryption(code : string){
-  var c=String.fromCharCode(code.charCodeAt(0)+code.length);
+var c=String.fromCharCode(code.charCodeAt(0)+code.length);
  for(var i=1;i<code.length;i++){      
    c+=String.fromCharCode(code.charCodeAt(i)+code.charCodeAt(i-1));
  }   

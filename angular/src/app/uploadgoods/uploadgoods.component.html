@@ -29,10 +29,12 @@
                     <div class="panel-heading" >基本设置</div>
                      <dl class="setting-box">
                                     <dt>
+                                    <form enctype="multipart/form-data">
                                     <input type="file" class="hidden" id="upload">
                                     <button class="btn btn-default" id="heading" (click)="selectImg()">选择封面</button>
                                     <button id="uploadbtn" class="hidden" (click)="uploadcover()"></button>
                                     <span id="filename"></span>
+                                    </form>    
                                     </dt>
                                     <dt>封面标题</dt>
                                     <dd><input [(ngModel)]="title" type="text" id="title"></dd>
@@ -58,7 +60,7 @@
                                             物品标签 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                               <li *ngFor="let rows of typelist" (click)="GetSubType(rows.name)"><a>{{rows.name}}</a></li>
+                                               <li *ngFor="let rows of typelist" (click)="GetSubType(rows.tag)"><a>{{rows.tag}}</a></li>
                                                <li  (click)="GetSubType('新标签')"><a>添加新标签</a></li>
                                             </ul>
                                         </div><!--btn-group-->

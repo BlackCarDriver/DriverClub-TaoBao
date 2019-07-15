@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 //########################################## 主页结构和模拟数据 ################################
 type Goods1 struct {
 	Headimg string  `json:"headimg"`
@@ -88,7 +90,6 @@ type GoodsShort struct {
 	Price   float64 `json:"price"`
 }
 
-//数据库未有title
 type MyMessage struct {
 	Time    string `json:"time"`
 	Name    string `json:"name"`
@@ -151,16 +152,21 @@ type UpLoadResult struct {
 }
 
 type UploadGoodsData struct {
-	Username   string `json:"username"`
-	Title      string `json:"title"`
-	Date       string `json:"date"`
-	Price      int    `json:"price"`
-	Imgurl     string `json:"imgurl"`
-	Type       string `json:"type"`
-	Tag        string `json:"tag"`
-	Usenewtag  bool   `json:"usenewtag"`
-	Newtagname string `json:"newtagname"`
-	Text       string `json:"text"`
+	UserId     string  `json:"userid"`
+	Name       string  `json:"name"`
+	Title      string  `json:"title"`
+	Date       string  `json:"date"`
+	Price      float64 `json:"price"`
+	Imgurl     string  `json:"imgurl"`
+	Type       string  `json:"type"`
+	Tag        string  `json:"tag"`
+	Usenewtag  bool    `json:"usenewtag"`
+	Newtagname string  `json:"newtagname"`
+	Text       string  `json:"text"`
+}
+
+func CreateUploadRes(status int, err error, imgurl string) UpLoadResult {
+	return UpLoadResult{status, fmt.Sprint(err), imgurl}
 }
 
 //########################################## 更新个人信息页面数据结构和模拟数据 #################################################
@@ -201,6 +207,7 @@ type LoginData struct {
 	Password string `json:"password"`
 }
 
+//注册账号时发来的结构体
 type RegisterData struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
@@ -208,6 +215,7 @@ type RegisterData struct {
 	Code     string `json:"code"`
 }
 
+//请求登录，注册，更换验证码时返回的结构
 type RequireResult struct {
 	Status   int    `json:"status"`
 	Describe string `json:"describe"`

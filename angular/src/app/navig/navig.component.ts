@@ -80,6 +80,7 @@ export class NavigComponent implements OnInit {
   this.data1.name = $("#regname").val();
   this.data1.password = $("#regpasw1").val();
   this.data1.email = $("#regemail").val();
+  
   this.server.Entrance(this.username, "CheckRegister", this.data1).subscribe(result=>{
     let checkResult = new RequertResult();
     checkResult = result;

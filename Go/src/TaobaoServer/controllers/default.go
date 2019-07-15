@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"TaobaoServer/models"
+	md "TaobaoServer/models"
 	"encoding/json"
 	"fmt"
 
@@ -9,7 +9,11 @@ import (
 )
 
 const (
-	imgPath = `E:\tempfile\taobaosource\`
+	imgPath = "E:\\tempfile\\taobaosource\\"
+)
+
+var (
+	tmpImgurl = "https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a"
 )
 
 type HPGoodsController struct {
@@ -43,27 +47,27 @@ type EntranceController struct {
 
 //主页商品封面数据
 func (this *HPGoodsController) Post() {
-	PostBody := models.PostBody1{}
+	PostBody := md.PostBody1{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &PostBody); err != nil {
 		return
 	}
 	//需要根据不同的类型，标签和页数从数据库中获取真实数据
 	fmt.Println(PostBody.GoodsTag, "------------------", PostBody.GoodsIndex)
-	this.Data["json"] = &models.MockGoodsData
+	this.Data["json"] = &md.MockGoodsData
 	this.ServeJSON()
 }
 
 //返回商品分类和标签列表数据
 func (this *GoodsTypeController) Get() {
 	//需要从数据库获取真实数据返回
-	this.Data["json"] = &models.MockTypeData
+	this.Data["json"] = &md.MockTypeData
 	this.ServeJSON()
 }
 
 //商品详情获取数据接口
 func (this *GoodsDetailController) Post() {
-	postBody := models.GoodsPostBody{}
+	postBody := md.GoodsPostBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		return
@@ -76,9 +80,9 @@ func (this *GoodsDetailController) Post() {
 	fmt.Println("GoodsDetail postBody :", postBody)
 	switch datatype {
 	case "message":
-		this.Data["json"] = &models.MockGoodsMessage
+		this.Data["json"] = &md.MockGoodsMessage
 	case "detail":
-		this.Data["json"] = &models.MockGoodsDetail
+		this.Data["json"] = &md.MockGoodsDetail
 	}
 
 	this.ServeJSON()
@@ -86,7 +90,7 @@ func (this *GoodsDetailController) Post() {
 
 //个人详情页面信息获取接口
 func (this *PersonalDataController) Post() {
-	postBody := models.PersonalPostBody{}
+	postBody := md.PersonalPostBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		return
@@ -99,23 +103,23 @@ func (this *PersonalDataController) Post() {
 	fmt.Println(userName, " -------------- ", dataTag)
 	switch dataTag {
 	case "mymsg":
-		this.Data["json"] = &models.MockUserMessage
+		this.Data["json"] = &md.MockUserMessage
 	case "mygoods":
-		this.Data["json"] = &models.MockGoodsShort
+		this.Data["json"] = &md.MockGoodsShort
 	case "mycollect":
-		this.Data["json"] = &models.MockGoodsShort
+		this.Data["json"] = &md.MockGoodsShort
 	case "message":
-		this.Data["json"] = &models.MockMyMessage
+		this.Data["json"] = &md.MockMyMessage
 	case "rank":
-		this.Data["json"] = &models.MockRank
+		this.Data["json"] = &md.MockRank
 	case "mycare":
-		this.Data["json"] = &models.MockCare
+		this.Data["json"] = &md.MockCare
 	case "naving":
-		this.Data["json"] = &models.MockMystatus
+		this.Data["json"] = &md.MockMystatus
 	case "othermsg":
-		this.Data["json"] = &models.MockUserMessage
+		this.Data["json"] = &md.MockUserMessage
 	case "setdata":
-		this.Data["json"] = &models.MockUserSetData
+		this.Data["json"] = &md.MockUserSetData
 
 	}
 	this.ServeJSON()
@@ -123,7 +127,7 @@ func (this *PersonalDataController) Post() {
 
 //更新信息接口
 func (this *UpdataMsgController) Post() {
-	postBody := models.UpdateBody{}
+	postBody := md.UpdateBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		return
@@ -132,48 +136,60 @@ func (this *UpdataMsgController) Post() {
 	switch updateTag {
 	case "MyBaseMessage":
 		fmt.Println("Updata base message ...")
-		this.Data["json"] = &models.MockUpdateResult
+		this.Data["json"] = &md.MockUpdateResult
 	case "MyConnectMessage":
 		fmt.Println("Updata connect ways...")
-		this.Data["json"] = &models.MockUpdateResult
+		this.Data["json"] = &md.MockUpdateResult
 	case "MyHeadImage":
 		fmt.Println("Updata head img ...")
-		this.Data["json"] = &models.MockUpdateResult
+		this.Data["json"] = &md.MockUpdateResult
 	}
 	this.ServeJSON()
 }
 
 //上传商品
 func (this *UploadGoodsController) Post() {
-	postBody := models.UploadGoodsData{}
+	var goodsdata md.UploadGoodsData
+	var returnRes md.UpLoadResult
 	var err error
-	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		return
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &goodsdata); err != nil {
+		returnRes = md.CreateUploadRes(-100, err, "")
+		goto tail
 	}
-	fmt.Println(postBody)
-	this.Data["json"] = &models.MockUpLoadResult
+	if err = md.CreateGoods(goodsdata); err != nil {
+		returnRes = md.CreateUploadRes(-200, err, "")
+		goto tail
+	}
+	returnRes = md.CreateUploadRes(0, nil, "")
+tail:
+	this.Data["json"] = &returnRes
 	this.ServeJSON()
 }
 
-//上传图片
+//保存用户上传的图片，返回访问这个图片的url
 func (this *UploadImagesController) Post() {
+	var uploadRes md.UpLoadResult
 	f, h, err := this.GetFile("file")
 	if err != nil {
-		return
+		uploadRes = md.CreateUploadRes(-100, err, "")
+		goto tail
 	}
 	defer f.Close()
 	err = this.SaveToFile("file", imgPath+h.Filename)
 	if err != nil {
-		fmt.Println("savetofile error : ", err)
-		return
+		uploadRes = md.CreateUploadRes(-200, err, "")
+		goto tail
 	}
-	this.Data["json"] = &models.MockUpLoadResult
+	uploadRes = md.CreateUploadRes(0, err, tmpImgurl)
+tail:
+	fmt.Println(uploadRes)
+	this.Data["json"] = &uploadRes
 	this.ServeJSON()
 }
 
-//登录，注册， 更换验证码， 获取验证码
+//登录，注册，更换验证码， 获取验证码
 func (this *EntranceController) Post() {
-	postBody := models.EntranceBody{}
+	postBody := md.EntranceBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		return
@@ -183,10 +199,25 @@ func (this *EntranceController) Post() {
 	case "login":
 		fmt.Println("user login ...")
 	case "CheckRegister":
-		fmt.Println("CheckRegister...")
+		tregister := md.RegisterData{}
+		Parse(postBody.Data, &tregister)
+		err := md.CreateAccount(tregister)
+		if err != nil {
+			fmt.Println(err)
+		}
 	case "confirmcode":
 		fmt.Println("confirmcode...")
 	}
-	this.Data["json"] = &models.MockRequireResult
+	this.Data["json"] = &md.MockRequireResult
 	this.ServeJSON()
+}
+
+//将map[string]interface{} 转换成相应结构体
+func Parse(data interface{}, container interface{}) error {
+	tdata, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	err = json.Unmarshal(tdata, container)
+	return err
 }

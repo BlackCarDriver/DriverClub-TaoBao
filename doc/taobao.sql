@@ -1,39 +1,37 @@
-drop table t_message;
+drop table public.t_collect;
+drop table public.t_comment;
+drop table public.t_concern;
+drop table public.t_message;
+drop table public.t_upload;
+drop table public.t_User;
+drop table public.t_goods;
 
-drop table t_upload;
 
-drop table t_collect;
-
-drop table t_comment;
-
-drop table t_concern;
-
-drop table t_goods;
-
-drop table t_user;
-
+/*==============================================================*/
+/* User: public                                                 */
+/*==============================================================*/
 /*==============================================================*/
 /* Table: t_User                                                */
 /*==============================================================*/
-create table t_User (
+create table public.t_User (
    id                   VARCHAR(50)          not null,
    password             VARCHAR(50)          not null default '123456',
-   email                VARCHAR(50)          null,
-   name                 VARCHAR(50)          null,
-   sex                  VARCHAR(50)          null default 'boy',
-   dorm                 VARCHAR(50)          null,
-   sign                 VARCHAR(400)         null,
-   major                VARCHAR(50)          null,
-   headimg              VARCHAR(100)         null,
-   phone                VARCHAR(50)          null,
-   qq                   VARCHAR(50)          null,
-   emails               VARCHAR(50)          null,
-   credits              INT4                 not null default 0,
-   leave                INT4                 not null default 1,
-   rank                 INT4                 not null,
-   visit                INT4                 not null default 0,
-   likes                INT4                 not null default 0,
-   lasttime             TIMESTAMP            not null default now(),
+   email                VARCHAR(50)          default null,
+   name                 VARCHAR(50)          default '',
+   sex                  VARCHAR(50)          default 'boy',
+   dorm                 VARCHAR(50)          default '',
+   sign                 VARCHAR(400)         default '',
+   major                VARCHAR(50)          default '',
+   headimg              VARCHAR(200)         default '',
+   phone                VARCHAR(50)          default '',
+   qq                   VARCHAR(50)          default '',
+   emails               VARCHAR(50)          default '',
+   credits              INT4                 default 0,
+   leave                INT4                 default 1,
+   rank                 INT4                 default 99999,
+   visit                INT4                 default 0,
+   likes                INT4                 default 0,
+   lasttime             TIMESTAMP            default now(),
    constraint PK_T_USER primary key (id)
 );
 
@@ -94,12 +92,10 @@ comment on column t_User.lasttime is
 /*==============================================================*/
 /* Table: t_collect                                             */
 /*==============================================================*/
-create table t_collect (
+create table public.t_collect (
    userid               VARCHAR(50)          not null,
-   goodsid               VARCHAR(50)          not null,
-   id                   VARCHAR(50)          null,
-   goo_id               VARCHAR(50)          null,
-   time                 TIMESTAMP            not null default now(),
+   goodsid              VARCHAR(50)          not null,
+   "time"               TIMESTAMP            default now(),
    constraint PK_T_COLLECT primary key (userid, goodsid)
 );
 
@@ -109,23 +105,17 @@ comment on column t_collect.userid is
 comment on column t_collect.goodsid is
 '商品id';
 
-comment on column t_collect.id is
-'账号';
-
-comment on column t_collect.goo_id is
-'id';
-
 comment on column t_collect."time" is
 '收藏时间';
 
 /*==============================================================*/
 /* Table: t_comment                                             */
 /*==============================================================*/
-create table t_comment (
+create table public.t_comment (
    userid               VARCHAR(50)          not null,
    goodsid              VARCHAR(50)          not null,
-   content              VARCHAR(400)         null,
-   time               	TIMESTAMP            not null default now()
+   content              VARCHAR(400)         default '',
+   "time"               TIMESTAMP            default now()
 );
 
 comment on column t_comment.userid is
@@ -143,15 +133,12 @@ comment on column t_comment."time" is
 /*==============================================================*/
 /* Table: t_concern                                             */
 /*==============================================================*/
-create table t_concern (
+create table public.t_concern (
    id1                  VARCHAR(50)          not null,
    id2                  VARCHAR(50)          not null,
-   time               	VARCHAR(50)          null,
+   "time"              	TIMESTAMP          	 default now(),
    constraint PK_T_CONCERN primary key (id1, id2)
 );
-
-comment on table t_concern is
-'关注';
 
 comment on column t_concern.id1 is
 '主用户id';
@@ -163,19 +150,19 @@ comment on column t_concern."time" is
 '关注时间';
 
 /*==============================================================*/
-/* Table: t_goodss                                               */
+/* Table: t_goods                                               */
 /*==============================================================*/
-create table t_goods (
+create table public.t_goods (
    id                   VARCHAR(50)          not null,
-   name                 VARCHAR(50)          null,
-   title                VARCHAR(50)          null,
-   type                 VARCHAR(50)          null,
-   tag                  VARCHAR(50)          null,
-   price                FLOAT8               null,
-   file                 VARCHAR(100)         null,
-   headimg              VARCHAR(100)         null,
-   visit                INT4                 null default 0,
-   "like"              	INT4                 default 0,
+   name                 VARCHAR(50)          default '',
+   title                VARCHAR(50)          default '',
+   type                 VARCHAR(50)          default '',
+   tag                  VARCHAR(50)          default '',
+   price                FLOAT8               default 0.0,
+   file                 TEXT                 default '',
+   headimg              VARCHAR(200)         default '',
+   visit                INT4                 default 0,
+   "like"               INT4                 default 0,
    state                INT4                 default 1,
    constraint PK_T_GOODS primary key (id)
 );
@@ -199,7 +186,7 @@ comment on column t_goods.price is
 '标价';
 
 comment on column t_goods.file is
-'文件名';
+'详细描叙';
 
 comment on column t_goods.headimg is
 '封面图片名';
@@ -216,12 +203,12 @@ comment on column t_goods.state is
 /*==============================================================*/
 /* Table: t_message                                             */
 /*==============================================================*/
-create table t_message (
+create table public.t_message (
    senderid             VARCHAR(50)          null,
    receiverid           VARCHAR(50)          null,
-   content              VARCHAR(400)         null,
-   time               	TIMESTAMP            not null default now(),
-   state                INT4                 null
+   content              VARCHAR(400)         default '',
+   "time"               TIMESTAMP            default now(),
+   state                INT4                 default 0
 );
 
 comment on column t_message.senderid is
@@ -242,10 +229,10 @@ comment on column t_message.state is
 /*==============================================================*/
 /* Table: t_upload                                              */
 /*==============================================================*/
-create table t_upload (
+create table public.t_upload (
    userid               VARCHAR(50)          not null,
    goodsid              VARCHAR(50)          not null,
-   time               	TIMESTAMP            not null default now(),
+   "time"               TIMESTAMP            default now(),
    constraint PK_T_UPLOAD primary key (userid, goodsid)
 );
 
@@ -257,8 +244,6 @@ comment on column t_upload.goodsid is
 
 comment on column t_upload."time" is
 '上传时间';
-
-
 
 alter table t_collect
    add constraint collect_fk foreign key (userid)
