@@ -145,6 +145,7 @@ export class PersonalSetting{
     sign:string ;
     grade:string;
     colleage:string ;
+    dorm:string;
     emails:string ;
     qq:string ;
     phone:string;

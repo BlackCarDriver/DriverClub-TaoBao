@@ -126,12 +126,15 @@ type UpdateBody struct {
 }
 
 type UpdeteMsg struct {
+	Id         string `json:"id"`
+	Headimg    string `json:"headimg"`
 	UpdataType string `json:"updatatype"`
 	Name       string `json:"name"`
 	Sex        string `json:"sex"`
 	Sign       string `json:"sign"`
 	Grade      string `json:"grade"`
 	Colleage   string `json:"colleage"`
+	Dorm       string `json:"dorm"`
 	Major      string `json:"major"`
 	Emails     string `json:"emails"`
 	Qq         string `json:"qq"`
@@ -141,6 +144,10 @@ type UpdeteMsg struct {
 type UpdateResult struct {
 	Status   int    `json:"status"`
 	Describe string `json:"describe"`
+}
+
+func GetUpdateResult(status int, err error) UpdateResult {
+	return UpdateResult{Status: status, Describe: fmt.Sprint(err)}
 }
 
 //########################################## 上传商品页面数据结构和模拟数据 #################################################

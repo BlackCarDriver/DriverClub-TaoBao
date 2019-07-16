@@ -12,7 +12,7 @@ declare var $: any;
 })
 export class ChgmymsgComponent implements OnInit {
    headimgurl = "https://tb1.bdstatic.com/tb/r/image/2018-02-11/7ec7062f14307db6f1728bc108c3189c.jpeg";
-   userid = "11";
+   userid = "00001";
    data = new PersonalSetting();
    updateresult = new UpdateResult();
   //绑定到表单的数据的默认值
@@ -21,6 +21,7 @@ export class ChgmymsgComponent implements OnInit {
    sign = "Welcome to BlackCarDriver.cn";
    grade = "2019";
    colleage = "未设置";
+   dorm = "未设置";
    email = "保密";
    qq = "保密";
    phone = "保密";
@@ -78,7 +79,6 @@ export class ChgmymsgComponent implements OnInit {
       result=>{
         this.data = result;
         this.headimgurl = this.data.headimg;
-        this.userid = this.data.id;
         this.username = this.data.name;
         this.userid = this.data.id;
         this.usersex = this.data.sex;
@@ -105,8 +105,19 @@ export class ChgmymsgComponent implements OnInit {
     var imgfiles = $("#uploadheadimg").prop('files');
     console.log(imgfiles[0]);
     this.server.UploadImg(this.username,imgfiles[0]).subscribe(result=>{
-      this.headimgurl = result.imgurl;
-      alert(result);
+      if( result.status>=0){
+        this.headimgurl = result.imgurl;
+        this.data.headimg = result.imgurl;
+        this.server.UpdateMessage(this.userid, "MyHeadImage", this.data).subscribe(result=>{
+            if(result.status>=0){
+              alert("修改成功！");
+            }else{
+              alert(result.describe);
+            }
+        });
+      }else{
+        alert(result.describe);
+      }
     });
   }
 
@@ -115,11 +126,12 @@ export class ChgmymsgComponent implements OnInit {
     this.data.name = $("#myname").val();
     this.data.colleage = $("mycolleage").val();
     this.data.sign = $("#mysign").val();
+    this.data.dorm =  $("#mydorm").val();
     this.data.sex =  this.usersex;
     this.data.grade = this.grade;
     this.server.UpdateMessage(this.userid, "MyBaseMessage", this.data).subscribe(result=>{
       this.updateresult = result; 
-      if (this.updateresult.status > 0) {
+      if (this.updateresult.status >= 0) {
         alert("修改成功！");
       }else{
         alert(this.updateresult.describe);
@@ -129,15 +141,17 @@ export class ChgmymsgComponent implements OnInit {
   
   //修改或设置联系方式信息并上传到服务器
   ChangeContact(){
-        this.data.emails = $("#myemail").val();
-        this.data.qq = $("#myqq").val();
-        this.data.phone = $("#myphone").val();
-        this.server.UpdateMessage(this.userid, "MyConnectMessage", this.data).subscribe(result=>{
-          this.updateresult = result;
-          alert(result);
-        })
-  }
-  
+    this.data.emails = $("#myemail").val();
+    this.data.qq = $("#myqq").val();
+    this.data.phone = $("#myphone").val();
+    this.server.UpdateMessage(this.userid, "MyConnectMessage", this.data).subscribe(result=>{
+      if(result.status >= 0) {
+        alert("修改成功！");
+      }else{
+        alert(result.describe);
+      }
+    })
+}
   //=================== 设置组件 ==================
 
   //设置年级选择按钮事件
