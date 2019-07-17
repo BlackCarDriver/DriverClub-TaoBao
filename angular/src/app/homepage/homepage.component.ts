@@ -41,7 +41,7 @@ export class HomepageComponent implements OnInit {
   }
   //获得在主页中显示的一页商品列表的数据
   GetGoods(){
-    this.server.GetHomePageGoods("placeholder ",11).subscribe(
+    this.server.GetHomePageGoods("all", "all", 0).subscribe(
       result => {
           this.goodsarray = result;
       })

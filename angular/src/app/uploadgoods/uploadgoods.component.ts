@@ -150,11 +150,14 @@ export class UploadgoodsComponent implements OnInit {
       data.date = this.date;
       data.price = this.price;
       data.type = this.typename;
-      data.tag = this.tagname;
       data.usenewtag = this.usenewtag;
-      data.newtagname = this.newtagname;
       data.imgurl = this.headImgUrl;
       data.text = this.godostext;
+      if(this.usenewtag){
+        data.tag = $("#newtypeinput").val();
+      }else{
+        data.tag = this.tagname
+      }
       this.server.UploadGoodsData(data).subscribe(
         result=>{
           if(result.status >= 0) {
@@ -198,12 +201,12 @@ export class UploadgoodsComponent implements OnInit {
   GetSubType(type:string){
       $("#subtype").html(type+" <span class='caret'>")
       if(type=='新标签') this.usenewtag = true;
-      this.tagname = type;
+
   }
 
   //得到物品子分类 ,又ngonitit调用
   GetType(){
-    this.server. GetHomePageType().subscribe(
+    this.server.GetHomePageType().subscribe(
     result => {this.typearray = result;});
   }
 

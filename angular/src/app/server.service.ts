@@ -19,9 +19,9 @@ export class ServerService {
 
  //=======================================  重做  =====================================================================
 //获取主页商品列表
-GetHomePageGoods(tag : string, index : number){
+GetHomePageGoods(type:string, tag : string, index : number){
   var url = this.addr + "/homepage/goodsdata";
-  var postdata = {goodstag:tag, goodsindex:index};
+  var postdata = {goodstype: type,goodstag:tag, goodsindex:index};
   return this.http.post<HomePageGoods[]>(url, JSON.stringify(postdata));
 }
 

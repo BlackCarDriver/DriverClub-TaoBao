@@ -6,16 +6,27 @@ import (
 	"fmt"
 )
 
-//主页商品封面数据
+//主页商品列表数据
 func (this *HPGoodsController) Post() {
 	PostBody := md.PostBody1{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &PostBody); err != nil {
 		return
 	}
-	//需要根据不同的类型，标签和页数从数据库中获取真实数据
-	fmt.Println(PostBody.GoodsTag, "------------------", PostBody.GoodsIndex)
-	this.Data["json"] = &md.MockGoodsData
+	var goodslist []md.Goods1
+	fmt.Println(PostBody)
+	err = md.SelectHomePageGoods(PostBody.GoodsType, PostBody.GoodsTag, PostBody.GoodsIndex, &goodslist)
+	if err != nil {
+		fmt.Println(err)
+	}
+	this.Data["json"] = goodslist
+	this.ServeJSON()
+}
+
+//返回商品分类和标签列表数据
+func (this *GoodsTypeController) Get() {
+	//需要从数据库获取真实数据返回
+	this.Data["json"] = &md.MockTypeData
 	this.ServeJSON()
 }
 

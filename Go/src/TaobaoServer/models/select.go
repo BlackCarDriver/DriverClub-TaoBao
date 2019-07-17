@@ -6,9 +6,17 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//获取主页商品的商品列表数据
-func SelectHomePageGoods(gstype string, tag string, skip int, container []Goods1) error {
-	fmt.Println(gstype, "  ", tag, "  ", skip, "  ", container)
+//获取主页商品的商品列表数据(不筛选)
+func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select uname as Userid, gid as Id, gname as Name, title,
+	 	price, time, headimg from goods_list where state = 1`).QueryRows(g)
+	if err != nil {
+		return err
+	}
+	if num == 0 {
+		return fmt.Errorf("the result is empty!")
+	}
 	return nil
 }
 

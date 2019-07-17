@@ -4,17 +4,18 @@ import "fmt"
 
 //########################################## 主页结构和模拟数据 ################################
 type Goods1 struct {
-	Headimg string  `json:"headimg"`
-	Userid  string  `json:"userid"`
-	Time    string  `json:"time"`
-	Title   string  `json:"title"`
-	Price   float64 `json:"price"`
 	Id      string  `json:"id"`
 	Name    string  `json:"name"`
+	Headimg string  `json:"headimg"`
+	Title   string  `json:"title"`
+	Price   float64 `json:"price"`
+	Userid  string  `json:"userid"`
+	Time    string  `json:"time"`
 }
 
 //主页获取商品封面数据时提供的信息
 type PostBody1 struct {
+	GoodsType  string `json:"goodstype"`
 	GoodsTag   string `json:"goodstag"`
 	GoodsIndex int    `json:"goodsindex"`
 }
