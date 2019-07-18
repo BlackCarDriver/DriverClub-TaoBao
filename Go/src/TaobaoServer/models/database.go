@@ -45,6 +45,7 @@ func init() {
 	orm.SetMaxIdleConns("default", 30)
 	// 设置为 UTC 时间
 	orm.DefaultTimeLoc = time.UTC
-
+	// 初次获取tempdata
+	initAllTempData()
 	//#################################test
 }

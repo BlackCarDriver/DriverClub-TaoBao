@@ -25,31 +25,33 @@ func (this *HPGoodsController) Post() {
 
 //返回商品分类和标签列表数据
 func (this *GoodsTypeController) Get() {
-	//需要从数据库获取真实数据返回
-	this.Data["json"] = &md.MockTypeData
+	this.Data["json"] = &md.GoodsTypeTempDate
 	this.ServeJSON()
 }
 
 //商品详情获取数据接口
 func (this *GoodsDetailController) Post() {
+	fmt.Println("###############")
 	postBody := md.GoodsPostBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		fmt.Println("error : ", err)
 		return
 	}
 	goodId := postBody.GoodId
 	datatype := postBody.DataType
-	if goodId == 0 || datatype == "" {
-		return
-	}
-	fmt.Println("GoodsDetail postBody :", postBody)
-	switch datatype {
-	case "message":
+	fmt.Println(postBody)
+	if goodId == "" || datatype == "" {
 		this.Data["json"] = &md.MockGoodsMessage
-	case "detail":
-		this.Data["json"] = &md.MockGoodsDetail
+		goto tail
 	}
-
+	switch datatype {
+	case "goodsmessage":
+		this.Data["json"] = &md.MockGoodsMessage
+	default:
+		this.Data["json"] = "empty"
+	}
+tail:
 	this.ServeJSON()
 }
 

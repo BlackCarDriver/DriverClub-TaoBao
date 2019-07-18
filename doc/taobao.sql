@@ -294,3 +294,21 @@ alter table t_upload
    add constraint upload_fk2 foreign key (goodsid)
       references t_goods (id)
       on delete restrict on update restrict;
+
+/* йсм╪ */
+
+CREATE VIEW goods_list2 AS 
+ SELECT u.name AS uname,
+    g.id AS gid,
+    g.name AS gname,
+    g.title,
+    g.headimg,
+    g.price,
+    g.state,
+    g.type,
+    g.tag,
+    p."time"
+   FROM t_upload p,
+    t_goods g,
+    t_user u
+  WHERE p.userid::text = u.id AND p.goodsid = g.id;

@@ -201,7 +201,9 @@ export class UploadgoodsComponent implements OnInit {
   GetSubType(type:string){
       $("#subtype").html(type+" <span class='caret'>")
       if(type=='新标签') this.usenewtag = true;
-
+      else{
+        this.tagname = type;
+      }
   }
 
   //得到物品子分类 ,又ngonitit调用

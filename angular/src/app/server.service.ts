@@ -32,7 +32,7 @@ GetHomePageType(){
 }
 
 //商品详情页面获取数据接口
-GetGoodsDeta(id:number, type:string){
+GetGoodsDeta(id:string, type:string){
     var url = this.addr+"/goodsdeta";
     var data = {goodid:id, datatype:type}
     return this.http.post<any>(url,JSON.stringify(data));

@@ -46,10 +46,11 @@ type GoodsDetail struct {
 	Like    int     `json:"like"`
 	Talk    int     `json:"talk"`
 	Collect int     `json:"collect"`
+	Detail  string  `json:"detail"`
 }
 
 type GoodsPostBody struct {
-	GoodId   int    `json:"goodid"`
+	GoodId   string `json:"goodid"`
 	DataType string `json:"datatype"`
 }
 

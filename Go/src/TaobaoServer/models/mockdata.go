@@ -1,8 +1,5 @@
 package models
 
-//商品描述文本
-var MockGoodsDetail = `<div style="color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; line-height: 18px; white-space: pre;"><div><div style="color: rgb(212, 212, 212); line-height: 18px;"><br><br><br><br><br><br><div style="color: rgb(212, 212, 212); line-height: 18px;"><span style="color: #d4d4d4;">asdfasdf</span></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div></div></div>`
-
 //商品主页数据
 var MockGoodsMessage = GoodsDetail{
 	Headimg: "https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
@@ -15,6 +12,7 @@ var MockGoodsMessage = GoodsDetail{
 	Like:    33322,
 	Talk:    100,
 	Collect: 40,
+	Detail:  `<div style="color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; line-height: 18px; white-space: pre;"><div><div style="color: rgb(212, 212, 212); line-height: 18px;"><br><br><br><br><br><br><div style="color: rgb(212, 212, 212); line-height: 18px;"><span style="color: #d4d4d4;">asdfasdf</span></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div></div></div>`,
 }
 
 //首页封面 模拟数据
@@ -31,13 +29,13 @@ var MockGoodsData = []Goods1{
 
 //首页分类 模拟数据
 var MockTypeData = []GoodsType{
-	{"stydy", []GoodsSubType{{"book", 111}, {"ruler", 123}, {"cap", 123}}},
-	{"sport", []GoodsSubType{{"ball", 333}, {"ruler", 123}, {"cap", 123}}},
-	{"live", []GoodsSubType{{"rice", 11}, {"ruler", 123}, {"cap", 123}}},
-	{"electrit", []GoodsSubType{{"phone", 1}, {"ruler", 123}, {"cap", 123}}},
-	{"handdiv", []GoodsSubType{{"wool", 1}, {"ruler", 123}, {"cap", 123}}},
-	{"virutal", []GoodsSubType{{"link", 111}, {"ruler", 123}, {"cap", 123}}},
-	{"other", []GoodsSubType{{"water", 111}, {"ruler", 123}, {"cap", 123}}},
+	{"学习用品", []GoodsSubType{{"book", 111}, {"ruler", 123}, {"cap", 123}}},
+	{"体育用品", []GoodsSubType{{"ball", 333}, {"ruler", 123}, {"cap", 123}}},
+	{"生活用品", []GoodsSubType{{"rice", 11}, {"ruler", 123}, {"cap", 123}}},
+	{"电子产品", []GoodsSubType{{"phone", 1}, {"ruler", 123}, {"cap", 123}}},
+	{"手工diy", []GoodsSubType{{"wool", 1}, {"ruler", 123}, {"cap", 123}}},
+	{"虚拟商品", []GoodsSubType{{"link", 111}, {"ruler", 123}, {"cap", 123}}},
+	{"其他", []GoodsSubType{{"water", 111}, {"ruler", 123}, {"cap", 123}}},
 }
 
 //导航栏我的信息下拉框

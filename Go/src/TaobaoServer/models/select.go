@@ -43,3 +43,20 @@ func CountGoods() int {
 	}
 	return goodsNumber
 }
+
+//获取某个类型的所有标签以及对应商品的数量
+func GetTagsData(gtype string, tag *[]GoodsSubType) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(tag)
+	if err != nil {
+		return err
+	}
+	if num == 0 {
+		return fmt.Errorf("the result is empty!")
+	}
+	return nil
+}
+
+func GetGoodsById(gid string) {
+
+}

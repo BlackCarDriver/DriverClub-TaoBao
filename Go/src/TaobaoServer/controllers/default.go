@@ -26,6 +26,9 @@ func init() {
 	random = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
+type TestController struct {
+	beego.Controller
+}
 type HPGoodsController struct {
 	beego.Controller
 }
@@ -53,6 +56,14 @@ type UploadImagesController struct {
 
 type EntranceController struct {
 	beego.Controller
+}
+
+//测试接口
+func (this *TestController) Get() {
+	fmt.Println("##### test #####")
+
+	this.Data["json"] = "test"
+	this.ServeJSON()
 }
 
 //保存用户上传的图片，返回访问这个图片的url
