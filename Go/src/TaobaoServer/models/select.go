@@ -57,6 +57,14 @@ func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	return nil
 }
 
-func GetGoodsById(gid string) {
-
+//根据商品的id获得这个商品的属性信息
+func GetGoodsById(gid string, c *GoodsDetail) error {
+	o := orm.NewOrm()
+	err := o.Raw(`select * from v_goods_detail where goodsid=$1`, gid).QueryRow(c)
+	if err != nil {
+		return err
+	}
+	//还需要加入收藏数量和评论数量信息
+	//还需要转换时间格式
+	return nil
 }

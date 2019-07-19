@@ -31,7 +31,6 @@ func (this *GoodsTypeController) Get() {
 
 //商品详情获取数据接口
 func (this *GoodsDetailController) Post() {
-	fmt.Println("###############")
 	postBody := md.GoodsPostBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
@@ -42,15 +41,28 @@ func (this *GoodsDetailController) Post() {
 	datatype := postBody.DataType
 	fmt.Println(postBody)
 	if goodId == "" || datatype == "" {
+		//请求不规范，这里应该返回一个错误页面或重定向
 		this.Data["json"] = &md.MockGoodsMessage
 		goto tail
 	}
 	switch datatype {
 	case "goodsmessage":
-		this.Data["json"] = &md.MockGoodsMessage
-	default:
-		this.Data["json"] = "empty"
+		fmt.Println("##########", goodId)
+		var gooddata md.GoodsDetail
+		err = md.GetGoodsById(goodId, &gooddata)
+		if err == nil {
+			this.Data["json"] = &gooddata
+			fmt.Println(gooddata.Name)
+			fmt.Println(gooddata.Time)
+			fmt.Println(gooddata.Type)
+			fmt.Println(gooddata.Tag)
+			fmt.Println(gooddata.Userid)
+
+			goto tail
+		}
 	}
+	//请求不规范或id找不到，应该或返回错误重定向
+	this.Data["json"] = "empty"
 tail:
 	this.ServeJSON()
 }

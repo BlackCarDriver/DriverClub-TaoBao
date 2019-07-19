@@ -297,6 +297,8 @@ alter table t_upload
 
 /* йсм╪ */
 
+drop view goods_list2;
+
 CREATE VIEW goods_list2 AS 
  SELECT u.name AS uname,
     g.id AS gid,
@@ -312,3 +314,24 @@ CREATE VIEW goods_list2 AS
     t_goods g,
     t_user u
   WHERE p.userid::text = u.id AND p.goodsid = g.id;
+  
+  
+  
+drop view v_goods_detail;
+
+create view v_goods_detail as 
+SELECT 
+g.id as goodsid,
+u.name as userid,
+g.name as name,
+p.time as time,
+g.headimg as headimg,
+g.price as price,
+g.title as title,
+g.type as "type",
+g.tag as tag,
+g.visit as visit, 
+g."like" as "like",
+g.file as detail
+FROM t_goods as g, t_upload as p, t_user as u
+where p.goodsid=g.id and p.userid = u.id and g.state = 1;

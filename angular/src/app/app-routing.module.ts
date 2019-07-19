@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'personals' , component :Personal2Component},
   { path: 'changemsg' , component: ChgmymsgComponent},
   { path: 'uploadgoods' , component: UploadgoodsComponent},
-  { path: 'goodsdetail' , component:  GoodspageComponent },
+  { path: 'goodsdetail/:gid' , component:  GoodspageComponent },
   { path: 'about' , component: AboutComponent},
   { path:'chat' ,component: CharthpComponent },
   { path: '', redirectTo: 'homepage', pathMatch: 'full' },

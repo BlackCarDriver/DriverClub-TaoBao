@@ -39,6 +39,8 @@ type GoodsDetail struct {
 	Userid  string  `json:"userid"`
 	Time    string  `json:"time"`
 	Title   string  `json:"title"`
+	Type    string  `json:"type"`
+	Tag     string  `json:"tag"`
 	Price   float64 `json:"price"`
 	Id      string  `json:"id"`
 	Name    string  `json:"name"`

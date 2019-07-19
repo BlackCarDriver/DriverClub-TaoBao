@@ -13,8 +13,8 @@ export class GoodspageComponent implements OnInit {
 
   constructor(private server : ServerService) { }
   ngOnInit() {
-    let rawStr = window.location.search;
-    let pid = rawStr.substring(5,15);
+    let rawStr = window.location.pathname;
+    let pid = rawStr.substring(13,23);
     this.getItPage(pid);
   } 
 
