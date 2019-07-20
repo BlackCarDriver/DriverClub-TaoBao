@@ -6,6 +6,7 @@
 export class HomePageGoods{
     headimg:string;
     userid:string;
+    username:string;
     time:string;
     title:string;
     price:number;
@@ -29,7 +30,8 @@ export class GoodSubType{
 //商品详情页需要的数据
 export class GoodsDetail {
     headimg:string;
-    userid:string;     //到时需要变成用户名
+    userid:string;    
+    username:string;
     time:string;
     title:string;
     price:number;
@@ -58,14 +60,15 @@ export class UserMessage{
     emails:string;
     qq:string ;
     phone:string; 
+    dorm:string
     //首部数据
     leave:number;  
     credits:number;   //积分
     rank:number ;    
     becare:number ;    //关注我的人数       (special)
-    like:number ;      //被点赞次数         (special)
+    likes:number ;      //被点赞次数         (special)
     //其他数据
-    lasttime:number;  //上次登录的时间间隔（小时）
+    lasttime:string;  
     visit:number;    //主页访问次数
     goodsnum:number;  //拥有商品的数量      (special)
     scuess:number;    //成功交易的商品数量

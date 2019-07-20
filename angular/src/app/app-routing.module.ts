@@ -13,10 +13,10 @@ import {Personal2Component} from '../app/personal2/personal2.component';
 
 const routes: Routes = [ 
   { path: 'homepage', component: HomepageComponent },
-  { path: 'personal', component: PersonalComponent},
-  { path: 'personals' , component :Personal2Component},
   { path: 'changemsg' , component: ChgmymsgComponent},
   { path: 'uploadgoods' , component: UploadgoodsComponent},
+  { path: 'personal', component: PersonalComponent},
+  { path: 'personals/:uid' , component :Personal2Component},
   { path: 'goodsdetail/:gid' , component:  GoodspageComponent },
   { path: 'about' , component: AboutComponent},
   { path:'chat' ,component: CharthpComponent },

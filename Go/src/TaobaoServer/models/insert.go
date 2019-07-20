@@ -54,3 +54,11 @@ func CreateGoods(goods UploadGoodsData) error {
 	}
 	return err
 }
+
+//某商品被收藏，记录收藏信息
+func AddCollectRecord(uid, gid string) error {
+	o := orm.NewOrm()
+	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
+	_, err := rawSeter.Exec()
+	return err
+}

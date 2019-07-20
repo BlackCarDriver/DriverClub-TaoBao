@@ -10,8 +10,8 @@ import (
 //需要确保ID是用户自己的ID
 func UpdateUserBaseMsg(d UpdeteMsg) error {
 	o := orm.NewOrm()
-	rawSeter := o.Raw("update t_user set,name=?,sex=?,sign=?,dorm=?,major=? where id=?",
-		d.Name, d.Sex, d.Sign, d.Dorm, d.Major, d.Id)
+	rawSeter := o.Raw("update t_user set name=?,sex=?,sign=?,dorm=?,major=?,grade=? where id=?",
+		d.Name, d.Sex, d.Sign, d.Dorm, d.Major, d.Grade, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
 		return err
@@ -43,6 +43,21 @@ func UpdateUserConnectMsg(d UpdeteMsg) error {
 func UpdateUserHeadIMg(imgurl, userid string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw("update t_user set headimg=? where id=?;", imgurl, userid)
+	result, err := rawSeter.Exec()
+	if err != nil {
+		return err
+	}
+	effect, _ := result.RowsAffected()
+	if effect == 0 {
+		return fmt.Errorf("No Roow Affected !")
+	}
+	return nil
+}
+
+//某商品被点赞，点赞数加1
+func UpdateGoodsLike(gid string) error {
+	o := orm.NewOrm()
+	rawSeter := o.Raw(`update t_goods set "like" = "like" + 1 where id = ?`, gid)
 	result, err := rawSeter.Exec()
 	if err != nil {
 		return err

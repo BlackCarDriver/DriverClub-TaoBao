@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-//个人详情页面信息获取接口
+//个人详情页面或其他用户主页信息获取接口
 func (this *PersonalDataController) Post() {
 	postBody := md.PersonalPostBody{}
 	var err error
@@ -35,11 +35,18 @@ func (this *PersonalDataController) Post() {
 	case "naving":
 		this.Data["json"] = &md.MockMystatus
 	case "othermsg":
-		this.Data["json"] = &md.MockUserMessage
+		var data md.UserMessage
+		err = md.GetUserData(userName, &data)
+		if err != nil {
+			goto tail
+		}
+		this.Data["json"] = data
+		goto tail
 	case "setdata":
 		this.Data["json"] = &md.MockUserSetData
 
 	}
+tail:
 	this.ServeJSON()
 }
 

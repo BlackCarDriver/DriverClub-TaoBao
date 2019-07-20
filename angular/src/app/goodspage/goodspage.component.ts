@@ -10,7 +10,7 @@ import{ServerService} from'../server.service';
 export class GoodspageComponent implements OnInit {
   //一个类不可以只声明，然后直接用，否则出现undefine error
   goodsdt = new GoodsDetail;
-
+  
   constructor(private server : ServerService) { }
   ngOnInit() {
     let rawStr = window.location.pathname;

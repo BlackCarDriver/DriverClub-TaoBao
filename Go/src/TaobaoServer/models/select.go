@@ -9,7 +9,7 @@ import (
 //获取主页商品的商品列表数据(不筛选)
 func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error {
 	o := orm.NewOrm()
-	num, err := o.Raw(`select uname as Userid, gid as Id, gname as Name, title,
+	num, err := o.Raw(`select uid as userid, uname as username, gid as Id, gname as Name, title,
 	 	price, time, headimg from goods_list where state = 1`).QueryRows(g)
 	if err != nil {
 		return err
@@ -66,5 +66,17 @@ func GetGoodsById(gid string, c *GoodsDetail) error {
 	}
 	//还需要加入收藏数量和评论数量信息
 	//还需要转换时间格式
+	return nil
+}
+
+//获取某个用户的展示数据
+func GetUserData(uid string, u *UserMessage) error {
+	o := orm.NewOrm()
+	err := o.Raw(`select * from t_user where id = $1`, uid).QueryRow(&u)
+	if err != nil {
+		fmt.Println("GetOtherUserData error: ", err)
+		return err
+	}
+	fmt.Println(u)
 	return nil
 }

@@ -4,13 +4,14 @@ import "fmt"
 
 //########################################## 主页结构和模拟数据 ################################
 type Goods1 struct {
-	Id      string  `json:"id"`
-	Name    string  `json:"name"`
-	Headimg string  `json:"headimg"`
-	Title   string  `json:"title"`
-	Price   float64 `json:"price"`
-	Userid  string  `json:"userid"`
-	Time    string  `json:"time"`
+	Userid   string  `json:"userid"`
+	Username string  `json:"username"`
+	Id       string  `json:"id"`
+	Name     string  `json:"name"`
+	Price    float64 `json:"price"`
+	Time     string  `json:"time"`
+	Headimg  string  `json:"headimg"`
+	Title    string  `json:"title"`
 }
 
 //主页获取商品封面数据时提供的信息
@@ -74,12 +75,13 @@ type UserMessage struct {
 	Emails   string `json:"emails"`
 	Qq       string `json:"qq"`
 	Phone    string `json:"phone"`
+	Lasttime string `json:"lasttime"`
+	Dorm     string `json:"dorm"`
 	Leave    int    `json:"leave"`
 	Credits  int    `json:"credits"`
 	Rank     int    `json:"rank"`
 	Becare   int    `json:"becare"`
-	Like     int    `json:"like"`
-	Lasttime int    `json:"lasttime"`
+	Likes    int    `json:"likes"`
 	Visit    int    `json:"visit"`
 	Goodsnum int    `json:"goodsnum"`
 	Scuess   int    `json:"scuess"`

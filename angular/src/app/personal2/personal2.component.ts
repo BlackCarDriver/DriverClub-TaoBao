@@ -10,17 +10,20 @@ import { ServerService } from '../server.service';
 export class Personal2Component implements OnInit {
 
   data = new UserMessage();
-
+  userid = "";
   constructor(private server : ServerService) { }
 
   ngOnInit() {
-    this.getOtherMsg();
+    let rawStr = window.location.pathname;
+    this.userid = rawStr.substring(11,21);
+    this.getOtherMsg(this.userid);
   }
 
   //获取页面数据
-  getOtherMsg(){
-    this.server.GetMyMsg("12345", "othermsg").subscribe(result=>{
+  getOtherMsg(uid : string){
+    this.server.GetMyMsg(this.userid, "othermsg").subscribe(result=>{
       this.data = result;
+      
     });
   }
 

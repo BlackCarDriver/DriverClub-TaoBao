@@ -17,7 +17,7 @@
               <!--头像 + 名字 + 个性签名 部分-->
               <div class="row msg1">
                     <div class="col-sm-3 head-img-box">
-                        <img src="https://gocn.vip/uploads/avatar/000/00/72/71_avatar_max.jpg" alt="head-img" class="head-img">     
+                        <img src={{data.headimg}} alt="head-img" class="head-img">     
                     </div>
                     <!--person mesage simple descripb-->
                     <div class="col-sm-9 myname">
@@ -40,10 +40,10 @@
               <!--小图标行-->
               <div class="row msg2">
                     <span class="ico1"><i class="glyphicon glyphicon-king"></i> 等级 :{{data.leave}}</span>
-                    <span class="ico1"><i class="glyphicon glyphicon-piggy-bank"></i> 积分 : {{data.sorce}}</span>
+                    <span class="ico1"><i class="glyphicon glyphicon-piggy-bank"></i> 积分 : {{data.credits}}</span>
                     <span class="ico1"><i class="glyphicon glyphicon glyphicon-stats"></i> 排名 :{{data.rank}} </span>
                     <span class="ico1"><i class="glyphicon glyphicon-heart"></i> 被关注: {{data.becare}} </span>
-                    <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞:  {{data.like}}</span>
+                    <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞:  {{data.likes}}</span>
               </div>
               <!--信息主体-->
               <div class="row swicth-box">  
@@ -80,9 +80,10 @@
                                                </div>
                  
                                                <div class="row msg-box">
-                                                 <div class="col-md-2 msg">学院</div>
-                                                 <div class="col-md-10 describ"> {{data.colleage}} </div>
+                                                 <div class="col-md-2 msg">专业</div>
+                                                 <div class="col-md-10 describ"> {{data.major}} </div>
                                                </div>
+                                               
                                            </div>    
             </div>  
   
@@ -101,6 +102,10 @@
                     <div class="row msg-box">
                         <div class="col-md-2 msg">邮箱</div>
                         <div class="col-md-10 describ">{{data.emails}} </div>
+                    </div>
+                    <div class="row msg-box">
+                        <div class="col-md-2 msg">楼栋</div>
+                        <div class="col-md-10 describ">{{data.dorm}} </div>
                     </div>
                 </div>                   
             </div>

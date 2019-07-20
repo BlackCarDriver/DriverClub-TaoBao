@@ -17,7 +17,7 @@
       <table class="table table-bordered">
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-user"></span></th>
-            <th><p class="goodtag">{{goodsdt.userid}}</p></th>
+            <th [routerLink]="['/personals', goodsdt.userid ]"><p class="goodtag">{{goodsdt.userid}}</p></th>
           </tr>
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-calendar"></span></th>

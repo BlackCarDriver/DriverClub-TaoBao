@@ -20,6 +20,7 @@ func (this *HPGoodsController) Post() {
 		fmt.Println(err)
 	}
 	this.Data["json"] = goodslist
+
 	this.ServeJSON()
 }
 
@@ -47,17 +48,11 @@ func (this *GoodsDetailController) Post() {
 	}
 	switch datatype {
 	case "goodsmessage":
-		fmt.Println("##########", goodId)
 		var gooddata md.GoodsDetail
 		err = md.GetGoodsById(goodId, &gooddata)
 		if err == nil {
 			this.Data["json"] = &gooddata
-			fmt.Println(gooddata.Name)
-			fmt.Println(gooddata.Time)
-			fmt.Println(gooddata.Type)
-			fmt.Println(gooddata.Tag)
 			fmt.Println(gooddata.Userid)
-
 			goto tail
 		}
 	}
