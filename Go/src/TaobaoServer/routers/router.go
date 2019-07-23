@@ -16,4 +16,5 @@ func init() {
 	beego.Router("/upload/newgoods", &controllers.UploadGoodsController{})
 	beego.Router("/upload/images", &controllers.UploadImagesController{})
 	beego.Router("/entrance", &controllers.EntranceController{})
+	beego.Router("/smallupdate", &controllers.UpdateController{})
 }

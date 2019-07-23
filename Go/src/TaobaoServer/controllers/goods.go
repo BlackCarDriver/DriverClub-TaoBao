@@ -80,3 +80,46 @@ tail:
 	this.Data["json"] = &returnRes
 	this.ServeJSON()
 }
+
+//更新各种信息的接口,如商品点赞数，私信，商品收藏
+func (this *UpdateController) Post() {
+	postBody := md.UpdatePostBody{}
+	result := md.UpdateResult{}
+	var err error
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		fmt.Println("error : ", err)
+		return
+	}
+	tag := postBody.Tag
+	switch tag {
+	case "likegoods":
+		err = md.UpdateGoodsLike(postBody.TargetId)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("点赞失败： %s ", err)
+	case "sendmessage":
+		err = md.AddUserMessage(postBody.UserId, postBody.TargetId, postBody.StrData)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("发送失败: %s", err)
+	case "addcollect":
+		err = md.AddGoodsCollect(postBody.UserId, postBody.TargetId)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("收藏失败: %s", err)
+	default:
+		fmt.Println(tag)
+	}
+tail:
+	this.Data["json"] = result
+	this.ServeJSON()
+}

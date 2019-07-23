@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"database/sql"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -61,4 +63,37 @@ func AddCollectRecord(uid, gid string) error {
 	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
 	_, err := rawSeter.Exec()
 	return err
+}
+
+//发出私信，更新消息表
+func AddUserMessage(uid, targetid, message string) error {
+	o := orm.NewOrm()
+	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, uid, targetid, message)
+	_, err := rawSeter.Exec()
+	return err
+}
+
+//某商品被收藏，更新收藏表
+func AddGoodsCollect(uid, gid string) error {
+	o := orm.NewOrm()
+	var err error
+	var result sql.Result
+	count := 0
+	fmt.Println(uid, gid)
+	err = o.Raw(`SELECT count(*) from t_collect where userid=? and goodsid=?`, uid, gid).QueryRow(&count)
+	if err != nil {
+		return fmt.Errorf("Error when select: %s", err)
+	}
+	if count > 0 {
+		return fmt.Errorf("You are already Collect it goods!")
+	}
+	result, err = o.Raw(`INSERT INTO public.t_collect(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
+	if err != nil {
+		return err
+	}
+	effect, _ := result.RowsAffected()
+	if effect == 0 {
+		return fmt.Errorf("No Roow Affected !")
+	}
+	return nil
 }

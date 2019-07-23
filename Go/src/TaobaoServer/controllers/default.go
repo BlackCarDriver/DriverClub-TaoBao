@@ -58,6 +58,10 @@ type EntranceController struct {
 	beego.Controller
 }
 
+type UpdateController struct {
+	beego.Controller
+}
+
 //测试接口
 func (this *TestController) Get() {
 	fmt.Println("##### test #####")

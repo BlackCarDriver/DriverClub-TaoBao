@@ -57,6 +57,15 @@ type GoodsPostBody struct {
 	DataType string `json:"datatype"`
 }
 
+//可用于更新点赞数，收藏表，和私信表
+type UpdatePostBody struct {
+	Tag      string `json:"tag"`
+	UserId   string `json:"userid"`
+	TargetId string `json:"targetid"`
+	StrData  string `json:"strdata"`
+	IntData  int    `json:"intdata"`
+}
+
 //########################################## 个人详情页结构体和模拟数据 #################################################
 type PersonalPostBody struct {
 	Name string `json:"name"`
@@ -233,3 +242,5 @@ type RequireResult struct {
 	Status   int    `json:"status"`
 	Describe string `json:"describe"`
 }
+
+//#####################

@@ -74,6 +74,13 @@ UpdateMessage(userid:string, tag:string, data:any){
   return this.http.post<UpdateResult>(url, JSON.stringify(postdata)); 
 }
 
+//更新如点赞量，私信等信息
+SmallUpdate(tag:string, userid:string, targetid:string, strdata:string, intdata:number){
+  var postdata = {tag:tag, userid:userid, targetid:targetid,strdata:strdata, intdata:intdata};
+  var url = this.addr + "/smallupdate"; 
+  return this.http.post<UpdateResult>(url, JSON.stringify(postdata));
+}
+
 // ================================== the following function reference to login or register ========================================================  
   
 Entrance(userid:string, tag:string, data:any){
