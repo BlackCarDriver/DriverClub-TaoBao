@@ -40,11 +40,16 @@ func (this *GoodsDetailController) Post() {
 	}
 	goodId := postBody.GoodId
 	datatype := postBody.DataType
-	fmt.Println(postBody)
 	if goodId == "" || datatype == "" {
 		//请求不规范，这里应该返回一个错误页面或重定向
 		this.Data["json"] = &md.MockGoodsMessage
 		goto tail
+	}
+	err = md.UpdateGoodsVisit(goodId)
+	if err != nil {
+		fmt.Println("update visit of goods fall!! ", err)
+	} else {
+		fmt.Println(goodId)
 	}
 	switch datatype {
 	case "goodsmessage":
@@ -52,7 +57,6 @@ func (this *GoodsDetailController) Post() {
 		err = md.GetGoodsById(goodId, &gooddata)
 		if err == nil {
 			this.Data["json"] = &gooddata
-			fmt.Println(gooddata.Userid)
 			goto tail
 		}
 	}
@@ -78,48 +82,5 @@ func (this *UploadGoodsController) Post() {
 	returnRes = md.CreateUploadRes(0, nil, "")
 tail:
 	this.Data["json"] = &returnRes
-	this.ServeJSON()
-}
-
-//更新各种信息的接口,如商品点赞数，私信，商品收藏
-func (this *UpdateController) Post() {
-	postBody := md.UpdatePostBody{}
-	result := md.UpdateResult{}
-	var err error
-	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		fmt.Println("error : ", err)
-		return
-	}
-	tag := postBody.Tag
-	switch tag {
-	case "likegoods":
-		err = md.UpdateGoodsLike(postBody.TargetId)
-		if err == nil {
-			result.Status = 0
-			goto tail
-		}
-		result.Status = -1
-		result.Describe = fmt.Sprintf("点赞失败： %s ", err)
-	case "sendmessage":
-		err = md.AddUserMessage(postBody.UserId, postBody.TargetId, postBody.StrData)
-		if err == nil {
-			result.Status = 0
-			goto tail
-		}
-		result.Status = -1
-		result.Describe = fmt.Sprintf("发送失败: %s", err)
-	case "addcollect":
-		err = md.AddGoodsCollect(postBody.UserId, postBody.TargetId)
-		if err == nil {
-			result.Status = 0
-			goto tail
-		}
-		result.Status = -1
-		result.Describe = fmt.Sprintf("收藏失败: %s", err)
-	default:
-		fmt.Println(tag)
-	}
-tail:
-	this.Data["json"] = result
 	this.ServeJSON()
 }

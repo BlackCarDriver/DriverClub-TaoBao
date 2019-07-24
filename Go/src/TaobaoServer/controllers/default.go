@@ -131,3 +131,62 @@ func CheckImgName(filename string) (newName string, err error) {
 	}
 	return GetRandomString(10) + "." + suffix, nil
 }
+
+//更新各种信息的接口,如商品点赞数，私信，商品收藏
+func (this *UpdateController) Post() {
+	postBody := md.UpdatePostBody{}
+	result := md.UpdateResult{}
+	var err error
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		fmt.Println("error : ", err)
+		return
+	}
+	tag := postBody.Tag
+	switch tag {
+	case "likegoods": //商品点赞
+		err = md.UpdateGoodsLike(postBody.TargetId)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("点赞失败： %s ", err)
+	case "sendmessage": //商品页面向卖家发私信
+		err = md.AddUserMessage(postBody.UserId, postBody.TargetId, postBody.StrData)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("发送失败: %s", err)
+	case "addcollect": //收藏商品
+		err = md.AddGoodsCollect(postBody.UserId, postBody.TargetId)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("收藏失败: %s", err)
+	case "likeuser": //个人信息页面点赞
+		err = md.UpdateUserLike(postBody.TargetId)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("点赞失败： %s", err)
+	case "addconcern": //个人信息页面关注
+		err = md.AddUserConcern(postBody.UserId, postBody.TargetId)
+		if err == nil {
+			result.Status = 0
+			goto tail
+		}
+		result.Status = -1
+		result.Describe = fmt.Sprintf("关注失败： %s", err)
+	default:
+		fmt.Println(tag)
+	}
+tail:
+	this.Data["json"] = result
+	this.ServeJSON()
+}

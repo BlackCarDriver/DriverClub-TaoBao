@@ -17,7 +17,7 @@
               <!--头像 + 名字 + 个性签名 部分-->
               <div class="row msg1">
                     <div class="col-sm-3 head-img-box">
-                        <img src={{data.headimg}} alt="head-img" class="head-img">     
+                        <img src={{data.headimg}} alt="head-img" class="head-img">    
                     </div>
                     <!--person mesage simple descripb-->
                     <div class="col-sm-9 myname">
@@ -25,11 +25,12 @@
                         <button type="button" class="btn btn-info sendmsg" data-toggle="modal" data-target=".bs-example-modal-sm">
                                 <span class="glyphicon glyphicon-comment"></span>发私信
                         </button>
+                        
                         <!--模态框-->
                         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                             <div class="modal-dialog modal-sm" role="document">
                                 <div class="modal-content send-text-box">
-                                    <textarea type="text" class="form-control" placeholder="这里输入你想发送的私信..."></textarea>
+                                    <textarea id="messagesender" type="text" class="form-control" placeholder="这里输入你想发送的私信..."></textarea>
                                     <button type="button"class="btn btn-info">发送私信</button>
                                 </div>
                             </div>
@@ -44,6 +45,8 @@
                     <span class="ico1"><i class="glyphicon glyphicon glyphicon-stats"></i> 排名 :{{data.rank}} </span>
                     <span class="ico1"><i class="glyphicon glyphicon-heart"></i> 被关注: {{data.becare}} </span>
                     <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞:  {{data.likes}}</span>
+                    <span class="ico2" (click)="addConcern()" title="收藏"><i class="glyphicon glyphicon-heart"></i></span>
+                    <span class="ico2" (click)="updateLike()" title="点赞"><i class="glyphicon glyphicon-thumbs-up"></i></span>
               </div>
               <!--信息主体-->
               <div class="row swicth-box">  

@@ -15,7 +15,7 @@ func (this *PersonalDataController) Post() {
 	}
 	userName := postBody.Name
 	dataTag := postBody.Tag
-	if userName == "" || dataTag == "" {
+	if userName == "" || dataTag == "" { //userName 就是 id
 		return
 	}
 	fmt.Println(userName, " -------------- ", dataTag)
@@ -39,6 +39,12 @@ func (this *PersonalDataController) Post() {
 		err = md.GetUserData(userName, &data)
 		if err != nil {
 			goto tail
+		}
+		err = md.UpdateUserVisit(userName)
+		if err != nil {
+			fmt.Println("update user visit fall, ", err)
+		} else {
+			fmt.Println(userName)
 		}
 		this.Data["json"] = data
 		goto tail

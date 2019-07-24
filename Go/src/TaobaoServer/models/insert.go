@@ -87,7 +87,32 @@ func AddGoodsCollect(uid, gid string) error {
 	if count > 0 {
 		return fmt.Errorf("You are already Collect it goods!")
 	}
-	result, err = o.Raw(`INSERT INTO public.t_collect(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
+	result, err = o.Raw(`INSERT INTO t_collect(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
+	if err != nil {
+		return err
+	}
+	effect, _ := result.RowsAffected()
+	if effect == 0 {
+		return fmt.Errorf("No Roow Affected !")
+	}
+	return nil
+}
+
+//某人被关注，更新关注表
+func AddUserConcern(id1, id2 string) error {
+	o := orm.NewOrm()
+	var err error
+	var result sql.Result
+	count := 0
+	fmt.Println(id1, id2)
+	err = o.Raw(`SELECT count(*) FROM t_concern where id1=? and id2=?`, id1, id2).QueryRow(&count)
+	if err != nil {
+		return fmt.Errorf("Error when select from t_concern: %s", err)
+	}
+	if count > 0 {
+		return fmt.Errorf("You are already concern it user!")
+	}
+	result, err = o.Raw(`INSERT INTO t_concern(id1, id2)VALUES (?, ?)`, id1, id2).Exec()
 	if err != nil {
 		return err
 	}
