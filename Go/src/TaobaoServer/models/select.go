@@ -80,3 +80,29 @@ func GetUserData(uid string, u *UserMessage) error {
 	fmt.Println(u)
 	return nil
 }
+
+//获取我的消息
+func GetMyMessage(uid string, c *[]MyMessage) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select * from v_mymessage where id = ?`, uid).QueryRows(c)
+	if err != nil {
+		return fmt.Errorf("GetMessage error: %v", err)
+	}
+	if num == 0 {
+		return fmt.Errorf("the result is empty!")
+	}
+	return nil
+}
+
+//获取我的收藏商品
+func GetMyCollectGoods(uid string, c *[]GoodsShort) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select * from v_mycollect where uid = ?`, uid).QueryRows(c)
+	if err != nil {
+		return err
+	}
+	if num == 0 {
+		return fmt.Errorf("the result is empty!")
+	}
+	return nil
+}

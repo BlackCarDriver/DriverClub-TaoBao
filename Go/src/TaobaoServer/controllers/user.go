@@ -25,9 +25,25 @@ func (this *PersonalDataController) Post() {
 	case "mygoods":
 		this.Data["json"] = &md.MockGoodsShort
 	case "mycollect":
-		this.Data["json"] = &md.MockGoodsShort
+		var data []md.GoodsShort
+		err = md.GetMyCollectGoods(userName, &data)
+		if err != nil {
+			fmt.Println(err)
+			this.Data["json"] = "do something..."
+			goto tail
+		}
+		fmt.Println(data)
+		this.Data["json"] = &data
 	case "message":
-		this.Data["json"] = &md.MockMyMessage
+		var data []md.MyMessage
+		err = md.GetMyMessage(userName, &data)
+		if err != nil {
+			//do something...
+			this.Data["json"] = ""
+			goto tail
+		}
+		this.Data["json"] = data
+
 	case "rank":
 		this.Data["json"] = &md.MockRank
 	case "mycare":

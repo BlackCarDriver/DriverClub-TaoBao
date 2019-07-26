@@ -35,7 +35,7 @@ let unsafe =-999;
 export class NavigComponent implements OnInit {
   data1 = new RegisterData();
   data2 = new LoginData();
-  username = "blackcardriver";
+  username = "19070010";
   usermsg = new  MyStatus();
   constructor(
     // private localdata: LocalStorage,
@@ -215,7 +215,7 @@ getloginmessage(){
 //load username from cookie if it is not empty then
 //hide the login box, and show the user message box and require user short data
 setstate(){
-  this.username = "blackcardriver";
+  this.username = "19070010";
   // this.username = "blackcardriver"
   if(this.username != ""){
     $("#singin").addClass("hidden");

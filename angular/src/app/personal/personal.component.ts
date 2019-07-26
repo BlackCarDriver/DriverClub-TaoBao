@@ -10,7 +10,7 @@ declare let $: any;
 })
 
 export class PersonalComponent implements OnInit {
-  username = "123456";
+  username = "19070010";
   key = "itisuserkey..";
 
   msg = new UserMessage(); //基本信息
