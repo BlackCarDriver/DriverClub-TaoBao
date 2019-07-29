@@ -114,7 +114,7 @@ export class Rank{
 export class UploadGoods{
     userid: string;
     title:string;
-    date :string ;
+    date :string ; 
     price:number;
     imgurl:string;
     type:string;
@@ -166,6 +166,7 @@ export class UpdateResult {
 
 //首页-个人信息下拉框
 export class MyStatus{
+    name:string;
     headimg :string ;
     leave : number ;
     credits : number ;

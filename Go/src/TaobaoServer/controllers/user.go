@@ -18,13 +18,29 @@ func (this *PersonalDataController) Post() {
 	if userName == "" || dataTag == "" { //userName 就是 id
 		return
 	}
-	fmt.Println(userName, " -------------- ", dataTag)
 	switch dataTag {
-	case "mymsg":
-		this.Data["json"] = &md.MockUserMessage
-	case "mygoods":
+	case "mymsg": //我的数据
+		var data md.UserMessage
+		err = md.GetUserData(userName, &data)
+		if err != nil {
+			fmt.Println(err)
+			this.Data["json"] = ""
+			goto tail
+		}
+		this.Data["json"] = data
+
+	case "mygoods": //我的商品
 		this.Data["json"] = &md.MockGoodsShort
-	case "mycollect":
+		var data []md.GoodsShort
+		err = md.GetMyGoods(userName, &data)
+		if err != nil {
+			fmt.Println(err)
+			this.Data["json"] = ""
+			goto tail
+		}
+		this.Data["json"] = data
+
+	case "mycollect": //我的收藏
 		var data []md.GoodsShort
 		err = md.GetMyCollectGoods(userName, &data)
 		if err != nil {
@@ -32,9 +48,9 @@ func (this *PersonalDataController) Post() {
 			this.Data["json"] = "do something..."
 			goto tail
 		}
-		fmt.Println(data)
 		this.Data["json"] = &data
-	case "message":
+
+	case "message": //我的消息
 		var data []md.MyMessage
 		err = md.GetMyMessage(userName, &data)
 		if err != nil {
@@ -44,13 +60,30 @@ func (this *PersonalDataController) Post() {
 		}
 		this.Data["json"] = data
 
-	case "rank":
-		this.Data["json"] = &md.MockRank
-	case "mycare":
-		this.Data["json"] = &md.MockCare
-	case "naving":
-		this.Data["json"] = &md.MockMystatus
-	case "othermsg":
+	case "rank": //用户排名数据
+		this.Data["json"] = &md.UserRank
+
+	case "mycare": //关注我的和我关注的用户数据
+		var data [2][]md.UserShort
+		err = md.GetCareMeData(userName, &data)
+		if err != nil {
+			fmt.Println(err)
+			this.Data["json"] = ""
+			goto tail
+		}
+		this.Data["json"] = data
+
+	case "naving": //导航栏我的数据
+		var data md.MyStatus
+		err = md.GetNavingMsg(userName, &data)
+		if err != nil {
+			fmt.Println(err)
+			this.Data["json"] = ""
+			goto tail
+		}
+		this.Data["json"] = data
+
+	case "othermsg": //看其他人的数据
 		var data md.UserMessage
 		err = md.GetUserData(userName, &data)
 		if err != nil {
@@ -64,6 +97,7 @@ func (this *PersonalDataController) Post() {
 		}
 		this.Data["json"] = data
 		goto tail
+
 	case "setdata":
 		this.Data["json"] = &md.MockUserSetData
 

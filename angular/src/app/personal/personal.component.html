@@ -139,8 +139,7 @@
                  <!--我的商品 tag box-->
                 <div class="tab-pane" id="panel-mygoods">
                     <ul class="good-list" >
-
-                        <li class="goods-box" *ngFor="let rows of mygoodslist">
+                        <li class="goods-box" [routerLink]="['/goodsdetail', rows.id ]" *ngFor="let rows of mygoodslist">
                             <img src={{rows.headimg}} alt="" class="goods-img">
                                 <div class="goods-dsc">
                                 <a class="goods-dsc">{{rows.title}}}</a>
@@ -155,7 +154,7 @@
                 <div class="tab-pane" id="panel-shouchang">
                     <ul class="good-list">
 
-                        <li class="goods-box"  *ngFor="let rows of mycollectlist">
+                        <li class="goods-box"  [routerLink]="['/goodsdetail', rows.id ]" *ngFor="let rows of mycollectlist">
                             <img src={{rows.headimg}} alt="" class="goods-img">
                                 <div class="goods-dsc">
                                 <a class="goods-dsc">{{rows.title}}}</a>
@@ -179,7 +178,7 @@
                                     <p>{{rows.id}}</p>    <!--暂时没有标题-->
                                 </div>   
                                 <div class="col-sm-3">                               
-                                    <p> <span class="glyphicon glyphicon-user"></span>{{rows.name}}</p>
+                                    <p  [routerLink]="['/personals', rows.id ]"> <span class="glyphicon glyphicon-user"></span>{{rows.name}}</p>
                                 </div>
                                 <div class="col-sm-3">
                                     <p><span class="glyphicon glyphicon-time"></span>{{rows.time}}</p>
@@ -260,7 +259,7 @@
           <div class="right-box-son rank-list">
               <h3>用户排名榜</h3>
               <ul *ngFor="let rows of hero" >
-                  <li><span>{{rows.rank}}</span><p>{{rows.name}}</p></li>
+                  <li [routerLink]="['/personals', rows.userid ]"><span>{{rows.rank}}</span><p>{{rows.name}}</p></li>
               </ul>
           </div>
 

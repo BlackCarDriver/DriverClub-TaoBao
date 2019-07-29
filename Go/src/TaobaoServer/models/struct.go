@@ -106,6 +106,7 @@ type GoodsShort struct {
 }
 
 type MyMessage struct {
+	Id      string `json:"id"`
 	Time    string `json:"time"`
 	Name    string `json:"name"`
 	Title   string `json:"title"`
@@ -210,6 +211,7 @@ type UserSetData struct {
 //########################################## 导航栏页面数据结构和模拟数据 #################################################
 
 type MyStatus struct {
+	Name       string `json:"name"`
 	Headimg    string `json:"headimg"`
 	Leave      int    `json:"leave"`
 	Credits    int    `json:"credits"`

@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 /*
 tempDate.go保存一些全局的数据,避免每次前端请求都查询一次数据库
 */
@@ -7,6 +9,7 @@ tempDate.go保存一些全局的数据,避免每次前端请求都查询一次�
 //更新所有tempDate,
 func initAllTempData() {
 	UpdateGoodsTypeTempDate()
+	UpdateUserRank()
 }
 
 //商品类型及标签的数据
@@ -20,8 +23,17 @@ var GoodsTypeTempDate = []GoodsType{
 	{"其他", []GoodsSubType{}},
 }
 
+var UserRank []Rank
+
 func UpdateGoodsTypeTempDate() {
 	for i := 0; i < len(GoodsTypeTempDate); i++ {
 		GetTagsData(GoodsTypeTempDate[i].Type, &GoodsTypeTempDate[i].List)
+	}
+}
+
+func UpdateUserRank() {
+	err := GetRankList(&UserRank)
+	if err != nil {
+		fmt.Println(err)
 	}
 }

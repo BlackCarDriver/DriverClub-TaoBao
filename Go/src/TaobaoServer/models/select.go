@@ -8,9 +8,20 @@ import (
 
 //获取主页商品的商品列表数据(不筛选)
 func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error {
+	var err error
+	var num int64
 	o := orm.NewOrm()
-	num, err := o.Raw(`select uid as userid, uname as username, gid as Id, gname as Name, title,
-	 	price, time, headimg from goods_list where state = 1`).QueryRows(g)
+	if gstype == "all" { //不筛选
+		num, err = o.Raw(`select * from v_hpgoodslist offset ?`, skip).QueryRows(g)
+		goto tail
+	}
+	if tag == "all" { //筛选类型
+		num, err = o.Raw(`select * from v_hpgoodslist where type=? offset ?`, gstype, skip).QueryRows(g)
+		goto tail
+	}
+	//筛选标签
+	num, err = o.Raw(`select * from v_hpgoodslist where type=? && tag=? offset`, gstype, tag, skip).QueryRows(g)
+tail:
 	if err != nil {
 		return err
 	}
@@ -47,13 +58,23 @@ func CountGoods() int {
 //获取某个类型的所有标签以及对应商品的数量
 func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	o := orm.NewOrm()
-	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(tag)
+	var tSubType []GoodsSubType
+	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(&tSubType)
 	if err != nil {
 		return err
 	}
 	if num == 0 {
 		return fmt.Errorf("the result is empty!")
 	}
+	var sum int64 = 0
+	for i := 0; i < len(tSubType); i++ {
+		sum += tSubType[i].Number
+	}
+	slice := make([]GoodsSubType, len(tSubType)+1)
+	copy(slice, []GoodsSubType{{"全部", sum}})
+	copy(slice[1:], tSubType)
+	*tag = make([]GoodsSubType, len(tSubType)+1)
+	copy(*tag, slice)
 	return nil
 }
 
@@ -72,12 +93,11 @@ func GetGoodsById(gid string, c *GoodsDetail) error {
 //获取某个用户的展示数据
 func GetUserData(uid string, u *UserMessage) error {
 	o := orm.NewOrm()
-	err := o.Raw(`select * from t_user where id = $1`, uid).QueryRow(&u)
+	err := o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&u)
 	if err != nil {
 		fmt.Println("GetOtherUserData error: ", err)
 		return err
 	}
-	fmt.Println(u)
 	return nil
 }
 
@@ -103,6 +123,64 @@ func GetMyCollectGoods(uid string, c *[]GoodsShort) error {
 	}
 	if num == 0 {
 		return fmt.Errorf("the result is empty!")
+	}
+	return nil
+}
+
+//获取我上传的商品数据
+func GetMyGoods(uid string, c *[]GoodsShort) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select * from v_mygoods where uid = ?`, uid).QueryRows(c)
+	if err != nil {
+		return err
+	}
+	if num == 0 {
+		return fmt.Errorf("the result is empty!")
+	}
+	return nil
+}
+
+//获取我关注的和关注我的用户数据
+func GetCareMeData(uid string, c *[2][]UserShort) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select * from v_concern where myid=?`, uid).QueryRows(c[0])
+	if err != nil {
+		return err
+	}
+	if num == 0 {
+		return fmt.Errorf("the result of c[0] is empty!")
+	}
+	num, err = o.Raw(`select myid as id, name, headimg from v_iconcern where id = ?`, uid).QueryRows(c[1])
+	if err != nil {
+		return err
+	}
+	if num == 0 {
+		return fmt.Errorf("the result of c[1] is empty!")
+	}
+	return nil
+}
+
+//获取排名信息
+func GetRankList(c *[]Rank) error {
+	o := orm.NewOrm()
+	num, err := o.Raw(`select * from v_rank`).QueryRows(c)
+	if err != nil {
+		return fmt.Errorf("GetMessage error: %v", err)
+	}
+	if num == 0 {
+		return fmt.Errorf("the result is empty!")
+	}
+	fmt.Println(c)
+	return nil
+}
+
+//获取导航栏我的信息框数据
+func GetNavingMsg(uid string, c *MyStatus) error {
+	o := orm.NewOrm()
+	err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c)
+	if err != nil {
+		fmt.Println("GetOtherUserData error: ", err)
+		return err
 	}
 	return nil
 }

@@ -46,9 +46,9 @@ GetMyMsg(username:string, tag:string){
 }
 
 //导航栏得到用户的数据
-GetNavigUser(username:string){
+GetNavigUser(userid:string){
   var url = this.addr + "/personal/data";
-  var postdata = {name:username, tag:"naving"};
+  var postdata = {name:userid, tag:"naving"};
   return this.http.post<MyStatus>(url, JSON.stringify(postdata), {withCredentials: true});
 }
 
@@ -80,6 +80,7 @@ SmallUpdate(tag:string, userid:string, targetid:string, strdata:string, intdata:
   var url = this.addr + "/smallupdate"; 
   return this.http.post<UpdateResult>(url, JSON.stringify(postdata));
 }
+
 
 // ================================== the following function reference to login or register ========================================================  
   

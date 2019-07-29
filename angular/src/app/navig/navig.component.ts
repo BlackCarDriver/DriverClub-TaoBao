@@ -35,7 +35,7 @@ let unsafe =-999;
 export class NavigComponent implements OnInit {
   data1 = new RegisterData();
   data2 = new LoginData();
-  username = "19070010";
+  userid = "19070010";
   usermsg = new  MyStatus();
   constructor(
     // private localdata: LocalStorage,
@@ -60,7 +60,7 @@ export class NavigComponent implements OnInit {
       alert("请正确输入信息");
       return;
     }
-    this.server.Entrance(this.username, "login", this.data2).subscribe(result=>{
+    this.server.Entrance(this.userid, "login", this.data2).subscribe(result=>{
         let loginresult = new RequertResult() ;
         loginresult = result
         if (loginresult.status > 0) {
@@ -81,7 +81,7 @@ export class NavigComponent implements OnInit {
   this.data1.password = $("#regpasw1").val();
   this.data1.email = $("#regemail").val();
   
-  this.server.Entrance(this.username, "CheckRegister", this.data1).subscribe(result=>{
+  this.server.Entrance(this.userid, "CheckRegister", this.data1).subscribe(result=>{
     let checkResult = new RequertResult();
     checkResult = result;
     if(checkResult.status==enable){
@@ -117,7 +117,7 @@ export class NavigComponent implements OnInit {
     alert("请输入正确的验证码！");
     return;
   }
-  this.server.Entrance(this.username, "confirmcode", this.data1).subscribe(result=>{
+  this.server.Entrance(this.userid, "confirmcode", this.data1).subscribe(result=>{
     let confirmResult = new RequertResult();
     if(confirmResult.status == scuess){ 
         alert("注册成功！");
@@ -201,7 +201,7 @@ $("#loginpassword").change(function(){
 });
 }
 
-//get username and password in the cookie and push the nin input box
+//get userid and password in the cookie and push the nin input box
 getloginmessage(){
   var ck = this.server.getCookie("BCDCNCK")
   if(ck=="")return;
@@ -212,20 +212,22 @@ getloginmessage(){
   $("#loginpassword").val(psw);
 }
 
-//load username from cookie if it is not empty then
+//load userid from cookie if it is not empty then
 //hide the login box, and show the user message box and require user short data
 setstate(){
-  this.username = "19070010";
-  // this.username = "blackcardriver"
-  if(this.username != ""){
+  this.userid = "19070010";
+  // this.userid = "blackcardriver"
+  if(this.userid != ""){
     $("#singin").addClass("hidden");
     $("#userbox").removeClass("hidden");
+    this.server.GetNavigUser(this.userid).subscribe(result=>{
+      this.usermsg = result;
+    });
   }else{
     $("#userbox").addClass("hidden");
     $("#singin").removeClass("hidden");
   }
 }
-
 
 // initiatly check the register input data before send to server
 checkRegister(){
@@ -257,12 +259,12 @@ clearcookie(){
   var clstr = new Date();
   clstr.setTime(clstr.getTime() + 0); 
   document.cookie = "BCDCNCK= ;expires="+clstr //name and password
-  document.cookie = "driverlei= ;expires="+clstr; //username
+  document.cookie = "driverlei= ;expires="+clstr; //userid
   document.cookie = "dvurst= ;expires="+clstr;  //time tag
 }
 
 /*
- //check the check box and choose to set username and password in cookie
+ //check the check box and choose to set userid and password in cookie
 setcookie(){
       if($("#remember").is(':checked')==false){
          //erase the cookie if checkbox value is false 

@@ -42,7 +42,8 @@ var MockTypeData = []GoodsType{
 
 //导航栏我的信息下拉框
 var MockMystatus = MyStatus{
-	"https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
+	"Blackcardriver",
+	"https://tb1.bdstatic.com/tb/电视剧.jpg",
 	122, 123213, 11, 33, "2019-22-22",
 }
 
@@ -66,11 +67,11 @@ var MockGoodsShort = []GoodsShort{
 
 //个人主页，我的消息
 var MockMyMessage = []MyMessage{
-	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
 }
 
 //个人主页，用户排名
