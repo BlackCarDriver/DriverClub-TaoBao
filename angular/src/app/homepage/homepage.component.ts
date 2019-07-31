@@ -28,7 +28,10 @@ export class HomepageComponent implements OnInit {
    diytype = GoodSubType[100];
    virtualtype = GoodSubType[100];
    othertype = GoodSubType[100];
-
+   //当前浏览的商品类型和标签
+   lookingtype = "all"; 
+   lookingtag="all";
+   lookingpage=1;
   constructor(
     private server : ServerService
   ) { }
@@ -41,11 +44,34 @@ export class HomepageComponent implements OnInit {
   }
   //获得在主页中显示的一页商品列表的数据
   GetGoods(){
-    this.server.GetHomePageGoods("all", "all", 0).subscribe(
+    this.server.GetHomePageGoods(this.lookingtype, this.lookingtag, this.lookingpage).subscribe(
       result => {
           this.goodsarray = result;
       })
   }
+
+  //按照特定类型和标签获取商品列表
+  GetSpecalGoods(type :string, tag:string){
+    this.lookingtype = type;
+    this.lookingtag = tag;
+    this.GetGoods();
+  }
+
+  //搜索框搜索
+  SearchGoods(){
+    let input :string =  $('#searchgoods').val();
+    if (input==""){
+      return;
+    }
+    if (input.length > 20) {
+      alert("名字太长！");
+      return;
+    }
+    this.lookingtype = "like";
+    this.lookingtag = input;
+    this.GetGoods();
+  }
+
   //获得商品的各个类型中包含的标签列表
   GetType(){
     this.server. GetHomePageType().subscribe(
@@ -63,7 +89,7 @@ export class HomepageComponent implements OnInit {
 
 set_mainbody_height(){
   var hight=  $(window).height();
-  $(".main-body").css("min-height",hight-240+"px")
+  $(".main-body").css("min-height",hight-240+"px");
 }
  
 collapse(id:string){

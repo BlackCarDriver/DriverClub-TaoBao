@@ -6,21 +6,27 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//获取主页商品的商品列表数据(不筛选)
+//获取主页商品的商品列表数据
 func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error {
 	var err error
 	var num int64
+	skip = (skip - 1) * 40
 	o := orm.NewOrm()
 	if gstype == "all" { //不筛选
 		num, err = o.Raw(`select * from v_hpgoodslist offset ?`, skip).QueryRows(g)
 		goto tail
 	}
-	if tag == "all" { //筛选类型
+	if gstype == "like" { //模糊搜索
+		tag = fmt.Sprintf("%%%s%%", tag)
+		num, err = o.Raw(`select distinct * from v_hpgoodslist where tag like ? or name like ? or title like ?`, tag, tag, tag).QueryRows(g)
+		goto tail
+	}
+	if tag == "全部" { //筛选类型
 		num, err = o.Raw(`select * from v_hpgoodslist where type=? offset ?`, gstype, skip).QueryRows(g)
 		goto tail
 	}
 	//筛选标签
-	num, err = o.Raw(`select * from v_hpgoodslist where type=? && tag=? offset`, gstype, tag, skip).QueryRows(g)
+	num, err = o.Raw(`select * from v_hpgoodslist where type=? and tag=? offset ?`, gstype, tag, skip).QueryRows(g)
 tail:
 	if err != nil {
 		return err
