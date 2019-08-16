@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 //########################################## 主页结构和模拟数据 ################################
 type Goods1 struct {
@@ -12,6 +15,8 @@ type Goods1 struct {
 	Time     string  `json:"time"`
 	Headimg  string  `json:"headimg"`
 	Title    string  `json:"title"`
+	Type     string  `json:"type"`
+	Tag      string  `json:"tag"`
 }
 
 //主页获取商品封面数据时提供的信息
@@ -50,6 +55,12 @@ type GoodsDetail struct {
 	Talk    int     `json:"talk"`
 	Collect int     `json:"collect"`
 	Detail  string  `json:"detail"`
+}
+
+type GoodsComment struct { //comment of goods
+	Username string    `json:"username"`
+	Time     time.Time `json:"time"`
+	Comment  string    `json:"comment"`
 }
 
 type GoodsPostBody struct {

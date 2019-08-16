@@ -13,7 +13,38 @@
     <div class="col-sm-3 head-picture">
         <img src={{goodsdt.headimg}} alt="head-image of goods">
     </div>
-    <div class="col-sm-4"> 
+    <div class="col-sm-5">
+        <div class="row">
+            <div class="col-sm-2 price">
+                <span class="glyphicon glyphicon-yen"></span>
+                <p>{{goodsdt.price}}</p>
+            </div>
+            <div class="col-sm-9">
+              <p class="tittle">{{goodsdt.name}}</p>
+            </div>
+        </div>
+        <div class="row title2">
+          <span class="glyphicon glyphicon-bullhorn">  {{goodsdt.title}}</span>
+        </div>
+        <div class="row btn-list">
+            <button type="button" class="btn btn-info" (click)="collect()"><span class="glyphicon glyphicon-heart"></span> 收藏 <span class="badge">{{goodsdt.collect}}</span></button>
+            <button type="button" class="btn btn-info" (click)="likeGoods()"><span class="glyphicon glyphicon-thumbs-up"></span> 点赞 <span class="badge">{{goodsdt.like}}</span></button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-sm">
+              <span class="glyphicon glyphicon-comment"></span> 私聊 <span class="badge">{{goodsdt.talk}} </span>
+            </button>
+            <!--模态框-->
+            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                  <div class="modal-content send-text-box">
+                      <textarea id="messagesender" type="text" class="form-control" placeholder="这里输入你想发送的私信..."></textarea>
+                      <button type="button"class="btn btn-info" (click)="sendMessage()">私聊</button>
+                  </div>
+                </div>
+            </div>
+        
+        </div>
+      </div>
+    <div class="col-sm-4">  
       <table class="table table-bordered">
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-user"></span></th>
@@ -33,50 +64,34 @@
           </tr>
           <tr class="my-tr">
             <th class="val"><span class="glyphicon glyphicon-thumbs-up"></span></th>
-            <th><p class="goodtag">{{goodsdt.like}}</p></th>
+            <th><p class="goodtag">{{goodsdt.type}}</p></th>
             <th class="val"><span class="glyphicon glyphicon-heart"></span></th>
-            <th><p class="goodtag">{{goodsdt.collect}}</p></th>
+            <th><p class="goodtag">{{goodsdt.tag}}</p></th>
           </tr>
       </table>
     </div>
-    <div class="col-sm-5">
-      <div class="row">
-          <div class="col-sm-3 price">
-              <span class="glyphicon glyphicon-yen"></span>
-              <p>{{goodsdt.price}}</p>
-          </div>
-          <div class="col-sm-7">
-            <p class="tittle">{{goodsdt.name}}</p>
-          </div>
-      </div>
-      <div class="row btn-list">
-          <button type="button" class="btn btn-info" (click)="collect()"><span class="glyphicon glyphicon-heart"></span> 收藏</button>
-          <button type="button" class="btn btn-info" (click)="likeGoods()"><span class="glyphicon glyphicon-thumbs-up"></span> 点赞</button>
-          <button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-sm">
-            <span class="glyphicon glyphicon-comment"></span> 发私信
-          </button>
-          <!--模态框-->
-          <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-              <div class="modal-dialog modal-sm" role="document">
-                <div class="modal-content send-text-box">
-                    <textarea id="messagesender" type="text" class="form-control" placeholder="这里输入你想发送的私信..."></textarea>
-                    <button type="button"class="btn btn-info" (click)="sendMessage()">发送私信</button>
-                </div>
-              </div>
-          </div>
-      
-      </div>
-      <div class="row title2">
-        <p>{{goodsdt.title}}</p>
-      </div>
-    </div>
+
 </div>
 
+<div class="container main-body textpage" > 
+    <div class="page-header">商品描述</div>
+    <p id="text-targer"></p>
+</div>
 
-<div class="container main-body textpage" id="text-targer"> <!--textpage-->
-<!--the following is adding -->  
-
-<!--the adding contain is over !-->
+<div class="container main-body textpage" > 
+    <div class="page-header">商品评论</div>
+    <div class="comment-row" *ngFor="let row of commentdata">
+        <div class="comment-row-header">
+          <div class="com-user">{{row.username}}</div><div class="com-time">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
+        </div>
+        <div class="comment-text">
+          {{row.comment}}
+        </div>
+      </div>
+    <div class="comment-pan">
+        <textarea class="com-input" id="comment-area"></textarea>
+        <button class="com-send" (click)="sendComment()">发送评论</button>
+    </div>
 </div>
 
 <app-footer></app-footer>

@@ -48,18 +48,25 @@ func (this *GoodsDetailController) Post() {
 	err = md.UpdateGoodsVisit(goodId)
 	if err != nil {
 		fmt.Println("update visit of goods fall!! ", err)
-	} else {
-		fmt.Println(goodId)
 	}
 	switch datatype {
-	case "goodsmessage":
+	case "goodsmessage": //base message
 		var gooddata md.GoodsDetail
 		err = md.GetGoodsById(goodId, &gooddata)
 		if err == nil {
 			this.Data["json"] = &gooddata
 			goto tail
 		}
+	case "goodscomment": //goods comment
+		var comment []md.GoodsComment
+		err = md.GetGoodsComment(goodId, &comment)
+		fmt.Println(comment)
+		if err == nil {
+			this.Data["json"] = comment
+			goto tail
+		}
 	}
+
 	//请求不规范或id找不到，应该或返回错误重定向
 	this.Data["json"] = "empty"
 tail:

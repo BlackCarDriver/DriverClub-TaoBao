@@ -1,14 +1,16 @@
-.main-body, .head-row{
+.main-body, .head-row {
     background-color: #fff;
     border: 1px solid #e6e6e6;
     padding-top: 25px;
     border-radius: 4px;
     margin-bottom: 20px;
 }
-.nopadbtm{
+
+.nopadbtm {
     margin-bottom: 0px;
 }
-.head-picture{
+
+.head-picture {
     height: 170px;
     width: 170px;
     border: 1px solid rgba(142, 137, 137, 0.25);
@@ -16,61 +18,145 @@
     margin-left: 20px;
     padding: 0px;
 }
-.head-picture img{
+
+.head-picture img {
     height: 100%;
-    width:100%;
+    width: 100%;
 }
-.table2{
+
+.table2 {
     position: relative;
     top: -21px;
 }
-.goodtag{
-    display:inline-block;
+
+.goodtag {
+    display: inline-block;
     margin-left: 10px;
     margin-bottom: 4px;
 }
-.price{
-    color: #ff6104;
+
+.price {
+    color: #ff554d;
     font-weight: 600;
-    font-size: 2em;
-    width: 150px;
+    font-size: 2.1em;
 }
-.price p{
+
+.price p {
     display: inline-block;
 }
-.my-tr .val{
+
+.my-tr .val {
     width: 40px;
 }
-.tittle{
+
+.tittle {
     color: rgba(255, 16, 4, 0.71);
-    top: -10px;
     position: relative;
     font-size: 2.4em;
     font-weight: 600;
 }
-.btn-list button{
+
+.btn-list button {
     margin-left: 20px;
     width: 90px;
 }
-.textpage{
-    padding: 30px;
+
+.textpage {
+    padding: 5px 20px;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+    border-left-color: #5bc0de;
 }
-.send-text-box{
+
+.send-text-box {
     width: 400px;
     height: 200px;
     padding: 6px;
     background-color: aliceblue;
 }
+
 .send-text-box textarea {
     height: 150px;
 }
-.send-text-box button{
+
+.send-text-box button {
     float: right;
     margin: 4px 10px;
     height: 30px;
 }
-.title2{
-    padding: 30px;
+
+.title2 {
     font-size: 1.3em;
-    overflow: hidden;
+    color: #ff554d;
+    font-weight: bold;
+    padding: 5px;
+    position: relative;
+    bottom: 10px;
+    left: 10px;
+}
+
+.page-header {
+    border-bottom: 1px solid #dbd4d4;
+    margin: 10px;
+    padding: 2px;
+    font-size: 2em;
+}
+
+.comment-row {
+    padding: 2px;
+    margin: 6px 2px;
+}
+
+.comment-row-header {
+    width: 100%;
+}
+
+.com-user {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: blue;
+    display: inline-block;
+    width: 300px;
+}
+
+.com-time {
+    margin: 2px;
+    display: inline-block;
+    color: #999494;
+}
+
+.comment-text {
+    min-height: 30px;
+    border-bottom: 1px solid #dee7f0;
+    margin-bottom: 10px;
+}
+
+.comment-row td {
+    display: inline;
+}
+
+.comment-pan {
+    clear: both;
+}
+
+.comment-pan .com-input {
+    min-height: 60px;
+    background-color: beige;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px dotted brown;
+    margin-bottom: 10px;
+    display: block;
+    width: 100%;
+}
+
+.comment-pan .com-send {
+    float: right;
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    height: 30px;
+    width: 90px;
 }

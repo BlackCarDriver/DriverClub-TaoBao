@@ -176,7 +176,6 @@ func GetRankList(c *[]Rank) error {
 	if num == 0 {
 		return fmt.Errorf("the result is empty!")
 	}
-	fmt.Println(c)
 	return nil
 }
 
@@ -187,6 +186,16 @@ func GetNavingMsg(uid string, c *MyStatus) error {
 	if err != nil {
 		fmt.Println("GetOtherUserData error: ", err)
 		return err
+	}
+	return nil
+}
+
+//get comment data of a goods
+func GetGoodsComment(goodsid string, c *[]GoodsComment) error {
+	o := orm.NewOrm()
+	_, err := o.Raw(`select u.name as "username", c.time as "time", c.content as "comment" from t_user as u, t_comment as c where u.id=c.userid and c.goodsid=?`, goodsid).QueryRows(c)
+	if err != nil {
+		return fmt.Errorf("Get comment fail: %v", err)
 	}
 	return nil
 }

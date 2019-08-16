@@ -11,19 +11,27 @@ import { asElementData } from '@angular/core/src/view';
 export class GoodspageComponent implements OnInit {
   //一个类不可以只声明，然后直接用，否则出现undefine error
   goodsdt = new GoodsDetail;
-  userid = "00001"
+  userid = "00001"    //当前浏览者的id
   goodid = "";
+  commentdata : comment[] = []; 
+
   constructor(private server : ServerService) { }
   ngOnInit() {
     let rawStr = window.location.pathname;
     this.goodid = rawStr.substring(13,23);
     this.getItPage(this.goodid);
+    this.getComment(this.goodid);
   } 
 
   getItPage(id:string){
     this.server.GetGoodsDeta(id, "goodsmessage").subscribe(result=>{
       this.goodsdt = result;
       $("#text-targer").html(this.goodsdt.detail);
+    });
+  }
+  getComment(gid:string){
+    this.server.GetGoodsDeta(gid, "goodscomment").subscribe(result=>{
+      this.commentdata = result;
     });
   }
   
@@ -64,5 +72,30 @@ export class GoodspageComponent implements OnInit {
       }
     });
   }
+  //发表评论
+  sendComment() {
+    let tre = new UpdateResult;
+    let comment : string;
+    comment = $("#comment-area").val().toString();
+    if (comment==""){
+      alert("内容不能为空");
+      return;
+    }
+    alert(comment);
+    //检查
+    this.server.SmallUpdate("addcomment", this.userid, this.goodid, comment, 0).subscribe(result => {
+      tre = result;
+      if (tre.status >= 0) {
+        alert("关注成功！");
+      } else {
+        alert(tre.describe);
+      }
+    });
+  }
+}
 
+type comment = {
+   time:string;
+   username:string;
+   comment:string;
 }

@@ -144,7 +144,7 @@ func (this *UpdateController) Post() {
 	tag := postBody.Tag
 	switch tag {
 	case "likegoods": //商品点赞
-		err = md.UpdateGoodsLike(postBody.TargetId)
+		err = md.AddGoodsLike(postBody.UserId, postBody.TargetId)
 		if err == nil {
 			result.Status = 0
 			goto tail
@@ -168,7 +168,7 @@ func (this *UpdateController) Post() {
 		result.Status = -1
 		result.Describe = fmt.Sprintf("收藏失败: %s", err)
 	case "likeuser": //个人信息页面点赞
-		err = md.UpdateUserLike(postBody.TargetId)
+		err = md.AddUserLike(postBody.UserId, postBody.TargetId)
 		if err == nil {
 			result.Status = 0
 			goto tail
@@ -183,6 +183,15 @@ func (this *UpdateController) Post() {
 		}
 		result.Status = -1
 		result.Describe = fmt.Sprintf("关注失败： %s", err)
+	case "addcomment": // reviews a goods
+		err = md.AddGoodsComment(postBody.UserId, postBody.TargetId, postBody.StrData)
+		if err == nil {
+			result.Status = 0
+		} else {
+			result.Status = -1
+			result.Describe = fmt.Sprintf("评论失败: %v", err)
+		}
+		goto tail
 	default:
 		fmt.Println(tag)
 	}

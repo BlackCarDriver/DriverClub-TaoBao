@@ -54,36 +54,6 @@ func UpdateUserHeadIMg(imgurl, userid string) error {
 	return nil
 }
 
-//某商品被点赞，点赞数加1
-func UpdateGoodsLike(gid string) error {
-	o := orm.NewOrm()
-	rawSeter := o.Raw(`update t_goods set "like" = "like" + 1 where id = ?`, gid)
-	result, err := rawSeter.Exec()
-	if err != nil {
-		return err
-	}
-	effect, _ := result.RowsAffected()
-	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
-	}
-	return nil
-}
-
-//某人被点赞，点赞数加1
-func UpdateUserLike(uid string) error {
-	o := orm.NewOrm()
-	rawSeter := o.Raw(`UPDATE t_user SET likes= likes+1 WHERE id = ?`, uid)
-	result, err := rawSeter.Exec()
-	if err != nil {
-		return err
-	}
-	effect, _ := result.RowsAffected()
-	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
-	}
-	return nil
-}
-
 //主页被浏览，更新浏览量
 func UpdateUserVisit(uid string) error {
 	o := orm.NewOrm()

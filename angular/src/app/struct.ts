@@ -42,6 +42,8 @@ export class GoodsDetail {
     collect:number;     //precial
     talk:number;        //precial
     detail:string;
+    type:string;
+    tag:string;
 }
 
 //#########################  personal  ######################################################

@@ -19,14 +19,14 @@ var MockGoodsMessage = GoodsDetail{
 
 //首页封面 模拟数据
 var MockGoodsData = []Goods1{
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 140, "120", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 140, "120", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 140, "120", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 140, "120", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", "", "", ""},
+	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", "", "", ""},
 }
 
 //首页分类 模拟数据
@@ -47,7 +47,7 @@ var MockMystatus = MyStatus{
 	122, 123213, 11, 33, "2019-22-22",
 }
 
-//个人主页，用户数据
+//个人主页,用户数据
 var MockUserMessage = UserMessage{
 	"https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
 	"BlackCarDriver", "id123345", "sexboy", "sign:it is sing",
@@ -56,7 +56,7 @@ var MockUserMessage = UserMessage{
 	3453, 56756, 6789, 55,
 }
 
-//个人主页，我的商品
+//个人主页,我的商品
 var MockGoodsShort = []GoodsShort{
 	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 123.123},
 	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 0.9},
@@ -65,7 +65,7 @@ var MockGoodsShort = []GoodsShort{
 	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 13},
 }
 
-//个人主页，我的消息
+//个人主页,我的消息
 var MockMyMessage = []MyMessage{
 	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
 	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
@@ -74,12 +74,12 @@ var MockMyMessage = []MyMessage{
 	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
 }
 
-//个人主页，用户排名
+//个人主页,用户排名
 var MockRank = []Rank{
 	{1, "Driver", "12322"}, {2, "DDridd", "123222"}, {3, "openid", "123421"},
 }
 
-//个人主页，我关注的和关注我的数据
+//个人主页,我关注的和关注我的数据
 var MockCare = [2][]UserShort{
 	{{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
 		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},

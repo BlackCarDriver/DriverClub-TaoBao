@@ -104,7 +104,6 @@ func AddUserConcern(id1, id2 string) error {
 	var err error
 	var result sql.Result
 	count := 0
-	fmt.Println(id1, id2)
 	err = o.Raw(`SELECT count(*) FROM t_concern where id1=? and id2=?`, id1, id2).QueryRow(&count)
 	if err != nil {
 		return fmt.Errorf("Error when select from t_concern: %s", err)
@@ -113,6 +112,54 @@ func AddUserConcern(id1, id2 string) error {
 		return fmt.Errorf("You are already concern it user!")
 	}
 	result, err = o.Raw(`INSERT INTO t_concern(id1, id2)VALUES (?, ?)`, id1, id2).Exec()
+	if err != nil {
+		return err
+	}
+	effect, _ := result.RowsAffected()
+	if effect == 0 {
+		return fmt.Errorf("No Roow Affected !")
+	}
+	return nil
+}
+
+//insert a goods_like record
+func AddGoodsLike(uid, gid string) error {
+	o := orm.NewOrm()
+	var err error
+	var result sql.Result
+	result, err = o.Raw(`INSERT INTO public.t_goods_like(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
+	if err != nil {
+		return err
+	}
+	effect, _ := result.RowsAffected()
+	if effect == 0 {
+		return fmt.Errorf("No Roow Affected !")
+	}
+	return nil
+}
+
+//save a user_like record
+func AddUserLike(uid1, uid2 string) error {
+	o := orm.NewOrm()
+	var err error
+	var result sql.Result
+	result, err = o.Raw(`INSERT INTO public.t_user_like(userid1, userid2)VALUES (?, ?)`, uid1, uid2).Exec()
+	if err != nil {
+		return err
+	}
+	effect, _ := result.RowsAffected()
+	if effect == 0 {
+		return fmt.Errorf("No Roow Affected !")
+	}
+	return nil
+}
+
+//save a goods comment
+func AddGoodsComment(uid, gid, conetnt string) error {
+	o := orm.NewOrm()
+	var err error
+	var result sql.Result
+	result, err = o.Raw(`INSERT INTO public.t_comment(userid, goodsid, content)VALUES (?, ?, ?)`, uid, gid, conetnt).Exec()
 	if err != nil {
 		return err
 	}

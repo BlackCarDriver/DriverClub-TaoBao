@@ -96,7 +96,7 @@
 }
 .good-user{
     float: left;
-    margin-left: 35px;
+    margin-left: 25px;
     margin-bottom: 4px;
     font-size: 0.9em;
     overflow: hidden;
@@ -211,3 +211,8 @@
     padding: 1px;
 }
 /* ==================================================== */
+
+.label{
+    position: relative;
+    left: 10px;
+}
