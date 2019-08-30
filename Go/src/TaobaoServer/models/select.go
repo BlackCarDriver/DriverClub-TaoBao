@@ -91,8 +91,7 @@ func GetGoodsById(gid string, c *GoodsDetail) error {
 	if err != nil {
 		return err
 	}
-	//还需要加入收藏数量和评论数量信息
-	//还需要转换时间格式
+	fmt.Println(c.Time)
 	return nil
 }
 

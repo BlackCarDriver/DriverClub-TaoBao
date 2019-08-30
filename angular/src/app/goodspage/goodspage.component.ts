@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {GoodsDetail ,UpdateResult} from'../struct';
 import{ServerService} from'../server.service';
-import { asElementData } from '@angular/core/src/view';
-
 @Component({
   selector: 'app-goodspage',
   templateUrl: './goodspage.component.html',

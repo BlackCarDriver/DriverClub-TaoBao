@@ -1,10 +1,12 @@
 package models
 
+import "time"
+
 //商品主页数据
 var MockGoodsMessage = GoodsDetail{
 	Headimg: "https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
 	Userid:  "4444444",
-	Time:    "4444-44-44",
+	Time:    time.Now(),
 	Price:   44.44,
 	Id:      "000043",
 	Name:    "错误名字",
@@ -15,18 +17,6 @@ var MockGoodsMessage = GoodsDetail{
 	Talk:    44444,
 	Collect: 44444,
 	Detail:  `<div style="color: rgb(212, 212, 212); background-color: rgb(30, 30, 30); font-family: Consolas, &quot;Courier New&quot;, monospace; font-size: 13px; line-height: 18px; white-space: pre;"><div><div style="color: rgb(212, 212, 212); line-height: 18px;"><br><br><br><br><br><br><div style="color: rgb(212, 212, 212); line-height: 18px;"><span style="color: #d4d4d4;">asdfasdf</span></div><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div></div></div>`,
-}
-
-//首页封面 模拟数据
-var MockGoodsData = []Goods1{
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 140, "120", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 140, "120", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 100.3, "123123", "", "", "", ""},
-	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "BlackCardriver", "2019-2-10", "adsfasdf阿斯顿发生大发大法第三方", 120.3, "1231", "", "", "", ""},
 }
 
 //首页分类 模拟数据
@@ -67,11 +57,7 @@ var MockGoodsShort = []GoodsShort{
 
 //个人主页,我的消息
 var MockMyMessage = []MyMessage{
-	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
-	{"19070010", "2019-10-10", "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
+	{"19070010", time.Now(), "BlackCarDriver", "Hello！", "I will give you ten yuan...", "https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg"},
 }
 
 //个人主页,用户排名
@@ -82,11 +68,6 @@ var MockRank = []Rank{
 //个人主页,我关注的和关注我的数据
 var MockCare = [2][]UserShort{
 	{{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
-		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
-		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
-		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
-	},
-	{
 		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
 		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},
 		{"https://avatar.csdn.net/0/E/6/3_blackcardriver.jpg", "BlackCarDriver", "123123"},

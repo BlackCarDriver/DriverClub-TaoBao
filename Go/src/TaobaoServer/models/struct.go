@@ -7,16 +7,16 @@ import (
 
 //########################################## 主页结构和模拟数据 ################################
 type Goods1 struct {
-	Userid   string  `json:"userid"`
-	Username string  `json:"username"`
-	Id       string  `json:"id"`
-	Name     string  `json:"name"`
-	Price    float64 `json:"price"`
-	Time     string  `json:"time"`
-	Headimg  string  `json:"headimg"`
-	Title    string  `json:"title"`
-	Type     string  `json:"type"`
-	Tag      string  `json:"tag"`
+	Userid   string    `json:"userid"`
+	Username string    `json:"username"`
+	Id       string    `json:"id"`
+	Name     string    `json:"name"`
+	Price    float64   `json:"price"`
+	Time     time.Time `json:"time"`
+	Headimg  string    `json:"headimg"`
+	Title    string    `json:"title"`
+	Type     string    `json:"type"`
+	Tag      string    `json:"tag"`
 }
 
 //主页获取商品封面数据时提供的信息
@@ -41,20 +41,20 @@ type GoodsSubType struct {
 //########################################## 商品详情页面结构体和模拟数据 #################################################
 
 type GoodsDetail struct {
-	Headimg string  `json:"headimg"`
-	Userid  string  `json:"userid"`
-	Time    string  `json:"time"`
-	Title   string  `json:"title"`
-	Type    string  `json:"type"`
-	Tag     string  `json:"tag"`
-	Price   float64 `json:"price"`
-	Id      string  `json:"id"`
-	Name    string  `json:"name"`
-	Visit   int     `json:"visit"`
-	Like    int     `json:"like"`
-	Talk    int     `json:"talk"`
-	Collect int     `json:"collect"`
-	Detail  string  `json:"detail"`
+	Headimg string    `json:"headimg"`
+	Userid  string    `json:"userid"`
+	Time    time.Time `json:"time"`
+	Title   string    `json:"title"`
+	Type    string    `json:"type"`
+	Tag     string    `json:"tag"`
+	Price   float64   `json:"price"`
+	Id      string    `json:"id"`
+	Name    string    `json:"name"`
+	Visit   int       `json:"visit"`
+	Like    int       `json:"like"`
+	Talk    int       `json:"talk"`
+	Collect int       `json:"collect"`
+	Detail  string    `json:"detail"`
 }
 
 type GoodsComment struct { //comment of goods
@@ -117,12 +117,12 @@ type GoodsShort struct {
 }
 
 type MyMessage struct {
-	Id      string `json:"id"`
-	Time    string `json:"time"`
-	Name    string `json:"name"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
-	Headimg string `json:"headimg"`
+	Id      string    `json:"id"`
+	Time    time.Time `json:"time"`
+	Name    string    `json:"name"`
+	Title   string    `json:"title"`
+	Content string    `json:"content"`
+	Headimg string    `json:"headimg"`
 }
 
 type User struct {

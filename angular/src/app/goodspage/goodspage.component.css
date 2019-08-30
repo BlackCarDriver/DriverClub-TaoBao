@@ -1,4 +1,4 @@
-.main-body, .head-row {
+.main-body {
     background-color: #fff;
     border: 1px solid #e6e6e6;
     padding-top: 25px;
@@ -6,59 +6,87 @@
     margin-bottom: 20px;
 }
 
+.gp-head {
+    background-color: #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 4px;
+    padding: 3px;
+    margin-bottom: 20px;
+}
+
+.gp-img {
+    display: inline-block;
+    padding: 0px;
+    height: 300px;
+}
+
+.gp-mid {
+    height: 300px;
+    padding: 1em;
+}
+
+.gp-right {
+    height: 300px;
+}
+
+.gp-mid-name {
+    font-size: 2em;
+    color: #797777;
+    font-weight: bold;
+}
+.gp-mid-name::before {
+    content: "名称： ";
+    font-size: 0.6em;
+    width: 100px;
+}
+.gp-mid-lbrow{
+    height: 2em; 
+}
+.gp-mid-price {
+    padding: 10px 20px;
+    background-color: #ffebeb;
+    font-size: 2em;
+    color: #ff554d;
+    border-radius: 4px;
+}
+.gp-mid-price::before{
+    content: "转让价： ￥";
+    font-size: 0.6em;
+    width: 100px;
+}
+.label {
+    margin: 5px;
+    font-size: 0.9em;
+}
+
+.gp-mid-desc {
+    padding: 10px 20px;
+    background-color: #f1f2ff;
+    font-size: 1.3em;
+    color: #0e909b;
+    height: 3em;
+    margin-top: 1em;
+    border-radius: 4px;
+}
+.gp-mid-desc::before{
+    content: "标题： ";
+    font-size: 0.6;
+}
+.pg-mid-butrow {
+    margin: 6px;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.pg-mid-butrow button {
+    margin-right: 1em;
+    padding: 6px 10px;
+}
+
 .nopadbtm {
     margin-bottom: 0px;
-}
-
-.head-picture {
-    height: 170px;
-    width: 170px;
-    border: 1px solid rgba(142, 137, 137, 0.25);
-    margin-bottom: 20px;
-    margin-left: 20px;
-    padding: 0px;
-}
-
-.head-picture img {
-    height: 100%;
-    width: 100%;
-}
-
-.table2 {
-    position: relative;
-    top: -21px;
-}
-
-.goodtag {
-    display: inline-block;
-    margin-left: 10px;
-    margin-bottom: 4px;
-}
-
-.price {
-    color: #ff554d;
-    font-weight: 600;
-    font-size: 2.1em;
-}
-
-.price p {
-    display: inline-block;
-}
-
-.my-tr .val {
-    width: 40px;
-}
-
-.tittle {
-    color: rgba(255, 16, 4, 0.71);
-    position: relative;
-    font-size: 2.4em;
-    font-weight: 600;
-}
-
-.btn-list button {
-    margin-left: 20px;
-    width: 90px;
 }
 
 .textpage {
@@ -81,19 +109,10 @@
 }
 
 .send-text-box button {
-    float: right;
-    margin: 4px 10px;
-    height: 30px;
-}
-
-.title2 {
-    font-size: 1.3em;
-    color: #ff554d;
-    font-weight: bold;
-    padding: 5px;
-    position: relative;
-    bottom: 10px;
-    left: 10px;
+    margin-right: 1em;
+    padding: 6px 10px;
+    height: 40px;
+    width: 90px;
 }
 
 .page-header {
