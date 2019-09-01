@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ServerService} from '../server.service';
-import {  UploadAnyResult,GoodsType,GoodSubType, UploadGoods } from '../struct';
-import { elementStyleProp } from '@angular/core/src/render3';
+import { GoodsType,GoodSubType, UploadGoods } from '../struct';
 declare var $: any;
 
 
