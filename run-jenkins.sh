@@ -21,6 +21,11 @@ sh -c 'cd /go/src && go build TaobaoServer/main.go'
 
 if [ $? -ne 0 ]; then exit 2; fi
 
+# stop old container
+tmpval=$( sudo docker ps | grep 'market-server')
+if [  ${#tmpval} != 0  ]; then docker stop market-server && sleep 3s && echo 'kill rinning market-server' ; fi
+unset tmpval
+
 # go run 
 docker run \
 --rm -d \
