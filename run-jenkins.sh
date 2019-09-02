@@ -23,7 +23,7 @@ if [ $? -ne 0 ]; then exit 2; fi
 
 # go run 
 docker run \
---rm -d \
+--rm \
 --name market-setver \
 -v /home/ubuntu/DockerWorkPlace/jenkins/jenkins_home/workspace/market/Go/src:/workplace \
 -p 4749:4747 \
