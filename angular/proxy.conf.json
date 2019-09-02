@@ -1,11 +1,11 @@
 {
-    "/market": {
-      "target": "http://blackcardriver.cn:4749",
+    "/taobaoserver": {
+      "target": "http://localhost:4749",
       "logLevel": "debug",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {
-        "^/market": ""
+        "^/taobaoserver": ""
       }
     }
 }
