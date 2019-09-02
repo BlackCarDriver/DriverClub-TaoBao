@@ -1,11 +1,11 @@
 {
-    "/server": {
-      "target": "http://localhost:4747",
+    "/market": {
+      "target": "http://blackcardriver.cn:4749",
       "logLevel": "debug",
       "secure": false,
       "changeOrigin": true,
       "pathRewrite": {
-        "^/server": ""
+        "^/market": ""
       }
     }
 }
