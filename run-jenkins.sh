@@ -25,7 +25,7 @@ if [ $? -ne 0 ]; then exit 2; fi
 docker run \
 --rm -d \
 --name market-setver \
--v $PWD:/workplace \
+-v /home/ubuntu/DockerWorkPlace/jenkins/jenkins_home/workspace/market/Go/src:/workplace \
 -p 4749:4747 \
 alpine:latest \
 sh -c 'cp /workplace/main /workplace/TaobaoServer/main && cd /workplace/TaobaoServer && ./main'
