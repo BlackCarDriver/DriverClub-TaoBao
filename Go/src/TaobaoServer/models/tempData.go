@@ -1,6 +1,6 @@
 package models
 
-import "fmt"
+import "github.com/astaxie/beego/logs"
 
 /*
 tempDate.go保存一些全局的数据,避免每次前端请求都查询一次数据库
@@ -34,6 +34,6 @@ func UpdateGoodsTypeTempDate() {
 func UpdateUserRank() {
 	err := GetRankList(&UserRank)
 	if err != nil {
-		fmt.Println(err)
+		logs.Error(err)
 	}
 }

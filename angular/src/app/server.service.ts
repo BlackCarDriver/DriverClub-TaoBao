@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {  HomePageGoods , GoodsType,UploadAnyResult,UploadIImgResult,UploadGoods,UserMessage } from '../app/struct';
-import {  RequertResult, MyStatus, UpdateResult} from '../app/struct';
+import {  RequertResult, MyStatus, UpdateResult,RequestProto,ReplyProto} from '../app/struct';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,8 +9,10 @@ import {  RequertResult, MyStatus, UpdateResult} from '../app/struct';
 export class ServerService {
 
   //important config !!!
-//本地开发配置
- private addr: string  = "/taobaoserver"
+  //线上运行配置
+  // private addr: string  = "/taobaoserver"
+  //本地开发配置
+  private addr: string  = "/localserver"
  //服务器配置
   // private addr: string  = "https://www.blackcardriver.cn/server"
   constructor( 
@@ -31,12 +33,12 @@ GetHomePageType(){
   return this.http.get<GoodsType[]>(url);
 }
 
-//商品详情页面获取数据接口
-GetGoodsDeta(id:string, type:string){
+//get all kind of data in goodspage 🍌
+GetGoodsDeta(request : RequestProto){
     var url = this.addr+"/goodsdeta";
-    var data = {goodid:id, datatype:type}
-    return this.http.post<any>(url,JSON.stringify(data));
+    return this.http.post<ReplyProto>(url,JSON.stringify(request));
 }
+
 
 //个人主页里得到各种信息的数据接口
 GetMyMsg(username:string, tag:string){

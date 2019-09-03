@@ -1,0 +1,70 @@
+2019/09/03 15:31:37.407 [E] [router.go:835]  Can't get api or goodsid from request data
+2019/09/03 15:31:37.412 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|      5.015ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:31:37.440 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    21.0552ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:31:37.463 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    43.1194ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:31:37.465 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    45.1239ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.901 [I] [router.go:835]  Do something...
+2019/09/03 15:32:25.902 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    25.0662ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.940 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    64.1716ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.957 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    80.2129ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.964 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    86.2293ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:34:55.234 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    12.0277ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:34:55.241 [I] [router.go:835]  Do something...
+2019/09/03 15:34:55.260 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    38.0996ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:34:55.263 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    42.1103ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:34:55.275 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    54.1423ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:36.576 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    14.0365ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:35:36.587 [I] [router.go:835]  Do something...
+2019/09/03 15:35:36.589 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    28.0751ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:36.598 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    35.0934ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:36.640 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    77.3274ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:39.852 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     9.0236ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:35:39.862 [I] [router.go:835]  Do something...
+2019/09/03 15:35:39.863 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    24.0635ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:39.881 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    44.6246ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:39.897 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    61.1691ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:02.107 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    30.6872ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:38:02.121 [I] [router.go:835]  Do something...
+2019/09/03 15:38:02.130 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    54.7499ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:02.122 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     47.741ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:02.128 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    54.7542ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:23.641 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     9.2715ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:38:23.655 [I] [router.go:835]  Do something...
+2019/09/03 15:38:23.656 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    23.3075ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:23.664 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    32.3337ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:23.690 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    61.4097ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:27.833 [I] [router.go:835]  Do something...
+2019/09/03 15:40:27.836 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     21.056ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:27.834 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    19.0515ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:40:27.845 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    30.0796ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:27.861 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    50.1354ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:40.705 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    17.0432ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:40:40.707 [I] [router.go:835]  Do something...
+2019/09/03 15:40:40.712 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    23.0626ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:40.725 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    37.0991ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:40.731 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    43.1146ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:41:25.177 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    11.0289ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:41:25.187 [I] [router.go:835]  Do something...
+2019/09/03 15:41:25.188 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    22.0591ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:41:25.188 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    33.0863ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:41:25.196 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    32.0866ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:46:06.786 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     2.0015ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:46:06.812 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    13.0343ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:46:06.828 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    44.8679ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:46:50.886 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     2.0135ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:46:50.912 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    30.0813ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:46:50.919 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    14.0378ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:47:09.275 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     8.0362ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:47:09.295 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    19.2035ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:47:09.309 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    42.2575ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:47:19.098 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:47:19.116 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    20.0512ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:47:19.134 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    12.0346ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:47:46.207 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:47:46.227 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    22.0591ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:47:46.243 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    11.0298ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:55:07.780 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    14.0369ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:55:07.787 [I] [router.go:835]  Do something...
+2019/09/03 15:55:07.788 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    22.0603ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:55:07.793 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    28.0755ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:55:07.796 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    31.0827ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta

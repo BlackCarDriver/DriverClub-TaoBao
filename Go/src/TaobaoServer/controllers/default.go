@@ -8,6 +8,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego"
 )
 
@@ -23,6 +25,7 @@ var (
 )
 
 func init() {
+	beego.SetLogger("file", `{"filename":"logs/test.log"}`)
 	random = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
@@ -74,17 +77,20 @@ func (this *TestController) Get() {
 func (this *UploadImagesController) Post() {
 	f, h, err := this.GetFile("file")
 	if err != nil {
+		logs.Error(err)
 		this.Data["json"] = md.CreateUploadRes(-100, err, "")
 		goto tail
 	}
 	h.Filename, err = CheckImgName(h.Filename)
 	if err != nil {
+		logs.Error(err)
 		this.Data["json"] = md.CreateUploadRes(-200, err, "")
 		goto tail
 	}
 	defer f.Close()
 	err = this.SaveToFile("file", imgPath+h.Filename)
 	if err != nil {
+		logs.Error(err)
 		this.Data["json"] = md.CreateUploadRes(-300, err, "")
 		goto tail
 	}
@@ -98,9 +104,11 @@ tail:
 func Parse(data interface{}, container interface{}) error {
 	tdata, err := json.Marshal(data)
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	err = json.Unmarshal(tdata, container)
+	logs.Error(err)
 	return err
 }
 
@@ -119,15 +127,21 @@ func GetRandomString(l int) string {
 func CheckImgName(filename string) (newName string, err error) {
 	c := strings.Count(filename, ".")
 	if c > 1 {
-		return "", fmt.Errorf("Comma numbers in image name more than one!")
+		err := fmt.Errorf("Comma numbers in image name more than one!")
+		logs.Error(err)
+		return "", err
 	}
 	l := strings.LastIndex(filename, ".")
 	if l < 0 {
-		return "", fmt.Errorf("No comma in the image name!")
+		err := fmt.Errorf("No comma in the image name!")
+		logs.Error(err)
+		return "", err
 	}
 	suffix := strings.ToLower(filename[l+1:])
 	if suffix != "png" && suffix != "jpg" {
-		return "", fmt.Errorf("not an png or jpg type images!")
+		err := fmt.Errorf("not an png or jpg type images!")
+		logs.Error(err)
+		return "", err
 	}
 	return GetRandomString(10) + "." + suffix, nil
 }
@@ -138,7 +152,7 @@ func (this *UpdateController) Post() {
 	result := md.UpdateResult{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		fmt.Println("error : ", err)
+		logs.Error(err)
 		return
 	}
 	tag := postBody.Tag
@@ -188,6 +202,7 @@ func (this *UpdateController) Post() {
 		if err == nil {
 			result.Status = 0
 		} else {
+			logs.Error(err)
 			result.Status = -1
 			result.Describe = fmt.Sprintf("评论失败: %v", err)
 		}

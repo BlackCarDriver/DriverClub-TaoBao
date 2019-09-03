@@ -22,10 +22,10 @@
         {{goodsdt.title}}
     </div>
     <div class="pg-mid-butrow">
-      <button type="button" class="btn btn-info" (click)="collect()">
-        <span class="glyphicon glyphicon-heart"></span> 收藏 </button>
-      <button type="button" class="btn btn-info" (click)="likeGoods()">
-        <span class="glyphicon glyphicon-thumbs-up"></span> 点赞 </button>
+      <button type="button" class="btn btn-info" (click)="collect()" id="collect-btn">
+        <span class="glyphicon glyphicon-heart"></span>{{collectbtnshow}}</button>
+      <button type="button" class="btn btn-info" (click)="likeGoods()" id="like-btn">
+        <span class="glyphicon glyphicon-thumbs-up"></span>{{likebtnshow}}</button>
       <button type="button" class="btn btn-info" data-toggle="modal"
         data-target=".bs-example-modal-sm">
         <span class="glyphicon glyphicon-comment"></span> 私聊
@@ -66,8 +66,7 @@
   <div class="page-header">商品评论</div>
   <div class="comment-row" *ngFor="let row of commentdata">
     <div class="comment-row-header">
-      <div class="com-user">{{row.username}}</div><div class="com-time">{{row.time
-        | date:'yyyy-MM-dd hh:mm'}}</div>
+      <div class="com-user">{{row.username}}</div><div class="com-time">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
     </div>
     <div class="comment-text">
       {{row.comment}}

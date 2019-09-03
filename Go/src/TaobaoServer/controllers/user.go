@@ -4,6 +4,8 @@ import (
 	md "TaobaoServer/models"
 	"encoding/json"
 	"fmt"
+
+	"github.com/astaxie/beego/logs"
 )
 
 //个人详情页面或其他用户主页信息获取接口
@@ -11,6 +13,7 @@ func (this *PersonalDataController) Post() {
 	postBody := md.PersonalPostBody{}
 	var err error
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		logs.Error(err)
 		return
 	}
 	userName := postBody.Name
@@ -23,7 +26,7 @@ func (this *PersonalDataController) Post() {
 		var data md.UserMessage
 		err = md.GetUserData(userName, &data)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 			this.Data["json"] = ""
 			goto tail
 		}
@@ -34,7 +37,7 @@ func (this *PersonalDataController) Post() {
 		var data []md.GoodsShort
 		err = md.GetMyGoods(userName, &data)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 			this.Data["json"] = ""
 			goto tail
 		}
@@ -44,7 +47,7 @@ func (this *PersonalDataController) Post() {
 		var data []md.GoodsShort
 		err = md.GetMyCollectGoods(userName, &data)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 			this.Data["json"] = "do something..."
 			goto tail
 		}
@@ -67,7 +70,7 @@ func (this *PersonalDataController) Post() {
 		var data [2][]md.UserShort
 		err = md.GetCareMeData(userName, &data)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 			this.Data["json"] = ""
 			goto tail
 		}
@@ -77,7 +80,7 @@ func (this *PersonalDataController) Post() {
 		var data md.MyStatus
 		err = md.GetNavingMsg(userName, &data)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 			this.Data["json"] = ""
 			goto tail
 		}
@@ -171,7 +174,7 @@ func (this *EntranceController) Post() {
 		Parse(postBody.Data, &tregister)
 		err := md.CreateAccount(tregister)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 		}
 	case "confirmcode":
 		fmt.Println("confirmcode...")

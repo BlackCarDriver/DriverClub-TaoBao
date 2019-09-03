@@ -5,6 +5,22 @@ import (
 	"time"
 )
 
+//######################################### 公用协议 ##########################################
+type RequestProto struct {
+	Tag       string      `json:"tag"`
+	Api       string      `json:"api"`
+	GoodsId   string      `json:"goodsid"`
+	CacheTime int         `json:"cachetime"`
+	UserId    string      `json:"userid"`
+	Data      interface{} `json:"data"`
+}
+
+type ReplyProto struct {
+	StatusCode int         `json:"statuscode"`
+	Msg        string      `json:"msg"`
+	Data       interface{} `json:"data"`
+}
+
 //########################################## 主页结构和模拟数据 ################################
 type Goods1 struct {
 	Userid   string    `json:"userid"`
@@ -75,6 +91,12 @@ type UpdatePostBody struct {
 	TargetId string `json:"targetid"`
 	StrData  string `json:"strdata"`
 	IntData  int    `json:"intdata"`
+}
+
+//user state for goods
+type UserGoodsState struct {
+	Like    bool `json:"like"`
+	Collect bool `json:"collect"`
 }
 
 //########################################## 个人详情页结构体和模拟数据 #################################################

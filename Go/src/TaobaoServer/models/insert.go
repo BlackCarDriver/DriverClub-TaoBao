@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/astaxie/beego/logs"
+
 	"database/sql"
 
 	"github.com/astaxie/beego/orm"
@@ -26,6 +28,9 @@ func CreateAccount(user RegisterData) error {
 	rawSeter := o.Raw("insert into t_user(id, email, password, name, headimg) values(?,?,?,?,?)",
 		userid, user.Email, user.Password, user.Name, dfUserHeadimg)
 	_, err := rawSeter.Exec()
+	if err != nil {
+		logs.Error(err)
+	}
 	return err
 }
 
@@ -42,16 +47,21 @@ func CreateGoods(goods UploadGoodsData) error {
 
 	err = o.Begin()
 	if err != nil {
-		fmt.Println(err)
+		logs.Error(err)
 		return err
 	}
 	_, err1 := insertGoods.Exec()
 	_, err2 := insertUpload.Exec()
 	if err1 != nil || err2 != nil {
-		fmt.Println("Need to Rollback!! ", err1, "  ", err2)
-		err = o.Rollback()
+		err = fmt.Errorf("Need to Rollback!! %v   %v ", err1, err2)
+		logs.Error(err)
+		if err := o.Rollback(); err != nil {
+			logs.Error(err)
+		} else {
+			logs.Info("RollBack success!")
+		}
 	} else {
-		fmt.Println("Create Goods Scuueed!!")
+		logs.Info("Create Goods Scuueed!!")
 		err = o.Commit()
 	}
 	return err
@@ -62,6 +72,9 @@ func AddCollectRecord(uid, gid string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
 	_, err := rawSeter.Exec()
+	if err != nil {
+		logs.Error(err)
+	}
 	return err
 }
 
@@ -70,6 +83,9 @@ func AddUserMessage(uid, targetid, message string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, uid, targetid, message)
 	_, err := rawSeter.Exec()
+	if err != nil {
+		logs.Error(err)
+	}
 	return err
 }
 
@@ -82,18 +98,25 @@ func AddGoodsCollect(uid, gid string) error {
 	fmt.Println(uid, gid)
 	err = o.Raw(`SELECT count(*) from t_collect where userid=? and goodsid=?`, uid, gid).QueryRow(&count)
 	if err != nil {
-		return fmt.Errorf("Error when select: %s", err)
+		err := fmt.Errorf("Error when select: %s", err)
+		logs.Error(err)
+		return err
 	}
 	if count > 0 {
-		return fmt.Errorf("You are already Collect it goods!")
+		err := fmt.Errorf("You are already Collect it goods!")
+		logs.Error(err)
+		return err
 	}
 	result, err = o.Raw(`INSERT INTO t_collect(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -106,18 +129,25 @@ func AddUserConcern(id1, id2 string) error {
 	count := 0
 	err = o.Raw(`SELECT count(*) FROM t_concern where id1=? and id2=?`, id1, id2).QueryRow(&count)
 	if err != nil {
-		return fmt.Errorf("Error when select from t_concern: %s", err)
+		err := fmt.Errorf("Error when select from t_concern: %s", err)
+		logs.Error(err)
+		return err
 	}
 	if count > 0 {
-		return fmt.Errorf("You are already concern it user!")
+		err := fmt.Errorf("You are already concern it user!")
+		logs.Error(err)
+		return err
 	}
 	result, err = o.Raw(`INSERT INTO t_concern(id1, id2)VALUES (?, ?)`, id1, id2).Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -129,11 +159,14 @@ func AddGoodsLike(uid, gid string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_goods_like(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -145,11 +178,14 @@ func AddUserLike(uid1, uid2 string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_user_like(userid1, userid2)VALUES (?, ?)`, uid1, uid2).Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -161,11 +197,14 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_comment(userid, goodsid, content)VALUES (?, ?, ?)`, uid, gid, conetnt).Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }

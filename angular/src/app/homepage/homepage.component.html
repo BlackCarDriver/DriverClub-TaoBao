@@ -102,7 +102,7 @@
               </div>
               <div class="row">
                   <div class="col-sm-6">
-                    <div class="row"><p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{goods.time}}</p></div>
+                    <div class="row"><p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{goods.time | date:'yyyy-MM-dd' }}</p></div>
                   </div>
                   <div class="col-sm-6">
                     <p class="good-price"> <span class="label label-info"><span class="glyphicon glyphicon-yen"></span>{{goods.price}}</span></p>

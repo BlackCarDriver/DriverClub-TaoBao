@@ -1,5 +1,17 @@
-
-
+//#######################  公用协议  ##############################################
+export class RequestProto {
+    api?:string;
+    goodsid?:string;
+    userid?:string;
+    tag?:string;        //used as a key to get cache    
+    cachetime?:number;  //how many second save in cache
+    data?:any;
+}
+export class ReplyProto {
+    statuscode?:number;
+    msg?:string;
+    data?:any;
+}
 //#######################    homepage    ##########################################
 
 //商品显示的基本信息，见首页封面
@@ -23,27 +35,6 @@ export class GoodsType{
 export class GoodSubType{
     tag:string;
     number: number;
-}
-
-//#########################  goodsdetail  ######################################################
-
-//商品详情页需要的数据
-export class GoodsDetail {
-    headimg:string;
-    userid:string;    
-    username:string;
-    time:string;
-    title:string;
-    price:number;
-    id:string;
-    name:string;
-    visit:number; 
-    like:number;
-    collect:number;     //precial
-    talk:number;        //precial
-    detail:string;
-    type:string;
-    tag:string;
 }
 
 //#########################  personal  ######################################################
