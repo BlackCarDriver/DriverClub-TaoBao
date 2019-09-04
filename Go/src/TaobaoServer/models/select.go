@@ -227,20 +227,20 @@ func GetGoodsComment(goodsid string, c *[]GoodsComment) error {
 }
 
 //get statement of user-goods from database  🍌
-//like:1 collect:2
+//return result = like*1 + collect*2
 func GetStatement(userid, goodid string) (int, error) {
 	var result = 0
 	var tmp = 0
 	o := orm.NewOrm()
 	//check if have collect
-	if _, err := o.Raw(`SELECT count(*) FROM public.t_collect where userid=? and goodsid=?`, userid, goodid).QueryRows(&tmp); err != nil {
+	if err := o.Raw(`SELECT count(*) FROM public.t_collect where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
 		logs.Error(err)
 		return 0, err
 	} else {
 		result += tmp * 2
 	}
 	//check if have like
-	if _, err := o.Raw(`SELECT count(*) FROM public.t_goods_like where userid=? and goodsid=?`, userid, goodid).QueryRows(&tmp); err != nil {
+	if err := o.Raw(`SELECT count(*) FROM public.t_goods_like where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
 		logs.Error(err)
 		return result, err
 	} else {

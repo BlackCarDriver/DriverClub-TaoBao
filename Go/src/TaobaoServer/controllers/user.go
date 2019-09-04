@@ -109,52 +109,81 @@ tail:
 	this.ServeJSON()
 }
 
-//个人主页更新信息接口
+//update personal message, such as base information, connect wags. 🍍
+//server for UpdateMessage() in frontend
 func (this *UpdataMsgController) Post() {
-	postBody := md.UpdateBody{}
-	var updateTag string
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	response.StatusCode = 0
+	var api, userid string
 	var err error
+	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		this.Data["json"] = md.GetUpdateResult(-100, err)
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
 		goto tail
 	}
-	updateTag = postBody.Tag
-	switch updateTag {
-	//更新基本信息
-	case "MyBaseMessage":
-		fmt.Println("Updata base message ...")
-		postData := md.UpdeteMsg{}
-		Parse(postBody.Data, &postData)
-		err = md.UpdateUserBaseMsg(postData)
-		if err != nil {
-			this.Data["json"] = md.GetUpdateResult(-200, err)
-			goto tail
-		}
-		//更新联系方式
-	case "MyConnectMessage":
-		fmt.Println("Updata connect ways...")
-		postData := md.UpdeteMsg{}
-		Parse(postBody.Data, &postData)
-		err = md.UpdateUserConnectMsg(postData)
-		if err != nil {
-			this.Data["json"] = md.GetUpdateResult(-300, err)
-			goto tail
-		}
-		//修改头像
-	case "MyHeadImage":
-		fmt.Println("Updata User headimg...")
-		postData := md.UpdeteMsg{}
-		Parse(postBody.Data, &postData)
-		err = md.UpdateUserHeadIMg(postBody.UserId, postData.Headimg)
-		if err != nil {
-			this.Data["json"] = md.GetUpdateResult(-300, err)
-			goto tail
-		}
-	default:
-		this.Data["json"] = md.GetUpdateResult(-600, fmt.Errorf("No such tag!"))
+	api = postBody.Api
+	userid = postBody.UserId
+	//check that the data is complete
+	if api == "" || userid == "" {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Can't get api or userid from request data")
+		logs.Error(response.Msg)
+		goto tail
 	}
-	this.Data["json"] = md.GetUpdateResult(0, nil)
+	logs.Info(userid)
+	//handle the request
+	switch api {
+	case "MyBaseMessage": //base information of users
+		postData := md.UpdeteMsg{}
+		if err = Parse(postBody.Data, &postData); err != nil {
+			response.StatusCode = -3
+			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+		if err = md.UpdateUserBaseMsg(postData); err != nil {
+			response.StatusCode = -4
+			response.Msg = fmt.Sprintf("Update message fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+	case "MyConnectMessage": //connect information
+		postData := md.UpdeteMsg{}
+		if err = Parse(postBody.Data, &postData); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+		if err = md.UpdateUserConnectMsg(postData); err != nil {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("Update connection message fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+	case "MyHeadImage": //update profile picture
+		if postBody.Data.(string) == "" { //here imgurl save in data directrly
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("Can't get imagurl from postbody")
+			logs.Error(response.Msg)
+			goto tail
+		}
+		if err = md.UpdateUserHeadIMg(userid, postBody.Data.(string)); err != nil {
+			response.StatusCode = -8
+			response.Msg = fmt.Sprintf("Update profile iamge fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+	default:
+		response.StatusCode = -100
+		response.Msg = fmt.Sprintf("No such method: %s", api)
+		logs.Error(response.Msg)
+	}
 tail:
+	this.Data["json"] = response
 	this.ServeJSON()
 }
 

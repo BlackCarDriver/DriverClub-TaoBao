@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserMessage , GoodsShort, MyMessage, Rank,User  } from '../struct';
+import { UserMessage , GoodsShort, MyMessage, Rank,User,RequestProto, RequertResult  } from '../struct';
 import { ServerService } from '../server.service';
+import { post } from 'selenium-webdriver/http';
 declare let $: any;
 
 @Component({
@@ -10,7 +11,7 @@ declare let $: any;
 })
 
 export class PersonalComponent implements OnInit {
-  username = "19070010";
+  userid = "19070010";
   key = "itisuserkey..";
 
   msg = new UserMessage(); //基本信息
@@ -23,7 +24,7 @@ export class PersonalComponent implements OnInit {
   constructor(private server : ServerService) { }
 
   ngOnInit() {
-    // this.username = this.server.Getusername();
+    // this.userid = this.server.Getusername();
     this.getmymsg();
     this.getmymgoods();
     this.getmycollect();
@@ -32,41 +33,92 @@ export class PersonalComponent implements OnInit {
     this.getcare();
   }
 
-  //获取详细信息
+  //get detail information 🍍
   getmymsg(){
-    this.server.GetMyMsg(this.username,"mymsg").subscribe(result=>{
-      this.msg = result;
-    });
+     let postdata : RequestProto = {
+      api:"mymsg",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if (result.statuscode==0){this.msg = result.data;}
+      else{alert("get mymsg fail: "+result.msg);}
+    }, error=>{console.log("GetMyMsg() fail: " + error )
+  });
   }
-   //获取我的商品信息
+
+  //get my goods information 🍍
   getmymgoods(){
-    this.server.GetMyMsg(this.username,"mygoods").subscribe(result=>{
-      this.mygoodslist = result;
-    });
+    let postdata : RequestProto = {
+      api:"mygoods",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if(result.statuscode==0){
+        this.mygoodslist = result;
+      }else{
+        alert("get goods msg fail:"+result.msg);
+      }
+    }, error=>{console.log("GetMyMsg"+error)});
   }
-  //获取我的收藏数据
+
+  //get my collect goods information 🍍
   getmycollect(){
-    this.server.GetMyMsg(this.username,"mycollect").subscribe(result=>{
-      this.mycollectlist = result;
-    });
+    let postdata : RequestProto = {
+      api:"mycollect",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if (result.statuscode==0){
+        this.mycollectlist = result;
+      }else{
+        alert("get my collect message fail:"+result.msg);
+      }
+    }, error=>{ console.log("GetMyMsg fail: "+error)});
   }
-  //获取我的消息数据
+
+  // get my mail message  🍍
   getmymessage(){
-    this.server.GetMyMsg(this.username,"message").subscribe(result=>{
-      this.mymessagelist = result;
-  });
+    let postdata : RequestProto = {
+      api:"message",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if (result.statuscode==0){
+        this.mymessagelist = result;
+      }else{
+        alert("get my messges fail:"+result.msg );
+      }
+  }, error=>{ console.log("GetMyMsg() fail:"+error);});
   }
-  //获取用户等级排行数据
+
+  //get users rank message  🍍
   getrank(){
-    this.server.GetMyMsg(this.username,"rank").subscribe(result=>{
-      this.hero = result;
-  });
+    let postdata : RequestProto = {
+      api:"rank",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if (result.statuscode==0){
+        this.hero = result;
+      }else{
+        alert("get userrank fail:"+result.msg);
+      }
+  }, error=>{console.log("GetMyMsg() fail: "+ error)});
   }
-   //获取用户等级排行数据
+
+   //get user's cared numbers information 🍍
    getcare(){
-    this.server.GetMyMsg(this.username,"mycare").subscribe(result=>{
-      this.icare = result[0];
-      this.carei = result[1];
-  });
+    let postdata : RequestProto = {
+      api:"mycare",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if (result.statuscode==0){
+        this.icare = result[0];
+        this.carei = result[1];
+      }else{
+        alert("GetMyMsg fail:"+result.msg);
+      }
+  }, error=>{ console.log(error)});
   }
 }

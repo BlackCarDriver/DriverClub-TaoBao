@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UpdateResult } from '../struct';
 import { HttpClient } from '@angular/common/http';
 import { ServerService } from '../server.service';
 import {RequestProto} from '../struct';
@@ -38,7 +37,7 @@ export class GoodspageComponent implements OnInit {
   getItPage(id: string) {
     let postdata : RequestProto = {
       api:"goodsmessage",
-      goodsid:this.goodid,
+      targetid:this.goodid,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if(result.statuscode!=0){ 
@@ -56,7 +55,7 @@ export class GoodspageComponent implements OnInit {
   getComment(gid: string) {
     let postdata : RequestProto = {
       api:"goodscomment",
-      goodsid:this.goodid,
+      targetid:this.goodid,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result=>{
       if(result.statuscode!=0){
@@ -73,7 +72,7 @@ export class GoodspageComponent implements OnInit {
   getStatement() {
     let postdata : RequestProto = {
       api:"usergoodsstate",
-      goodsid:this.goodid,
+      targetid:this.goodid,
       userid:this.userid,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
@@ -88,67 +87,86 @@ export class GoodspageComponent implements OnInit {
       alert("getStatement unresponse:" + err);
     })
   }
-  //#######################################################################
+  //########################## SmallUpdate() #############################################
 
-  //点赞商品
-  likeGoods() {
-    let tre = new UpdateResult;
-    this.server.SmallUpdate("likegoods", this.userid, this.goodid, "", 1).subscribe(resutl => {
-      tre = resutl;
-      if (tre.status >= 0) {
+  //user like specified goods  🍍
+  likeGoods() { 
+    let postdata : RequestProto = {
+      api:"likegoods",
+      userid:this.userid,
+      targetid:this.goodid,
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if (result.statuscode == 0) {
         alert("点赞成功!");
       } else {
-        alert(tre.describe);
+        alert("点赞失败："+result.statuscode+result.msg);
       }
+    },error=>{
+        alert("error happen in likeGoods: "+error)
     });
   }
-  //发送私信
+
+  // user send a message to owner 🍍
   sendMessage() {
     let message = $("#messagesender").val().toString();
-    let tre = new UpdateResult;
-    this.server.SmallUpdate("sendmessage", this.userid, this.goodsdt.userid, message, 0).subscribe(result => {
-      tre = result;
-      if (tre.status >= 0) {
-        alert("发送成功！");
-      } else {
-        alert(tre.describe);
-      }
+    let postdata : RequestProto = {
+      api:"sendmessage",
+      userid:this.userid,
+      targetid:this.goodid,
+      data:{ownerid:this.goodsdt.userid, message:message},
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+        if (result.statuscode==0){alert("发送成功！");}
+        else{alert("发送失败："+result.statuscode+":"+result.msg);}
+    },error=>{
+        alert("error happen in sendMessage():"+error);
     });
   }
-  //收藏商品
+
+  //user add a goods to favorite 🍍
   collect() {
-    let tre = new UpdateResult;
-    this.server.SmallUpdate("addcollect", this.userid, this.goodid, "", 0).subscribe(result => {
-      tre = result;
-      if (tre.status >= 0) {
-        alert("收藏成功!");
-      } else {
-        alert(tre.describe);
-      }
+    let postdata : RequestProto = {
+      api:"addcollect",
+      userid:this.userid,
+      targetid:this.goodid,
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if (result.statuscode==0){alert("收藏成功！");}
+      else{alert("收藏失败："+result.msg);}
+    },error=>{
+      alert("error happen in  collect():"+error);
     });
   }
-  //发表评论
+
+  //user comment on a goods 🍍
   sendComment() {
-    let tre = new UpdateResult;
-    let comment: string;
-    comment = $("#comment-area").val().toString();
+    let comment = $("#comment-area").val().toString();
     if (comment == "") {
       alert("内容不能为空");
       return;
     }
-    alert(comment);
+    let postdata : RequestProto = {
+      api:"addcomment",
+      userid:this.userid,
+      targetid:this.goodid,
+      data:{comment:comment},
+    };
     //todo:检查评论内容
-    this.server.SmallUpdate("addcomment", this.userid, this.goodid, comment, 0).subscribe(result => {
-      tre = result;
-      if (tre.status >= 0) {
-        alert("评论成功");
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if (result.statuscode!=0){
+        alert("评论成功！");
+      }else{
+        alert("评论失败："+result.msg);
       }
+    }, error=>{
+      alert("error happen in sendComment():"+error);
     });
   }
-
-
+  //###########################################################################
 
 }
+
 
 //detail data response from server
 type GoodsDetail = {

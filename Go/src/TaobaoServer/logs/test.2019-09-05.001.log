@@ -1,0 +1,585 @@
+2019/09/03 15:31:37.407 [E] [router.go:835]  Can't get api or goodsid from request data
+2019/09/03 15:31:37.412 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|      5.015ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:31:37.440 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    21.0552ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:31:37.463 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    43.1194ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:31:37.465 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    45.1239ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.901 [I] [router.go:835]  Do something...
+2019/09/03 15:32:25.902 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    25.0662ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.940 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    64.1716ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.957 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    80.2129ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:32:25.964 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    86.2293ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:34:55.234 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    12.0277ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:34:55.241 [I] [router.go:835]  Do something...
+2019/09/03 15:34:55.260 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    38.0996ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:34:55.263 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    42.1103ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:34:55.275 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    54.1423ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:36.576 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    14.0365ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:35:36.587 [I] [router.go:835]  Do something...
+2019/09/03 15:35:36.589 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    28.0751ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:36.598 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    35.0934ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:36.640 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    77.3274ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:39.852 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     9.0236ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:35:39.862 [I] [router.go:835]  Do something...
+2019/09/03 15:35:39.863 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    24.0635ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:39.881 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    44.6246ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:35:39.897 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    61.1691ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:02.107 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    30.6872ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:38:02.121 [I] [router.go:835]  Do something...
+2019/09/03 15:38:02.130 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    54.7499ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:02.122 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     47.741ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:02.128 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    54.7542ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:23.641 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     9.2715ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:38:23.655 [I] [router.go:835]  Do something...
+2019/09/03 15:38:23.656 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    23.3075ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:23.664 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    32.3337ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:38:23.690 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    61.4097ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:27.833 [I] [router.go:835]  Do something...
+2019/09/03 15:40:27.836 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     21.056ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:27.834 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    19.0515ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:40:27.845 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    30.0796ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:27.861 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    50.1354ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:40.705 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    17.0432ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:40:40.707 [I] [router.go:835]  Do something...
+2019/09/03 15:40:40.712 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    23.0626ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:40.725 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    37.0991ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:40:40.731 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    43.1146ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:41:25.177 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    11.0289ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:41:25.187 [I] [router.go:835]  Do something...
+2019/09/03 15:41:25.188 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    22.0591ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:41:25.188 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    33.0863ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:41:25.196 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    32.0866ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:46:06.786 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     2.0015ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:46:06.812 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    13.0343ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:46:06.828 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    44.8679ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:46:50.886 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     2.0135ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:46:50.912 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    30.0813ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:46:50.919 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    14.0378ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:47:09.275 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     8.0362ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:47:09.295 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    19.2035ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:47:09.309 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    42.2575ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:47:19.098 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:47:19.116 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    20.0512ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:47:19.134 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    12.0346ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:47:46.207 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/03 15:47:46.227 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    22.0591ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/03 15:47:46.243 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    11.0298ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:55:07.780 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    14.0369ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/03 15:55:07.787 [I] [router.go:835]  Do something...
+2019/09/03 15:55:07.788 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    22.0603ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:55:07.793 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    28.0755ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 15:55:07.796 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    31.0827ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/03 16:20:07.730 [I] [asm_amd64.s:1337]  http server Running on http://:4747
+2019/09/04 08:43:00.374 [I] [asm_amd64.s:1337]  http server Running on http://:4747
+2019/09/04 08:44:47.141 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     1.0052ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/04 08:44:47.182 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    43.1232ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/04 08:44:47.353 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    62.5481ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:44:55.730 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    16.0426ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/04 08:44:55.745 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|      1.004ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/04 08:44:55.762 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    15.0392ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:44:57.416 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    55.4386ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:44:57.480 [C] [panic.go:522]  the request url is  /goodsdeta
+2019/09/04 08:44:57.482 [C] [panic.go:522]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:44:57.483 [C] [panic.go:522]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:44:57.484 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:44:57.485 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:44:57.486 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:44:57.487 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:44:57.488 [C] [panic.go:522]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:44:57.489 [C] [panic.go:522]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:44:57.489 [C] [panic.go:522]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:44:57.492 [server.go:3010]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:44:57.510 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|   150.6163ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:44:57.514 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|     156.55ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:45:24.959 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    41.4806ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:45:24.959 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    11.8609ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:45:24.960 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    45.4921ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:45:24.983 [C] [panic.go:522]  the request url is  /goodsdeta
+2019/09/04 08:45:24.989 [C] [panic.go:522]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:45:24.991 [C] [panic.go:522]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:45:24.994 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:45:24.996 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:45:24.996 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:45:24.998 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:45:24.998 [C] [panic.go:522]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:45:24.999 [C] [panic.go:522]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:45:24.999 [C] [panic.go:522]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:45:25.000 [server.go:3010]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:46:07.763 [I] [asm_amd64.s:1337]  http server Running on http://:4747
+2019/09/04 08:47:04.699 [I] [asm_amd64.s:1337]  http server Running on http://:4747
+2019/09/04 08:47:10.905 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    60.2667ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:47:10.912 [C] [panic.go:522]  the request url is  /goodsdeta
+2019/09/04 08:47:10.913 [C] [panic.go:522]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:47:10.913 [C] [panic.go:522]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:47:10.914 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:47:10.915 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:47:10.916 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:47:10.917 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:47:10.916 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    65.2822ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:47:10.917 [C] [panic.go:522]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:47:10.918 [C] [panic.go:522]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:47:10.919 [C] [panic.go:522]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:47:10.922 [server.go:3010]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:47:10.951 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|   106.7994ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:48:56.069 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 08:49:02.360 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    51.5383ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:49:02.374 [C] [config.go:176]  the request url is  /goodsdeta
+2019/09/04 08:49:02.394 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:49:02.375 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    69.5864ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:02.399 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:49:02.403 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:49:02.405 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:49:02.406 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:49:02.406 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:49:02.409 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:49:02.409 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:49:02.410 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:49:02.413 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:49:02.431 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   125.0932ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:16.915 [I] [log.go:443]  http server Running on http://:4747
+2019/09/04 08:49:19.032 [D] [log.go:425]  |      127.0.0.1|[42m 200 [0m|    61.1627ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:19.064 [D] [log.go:425]  |      127.0.0.1|[42m 200 [0m|    81.2174ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:49:19.110 [C] [log.go:385]  the request url is  /goodsdeta
+2019/09/04 08:49:19.139 [C] [log.go:385]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:49:19.130 [D] [log.go:425]  |      127.0.0.1|[42m 200 [0m|   157.2958ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:19.140 [C] [log.go:385]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:49:19.147 [C] [log.go:385]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:49:19.148 [C] [log.go:385]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:49:19.148 [C] [log.go:385]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:49:19.148 [C] [log.go:385]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:49:19.149 [C] [log.go:385]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:49:19.149 [C] [log.go:385]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:49:19.150 [C] [log.go:385]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:49:19.155 [log.go:254]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:49:33.613 [I] [log.go:276]  http server Running on http://:4747
+2019/09/04 08:49:36.910 [D] [log.go:276]  |      127.0.0.1|[42m 200 [0m|    80.2983ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:49:36.912 [D] [log.go:276]  |      127.0.0.1|[42m 200 [0m|    90.8255ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:36.912 [C] [log.go:276]  the request url is  /goodsdeta
+2019/09/04 08:49:36.918 [C] [log.go:276]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:49:36.922 [C] [log.go:276]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:49:36.923 [C] [log.go:276]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:49:36.923 [C] [log.go:276]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:49:36.925 [C] [log.go:276]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:49:36.926 [C] [log.go:276]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:49:36.926 [C] [log.go:276]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:49:36.927 [C] [log.go:276]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:49:36.927 [C] [log.go:276]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:49:36.931 [log.go:276]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:49:36.946 [D] [log.go:276]  |      127.0.0.1|[42m 200 [0m|   122.8148ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:47.154 [I] [log.go:629]  http server Running on http://:4747
+2019/09/04 08:49:49.816 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|    58.1538ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:49.842 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|    78.6266ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:49:49.849 [C] [log.go:599]  the request url is  /goodsdeta
+2019/09/04 08:49:49.851 [C] [log.go:599]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:49:49.854 [C] [log.go:599]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:49:49.854 [C] [log.go:599]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:49:49.857 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|   100.6853ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:49:49.857 [C] [log.go:599]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:49:49.862 [C] [log.go:599]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:49:49.862 [C] [log.go:599]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:49:49.863 [C] [log.go:599]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:49:49.863 [C] [log.go:599]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:49:49.863 [C] [log.go:599]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:49:49.867 [log.go:172]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:50:04.683 [I] [asm_amd64.s:1337]  http server Running on http://:4747
+2019/09/04 08:50:08.411 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    60.3115ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:50:08.445 [C] [panic.go:522]  the request url is  /goodsdeta
+2019/09/04 08:50:08.449 [C] [panic.go:522]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:50:08.450 [C] [panic.go:522]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:50:08.450 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:50:08.451 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:50:08.452 [C] [panic.go:522]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:50:08.458 [C] [panic.go:522]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:50:08.459 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|    90.3638ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:50:08.462 [C] [panic.go:522]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:50:08.464 [C] [panic.go:522]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:50:08.464 [C] [panic.go:522]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:50:08.467 [server.go:3010]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:50:08.473 [D] [server.go:2774]  |      127.0.0.1|[42m 200 [0m|   122.9521ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:50:22.977 [I] [???:0]  http server Running on http://:4747
+2019/09/04 08:50:28.774 [D] [server.go:1878]  |      127.0.0.1|[42m 200 [0m|    70.1411ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:50:28.775 [C] [orm_raw.go:423]  the request url is  /goodsdeta
+2019/09/04 08:50:28.776 [C] [orm_raw.go:423]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:50:28.776 [C] [orm_raw.go:423]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:50:28.777 [C] [orm_raw.go:423]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:50:28.777 [C] [orm_raw.go:423]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:50:28.778 [C] [orm_raw.go:423]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:50:28.778 [C] [orm_raw.go:423]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:50:28.779 [C] [orm_raw.go:423]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:50:28.779 [C] [orm_raw.go:423]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:50:28.780 [C] [orm_raw.go:423]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:50:28.783 [server.go:1124]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:50:28.806 [D] [server.go:1878]  |      127.0.0.1|[42m 200 [0m|    93.7101ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:50:28.815 [D] [server.go:1878]  |      127.0.0.1|[42m 200 [0m|   107.7419ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:50:51.944 [I] [log.go:629]  http server Running on http://:4747
+2019/09/04 08:50:56.475 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|    57.5928ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:50:56.508 [C] [log.go:599]  the request url is  /goodsdeta
+2019/09/04 08:50:56.525 [C] [log.go:599]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:50:56.511 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|    88.9827ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:50:56.527 [C] [log.go:599]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:50:56.542 [C] [log.go:599]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:50:56.542 [C] [log.go:599]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:50:56.542 [C] [log.go:599]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:50:56.543 [C] [log.go:599]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:50:56.543 [C] [log.go:599]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:50:56.544 [C] [log.go:599]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:50:56.544 [C] [log.go:599]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:50:56.549 [log.go:172]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:50:56.568 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|   151.9582ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:51:20.412 [I] [log.go:629]  http server Running on http://:4747
+2019/09/04 08:51:22.007 [W] [log.go:614]  test
+2019/09/04 08:51:22.007 [W] [log.go:614]  test
+2019/09/04 08:51:22.007 [W] [log.go:614]  test
+2019/09/04 08:51:22.078 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|    72.2005ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:51:22.085 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|    75.1996ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:51:22.095 [C] [log.go:599]  the request url is  /goodsdeta
+2019/09/04 08:51:22.097 [C] [log.go:599]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:51:22.100 [C] [log.go:599]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:51:22.101 [C] [log.go:599]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:51:22.102 [C] [log.go:599]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:51:22.102 [C] [log.go:599]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:90
+2019/09/04 08:51:22.109 [C] [log.go:599]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:51:22.109 [C] [log.go:599]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:51:22.110 [C] [log.go:599]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:51:22.110 [C] [log.go:599]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:51:22.112 [log.go:172]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:51:22.136 [D] [log.go:634]  |      127.0.0.1|[42m 200 [0m|   129.7924ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:51:46.272 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 08:51:50.380 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    50.1449ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/04 08:51:55.228 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    26.4311ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/04 08:52:00.494 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    29.0944ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/04 08:52:03.558 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     38.362ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/04 08:52:13.345 [W] [goods.go:37]  test
+2019/09/04 08:52:13.352 [W] [goods.go:37]  test
+2019/09/04 08:52:13.355 [W] [goods.go:37]  test
+2019/09/04 08:52:13.417 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    70.1902ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:52:13.427 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    71.1898ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:52:13.441 [C] [config.go:176]  the request url is  /goodsdeta
+2019/09/04 08:52:13.446 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:52:13.446 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:52:13.447 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:52:13.447 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:52:13.448 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:90
+2019/09/04 08:52:13.448 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:52:13.448 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    95.2517ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:52:13.448 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:52:13.451 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:52:13.452 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:52:13.460 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:54:58.256 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 08:55:01.537 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    78.2085ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:55:01.543 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    79.1894ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:55:01.545 [C] [config.go:176]  the request url is  /goodsdeta
+2019/09/04 08:55:01.549 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:55:01.553 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:55:01.557 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:55:01.558 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:55:01.558 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:55:01.559 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:55:01.560 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:55:01.560 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:55:01.561 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:55:01.563 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:55:01.580 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   119.8017ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:56:49.210 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 08:56:51.212 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    66.5699ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:56:51.222 [C] [config.go:176]  the request url is  /goodsdeta
+2019/09/04 08:56:51.226 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:56:51.236 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:56:51.236 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:56:51.242 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:56:51.244 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:89
+2019/09/04 08:56:51.244 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:56:51.244 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:56:51.246 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:56:51.247 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:56:51.249 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:56:51.258 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    72.8585ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:56:51.265 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   115.3668ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:59:39.865 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 08:59:40.265 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    72.1924ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 08:59:40.268 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    71.1898ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 08:59:40.274 [I] [goods.go:86]  00001 1907180019
+2019/09/04 08:59:40.274 [C] [config.go:176]  the request url is  /goodsdeta
+2019/09/04 08:59:40.275 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 08:59:40.275 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 08:59:40.276 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 08:59:40.277 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 08:59:40.278 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:90
+2019/09/04 08:59:40.278 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 08:59:40.278 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 08:59:40.279 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 08:59:40.280 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 08:59:40.282 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 08:59:40.314 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   119.3503ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 09:01:54.950 [I] [goods.go:86]  00001 1907180019
+2019/09/04 09:01:54.952 [C] [config.go:176]  the request url is  /goodsdeta
+2019/09/04 09:01:54.953 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 09:01:54.951 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      26.08ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 09:01:54.954 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 09:01:54.959 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 09:01:54.960 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:236
+2019/09/04 09:01:54.965 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/goods.go:90
+2019/09/04 09:01:54.972 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 09:01:54.967 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      45.12ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 09:01:54.972 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    51.1356ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 09:01:54.977 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 09:01:54.994 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 09:01:54.994 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 09:01:54.996 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 09:02:53.260 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 09:02:57.085 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    64.3456ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 09:02:57.128 [I] [goods.go:86]  00001 1907180019
+2019/09/04 09:02:57.134 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    85.4152ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 09:02:57.170 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   143.5576ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 09:02:57.208 [W] [goods.go:95]  3
+2019/09/04 09:02:57.212 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   178.3416ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 19:53:10.636 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 20:10:01.194 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/04 20:10:01.225 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    31.0823ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/04 20:10:01.251 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    23.0617ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 20:10:19.733 [I] [goods.go:86]  00001 1907180019
+2019/09/04 20:10:19.792 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    80.2146ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 20:10:19.798 [W] [goods.go:95]  3
+2019/09/04 20:10:19.799 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    90.2392ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:19.828 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    118.592ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:19.834 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   122.6049ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:26.441 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0022ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/04 20:10:26.485 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    45.1196ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/04 20:10:26.493 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    45.1196ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 20:10:27.466 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    15.0413ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 20:10:27.493 [I] [goods.go:86]  00001 1907180023
+2019/09/04 20:10:27.507 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    57.1529ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:27.509 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.1587ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:27.539 [W] [goods.go:95]  0
+2019/09/04 20:10:27.541 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      90.24ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:29.020 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      1.004ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/04 20:10:34.683 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    23.0617ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:34.685 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0399ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 20:10:34.690 [I] [goods.go:86]  00001 1907180023
+2019/09/04 20:10:34.731 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    64.1716ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:34.817 [W] [goods.go:95]  0
+2019/09/04 20:10:34.818 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   147.5623ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:10:37.284 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      2.004ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/04 20:11:56.496 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 20:12:59.471 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 20:14:02.492 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 20:20:37.645 [E] [goods.go:56]  Can't get api or goodsid from request data
+2019/09/04 20:20:37.651 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     6.0139ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:20:37.646 [E] [goods.go:56]  Can't get api or goodsid from request data
+2019/09/04 20:20:37.647 [E] [goods.go:56]  Can't get api or goodsid from request data
+2019/09/04 20:20:37.667 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    21.0573ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:20:37.669 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    23.0686ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 20:20:37.688 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    41.1094ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 20:22:43.889 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:05:22.669 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:06:54.476 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:07:56.898 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:08:15.000 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.8421ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:08:15.002 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    64.8538ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 21:08:15.037 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    94.5894ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 21:08:15.086 [W] [goods.go:94]  0
+2019/09/04 21:08:15.088 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   146.1952ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 21:11:14.334 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:11:14.337 [C] [config.go:176]  the request url is  /personal/data
+2019/09/04 21:11:14.349 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 21:11:14.350 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 21:11:14.351 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 21:11:14.352 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/04 21:11:14.357 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:71
+2019/09/04 21:11:14.359 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 21:11:14.371 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 21:11:14.369 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    44.1161ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:11:14.369 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     41.109ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:11:14.370 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    46.1222ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:11:14.370 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    41.1085ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:11:14.372 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 21:11:14.432 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     83.223ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:11:14.450 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 21:11:14.456 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 21:25:31.591 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0493ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:31.624 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     52.137ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 21:25:31.625 [W] [goods.go:94]  0
+2019/09/04 21:25:31.628 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    53.1358ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 21:25:31.628 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    58.1551ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/04 21:25:32.758 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    10.0258ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:32.765 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0378ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:32.784 [C] [config.go:176]  the request url is  /personal/data
+2019/09/04 21:25:32.786 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 21:25:32.784 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:32.788 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 21:25:32.791 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 21:25:32.791 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/04 21:25:32.792 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:71
+2019/09/04 21:25:32.792 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 21:25:32.801 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 21:25:32.800 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0382ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:32.800 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    15.0413ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:32.804 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 21:25:32.815 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    11.0294ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:25:32.838 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 21:25:32.844 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 21:38:34.280 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:38:41.709 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0001ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/04 21:38:41.735 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    35.0981ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/04 21:38:41.788 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    58.1564ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 21:38:49.378 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:38:49.379 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0092ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:39:27.213 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:39:27.293 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:39:27.295 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.9746ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:40:00.832 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:40:01.001 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:40:01.002 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0044ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:41:47.953 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:41:48.844 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:41:48.846 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     3.0067ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:41:54.877 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:41:54.879 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0066ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:44:07.192 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:44:07.217 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    24.7821ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:44:08.566 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:44:09.374 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:44:09.375 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0066ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:50:39.612 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:50:40.074 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:50:40.075 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0027ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:50:42.557 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:50:42.557 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:50:50.274 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:50:50.275 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0045ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:51:03.122 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:51:04.280 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:51:04.285 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     7.0165ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 21:51:04.375 [D] [router.go:925]  |      127.0.0.1|[43m 404 [0m|     5.0138ms| nomatch|[44m GET     [0m /favicon.ico
+2019/09/04 21:54:31.823 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 21:54:33.621 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 21:54:33.624 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     5.0326ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:02:04.966 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:02:04.969 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     4.0124ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:02:07.354 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:02:07.357 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      4.012ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:02:24.239 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:02:24.242 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     3.0374ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:02:27.889 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:02:27.891 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0352ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:02:47.819 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 22:02:48.078 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:02:48.082 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     4.0124ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:06:20.846 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 22:06:23.452 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:06:23.456 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     4.0064ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:06:40.879 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:06:40.887 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     9.0231ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:11:38.360 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 22:11:47.678 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:11:47.683 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     6.0134ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:18:20.124 [I] [default.go:72]  Soneont test the program by it iterface
+2019/09/04 22:18:20.128 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     4.0086ms|   match|[44m GET     [0m /test   r:/test
+2019/09/04 22:18:20.209 [D] [router.go:925]  |      127.0.0.1|[43m 404 [0m|     2.0079ms| nomatch|[44m GET     [0m /favicon.ico
+2019/09/04 22:25:43.313 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 22:26:29.996 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0054ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:26:30.020 [C] [config.go:176]  the request url is  /personal/data
+2019/09/04 22:26:30.155 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 22:26:30.161 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 22:26:30.156 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    83.2666ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:26:30.090 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    97.1286ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:26:30.094 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    82.0775ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:26:30.128 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   117.1704ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:26:30.044 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    38.9615ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:26:30.211 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 22:26:30.473 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/04 22:26:30.498 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:71
+2019/09/04 22:26:30.510 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 22:26:30.511 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 22:26:30.512 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 22:26:30.513 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 22:26:30.514 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 22:34:52.310 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      501.3µs|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:34:52.310 [C] [config.go:176]  the request url is  /personal/data
+2019/09/04 22:34:52.377 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/04 22:34:52.323 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.5528ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:34:52.323 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    41.5283ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:34:52.324 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    43.5345ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:34:52.344 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    34.6065ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:34:52.418 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/04 22:34:52.427 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    38.1022ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:34:52.478 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/04 22:34:52.513 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/04 22:34:52.514 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:71
+2019/09/04 22:34:52.515 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/04 22:34:52.522 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/04 22:34:52.523 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/04 22:34:52.525 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/04 22:34:52.526 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/04 22:39:27.705 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:39:27.762 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    57.3465ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:40:44.616 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0022ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:40:44.653 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    23.0609ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:40:50.365 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:40:50.395 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0357ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:42:11.725 [E] [default.go:94]  Can not get file from request: request Content-Type isn't multipart/form-data
+2019/09/04 22:42:11.725 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 22:46:41.614 [E] [default.go:94]  Can not get file from request: request Content-Type isn't multipart/form-data
+2019/09/04 22:46:41.615 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      971.1µs|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 22:47:30.306 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      1.001ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:47:30.322 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     18.048ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:47:34.195 [E] [default.go:94]  Can not get file from request: request Content-Type isn't multipart/form-data
+2019/09/04 22:47:34.197 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.9998ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 22:49:20.949 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:49:20.972 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     13.036ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:49:28.232 [E] [default.go:94]  Can not get file from request: request Content-Type isn't multipart/form-data
+2019/09/04 22:49:28.233 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0075ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 22:50:06.839 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:50:06.865 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    15.0362ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:50:12.066 [E] [default.go:94]  Can not get file from request: request Content-Type isn't multipart/form-data
+2019/09/04 22:50:12.067 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0018ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 22:52:28.720 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:52:28.779 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    31.6864ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 22:52:33.498 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     3.0068ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 22:52:33.555 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /update   r:/update
+2019/09/04 22:56:24.688 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:00:57.160 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:10:33.387 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:10:38.913 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     3.0813ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 23:10:38.958 [E] [user.go:133]  Can't get api or goodsid from request data
+2019/09/04 23:10:38.958 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:11:53.653 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:11:59.141 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     5.0142ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 23:11:59.217 [E] [user.go:133]  Can't get api or goodsid from request data
+2019/09/04 23:11:59.224 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     7.0165ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:12:43.542 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     6.0168ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 23:12:43.582 [E] [user.go:133]  Can't get api or goodsid from request data
+2019/09/04 23:12:43.593 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    11.0285ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:13:40.113 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:13:44.131 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     4.0107ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 23:13:44.183 [I] [user.go:129]  { MyHeadImage 123222  0 https://blackcardriver.com/taobao/images/zvkbz8ox7r.png}
+2019/09/04 23:13:44.184 [E] [user.go:134]  Can't get api or goodsid from request data
+2019/09/04 23:13:44.191 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     9.3082ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:15:21.473 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:15:25.882 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     3.5123ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 23:15:25.929 [E] [default.go:260]  json: cannot unmarshal string into Go value of type models.UpdeteMsg
+2019/09/04 23:15:25.936 [E] [user.go:171]  Can't parse postbody data: json: cannot unmarshal string into Go value of type models.UpdeteMsg
+2019/09/04 23:15:25.942 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.2968ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:18:15.661 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:18:30.793 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     5.0133ms|   match|[46m POST    [0m /upload/images   r:/upload/images
+2019/09/04 23:18:30.873 [E] [update.go:61]  No Roow Affected !
+2019/09/04 23:18:30.878 [E] [user.go:176]  Update profile iamge fail: No Roow Affected !
+2019/09/04 23:18:30.879 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    38.3855ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:18:43.229 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:18:53.048 [E] [default.go:260]  <nil>
+2019/09/04 23:18:53.071 [E] [update.go:24]  No Roow Affected !
+2019/09/04 23:18:53.072 [E] [user.go:149]  Update message fail: No Roow Affected !
+2019/09/04 23:18:53.074 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    27.0708ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:29:54.511 [I] [app.go:215]  http server Running on http://:4747
+2019/09/04 23:29:55.003 [I] [user.go:136]  123222
+2019/09/04 23:29:55.004 [E] [default.go:260]  <nil>
+2019/09/04 23:29:55.024 [E] [update.go:24]  No Roow Affected !
+2019/09/04 23:29:55.025 [E] [user.go:150]  Update message fail: No Roow Affected !
+2019/09/04 23:29:55.026 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    22.8498ms|   match|[46m POST    [0m /update   r:/update
+2019/09/04 23:31:26.887 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 23:31:26.921 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.1529ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/04 23:31:32.820 [I] [user.go:136]  123222
+2019/09/04 23:31:32.821 [E] [default.go:260]  <nil>
+2019/09/04 23:31:32.848 [E] [update.go:24]  No Roow Affected !
+2019/09/04 23:31:32.856 [E] [user.go:150]  Update message fail: No Roow Affected !
+2019/09/04 23:31:32.860 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    40.1076ms|   match|[46m POST    [0m /update   r:/update

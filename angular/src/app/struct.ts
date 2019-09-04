@@ -1,12 +1,14 @@
-//#######################  公用协议  ##############################################
+//#######################  公用协议  ############################################## 
+//public struct that used to request 🍌
 export class RequestProto {
     api?:string;
-    goodsid?:string;
     userid?:string;
+    targetid?:string;
     tag?:string;        //used as a key to get cache    
     cachetime?:number;  //how many second save in cache
     data?:any;
 }
+//public struct that response by server 🍌 
 export class ReplyProto {
     statuscode?:number;
     msg?:string;
@@ -146,11 +148,6 @@ export class PersonalSetting{
     emails:string ;
     qq:string ;
     phone:string;
-}
-//上传数据返回结果
-export class UpdateResult {
-    status:number;
-    describe:string;
 }
 
 //#########################  naving ######################################################

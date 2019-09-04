@@ -33,6 +33,7 @@ func (this *GoodsTypeController) Get() {
 }
 
 //get all kind of data in goodspage  🍌
+//response for GetGoodsDeta() in fontend
 func (this *GoodsDetailController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -47,8 +48,8 @@ func (this *GoodsDetailController) Post() {
 		goto tail
 	}
 	api = postBody.Api
-	goodId = postBody.GoodsId
-	userid = postBody.UserId
+	goodId = postBody.TargetId
+	userid = postBody.TargetId
 	//check that the data is complete
 	if api == "" || goodId == "" {
 		response.StatusCode = -2
@@ -86,13 +87,27 @@ func (this *GoodsDetailController) Post() {
 		tmp := md.UserGoodsState{Like: false, Collect: false}
 		if userid == "" { // if user havn't login then return default date
 			response.Data = tmp
+		} else if res, err := md.GetStatement(userid, goodId); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("Getstatement fail: %v", err)
+			logs.Error(response.Msg)
 		} else {
-			tmp.Collect = true
+			logs.Warn(res)
+			if res&1 != 0 {
+				tmp.Like = true
+			}
+			if res&2 != 0 {
+				tmp.Collect = true
+			}
 			response.Data = tmp
-			logs.Info("Do something...")
 		}
+		goto tail
+	default:
+		response.StatusCode = -10
+		response.Msg = "No such method"
+		logs.Warn(response.Msg)
+		goto tail
 	}
-
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

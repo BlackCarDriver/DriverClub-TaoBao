@@ -6,15 +6,17 @@ import (
 )
 
 //######################################### 公用协议 ##########################################
+//public struct that used to request 🍌
 type RequestProto struct {
 	Tag       string      `json:"tag"`
 	Api       string      `json:"api"`
-	GoodsId   string      `json:"goodsid"`
-	CacheTime int         `json:"cachetime"`
 	UserId    string      `json:"userid"`
+	TargetId  string      `json:"targetid"`
+	CacheTime int         `json:"cachetime"`
 	Data      interface{} `json:"data"`
 }
 
+//public struct that response by server 🍌
 type ReplyProto struct {
 	StatusCode int         `json:"statuscode"`
 	Msg        string      `json:"msg"`

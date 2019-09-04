@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserMessage, UpdateResult } from '../struct';
+import { UserMessage, RequestProto } from '../struct';
 import { ServerService } from '../server.service';
 
 @Component({
@@ -20,52 +20,74 @@ export class Personal2Component implements OnInit {
     this.getOtherMsg(this.userid);
   }
 
-  //获取页面数据
+  //get some other message need to show in the page 🍍
   getOtherMsg(uid: string) {
-    this.server.GetMyMsg(this.userid, "othermsg").subscribe(result => {
-      this.data = result;
-    });
+    let postdata : RequestProto = {
+      api:"othermsg",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result => {
+      if (result.statuscode==0){
+        this.data = result.data;
+      }else{
+        alert("get other message fail: "+ result.msg);
+      }
+    }, error=>{console.log("GetMymsg() fail" + error)});
   }
 
-  //点赞用户
+  // add a like to a user profile  🍍
   updateLike() {
-    let tre = new UpdateResult;
-    this.server.SmallUpdate("likeuser", this.lookcerid, this.userid, "", 0).subscribe(result => {
-      tre = result;
-      if (tre.status >= 0) {
-        alert("点赞成功！");
-      } else {
-        alert(tre.describe);
+    let postdata : RequestProto = {
+      api:"likegoods",
+      userid:this.lookcerid,
+      targetid:this.userid, 
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if (result.statuscode==0){
+        alert("收藏成功！");
+      }else{
+        alert("收藏失败："+result.msg);
       }
+    },error=>{
+      alert("updateLike() fail: "+error); 
     });
   }
 
-  //关注用户
+  //add a user into favorite 🍍
   addConcern() {
-    let tre = new UpdateResult;
-    //需要先获取浏览者的id，否则提示其登录
-    this.server.SmallUpdate("addconcern", this.lookcerid, this.userid, "", 0).subscribe(result => {
-      tre = result;
-      if (tre.status >= 0) {
-        alert("关注成功！");
-      } else {
-        alert(tre.describe);
-      }
+    //todo: must login before following operation
+    let postdata : RequestProto = {
+      api:"addconcern",
+      userid:this.lookcerid,
+      targetid:this.userid,
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if(result.statuscode==0){alert("关注成功！");}
+      else{alert("关注失败："+result.msg);}
+    },err=>{
+      alert("addConcern() fail: "+err);
     });
   }
 
-  //发送私信
+  //send a private message to owner 🍍
   sendMessage() {
-    //需要先登录
+    //todo: must login before following operation
     let message = $("#messagesender").val().toString();
-    let tre = new UpdateResult;
-    this.server.SmallUpdate("sendmessage", this.lookcerid, this.userid, message, 0).subscribe(result => {
-      tre = result;
-      if (tre.status >= 0) {
+    //TODO: check the message
+    let postdata : RequestProto = {
+      api:"sendmessage",
+      userid:this.lookcerid,
+      targetid:this.userid,  
+      data:{message:message},
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if (result.statuscode==0){
         alert("发送成功！");
-      } else {
-        alert(tre.describe);
+      }else{
+        alert("发送失败："+result.msg);
       }
+    }, error=>{
+        alert("sendMessage() fail: "+error);
     });
   }
 }
