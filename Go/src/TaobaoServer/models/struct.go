@@ -108,28 +108,28 @@ type PersonalPostBody struct {
 }
 
 type UserMessage struct {
-	Headimg  string `json:"headimg"`
-	Name     string `json:"name"`
-	Id       string `json:"id"`
-	Sex      string `json:"sex"`
-	Sign     string `json:"sign"`
-	Grade    string `json:"grade"`
-	Colleage string `json:"colleage"`
-	Major    string `json:"major"`
-	Emails   string `json:"emails"`
-	Qq       string `json:"qq"`
-	Phone    string `json:"phone"`
-	Lasttime string `json:"lasttime"`
-	Dorm     string `json:"dorm"`
-	Leave    int    `json:"leave"`
-	Credits  int    `json:"credits"`
-	Rank     int    `json:"rank"`
-	Becare   int    `json:"becare"`
-	Likes    int    `json:"likes"`
-	Visit    int    `json:"visit"`
-	Goodsnum int    `json:"goodsnum"`
-	Scuess   int    `json:"scuess"`
-	Care     int    `json:"care"`
+	Headimg  string    `json:"headimg"`
+	Name     string    `json:"name"`
+	Id       string    `json:"id"`
+	Sex      string    `json:"sex"`
+	Sign     string    `json:"sign"`
+	Grade    string    `json:"grade"`
+	Colleage string    `json:"colleage"`
+	Major    string    `json:"major"`
+	Emails   string    `json:"emails"`
+	Qq       string    `json:"qq"`
+	Phone    string    `json:"phone"`
+	Lasttime time.Time `json:"lasttime"`
+	Dorm     string    `json:"dorm"`
+	Leave    int       `json:"leave"`
+	Credits  int       `json:"credits"`
+	Rank     int       `json:"rank"`
+	Becare   int       `json:"becare"`
+	Likes    int       `json:"likes"`
+	Visit    int       `json:"visit"`
+	Goodsnum int       `json:"goodsnum"`
+	Scuess   int       `json:"scuess"`
+	Care     int       `json:"care"`
 }
 
 type GoodsShort struct {

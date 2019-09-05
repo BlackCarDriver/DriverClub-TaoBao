@@ -63,7 +63,7 @@ export class UserMessage{
     becare:number ;    //关注我的人数       (special)
     likes:number ;      //被点赞次数         (special)
     //其他数据
-    lasttime:string;  
+    lasttime:any;  
     visit:number;    //主页访问次数
     goodsnum:number;  //拥有商品的数量      (special)
     scuess:number;    //成功交易的商品数量

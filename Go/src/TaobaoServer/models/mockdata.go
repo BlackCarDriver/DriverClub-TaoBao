@@ -37,15 +37,6 @@ var MockMystatus = MyStatus{
 	122, 123213, 11, 33, "2019-22-22",
 }
 
-//个人主页,用户数据
-var MockUserMessage = UserMessage{
-	"https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
-	"BlackCarDriver", "id123345", "sexboy", "sign:it is sing",
-	"grad2015", "collect:计算机学院", "major:计算机", "emils:123123123.com",
-	"Qq123213213213", "phone2134213213", "123", "dorm", 1234, 12, 321, 2134, 4545,
-	3453, 56756, 6789, 55,
-}
-
 //个人主页,我的商品
 var MockGoodsShort = []GoodsShort{
 	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 123.123},

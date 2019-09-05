@@ -20,7 +20,7 @@ export class Personal2Component implements OnInit {
     this.getOtherMsg(this.userid);
   }
 
-  //get some other message need to show in the page 🍍
+  //get some other message need to show in the page 🍍🔥
   getOtherMsg(uid: string) {
     let postdata : RequestProto = {
       api:"othermsg",
@@ -36,7 +36,7 @@ export class Personal2Component implements OnInit {
     }, error=>{console.log("GetMymsg() fail" + error)});
   }
 
-  // add a like to a user profile  🍍
+  // add a like to a user profile  🍍🔥
   updateLike() {
     let postdata : RequestProto = {
       api:"likegoods",
@@ -45,16 +45,16 @@ export class Personal2Component implements OnInit {
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
-        alert("收藏成功！");
+        alert("点赞成功！");
       }else{
-        alert("收藏失败："+result.msg);
+        alert("点赞失败："+result.msg);
       }
     },error=>{
       alert("updateLike() fail: "+error); 
     });
   }
 
-  //add a user into favorite 🍍
+  //add a user into favorite 🍍🔥
   addConcern() {
     //todo: must login before following operation
     let postdata : RequestProto = {
@@ -70,7 +70,7 @@ export class Personal2Component implements OnInit {
     });
   }
 
-  //send a private message to owner 🍍
+  //send a private message to owner 🍍🔥
   sendMessage() {
     //todo: must login before following operation
     let message = $("#messagesender").val().toString();

@@ -8,25 +8,49 @@ import (
 	"github.com/astaxie/beego/logs"
 )
 
-//主页商品列表数据
+//return homepage goods list data 🍋🔥
 func (this *HPGoodsController) Post() {
-	PostBody := md.PostBody1{}
-	var err error
-	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &PostBody); err != nil {
-		logs.Error(err)
-		return
-	}
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	response.StatusCode = 0
 	var goodslist []md.Goods1
-	err = md.SelectHomePageGoods(PostBody.GoodsType, PostBody.GoodsTag, PostBody.GoodsIndex, &goodslist)
-	if err != nil {
-		logs.Error(err)
+	var err error
+	var goodstype, goodstag string
+	var goodsindex float64
+	var appendData map[string]interface{}
+	//parse postbody
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
+		goto tail
 	}
-	this.Data["json"] = goodslist
-
+	//get and chekc additional argument
+	appendData = postBody.Data.(map[string]interface{})
+	goodstype = appendData["goodstype"].(string)
+	goodstag = appendData["goodstag"].(string)
+	goodsindex = appendData["goodsindex"].(float64)
+	if goodstype == "" || goodstag == "" || int(goodsindex) == 0 {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Unexpect argument")
+		logs.Error(response.Msg)
+		goto tail
+	}
+	//get data from database
+	if err = md.SelectHomePageGoods(goodstype, goodstag, int(goodsindex), &goodslist); err != nil {
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Get goods list data fail: %v", err)
+		logs.Error(response.Msg)
+		goto tail
+	} else {
+		response.Data = goodslist
+	}
+tail:
+	this.Data["json"] = response
 	this.ServeJSON()
 }
 
-//返回商品分类和标签列表数据
+//return goods type list and tag list 🍋🔥
 func (this *GoodsTypeController) Get() {
 	this.Data["json"] = &md.GoodsTypeTempDate
 	this.ServeJSON()
@@ -57,10 +81,16 @@ func (this *GoodsDetailController) Post() {
 		logs.Error(response.Msg)
 		goto tail
 	}
-	//update some statistical
-	if err = md.UpdateGoodsVisit(goodId); err != nil {
-		logs.Error(err)
-	}
+	//catch the unexpect panic
+	defer func() {
+		if err, ok := recover().(error); ok {
+			response.StatusCode = -99
+			response.Msg = fmt.Sprintf("Unexpect error happen, api: %s , error: %v", api, err)
+			logs.Error(response.Msg)
+			this.Data["json"] = response
+			this.ServeJSON()
+		}
+	}()
 	//handle the request
 	switch api {
 	case "goodsmessage": // base message in goodsdetail page
@@ -71,6 +101,10 @@ func (this *GoodsDetailController) Post() {
 			logs.Error(response.Msg)
 		} else {
 			response.Data = &gooddata
+		}
+		//update some statistical
+		if err = md.UpdateGoodsVisit(goodId); err != nil {
+			logs.Error(err)
 		}
 		goto tail
 
@@ -115,23 +149,46 @@ tail:
 	this.ServeJSON()
 }
 
-//上传商品
+//user upload a goods 🍋🔥
 func (this *UploadGoodsController) Post() {
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	response.StatusCode = 0
 	var goodsdata md.UploadGoodsData
-	var returnRes md.UpLoadResult
 	var err error
-	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &goodsdata); err != nil {
-		logs.Error(err)
-		returnRes = md.CreateUploadRes(-100, err, "")
+	//parse request protocol
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
 		goto tail
 	}
+	//catch the unexpect panic
+	defer func() {
+		if err, ok := recover().(error); ok {
+			response.StatusCode = -99
+			response.Msg = fmt.Sprintf("Unexpect error happen, error: %v", err)
+			logs.Error(response.Msg)
+			this.Data["json"] = response
+			this.ServeJSON()
+		}
+	}()
+	logs.Info(postBody.Data)
+	//parse postBody.Data
+	if err := json.Unmarshal([]byte(postBody.Data.(string)), &goodsdata); err != nil {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Marshal fail: %v", err)
+		logs.Error(response.Msg)
+		goto tail
+	}
+	//save to database
 	if err = md.CreateGoods(goodsdata); err != nil {
-		returnRes = md.CreateUploadRes(-200, err, "")
-		logs.Error(err)
+		response.StatusCode = -3
+		response.Msg = fmt.Sprintf("Save goods fail: %v", err)
+		logs.Error(response.Msg)
 		goto tail
 	}
-	returnRes = md.CreateUploadRes(0, nil, "")
 tail:
-	this.Data["json"] = &returnRes
+	this.Data["json"] = response
 	this.ServeJSON()
 }

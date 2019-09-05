@@ -8,7 +8,7 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//获取主页商品的商品列表数据
+//get the goods list that need to show in homepage
 func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error {
 	var err error
 	var num int64
@@ -42,7 +42,7 @@ tail:
 	return nil
 }
 
-//获取已有用户人数
+//get the total number of user
 func CountUser() int {
 	o := orm.NewOrm()
 	userNumber := 0
@@ -54,7 +54,7 @@ func CountUser() int {
 	return userNumber
 }
 
-//获取已有商品数
+//get the total number of upload goods
 func CountGoods() int {
 	o := orm.NewOrm()
 	goodsNumber := 0
@@ -66,7 +66,7 @@ func CountGoods() int {
 	return goodsNumber
 }
 
-//获取某个类型的所有标签以及对应商品的数量
+//get all type name and tag
 func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	o := orm.NewOrm()
 	var tSubType []GoodsSubType
@@ -92,7 +92,7 @@ func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	return nil
 }
 
-//根据商品的id获得这个商品的属性信息
+//get a goods detail message
 func GetGoodsById(gid string, c *GoodsDetail) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_goods_detail where goodsid=$1`, gid).QueryRow(c)
@@ -104,7 +104,7 @@ func GetGoodsById(gid string, c *GoodsDetail) error {
 	return nil
 }
 
-//获取某个用户的展示数据
+//get the data need to show in personal page
 func GetUserData(uid string, u *UserMessage) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&u)
@@ -115,7 +115,7 @@ func GetUserData(uid string, u *UserMessage) error {
 	return nil
 }
 
-//获取我的消息
+//get my messages
 func GetMyMessage(uid string, c *[]MyMessage) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_mymessage where id = ?`, uid).QueryRows(c)
@@ -131,7 +131,7 @@ func GetMyMessage(uid string, c *[]MyMessage) error {
 	return nil
 }
 
-//获取我的收藏商品
+//get the goods list that i have collect
 func GetMyCollectGoods(uid string, c *[]GoodsShort) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_mycollect where uid = ?`, uid).QueryRows(c)
@@ -147,7 +147,7 @@ func GetMyCollectGoods(uid string, c *[]GoodsShort) error {
 	return nil
 }
 
-//获取我上传的商品数据
+//get the goods list that i upload
 func GetMyGoods(uid string, c *[]GoodsShort) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_mygoods where uid = ?`, uid).QueryRows(c)
@@ -163,32 +163,22 @@ func GetMyGoods(uid string, c *[]GoodsShort) error {
 	return nil
 }
 
-//获取我关注的和关注我的用户数据
+//get the list of user i care and which acre me
 func GetCareMeData(uid string, c *[2][]UserShort) error {
 	o := orm.NewOrm()
-	num, err := o.Raw(`select * from v_concern where myid=?`, uid).QueryRows(c[0])
+	_, err := o.Raw(`select * from v_concern where myid=?`, uid).QueryRows(&c[0])
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
-	if num == 0 {
-		err := fmt.Errorf("the result of c[0] is empty!")
-		logs.Error(err)
-		return err
-	}
-	num, err = o.Raw(`select myid as id, name, headimg from v_iconcern where id = ?`, uid).QueryRows(c[1])
+	_, err = o.Raw(`select myid as id, name, headimg from v_concern where id = ?`, uid).QueryRows(&c[1])
 	if err != nil {
-		return err
-	}
-	if num == 0 {
-		err := fmt.Errorf("the result of c[1] is empty!")
-		logs.Error(err)
 		return err
 	}
 	return nil
 }
 
-//获取排名信息
+//get the list of user's rank
 func GetRankList(c *[]Rank) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_rank`).QueryRows(c)
@@ -204,7 +194,7 @@ func GetRankList(c *[]Rank) error {
 	return nil
 }
 
-//获取导航栏我的信息框数据
+//get the data that need to show in naving componment
 func GetNavingMsg(uid string, c *MyStatus) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c)

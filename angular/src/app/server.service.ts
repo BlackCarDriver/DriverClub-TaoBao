@@ -21,25 +21,25 @@ export class ServerService {
 
  //======================================= large  interface =============================================================
 
- //get all kind of data in goodspage 🍌
+ //get all kind of data in goodspage 🍌🔥
 GetGoodsDeta(request : RequestProto){
   var url = this.addr+"/goodsdeta";
   return this.http.post<ReplyProto>(url,JSON.stringify(request));
 }
 
-//request to update some simple record such as collect number 🍍
+//request to update some simple record such as collect number 🍍🔥
 SmallUpdate(request : RequestProto){
   var url = this.addr + "/smallupdate"; 
   return this.http.post<ReplyProto>(url, JSON.stringify(request));
 }
 
-//request to update some complex message such as profile 🍍
+//request to update some complex message such as profile 🍍🔥
 UpdateMessage(request : RequestProto){
   var url = this.addr + "/update"; 
   return this.http.post<ReplyProto>(url, JSON.stringify(request)); 
 }
 
-//upload a images to server and receive a url to get it images 🍍
+//upload a images to server and receive a url to get it images 🍍🔥
 UploadImg(username:string , img:any){
   var postdata = new FormData();
   postdata.append("name", username);
@@ -49,40 +49,49 @@ UploadImg(username:string , img:any){
   return this.http.post<ReplyProto>(url, postdata);
 } 
 
-//get information in personal page 🍍
+//get information in personal page 🍍🔥
 GetMyMsg(request : RequestProto){
   var url = this.addr + "/personal/data"; 
   return this.http.post<ReplyProto>(url, JSON.stringify(request)); 
 }
 
-//a little different from GetMyMsg 🍋
+//a little different from GetMyMsg 🍋🔥
 GetCredentMsg(request : RequestProto){
   var url = this.addr + "/personal/data";
   return this.http.post<ReplyProto>(url, JSON.stringify(request), {withCredentials: true});
 }
 
- //=======================================  重做  =====================================================================
-//获取主页商品列表
+//get homepage goods list data 🍋🔥
 GetHomePageGoods(type:string, tag : string, index : number){
+  let postdata : RequestProto = {
+    api:"gethomepagegoods",
+    data:{goodstype: type, goodstag:tag, goodsindex:index},
+  };
   var url = this.addr + "/homepage/goodsdata";
-  var postdata = {goodstype: type,goodstag:tag, goodsindex:index};
-  return this.http.post<HomePageGoods[]>(url, JSON.stringify(postdata));
+  return this.http.post<ReplyProto>(url, JSON.stringify(postdata));
 }
 
-//主页商品类型和标签列表数据
+//upload a good data 🍋
+UploadGoodsData(data:UploadGoods){
+  var url = this.addr + "/upload/newgoods"; 
+  let postdata : RequestProto = {
+    api:"uploadgoodsdata",
+    data:JSON.stringify(data),
+  };
+  return this.http.post<ReplyProto>(url,JSON.stringify(postdata));
+}
+
+//get the list of goods type and tag 
 GetHomePageType(){
   var url = this.addr + "/homepage/goodstypemsg";
   return this.http.get<GoodsType[]>(url);
 }
 
+ //=======================================  重做  =====================================================================
 
 
 
-//上传商品
-UploadGoodsData(data:UploadGoods){
-    var url = this.addr + "/upload/newgoods"; 
-    return this.http.post<UploadAnyResult>(url,data);
-}
+
 
 
 

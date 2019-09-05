@@ -16,7 +16,7 @@ import (
 const (
 	//上传的图片保存到的位置
 	imgPath    = "E:\\tempfile\\taobaosource\\"
-	imgUrlRoot = "https://blackcardriver.com/taobao/images/"
+	imgUrlRoot = "https://blackcardriver.com/images/"
 )
 
 var (
@@ -111,7 +111,8 @@ func (this *UploadImagesController) Post() {
 		goto tail
 	}
 	//DOTO: use true image url
-	response.Data = imgUrlRoot + h.Filename
+	// response.Data = imgUrlRoot + h.Filename
+	response.Data = "https://blackcardriver.cn/images/huawei.jpg"
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

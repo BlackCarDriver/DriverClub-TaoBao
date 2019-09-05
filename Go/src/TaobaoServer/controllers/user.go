@@ -8,7 +8,7 @@ import (
 	"github.com/astaxie/beego/logs"
 )
 
-//get myprofile data or other user profile data 🍋
+//get myprofile data or other user profile data 🍋 🔥
 //server for GetMyMsg() from frontend
 func (this *PersonalDataController) Post() {
 	postBody := md.RequestProto{}
@@ -32,7 +32,17 @@ func (this *PersonalDataController) Post() {
 		logs.Error(response.Msg)
 		goto tail
 	}
-	logs.Info(api, "\t\t", targetid)
+	//catch the unexpect panic
+	defer func() {
+		if err, ok := recover().(error); ok {
+			response.StatusCode = -99
+			response.Msg = fmt.Sprintf("Unexpect error happen, api: %s , error: %v", api, err)
+			logs.Error(response.Msg)
+			this.Data["json"] = response
+			this.ServeJSON()
+		}
+	}()
+	// logs.Info(api, "\t\t", targetid)
 	//handle the request
 	switch api {
 	case "mymsg": //my profile data
@@ -117,19 +127,21 @@ func (this *PersonalDataController) Post() {
 		goto tail
 
 	case "rank": //user rank
-		this.Data["json"] = &md.UserRank
+		response.Data = md.UserRank
 		//TODO: make a function
 		goto tail
 
 	case "setdata": //??
-		this.Data["json"] = &md.MockUserSetData
+		response.Data = md.MockUserSetData
 		goto tail
 
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("Unsupose metho: %s", api)
 		logs.Error(response.Msg)
+		goto tail
 	}
+
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()
@@ -159,7 +171,16 @@ func (this *UpdataMsgController) Post() {
 		logs.Error(response.Msg)
 		goto tail
 	}
-	logs.Info(userid)
+	//catch the unexpect panic
+	defer func() {
+		if err, ok := recover().(error); ok {
+			response.StatusCode = -99
+			response.Msg = fmt.Sprintf("Unexpect error, api: %s , des: %v", api, err)
+			logs.Error(response.Msg)
+			this.Data["json"] = response
+			this.ServeJSON()
+		}
+	}()
 	//handle the request
 	switch api {
 	case "MyBaseMessage": //base information of users

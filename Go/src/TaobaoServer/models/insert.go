@@ -34,13 +34,14 @@ func CreateAccount(user RegisterData) error {
 	return err
 }
 
-//创建商品
+//insert a good to database 🍋
 func CreateGoods(goods UploadGoodsData) error {
 	o := orm.NewOrm()
 	var err error
 	goodsNumber := CountGoods() + 1
 	t := time.Now()
 	goodsid := fmt.Sprintf("%02d%02d%02d%04d", t.Year()%100, t.Month(), t.Day(), goodsNumber)
+	logs.Info(goods.UserId, goodsid)
 	insertGoods := o.Raw("insert into t_goods(id, name, title, type, tag, price, file, headimg)values(?,?,?,?,?,?,?,?)",
 		goodsid, goods.Name, goods.Title, goods.Type, goods.Tag, goods.Price, goods.Text, goods.Imgurl)
 	insertUpload := o.Raw("insert into t_upload(userid, goodsid) values(?, ?)", goods.UserId, goodsid)
@@ -52,13 +53,19 @@ func CreateGoods(goods UploadGoodsData) error {
 	}
 	_, err1 := insertGoods.Exec()
 	_, err2 := insertUpload.Exec()
+
 	if err1 != nil || err2 != nil {
-		err = fmt.Errorf("Need to Rollback!! %v   %v ", err1, err2)
-		logs.Error(err)
-		if err := o.Rollback(); err != nil {
-			logs.Error(err)
+		logs.Warn("Need to Rollback!! t_goods: %v ,  t_upload: %v ", err1, err2)
+		//rollback
+		if err3 := o.Rollback(); err3 != nil {
+			logs.Error("Rollback fail: ", err3)
 		} else {
 			logs.Info("RollBack success!")
+		}
+		if err1 != nil {
+			err = fmt.Errorf("updata t_goods fail: %v", err1)
+		} else {
+			err = fmt.Errorf("update t_upload fail: %v", err2)
 		}
 	} else {
 		logs.Info("Create Goods Scuueed!!")

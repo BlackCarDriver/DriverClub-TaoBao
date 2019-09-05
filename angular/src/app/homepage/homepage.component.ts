@@ -42,22 +42,29 @@ export class HomepageComponent implements OnInit {
     this.GetType();
     this.set_mainbody_height();
   }
-  //获得在主页中显示的一页商品列表的数据
+
+  //get a page of goods list data 🍋🔥
   GetGoods(){
     this.server.GetHomePageGoods(this.lookingtype, this.lookingtag, this.lookingpage).subscribe(
-      result => {
-          this.goodsarray = result;
-      })
+      result=>{
+        if(result.statuscode==0){
+          this.goodsarray = result.data;
+        }else{
+          alert("获取数据失败："+result.msg);
+        }
+      },
+      error=>{console.log("GetHomePageGoods() fail: "+ error);}
+    )
   }
 
-  //按照特定类型和标签获取商品列表
+  //get specified type or tag of goods
   GetSpecalGoods(type :string, tag:string){
     this.lookingtype = type;
     this.lookingtag = tag;
     this.GetGoods();
   }
 
-  //搜索框搜索
+  //search goods by input the keyword
   SearchGoods(){
     let input :string =  $('#searchgoods').val();
     if (input==""){
@@ -72,9 +79,9 @@ export class HomepageComponent implements OnInit {
     this.GetGoods();
   }
 
-  //获得商品的各个类型中包含的标签列表
+  //show the type and tag information into page
   GetType(){
-    this.server. GetHomePageType().subscribe(
+    this.server.GetHomePageType().subscribe(
       result => {
           this.typearray = result;
           this.studytype = this.typearray[0].list;
