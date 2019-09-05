@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego/config"
 	"github.com/astaxie/beego/orm"
 	_ "github.com/lib/pq"
@@ -21,6 +23,7 @@ func init() {
 	//获取连接数据库配置
 	iniconf, err := config.NewConfig("ini", "./conf/database.conf")
 	if err != nil {
+		logs.Error(err)
 		panic(err)
 	}
 	userName = iniconf.String("userName")
@@ -29,6 +32,7 @@ func init() {
 	host = iniconf.String("host")
 	port, err = iniconf.Int("port")
 	if err != nil {
+		logs.Error(err)
 		panic(err)
 	}
 
@@ -36,10 +40,11 @@ func init() {
 	dataSource := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, userName, password, database)
 	err = orm.RegisterDataBase("default", "postgres", dataSource)
 	if err != nil {
-		fmt.Println("Can't not connect to database! : ", err)
-		return
+		err = fmt.Errorf("Can't not connect to database! : %v", err)
+		logs.Error(err)
+		panic(err)
 	} else {
-		fmt.Println("DataBase connect scuess!!")
+		logs.Info("DataBase connect scuess!!")
 	}
 	//设置最大空闲连接
 	orm.SetMaxIdleConns("default", 30)

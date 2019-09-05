@@ -3,6 +3,8 @@ package models
 import (
 	"fmt"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -29,10 +31,13 @@ func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error
 	num, err = o.Raw(`select * from v_hpgoodslist where type=? and tag=? offset ?`, gstype, tag, skip).QueryRows(g)
 tail:
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result is empty!")
+		err = fmt.Errorf("the result is empty!")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -43,7 +48,7 @@ func CountUser() int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_user").QueryRow(&userNumber)
 	if err != nil {
-		fmt.Println("CountUser fall ! ", err)
+		logs.Error(err)
 		return 0
 	}
 	return userNumber
@@ -55,7 +60,7 @@ func CountGoods() int {
 	goodsNumber := 0
 	err := o.Raw("select count(*) from t_goods").QueryRow(&goodsNumber)
 	if err != nil {
-		fmt.Println("CountGoods fall ! ", err)
+		logs.Error(err)
 		return 0
 	}
 	return goodsNumber
@@ -67,10 +72,13 @@ func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	var tSubType []GoodsSubType
 	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(&tSubType)
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result is empty!")
+		err = fmt.Errorf("the result is empty!")
+		logs.Warn(err)
+		return err
 	}
 	var sum int64 = 0
 	for i := 0; i < len(tSubType); i++ {
@@ -89,6 +97,7 @@ func GetGoodsById(gid string, c *GoodsDetail) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_goods_detail where goodsid=$1`, gid).QueryRow(c)
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	fmt.Println(c.Time)
@@ -100,7 +109,7 @@ func GetUserData(uid string, u *UserMessage) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&u)
 	if err != nil {
-		fmt.Println("GetOtherUserData error: ", err)
+		logs.Error(err)
 		return err
 	}
 	return nil
@@ -111,10 +120,13 @@ func GetMyMessage(uid string, c *[]MyMessage) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_mymessage where id = ?`, uid).QueryRows(c)
 	if err != nil {
-		return fmt.Errorf("GetMessage error: %v", err)
+		logs.Error(err)
+		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result is empty!")
+		err = fmt.Errorf("the result is empty!")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -124,10 +136,13 @@ func GetMyCollectGoods(uid string, c *[]GoodsShort) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_mycollect where uid = ?`, uid).QueryRows(c)
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result is empty!")
+		err := fmt.Errorf("the result is empty!")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -137,10 +152,13 @@ func GetMyGoods(uid string, c *[]GoodsShort) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_mygoods where uid = ?`, uid).QueryRows(c)
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result is empty!")
+		err := fmt.Errorf("the result is empty!")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -150,17 +168,22 @@ func GetCareMeData(uid string, c *[2][]UserShort) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_concern where myid=?`, uid).QueryRows(c[0])
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result of c[0] is empty!")
+		err := fmt.Errorf("the result of c[0] is empty!")
+		logs.Error(err)
+		return err
 	}
 	num, err = o.Raw(`select myid as id, name, headimg from v_iconcern where id = ?`, uid).QueryRows(c[1])
 	if err != nil {
 		return err
 	}
 	if num == 0 {
-		return fmt.Errorf("the result of c[1] is empty!")
+		err := fmt.Errorf("the result of c[1] is empty!")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -170,10 +193,13 @@ func GetRankList(c *[]Rank) error {
 	o := orm.NewOrm()
 	num, err := o.Raw(`select * from v_rank`).QueryRows(c)
 	if err != nil {
+		logs.Error(err)
 		return fmt.Errorf("GetMessage error: %v", err)
 	}
 	if num == 0 {
-		return fmt.Errorf("the result is empty!")
+		err := fmt.Errorf("the result is empty!")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -183,7 +209,7 @@ func GetNavingMsg(uid string, c *MyStatus) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c)
 	if err != nil {
-		fmt.Println("GetOtherUserData error: ", err)
+		logs.Error(err)
 		return err
 	}
 	return nil
@@ -194,7 +220,31 @@ func GetGoodsComment(goodsid string, c *[]GoodsComment) error {
 	o := orm.NewOrm()
 	_, err := o.Raw(`select u.name as "username", c.time as "time", c.content as "comment" from t_user as u, t_comment as c where u.id=c.userid and c.goodsid=?`, goodsid).QueryRows(c)
 	if err != nil {
-		return fmt.Errorf("Get comment fail: %v", err)
+		logs.Error(err)
+		return err
 	}
 	return nil
+}
+
+//get statement of user-goods from database  🍌
+//return result = like*1 + collect*2
+func GetStatement(userid, goodid string) (int, error) {
+	var result = 0
+	var tmp = 0
+	o := orm.NewOrm()
+	//check if have collect
+	if err := o.Raw(`SELECT count(*) FROM public.t_collect where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
+		logs.Error(err)
+		return 0, err
+	} else {
+		result += tmp * 2
+	}
+	//check if have like
+	if err := o.Raw(`SELECT count(*) FROM public.t_goods_like where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
+		logs.Error(err)
+		return result, err
+	} else {
+		result += tmp
+	}
+	return result, nil
 }

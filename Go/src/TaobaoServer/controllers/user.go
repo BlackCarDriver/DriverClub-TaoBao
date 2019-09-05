@@ -4,154 +4,212 @@ import (
 	md "TaobaoServer/models"
 	"encoding/json"
 	"fmt"
+
+	"github.com/astaxie/beego/logs"
 )
 
-//个人详情页面或其他用户主页信息获取接口
+//get myprofile data or other user profile data 🍋
+//server for GetMyMsg() from frontend
 func (this *PersonalDataController) Post() {
-	postBody := md.PersonalPostBody{}
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	response.StatusCode = 0
 	var err error
+	var api, targetid string
+	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		return
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
+		goto tail
 	}
-	userName := postBody.Name
-	dataTag := postBody.Tag
-	if userName == "" || dataTag == "" { //userName 就是 id
-		return
+	api = postBody.Api
+	targetid = postBody.TargetId
+	//check that the data is complete
+	if api == "" || targetid == "" {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Can't get api or goodsid from request data")
+		logs.Error(response.Msg)
+		goto tail
 	}
-	switch dataTag {
-	case "mymsg": //我的数据
+	logs.Info(api, "\t\t", targetid)
+	//handle the request
+	switch api {
+	case "mymsg": //my profile data
 		var data md.UserMessage
-		err = md.GetUserData(userName, &data)
-		if err != nil {
-			fmt.Println(err)
-			this.Data["json"] = ""
-			goto tail
-		}
-		this.Data["json"] = data
-
-	case "mygoods": //我的商品
-		this.Data["json"] = &md.MockGoodsShort
-		var data []md.GoodsShort
-		err = md.GetMyGoods(userName, &data)
-		if err != nil {
-			fmt.Println(err)
-			this.Data["json"] = ""
-			goto tail
-		}
-		this.Data["json"] = data
-
-	case "mycollect": //我的收藏
-		var data []md.GoodsShort
-		err = md.GetMyCollectGoods(userName, &data)
-		if err != nil {
-			fmt.Println(err)
-			this.Data["json"] = "do something..."
-			goto tail
-		}
-		this.Data["json"] = &data
-
-	case "message": //我的消息
-		var data []md.MyMessage
-		err = md.GetMyMessage(userName, &data)
-		if err != nil {
-			//do something...
-			this.Data["json"] = ""
-			goto tail
-		}
-		this.Data["json"] = data
-
-	case "rank": //用户排名数据
-		this.Data["json"] = &md.UserRank
-
-	case "mycare": //关注我的和我关注的用户数据
-		var data [2][]md.UserShort
-		err = md.GetCareMeData(userName, &data)
-		if err != nil {
-			fmt.Println(err)
-			this.Data["json"] = ""
-			goto tail
-		}
-		this.Data["json"] = data
-
-	case "naving": //导航栏我的数据
-		var data md.MyStatus
-		err = md.GetNavingMsg(userName, &data)
-		if err != nil {
-			fmt.Println(err)
-			this.Data["json"] = ""
-			goto tail
-		}
-		this.Data["json"] = data
-
-	case "othermsg": //看其他人的数据
-		var data md.UserMessage
-		err = md.GetUserData(userName, &data)
-		if err != nil {
-			goto tail
-		}
-		err = md.UpdateUserVisit(userName)
-		if err != nil {
-			fmt.Println("update user visit fall, ", err)
+		if err = md.GetUserData(targetid, &data); err != nil {
+			response.StatusCode = -3
+			response.Msg = fmt.Sprintf("Get user data fail: %v", err)
+			logs.Error(response.Msg)
 		} else {
-			fmt.Println(userName)
+			response.Data = data
 		}
-		this.Data["json"] = data
 		goto tail
 
-	case "setdata":
-		this.Data["json"] = &md.MockUserSetData
+	case "mygoods": //my goods data
+		var data []md.GoodsShort
+		if err = md.GetMyGoods(targetid, &data); err != nil {
+			response.StatusCode = -4
+			response.Msg = fmt.Sprintf("Can't get goods data: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
+		goto tail
 
+	case "mycollect": //my collect goods data
+		var data []md.GoodsShort
+		if err = md.GetMyCollectGoods(targetid, &data); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("Can't get collect data: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
+		goto tail
+
+	case "mycare": //get my favorite and who care me
+		var data [2][]md.UserShort
+		if err = md.GetCareMeData(targetid, &data); err != nil {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("Can't get care data: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
+		goto tail
+
+	case "naving": //get naving data
+		var data md.MyStatus
+		if err = md.GetNavingMsg(targetid, &data); err != nil {
+			response.StatusCode = -7
+			response.Msg = fmt.Sprintf("Can't get naving data: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
+		goto tail
+
+	case "othermsg": //other people profile data
+		var data md.UserMessage
+		if err = md.GetUserData(targetid, &data); err != nil {
+			response.StatusCode = -8
+			response.Msg = fmt.Sprintf("Can't get user data: %v ", err)
+			logs.Error(response.Msg)
+			goto tail
+		} else {
+			response.Data = data
+		}
+		if err = md.UpdateUserVisit(targetid); err != nil {
+			logs.Error("Update visit number fail: %v", err)
+		}
+		goto tail
+
+	case "message": //my receive messages
+		var data []md.MyMessage
+		if err = md.GetMyMessage(targetid, &data); err != nil {
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("Can't get message data: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
+		goto tail
+
+	case "rank": //user rank
+		this.Data["json"] = &md.UserRank
+		//TODO: make a function
+		goto tail
+
+	case "setdata": //??
+		this.Data["json"] = &md.MockUserSetData
+		goto tail
+
+	default:
+		response.StatusCode = -100
+		response.Msg = fmt.Sprintf("Unsupose metho: %s", api)
+		logs.Error(response.Msg)
 	}
 tail:
+	this.Data["json"] = response
 	this.ServeJSON()
 }
 
-//个人主页更新信息接口
+//update personal message, such as base information, connect wags. 🍍
+//server for UpdateMessage() in frontend
 func (this *UpdataMsgController) Post() {
-	postBody := md.UpdateBody{}
-	var updateTag string
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	response.StatusCode = 0
+	var api, userid string
 	var err error
+	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		this.Data["json"] = md.GetUpdateResult(-100, err)
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
 		goto tail
 	}
-	updateTag = postBody.Tag
-	switch updateTag {
-	//更新基本信息
-	case "MyBaseMessage":
-		fmt.Println("Updata base message ...")
-		postData := md.UpdeteMsg{}
-		Parse(postBody.Data, &postData)
-		err = md.UpdateUserBaseMsg(postData)
-		if err != nil {
-			this.Data["json"] = md.GetUpdateResult(-200, err)
-			goto tail
-		}
-		//更新联系方式
-	case "MyConnectMessage":
-		fmt.Println("Updata connect ways...")
-		postData := md.UpdeteMsg{}
-		Parse(postBody.Data, &postData)
-		err = md.UpdateUserConnectMsg(postData)
-		if err != nil {
-			this.Data["json"] = md.GetUpdateResult(-300, err)
-			goto tail
-		}
-		//修改头像
-	case "MyHeadImage":
-		fmt.Println("Updata User headimg...")
-		postData := md.UpdeteMsg{}
-		Parse(postBody.Data, &postData)
-		err = md.UpdateUserHeadIMg(postBody.UserId, postData.Headimg)
-		if err != nil {
-			this.Data["json"] = md.GetUpdateResult(-300, err)
-			goto tail
-		}
-	default:
-		this.Data["json"] = md.GetUpdateResult(-600, fmt.Errorf("No such tag!"))
+	api = postBody.Api
+	userid = postBody.UserId
+	//check that the data is complete
+	if api == "" || userid == "" {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Can't get api or userid from request data")
+		logs.Error(response.Msg)
+		goto tail
 	}
-	this.Data["json"] = md.GetUpdateResult(0, nil)
+	logs.Info(userid)
+	//handle the request
+	switch api {
+	case "MyBaseMessage": //base information of users
+		postData := md.UpdeteMsg{}
+		if err = Parse(postBody.Data, &postData); err != nil {
+			response.StatusCode = -3
+			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+		if err = md.UpdateUserBaseMsg(postData); err != nil {
+			response.StatusCode = -4
+			response.Msg = fmt.Sprintf("Update message fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+	case "MyConnectMessage": //connect information
+		postData := md.UpdeteMsg{}
+		if err = Parse(postBody.Data, &postData); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+		if err = md.UpdateUserConnectMsg(postData); err != nil {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("Update connection message fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+	case "MyHeadImage": //update profile picture
+		if postBody.Data.(string) == "" { //here imgurl save in data directrly
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("Can't get imagurl from postbody")
+			logs.Error(response.Msg)
+			goto tail
+		}
+		if err = md.UpdateUserHeadIMg(userid, postBody.Data.(string)); err != nil {
+			response.StatusCode = -8
+			response.Msg = fmt.Sprintf("Update profile iamge fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+	default:
+		response.StatusCode = -100
+		response.Msg = fmt.Sprintf("No such method: %s", api)
+		logs.Error(response.Msg)
+	}
 tail:
+	this.Data["json"] = response
 	this.ServeJSON()
 }
 
@@ -171,7 +229,7 @@ func (this *EntranceController) Post() {
 		Parse(postBody.Data, &tregister)
 		err := md.CreateAccount(tregister)
 		if err != nil {
-			fmt.Println(err)
+			logs.Error(err)
 		}
 	case "confirmcode":
 		fmt.Println("confirmcode...")

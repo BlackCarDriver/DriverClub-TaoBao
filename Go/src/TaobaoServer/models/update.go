@@ -3,6 +3,7 @@ package models
 import (
 	"fmt"
 
+	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -14,11 +15,14 @@ func UpdateUserBaseMsg(d UpdeteMsg) error {
 		d.Name, d.Sex, d.Sign, d.Dorm, d.Major, d.Grade, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err = fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -30,11 +34,14 @@ func UpdateUserConnectMsg(d UpdeteMsg) error {
 		d.Emails, d.Phone, d.Qq, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -45,11 +52,14 @@ func UpdateUserHeadIMg(imgurl, userid string) error {
 	rawSeter := o.Raw("update t_user set headimg=? where id=?;", imgurl, userid)
 	result, err := rawSeter.Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err = fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -60,11 +70,14 @@ func UpdateUserVisit(uid string) error {
 	rawSeter := o.Raw(`UPDATE t_user SET visit=visit+1 WHERE id = ?`, uid)
 	result, err := rawSeter.Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err = fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }
@@ -75,11 +88,14 @@ func UpdateGoodsVisit(gid string) error {
 	rawSeter := o.Raw(`UPDATE t_goods SET visit=visit+1 WHERE id = ?`, gid)
 	result, err := rawSeter.Exec()
 	if err != nil {
+		logs.Error(err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		return fmt.Errorf("No Roow Affected !")
+		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
 	}
 	return nil
 }

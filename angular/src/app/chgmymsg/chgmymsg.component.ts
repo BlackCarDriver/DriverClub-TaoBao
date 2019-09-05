@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ServerService} from '../server.service';
-import {PersonalSetting, UpdateResult} from '../struct';
+import {PersonalSetting,RequestProto} from '../struct';
 
 declare var $: any;
 
@@ -12,9 +12,8 @@ declare var $: any;
 })
 export class ChgmymsgComponent implements OnInit {
    headimgurl = "https://tb1.bdstatic.com/tb/r/image/2018-02-11/7ec7062f14307db6f1728bc108c3189c.jpeg";
-   userid = "00001";
+   userid = "20190006";
    data = new PersonalSetting();
-   updateresult = new UpdateResult();
   //绑定到表单的数据的默认值
    username = "未设置";
    usersex = "BOY";
@@ -73,11 +72,15 @@ export class ChgmymsgComponent implements OnInit {
     this.getmymsg();
   }
 
-  //获取用户的基本信息
+  //get a user's base information   🍍
   getmymsg(){
-    this.server.GetMyMsg(this.userid, "setdata").subscribe(
-      result=>{
-        this.data = result;
+    let postdata : RequestProto = {
+      api:"setdata",
+      userid:this.userid
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if(result.statuscode==0){
+        this.data = result.data;
         this.headimgurl = this.data.headimg;
         this.username = this.data.name;
         this.userid = this.data.id;
@@ -97,31 +100,38 @@ export class ChgmymsgComponent implements OnInit {
           $("#girlbtn").addClass("isnot");
           this.usersex = "BOY";
         }
-      });
+      }else{
+        alert("get my messgage fail:"+result.msg);
+      }
+      }, error=>{console.log(error)});
   }
   
-  //上传选中的头像文件并更新imgurl的值
+  //update a profile image and get it url after saved by server 🍍
   upload(){
     var imgfiles = $("#uploadheadimg").prop('files');
-    console.log(imgfiles[0]);
+    //upload images
     this.server.UploadImg(this.username,imgfiles[0]).subscribe(result=>{
-      if( result.status>=0){
-        this.headimgurl = result.imgurl;
-        this.data.headimg = result.imgurl;
-        this.server.UpdateMessage(this.userid, "MyHeadImage", this.data).subscribe(result=>{
-            if(result.status>=0){
+      if( result.statuscode==0){
+        this.data.headimg = result.data;
+        this.headimgurl = result.data;
+        //update database
+        let postdata : RequestProto = {
+          api:"MyHeadImage",
+          userid:this.userid,
+          data:result.data,
+        };
+        this.server.UpdateMessage(postdata).subscribe(result=>{
+            if(result.statuscode==0){
               alert("修改成功！");
             }else{
-              alert(result.describe);
+              alert("修改失败："+result.msg);
             }
-        });
-      }else{
-        alert(result.describe);
-      }
-    });
+        }, error=>{console.log("UpdateMessage() fail: "+error);});
+      }else{ alert("上传失败："+result.msg); } 
+    }, error=>{console.log("UploadImg() fail: "+error)});
   }
 
-  //修改或设置基本信息并上传到服务器
+  //update user base message of profile  🍍
   ChangeBaseMsg(){
     this.data.name = $("#myname").val();
     this.data.colleage = $("mycolleage").val();
@@ -129,28 +139,37 @@ export class ChgmymsgComponent implements OnInit {
     this.data.dorm =  $("#mydorm").val();
     this.data.sex =  this.usersex;
     this.data.grade = this.grade;
-    this.server.UpdateMessage(this.userid, "MyBaseMessage", this.data).subscribe(result=>{
-      this.updateresult = result; 
-      if (this.updateresult.status >= 0) {
-        alert("修改成功！");
+    let postdata : RequestProto = {
+      api:"MyBaseMessage",
+      userid:this.userid,
+      data:this.data,
+    };
+    this.server.UpdateMessage(postdata).subscribe(result=>{
+      if(result.statuscode==0){
+        alert("修改成功");
       }else{
-        alert(this.updateresult.describe);
+        alert("修改失败："+result.msg);
       }
-    })
+    }, error=>{console.log("UpdateMessage() fail: "+error);})
   }
   
-  //修改或设置联系方式信息并上传到服务器
+  //update user's connect message of profile  🍍
   ChangeContact(){
     this.data.emails = $("#myemail").val();
     this.data.qq = $("#myqq").val();
     this.data.phone = $("#myphone").val();
-    this.server.UpdateMessage(this.userid, "MyConnectMessage", this.data).subscribe(result=>{
-      if(result.status >= 0) {
+    let postdata : RequestProto = {
+      api:"MyConnectMessage",
+      userid:this.userid,
+      data:this.data,
+    };
+    this.server.UpdateMessage(postdata).subscribe(result=>{
+      if(result.statuscode == 0) {
         alert("修改成功！");
       }else{
-        alert(result.describe);
+        alert("修改失败："+result.msg);
       }
-    })
+    },error=>{alert("UpdateMessage() fail: "+ error);})
 }
   //=================== 设置组件 ==================
 

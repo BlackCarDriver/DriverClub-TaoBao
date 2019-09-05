@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {  HomePageGoods , GoodsType,UploadAnyResult,UploadIImgResult,UploadGoods,UserMessage } from '../app/struct';
-import {  RequertResult, MyStatus, UpdateResult} from '../app/struct';
+import {  HomePageGoods , GoodsType,UploadAnyResult,UploadIImgResult,UploadGoods } from '../app/struct';
+import {  RequertResult, MyStatus,RequestProto,ReplyProto} from '../app/struct';
 @Injectable({
   providedIn: 'root'
 })
@@ -9,13 +9,57 @@ import {  RequertResult, MyStatus, UpdateResult} from '../app/struct';
 export class ServerService {
 
   //important config !!!
-//本地开发配置
- private addr: string  = "/taobaoserver"
+  //线上运行配置
+  // private addr: string  = "/taobaoserver"
+  //本地开发配置
+  private addr: string  = "/localserver"
  //服务器配置
   // private addr: string  = "https://www.blackcardriver.cn/server"
   constructor( 
     private http: HttpClient
   ){ }
+
+ //======================================= large  interface =============================================================
+
+ //get all kind of data in goodspage 🍌
+GetGoodsDeta(request : RequestProto){
+  var url = this.addr+"/goodsdeta";
+  return this.http.post<ReplyProto>(url,JSON.stringify(request));
+}
+
+//request to update some simple record such as collect number 🍍
+SmallUpdate(request : RequestProto){
+  var url = this.addr + "/smallupdate"; 
+  return this.http.post<ReplyProto>(url, JSON.stringify(request));
+}
+
+//request to update some complex message such as profile 🍍
+UpdateMessage(request : RequestProto){
+  var url = this.addr + "/update"; 
+  return this.http.post<ReplyProto>(url, JSON.stringify(request)); 
+}
+
+//upload a images to server and receive a url to get it images 🍍
+UploadImg(username:string , img:any){
+  var postdata = new FormData();
+  postdata.append("name", username);
+  postdata.append("file",img)
+  var url = this.addr + "/upload/images"; 
+  //post a multipart/form-data, can not use json.stringfiy
+  return this.http.post<ReplyProto>(url, postdata);
+} 
+
+//get information in personal page 🍍
+GetMyMsg(request : RequestProto){
+  var url = this.addr + "/personal/data"; 
+  return this.http.post<ReplyProto>(url, JSON.stringify(request)); 
+}
+
+//a little different from GetMyMsg 🍋
+GetCredentMsg(request : RequestProto){
+  var url = this.addr + "/personal/data";
+  return this.http.post<ReplyProto>(url, JSON.stringify(request), {withCredentials: true});
+}
 
  //=======================================  重做  =====================================================================
 //获取主页商品列表
@@ -31,26 +75,8 @@ GetHomePageType(){
   return this.http.get<GoodsType[]>(url);
 }
 
-//商品详情页面获取数据接口
-GetGoodsDeta(id:string, type:string){
-    var url = this.addr+"/goodsdeta";
-    var data = {goodid:id, datatype:type}
-    return this.http.post<any>(url,JSON.stringify(data));
-}
 
-//个人主页里得到各种信息的数据接口
-GetMyMsg(username:string, tag:string){
-    var url = this.addr + "/personal/data"; 
-    var data = {tag:tag, name:username};
-    return this.http.post<any>(url,data); 
-}
 
-//导航栏得到用户的数据
-GetNavigUser(userid:string){
-  var url = this.addr + "/personal/data";
-  var postdata = {name:userid, tag:"naving"};
-  return this.http.post<MyStatus>(url, JSON.stringify(postdata), {withCredentials: true});
-}
 
 //上传商品
 UploadGoodsData(data:UploadGoods){
@@ -58,28 +84,6 @@ UploadGoodsData(data:UploadGoods){
     return this.http.post<UploadAnyResult>(url,data);
 }
 
-//上传图片到服务器得到一个访问这个图片的的url
-UploadImg(username:string , img:any){
-    var postdata = new FormData();
-    postdata.append("name", username);
-    postdata.append("file",img)
-    var url = this.addr + "/upload/images"; 
-    return this.http.post<UploadIImgResult>(url,postdata);
-} 
-
-//更新信息接口
-UpdateMessage(userid:string, tag:string, data:any){
-  var postdata = {userid:userid, tag:tag, data:data};
-  var url = this.addr + "/update"; 
-  return this.http.post<UpdateResult>(url, JSON.stringify(postdata)); 
-}
-
-//更新如点赞量，私信等信息
-SmallUpdate(tag:string, userid:string, targetid:string, strdata:string, intdata:number){
-  var postdata = {tag:tag, userid:userid, targetid:targetid,strdata:strdata, intdata:intdata};
-  var url = this.addr + "/smallupdate"; 
-  return this.http.post<UpdateResult>(url, JSON.stringify(postdata));
-}
 
 
 // ================================== the following function reference to login or register ========================================================  
