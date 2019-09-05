@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ServerService } from '../server.service';
 import {RequestProto} from '../struct';
 
@@ -10,7 +9,7 @@ import {RequestProto} from '../struct';
 })
 
 export class GoodspageComponent implements OnInit {
-  goodsdt: GoodsDetail;
+  goodsdt = new GoodsDetail();
   state = { collect: false, like: false };
   userid = "00001"    //当前浏览者的id
   goodid = "";
@@ -20,7 +19,6 @@ export class GoodspageComponent implements OnInit {
 
   constructor(
     private server: ServerService,
-    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -33,7 +31,7 @@ export class GoodspageComponent implements OnInit {
 
     //######################## GetGoodsDeta() #######################################
 
-  //get mainly message of it goods 🍌
+  //get mainly message of it goods 🍌🔥
   getItPage(id: string) {
     let postdata : RequestProto = {
       api:"goodsmessage",
@@ -51,7 +49,7 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  // get comment data of it goods 🍌
+  // get comment data of it goods 🍌🔥
   getComment(gid: string) {
     let postdata : RequestProto = {
       api:"goodscomment",
@@ -68,7 +66,7 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  //get goods statement 🍌
+  //get goods statement 🍌🔥
   getStatement() {
     let postdata : RequestProto = {
       api:"usergoodsstate",
@@ -76,9 +74,10 @@ export class GoodspageComponent implements OnInit {
       userid:this.userid,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
-      if (result.statuscode < 0) {
-        alert("getStatement(): "+result.msg);
+      if (result.statuscode != 0) {
+        alert("获取数据失败: "+result.msg);
       } else {
+        console.log(result.data)
         this.state = result.data;
         if (this.state.collect) { $("#collect-btn").removeClass('btn-info'); this.collectbtnshow=" 已收藏 ";}
         if (this.state.like) { $("#like-btn").removeClass('btn-info'); this.likebtnshow=" 已点赞 "}
@@ -87,9 +86,10 @@ export class GoodspageComponent implements OnInit {
       alert("getStatement unresponse:" + err);
     })
   }
+
   //########################## SmallUpdate() #############################################
 
-  //user like specified goods  🍍
+  //user like specified goods  🍍🔥
   likeGoods() { 
     let postdata : RequestProto = {
       api:"likegoods",
@@ -107,24 +107,7 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  // user send a message to owner 🍍
-  sendMessage() {
-    let message = $("#messagesender").val().toString();
-    let postdata : RequestProto = {
-      api:"sendmessage",
-      userid:this.userid,
-      targetid:this.goodid,
-      data:{ownerid:this.goodsdt.userid, message:message},
-    };
-    this.server.SmallUpdate(postdata).subscribe(result => {
-        if (result.statuscode==0){alert("发送成功！");}
-        else{alert("发送失败："+result.statuscode+":"+result.msg);}
-    },error=>{
-        alert("error happen in sendMessage():"+error);
-    });
-  }
-
-  //user add a goods to favorite 🍍
+  //user add a goods to favorite 🍍🔥
   collect() {
     let postdata : RequestProto = {
       api:"addcollect",
@@ -139,7 +122,24 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  //user comment on a goods 🍍
+  // user send a message to owner 🍍🔥
+  sendMessage() {
+    let message = $("#messagesender").val().toString();
+    let postdata : RequestProto = {
+      api:"sendmessage",
+      userid:this.userid,
+      targetid:this.goodsdt.userid,
+      data:{message:message},
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+        if (result.statuscode==0){alert("发送成功！");}
+        else{alert("发送失败："+result.statuscode+":"+result.msg);}
+    },error=>{
+        alert("error happen in sendMessage():"+error);
+    });
+  }
+
+  //user comment on a goods 🍍🔥
   sendComment() {
     let comment = $("#comment-area").val().toString();
     if (comment == "") {
@@ -154,7 +154,7 @@ export class GoodspageComponent implements OnInit {
     };
     //todo:检查评论内容
     this.server.SmallUpdate(postdata).subscribe(result => {
-      if (result.statuscode!=0){
+      if (result.statuscode==0){
         alert("评论成功！");
       }else{
         alert("评论失败："+result.msg);
@@ -163,13 +163,11 @@ export class GoodspageComponent implements OnInit {
       alert("error happen in sendComment():"+error);
     });
   }
-  //###########################################################################
-
 }
 
 
 //detail data response from server
-type GoodsDetail = {
+class GoodsDetail {
   headimg: string;
   userid: string;
   username: string;
@@ -192,9 +190,3 @@ type comment = {
   username: string;
   comment: string;
 }
-
-// //whether it collect have liked or collected by user 
-// type statement = {
-//   like: boolean;
-//   collect: boolean;
-// }

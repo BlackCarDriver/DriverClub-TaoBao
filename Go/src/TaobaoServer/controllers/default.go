@@ -143,7 +143,7 @@ func (this *UpdateController) Post() {
 		goto tail
 	}
 	switch api {
-	case "likegoods": //add like to a goods
+	case "likegoods": //add like to a goods 🔥
 		err = md.AddGoodsLike(userid, targetid)
 		if err != nil {
 			response.StatusCode = -3
@@ -151,10 +151,12 @@ func (this *UpdateController) Post() {
 			logs.Error(response.Msg)
 		}
 		goto tail
-	case "sendmessage": //send a private message to goods owner
-		appendData := postBody.Data.(map[string]string)
+
+	case "sendmessage": //send a private message to goods owner 🔥
+		logs.Info(postBody.Data)
+		appendData := postBody.Data.(map[string]interface{})
 		message := ""
-		if message = appendData["message"]; message == "" {
+		if message = appendData["message"].(string); message == "" {
 			response.StatusCode = -4
 			response.Msg = "Can't get message on postbody"
 			logs.Error(response.Msg)
@@ -166,32 +168,19 @@ func (this *UpdateController) Post() {
 			logs.Error(response.Msg)
 		}
 		goto tail
-	case "addcollect": //add a goods to favorite
+
+	case "addcollect": //add a goods to favorite	🔥
 		if err = md.AddGoodsCollect(userid, targetid); err != nil {
 			response.StatusCode = -6
 			response.Msg = fmt.Sprintf("AddGoodsCollect() fail: %v", err)
 			logs.Error(response.Msg)
 		}
 		goto tail
-	case "likeuser": //add a like to a user profile
-		if err = md.AddUserLike(userid, targetid); err != nil {
-			response.StatusCode = -7
-			response.Msg = fmt.Sprintf("AddUserLike() fail: %v", err)
-			logs.Error(response.Msg)
-		}
-		goto tail
-	case "addconcern": // add someone to favorite
-		if err = md.AddUserConcern(userid, targetid); err != nil {
-			response.StatusCode = -8
-			response.Msg = fmt.Sprintf("AddUserConcern() fail: %v", err)
-			logs.Error(response.Msg)
-			goto tail
-		}
-		goto tail
-	case "addcomment": // reviews a goods
-		appendData := postBody.Data.(map[string]string)
+
+	case "addcomment": // reviews a goods 🔥
+		appendData := postBody.Data.(map[string]interface{})
 		comment := ""
-		if comment = appendData["comment"]; comment == "" {
+		if comment = appendData["comment"].(string); comment == "" {
 			response.StatusCode = -10
 			response.Msg = "Can't get comment on postbody"
 			logs.Error(response.Msg)
@@ -203,6 +192,24 @@ func (this *UpdateController) Post() {
 			logs.Error(response.Msg)
 		}
 		goto tail
+
+	case "likeuser": //add a like to a user profile
+		if err = md.AddUserLike(userid, targetid); err != nil {
+			response.StatusCode = -7
+			response.Msg = fmt.Sprintf("AddUserLike() fail: %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+
+	case "addconcern": // add someone to favorite
+		if err = md.AddUserConcern(userid, targetid); err != nil {
+			response.StatusCode = -8
+			response.Msg = fmt.Sprintf("AddUserConcern() fail: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+		goto tail
+
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such api %s", api)

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { UserMessage , GoodsShort, MyMessage, Rank,User,RequestProto, RequertResult  } from '../struct';
+import { UserMessage , GoodsShort, MyMessage, Rank,User,RequestProto  } from '../struct';
 import { ServerService } from '../server.service';
-import { post } from 'selenium-webdriver/http';
 declare let $: any;
 
 @Component({
@@ -11,7 +10,7 @@ declare let $: any;
 })
 
 export class PersonalComponent implements OnInit {
-  userid = "19070010";
+  userid = "19070010"; 
   key = "itisuserkey..";
 
   msg = new UserMessage(); //基本信息
@@ -37,7 +36,7 @@ export class PersonalComponent implements OnInit {
   getmymsg(){
      let postdata : RequestProto = {
       api:"mymsg",
-      userid:this.userid
+      targetid:this.userid
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if (result.statuscode==0){this.msg = result.data;}
@@ -50,7 +49,7 @@ export class PersonalComponent implements OnInit {
   getmymgoods(){
     let postdata : RequestProto = {
       api:"mygoods",
-      userid:this.userid
+      targetid:this.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if(result.statuscode==0){
@@ -65,7 +64,7 @@ export class PersonalComponent implements OnInit {
   getmycollect(){
     let postdata : RequestProto = {
       api:"mycollect",
-      userid:this.userid
+      targetid:this.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if (result.statuscode==0){
@@ -80,7 +79,7 @@ export class PersonalComponent implements OnInit {
   getmymessage(){
     let postdata : RequestProto = {
       api:"message",
-      userid:this.userid
+      targetid:this.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if (result.statuscode==0){
@@ -95,7 +94,7 @@ export class PersonalComponent implements OnInit {
   getrank(){
     let postdata : RequestProto = {
       api:"rank",
-      userid:this.userid
+      targetid:this.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if (result.statuscode==0){
@@ -110,7 +109,7 @@ export class PersonalComponent implements OnInit {
    getcare(){
     let postdata : RequestProto = {
       api:"mycare",
-      userid:this.userid
+      targetid:this.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if (result.statuscode==0){

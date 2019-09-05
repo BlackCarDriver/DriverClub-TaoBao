@@ -1,0 +1,480 @@
+2019/09/05 16:55:56.587 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    18.1102ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/05 16:57:17.493 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 16:57:17.695 [I] [default.go:206]  ddddddddddddddddddddddddddddd
+2019/09/05 16:57:17.741 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    47.1602ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/05 16:58:37.190 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 16:58:51.981 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 16:58:52.094 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   112.5686ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 16:58:52.115 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   146.0252ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 16:58:52.143 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   172.9056ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 16:58:52.281 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    308.946ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 16:58:57.560 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    52.8904ms|   match|[46m POST    [0m /smallupdate   r:/smallupdate
+2019/09/05 16:59:01.383 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 16:59:01.397 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0369ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 16:59:01.428 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    60.0093ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 16:59:01.477 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    104.223ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 16:59:01.499 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   131.1738ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 16:59:51.955 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 17:01:17.628 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:01:17.702 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    75.4611ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:01:17.746 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   135.6192ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:17.763 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   151.6619ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:17.811 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   185.7952ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:19.022 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 17:01:22.338 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:01:22.348 [W] [goods.go:107]  No such method
+2019/09/05 17:01:22.348 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    27.2946ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:22.407 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     69.582ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:01:22.443 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   116.4871ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:22.475 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   147.8134ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:37.046 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 17:01:39.635 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:01:39.675 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    52.5478ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:39.709 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    73.7381ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:01:39.814 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   191.7681ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:01:39.816 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   193.8617ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:03:08.837 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 17:04:41.887 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    15.0404ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:04:41.912 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    40.1053ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:04:41.896 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:04:41.954 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    58.3952ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:05:10.865 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      1.001ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:05:10.880 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    20.0534ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:05:10.886 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:05:10.911 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    25.0645ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:05:18.286 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:05:18.300 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    20.4442ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:05:18.311 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:05:18.345 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    34.0902ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:05:19.298 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:05:19.344 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    50.7434ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:05:19.376 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    77.4997ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:05:19.422 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   128.3843ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:05:19.440 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   146.0594ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:05:23.062 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0018ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:05:23.126 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:05:23.130 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    73.1954ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:05:23.143 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    18.7857ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:05:25.044 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:05:25.062 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     17.044ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:05:25.084 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    55.5063ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:05:25.116 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     87.028ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:05:25.138 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    97.0768ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 17:05:27.066 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    17.0453ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:05:27.071 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:05:27.078 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:05:27.137 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.1573ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:10:57.993 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:10:58.032 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    41.3379ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:10:58.035 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:10:58.059 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    24.0644ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 17:12:40.441 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 17:12:40.459 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 17:12:40.466 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    28.0725ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 17:12:40.471 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    12.0239ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:44:45.284 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:44:45.299 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    15.9492ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:44:45.313 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:44:45.363 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    50.6973ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:45:21.057 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:45:21.063 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0022ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:45:21.092 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     59.953ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:45:21.094 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    37.4199ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:45:47.195 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0027ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:45:47.216 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:45:47.221 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    29.0777ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:45:47.269 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    53.5073ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:45:55.367 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    25.0645ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:45:55.432 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:45:55.433 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:45:55.488 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    55.2733ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:48:10.782 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:48:10.782 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:48:10.809 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     38.071ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:48:10.811 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    28.8819ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:48:36.200 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:48:36.202 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:48:36.217 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    24.1894ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:48:36.223 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    21.0564ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:50:31.870 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:50:31.878 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     21.187ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:50:31.884 [E] [user.go:32]  Can't get api or goodsid from request data
+2019/09/05 18:50:31.904 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    21.0559ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:50:49.634 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    27.0715ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:50:49.634 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:50:49.644 [E] [user.go:32]  Can't get api or goodsid from request data
+2019/09/05 18:50:49.648 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0022ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:52:19.911 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    27.0694ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:52:19.919 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0044ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:52:19.919 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:52:19.938 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    19.0498ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:53:06.271 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    15.3242ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:53:06.282 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:53:06.284 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:53:06.322 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    38.0991ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:54:15.904 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    23.5524ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:54:16.003 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0023ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:54:16.003 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:54:16.004 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:54:16.114 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   111.3492ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:54:16.148 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   144.4418ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:55:00.810 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     18.048ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:55:00.820 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0031ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:55:00.850 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:55:00.850 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:55:00.949 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     98.498ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:55:00.959 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   108.9616ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:55:24.118 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    11.7252ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:55:24.129 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:55:24.146 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:55:24.146 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:55:24.183 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    37.0978ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:55:24.197 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    51.1347ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:55:42.343 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    32.1211ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:55:42.347 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0013ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:55:42.356 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:55:42.348 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 18:55:42.375 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    20.0555ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:55:42.380 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.0999ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:56:24.244 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:56:24.244 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:56:24.246 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    42.2348ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:56:24.246 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:56:24.310 [E] [select.go:160]  the result is empty!
+2019/09/05 18:56:24.337 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:56:24.337 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    93.2487ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:56:24.356 [E] [select.go:160]  the result is empty!
+2019/09/05 18:56:24.360 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:56:24.365 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   118.7378ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:56:56.007 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 18:56:58.991 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    42.4413ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:56:59.017 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:56:59.019 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:56:59.019 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:56:59.072 [E] [select.go:160]  the result is empty!
+2019/09/05 18:56:59.086 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:56:59.087 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     69.367ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:56:59.119 [E] [select.go:160]  the result is empty!
+2019/09/05 18:56:59.177 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:56:59.182 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   162.3226ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:58:32.725 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:58:32.731 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:58:32.732 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    26.0795ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:58:32.739 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:58:32.766 [E] [select.go:160]  the result is empty!
+2019/09/05 18:58:32.777 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:58:32.783 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    51.1377ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:58:32.783 [E] [select.go:160]  the result is empty!
+2019/09/05 18:58:32.789 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:58:32.799 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.1572ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:59:00.151 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0018ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:59:00.156 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    31.0831ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:59:00.157 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:59:00.175 [I] [user.go:35]  mygoods 		 00007
+2019/09/05 18:59:00.202 [E] [select.go:160]  the result is empty!
+2019/09/05 18:59:00.203 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:59:00.204 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    48.1275ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:59:00.251 [E] [select.go:160]  the result is empty!
+2019/09/05 18:59:00.254 [E] [user.go:54]  Can't get goods data: the result is empty! 
+2019/09/05 18:59:00.258 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    82.4669ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:59:34.498 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    40.9399ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:59:34.505 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:59:34.505 [I] [user.go:35]  mycare 		 19070010
+2019/09/05 18:59:34.530 [C] [config.go:176]  the request url is  /personal/data
+2019/09/05 18:59:34.505 [I] [user.go:35]  mycare 		 19070010
+2019/09/05 18:59:34.531 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/05 18:59:34.532 [C] [config.go:176]  the request url is  /personal/data
+2019/09/05 18:59:34.533 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/05 18:59:34.533 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/05 18:59:34.533 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/05 18:59:34.534 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/05 18:59:34.534 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/05 18:59:34.535 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:73
+2019/09/05 18:59:34.535 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/05 18:59:34.536 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/05 18:59:34.539 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/05 18:59:34.541 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:73
+2019/09/05 18:59:34.540 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/05 18:59:34.542 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/05 18:59:34.543 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/05 18:59:34.542 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/05 18:59:34.544 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/05 18:59:34.548 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/05 18:59:34.547 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/05 18:59:34.553 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/05 18:59:34.553 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/05 18:59:51.065 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0027ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 18:59:51.072 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    28.8252ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 18:59:51.083 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:59:51.083 [I] [user.go:35]  naving 		 19070010
+2019/09/05 18:59:51.122 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    39.1031ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 18:59:51.130 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    47.1249ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:00:02.479 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    19.4274ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/05 19:00:02.484 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/05 19:00:02.513 [I] [user.go:35]  mycare 		 19070010
+2019/09/05 19:00:02.515 [C] [config.go:176]  the request url is  /personal/data
+2019/09/05 19:00:02.514 [I] [user.go:35]  mycare 		 19070010
+2019/09/05 19:00:02.542 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/05 19:00:02.559 [C] [config.go:176]  the request url is  /personal/data
+2019/09/05 19:00:02.561 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/05 19:00:02.567 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/05 19:00:02.575 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/05 19:00:02.577 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/05 19:00:02.576 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/05 19:00:02.591 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:73
+2019/09/05 19:00:02.593 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/05 19:00:02.594 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/05 19:00:02.593 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/05 19:00:02.595 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:73
+2019/09/05 19:00:02.596 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/05 19:00:02.601 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/05 19:00:02.602 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/05 19:00:02.601 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/05 19:00:02.602 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/05 19:00:02.603 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/05 19:00:02.604 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/05 19:00:02.605 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/05 19:00:02.605 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/05 19:00:15.692 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    53.1405ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:00:15.706 [I] [user.go:35]  mycare 		 19070010
+2019/09/05 19:00:15.707 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.1581ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:00:15.707 [I] [user.go:35]  mycare 		 19070010
+2019/09/05 19:00:15.722 [C] [config.go:176]  the request url is  /personal/data
+2019/09/05 19:00:15.725 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/05 19:00:15.725 [C] [config.go:176]  the request url is  /personal/data
+2019/09/05 19:00:15.726 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/05 19:00:15.734 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/05 19:00:15.726 [C] [config.go:177]  Handler crashed with error <RawSeter.QueryRows> all args must be use ptr slice
+2019/09/05 19:00:15.735 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/05 19:00:15.736 [C] [config.go:183]  C:/Go/src/runtime/panic.go:522
+2019/09/05 19:00:15.737 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/orm/orm_raw.go:423
+2019/09/05 19:00:15.736 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:73
+2019/09/05 19:00:15.737 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/models/select.go:169
+2019/09/05 19:00:15.738 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/05 19:00:15.740 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/05 19:00:15.738 [C] [config.go:183]  D:/WorkPlace/Git WorPlace/DriverClub-taobao/Go/src/TaobaoServer/controllers/user.go:73
+2019/09/05 19:00:15.744 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/05 19:00:15.751 [C] [config.go:183]  D:/WorkPlace/GoWorkPlace/GoPath/src/github.com/astaxie/beego/router.go:835
+2019/09/05 19:00:15.757 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/05 19:00:15.767 [C] [config.go:183]  C:/Go/src/net/http/server.go:2774
+2019/09/05 19:00:15.770 [C] [config.go:183]  C:/Go/src/net/http/server.go:1878
+2019/09/05 19:00:15.771 [C] [config.go:183]  C:/Go/src/runtime/asm_amd64.s:1337
+2019/09/05 19:00:15.770 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/05 19:00:15.774 [log.go:179]  [HTTP] http: superfluous response.WriteHeader call from github.com/astaxie/beego/context.(*Response).WriteHeader (context.go:230)
+2019/09/05 19:00:15.802 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   150.3755ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:01:07.681 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:01:07.681 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:01:07.710 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    58.1558ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:01:07.769 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    88.5724ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:01:07.770 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    89.0742ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:01:07.770 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    94.0863ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:01:07.771 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    90.5769ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:02:37.315 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 19:02:39.208 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:02:39.209 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:02:39.231 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    70.8688ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:02:39.269 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    62.1661ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:02:39.384 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   180.4802ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:02:39.400 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   191.2164ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:02:39.449 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   242.1543ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:04:15.853 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 19:04:17.748 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:04:17.749 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:04:17.779 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    82.1046ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:04:17.840 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    91.2422ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:04:17.852 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      114.3ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:04:17.852 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   104.2781ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:04:17.926 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   186.6916ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:04:46.450 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 19:04:48.740 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:04:48.740 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:04:48.816 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   115.7311ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:04:48.875 [I] [user.go:89]  {blackcardriver https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a 1 54665 0 0 2019-07-15 14:38:39.893233 +0000 +0000}
+2019/09/05 19:04:48.901 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   161.4274ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:04:48.879 [I] [user.go:89]  {blackcardriver https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a 1 54665 0 0 2019-07-15 14:38:39.893233 +0000 +0000}
+2019/09/05 19:04:48.926 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    186.494ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:04:48.913 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   176.4687ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:04:49.028 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   289.6368ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:05:01.510 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:05:01.510 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:05:01.532 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    55.1461ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:05:01.584 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   120.8741ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:05:01.598 [I] [user.go:89]  {blackcardriver https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a 1 54665 0 0 2019-07-15 14:38:39.893233 +0000 +0000}
+2019/09/05 19:05:01.678 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   167.4439ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:05:01.599 [I] [user.go:89]  {blackcardriver https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a 1 54665 0 0 2019-07-15 14:38:39.893233 +0000 +0000}
+2019/09/05 19:05:01.625 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   117.3088ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:05:01.789 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   279.2325ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:05:32.940 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 19:06:13.103 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:06:13.115 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    51.1398ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:06:13.185 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     104.86ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:06:13.185 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    83.2187ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:06:13.264 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   173.7065ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:06:47.371 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:06:47.380 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    37.7313ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:06:47.393 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    22.0586ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:06:47.394 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    51.7674ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:06:47.429 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|      59.86ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:08:11.380 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:08:11.394 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    13.3478ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:08:11.405 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    70.9725ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:08:11.421 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    41.7293ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:08:11.434 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    54.7358ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:09:26.953 [I] [user.go:35]  othermsg 		 blackcardr
+2019/09/05 19:09:26.967 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:09:26.997 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    30.2157ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:09:27.009 [E] [select.go:112]  <QuerySeter> no row found
+2019/09/05 19:09:27.018 [E] [user.go:98]  Can't get user data: <QuerySeter> no row found 
+2019/09/05 19:09:27.019 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    65.6016ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:09:48.343 [I] [user.go:35]  othermsg 		 blackcardr
+2019/09/05 19:09:48.378 [E] [select.go:112]  <QuerySeter> no row found
+2019/09/05 19:09:48.380 [E] [user.go:98]  Can't get user data: <QuerySeter> no row found 
+2019/09/05 19:09:48.386 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    42.7724ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:09:48.602 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    42.2783ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:09:48.603 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.3117ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:09:48.603 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     42.769ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:11:37.801 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:11:37.836 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     35.846ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:11:37.850 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    49.8824ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:11:37.866 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    65.1793ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:11:37.888 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    89.0055ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:11:47.919 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:11:47.944 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    26.5097ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:11:47.950 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    30.4136ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:11:47.960 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    42.5523ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:11:47.977 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    57.4855ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:10.028 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:12:10.032 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    29.0761ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:10.041 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    34.0898ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:10.042 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0382ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:12:10.080 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    54.4456ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:22.099 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:12:22.154 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     62.164ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:22.154 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    55.1462ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:12:22.156 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    66.1751ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:22.174 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    75.2016ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:55.225 [I] [user.go:35]  mymsg 		 19070010
+2019/09/05 19:12:55.238 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    13.0364ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:12:55.268 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    44.1181ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:55.271 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    49.1301ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:12:55.285 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     61.163ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:16:34.833 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    43.0075ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:16:34.848 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:16:34.877 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.0871ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:16:34.895 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    47.2149ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:16:34.903 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    54.9712ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:07.341 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    36.2952ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:07.349 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:17:07.382 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.0876ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:17:07.384 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    40.1066ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:07.398 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    50.1329ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:22.878 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:17:22.903 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     27.072ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:22.910 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.0884ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:17:22.920 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     46.123ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:22.925 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    48.1254ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:39.260 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    25.0666ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:39.283 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    48.1283ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:39.284 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    49.1306ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:40.176 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:17:40.190 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    14.0373ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:17:56.205 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    27.4649ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:56.213 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    35.4866ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:56.230 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    52.4403ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:17:58.475 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:17:58.509 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.9033ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:18:14.189 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:18:14.200 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    12.0336ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:18:14.213 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    38.1008ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:18:14.216 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    36.0947ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:18:14.231 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    46.1217ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:18:24.794 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:18:24.814 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    21.0547ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:18:24.815 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    23.0625ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:18:24.817 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    36.1058ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:18:24.839 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    45.1169ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:19:33.270 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 19:19:34.489 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:19:34.537 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.5912ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:19:34.547 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    58.1563ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:19:34.585 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   102.4835ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:19:34.641 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    155.207ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:20:58.764 [I] [app.go:215]  http server Running on http://:4747
+2019/09/05 19:20:59.609 [I] [user.go:35]  mycollect 		 19070010
+2019/09/05 19:20:59.691 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    99.2665ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:20:59.854 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   245.5434ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:20:59.874 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   278.5366ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:00.037 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   431.0228ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:12.715 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    78.7472ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:12.740 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   103.7306ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:12.756 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    97.3593ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:16.634 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:21:16.670 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    39.4986ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:16.726 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    95.6445ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:16.810 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   179.8952ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:21:16.825 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   191.5083ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:22:07.926 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:22:08.058 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   132.3484ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:22:08.085 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   161.8494ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:08.121 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   194.7633ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:08.123 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   200.7741ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:22.880 [I] [user.go:35]  mygoods 		 19070010
+2019/09/05 19:22:22.965 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    85.9707ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:22:22.991 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   125.0823ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:22.992 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   127.0867ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:23.013 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   141.1241ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:40.489 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:22:40.643 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   153.8221ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:22:40.678 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    202.855ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:40.685 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     203.62ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:22:40.689 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   209.5387ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:24:30.996 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:24:31.041 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    45.1229ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:24:31.045 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     53.931ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:24:31.060 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    67.1777ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:24:31.060 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    64.1684ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:25:59.981 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:25:59.998 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    17.0453ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:26:00.003 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    28.0746ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:26:00.017 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    49.1319ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:26:00.035 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    55.1474ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:26:28.996 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:26:29.016 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.0884ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:26:29.024 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    28.1066ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:26:29.024 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    35.1261ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:26:29.036 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    45.1199ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:27:54.717 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:27:54.760 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    43.1142ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:27:54.762 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    47.1265ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:27:54.765 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     55.147ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:27:54.774 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.1555ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:28:28.375 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:28:28.419 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     44.116ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:28:28.434 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    66.1755ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:28:28.434 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    65.1724ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:28:28.484 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   114.3051ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:28:58.050 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:28:58.063 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    13.0325ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:28:58.081 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    34.0988ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:28:58.108 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    59.1577ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:28:58.127 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    76.7922ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:29:48.863 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:29:48.874 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    11.0297ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:29:48.891 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    34.0932ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:29:48.901 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    52.2483ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:29:48.932 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    69.2935ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:30:22.559 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:30:22.561 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    29.7502ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:30:22.584 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    24.7227ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:30:22.584 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    50.9725ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:30:22.599 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    58.0116ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:29.690 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:31:29.709 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    19.0532ms|   match|[46m POST    [0m /personal/data   r:/personal/data
+2019/09/05 19:31:29.718 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.2032ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:29.720 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    43.2401ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:29.770 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     82.344ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:50.298 [I] [user.go:35]  naving 		 19070010
+2019/09/05 19:31:50.325 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    31.0877ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:50.330 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    33.0858ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:50.331 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    35.0933ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/05 19:31:50.333 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    35.0945ms|   match|[46m POST    [0m /personal/data   r:/personal/data

@@ -10,8 +10,8 @@ import { ServerService } from '../server.service';
 export class Personal2Component implements OnInit {
 
   data = new UserMessage();
-  userid = "";  //页面显示信息的用户id
-  lookcerid = "00001";  //浏览者id
+  userid = "";          //user which is showing in the page
+  lookcerid = "00001"; 
   constructor(private server: ServerService) { }
 
   ngOnInit() {
@@ -24,11 +24,12 @@ export class Personal2Component implements OnInit {
   getOtherMsg(uid: string) {
     let postdata : RequestProto = {
       api:"othermsg",
-      userid:this.userid
+      targetid:this.userid
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode==0){
         this.data = result.data;
+        console.log(this.data)
       }else{
         alert("get other message fail: "+ result.msg);
       }

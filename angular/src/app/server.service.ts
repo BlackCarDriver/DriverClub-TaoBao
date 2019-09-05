@@ -52,10 +52,14 @@ UploadImg(username:string , img:any){
 //get information in personal page 🍍
 GetMyMsg(request : RequestProto){
   var url = this.addr + "/personal/data"; 
-  var data = {tag:tag, name:username};
-  return this.http.post<ReplyProto>(url,data); 
+  return this.http.post<ReplyProto>(url, JSON.stringify(request)); 
 }
 
+//a little different from GetMyMsg 🍋
+GetCredentMsg(request : RequestProto){
+  var url = this.addr + "/personal/data";
+  return this.http.post<ReplyProto>(url, JSON.stringify(request), {withCredentials: true});
+}
 
  //=======================================  重做  =====================================================================
 //获取主页商品列表
@@ -72,12 +76,7 @@ GetHomePageType(){
 }
 
 
-//导航栏得到用户的数据
-GetNavigUser(userid:string){
-  var url = this.addr + "/personal/data";
-  var postdata = {name:userid, tag:"naving"};
-  return this.http.post<MyStatus>(url, JSON.stringify(postdata), {withCredentials: true});
-}
+
 
 //上传商品
 UploadGoodsData(data:UploadGoods){

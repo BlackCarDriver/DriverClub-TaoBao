@@ -175,15 +175,15 @@ export class UploadgoodsComponent implements OnInit {
     $("#upload").trigger("click");
   }
   
-//将input选中的图片发送到服务端，获得一个链接
+//upload select picture to server and get a url. 🍋
   uploadcover(){
     var files = $("#upload").prop('files');
     this.server.UploadImg("uploadname",files[0]).subscribe(
     result=>{
-      if(result.status >= 0){
-          this.headImgUrl = result.imgurl;
+      if(result.statuscode == 0){
+          this.headImgUrl = result.data;
       }else{
-        alert(result.describe);
+        alert("上传失败"+result.msg);
       }
     }
   )};

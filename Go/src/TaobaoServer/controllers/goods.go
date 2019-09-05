@@ -32,7 +32,7 @@ func (this *GoodsTypeController) Get() {
 	this.ServeJSON()
 }
 
-//get all kind of data in goodspage  🍌
+//get all kind of data in goodspage  🍌🔥
 //response for GetGoodsDeta() in fontend
 func (this *GoodsDetailController) Post() {
 	postBody := md.RequestProto{}
@@ -49,7 +49,7 @@ func (this *GoodsDetailController) Post() {
 	}
 	api = postBody.Api
 	goodId = postBody.TargetId
-	userid = postBody.TargetId
+	userid = postBody.UserId
 	//check that the data is complete
 	if api == "" || goodId == "" {
 		response.StatusCode = -2
@@ -63,7 +63,7 @@ func (this *GoodsDetailController) Post() {
 	}
 	//handle the request
 	switch api {
-	case "goodsmessage": //base message
+	case "goodsmessage": // base message in goodsdetail page
 		var gooddata md.GoodsDetail
 		if err := md.GetGoodsById(goodId, &gooddata); err != nil {
 			response.StatusCode = -3
@@ -73,7 +73,8 @@ func (this *GoodsDetailController) Post() {
 			response.Data = &gooddata
 		}
 		goto tail
-	case "goodscomment": //comment or discuss date
+
+	case "goodscomment": //comment or discuss date in goodsdetail page
 		var comment []md.GoodsComment
 		if err := md.GetGoodsComment(goodId, &comment); err != nil {
 			response.StatusCode = -4
@@ -83,7 +84,8 @@ func (this *GoodsDetailController) Post() {
 			response.Data = comment
 		}
 		goto tail
-	case "usergoodsstate": //user state for specified goods
+
+	case "usergoodsstate": //user state for specified goods in goodsdetail page
 		tmp := md.UserGoodsState{Like: false, Collect: false}
 		if userid == "" { // if user havn't login then return default date
 			response.Data = tmp
@@ -92,7 +94,6 @@ func (this *GoodsDetailController) Post() {
 			response.Msg = fmt.Sprintf("Getstatement fail: %v", err)
 			logs.Error(response.Msg)
 		} else {
-			logs.Warn(res)
 			if res&1 != 0 {
 				tmp.Like = true
 			}
@@ -102,6 +103,7 @@ func (this *GoodsDetailController) Post() {
 			response.Data = tmp
 		}
 		goto tail
+
 	default:
 		response.StatusCode = -10
 		response.Msg = "No such method"
