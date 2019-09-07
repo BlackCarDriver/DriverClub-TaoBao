@@ -10,8 +10,8 @@ import { ServerService } from '../server.service';
 export class Personal2Component implements OnInit {
 
   data = new UserMessage();
+  lookcerid = "19070010"; 
   userid = "";          //user which is showing in the page
-  lookcerid = "00001"; 
   constructor(private server: ServerService) { }
 
   ngOnInit() {

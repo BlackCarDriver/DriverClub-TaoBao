@@ -1,5 +1,6 @@
 //#######################  公用协议  ############################################## 
-//public struct that used to request 🍌
+
+//public struct that used to request 🍌🍉
 export class RequestProto {
     api?:string;
     userid?:string;
@@ -7,13 +8,18 @@ export class RequestProto {
     tag?:string;        //used as a key to get cache    
     cachetime?:number;  //how many second save in cache
     data?:any;
+    offset?:number;
+    limit?:number;
 }
-//public struct that response by server 🍌 
+//public struct that response by server 🍌 🍉
 export class ReplyProto {
     statuscode?:number;
     msg?:string;
     data?:any;
+    rows?:number;
+    sum?:number;
 }
+
 //#######################    homepage    ##########################################
 
 //商品显示的基本信息，见首页封面
@@ -134,7 +140,6 @@ export class UploadAnyResult {
 
 //#########################  chgmymsg ######################################################
 
-
 //个人信息设置页上传的信息数据
 export class PersonalSetting{
     headimg:string;
@@ -151,8 +156,6 @@ export class PersonalSetting{
 }
 
 //#########################  naving ######################################################
-
-
 
 //首页-个人信息下拉框
 export class MyStatus{

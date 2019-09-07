@@ -61,3 +61,11 @@
     border: 1px solid;
     border-radius: 5px;
 }
+.msg-box{
+    margin-top: 6px;
+    color: #6e6d6d;
+}
+.msg{
+    font-size: 1.2em;
+    font-weight: 600;
+}

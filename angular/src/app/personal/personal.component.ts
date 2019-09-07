@@ -11,6 +11,7 @@ declare let $: any;
 
 export class PersonalComponent implements OnInit {
   userid = "19070010";
+  // userid = "19070009";
   key = "itisuserkey..";
 
   msg = new UserMessage(); //基本信息
@@ -20,6 +21,9 @@ export class PersonalComponent implements OnInit {
   hero = Rank[20];             //等级排行榜
   icare = User[100];   //我关注的和关注我的
   carei = User[100];  //关注我的用户
+  show_no_goods = false;
+  show_no_message = false;
+  show_no_collect = false;
   constructor(private server: ServerService) { }
 
   ngOnInit() {
@@ -32,7 +36,7 @@ export class PersonalComponent implements OnInit {
     this.getcare();
   }
 
-  //get detail information 🍍🔥
+  //get detail information 🍍
   getmymsg() {
     let postdata: RequestProto = {
       api: "mymsg",
@@ -46,7 +50,7 @@ export class PersonalComponent implements OnInit {
     });
   }
 
-  //get the list of user i care and which acre me🍍🔥
+  //get the list of user i care and which acre me🍍
   getcare() {
     let postdata: RequestProto = {
       api: "mycare",
@@ -62,52 +66,61 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log(error) });
   }
 
-  //get my goods information 🍍 🔥
+  //get my goods information 🍍 🍉
   getmymgoods() {
     let postdata: RequestProto = {
       api: "mygoods",
       targetid: this.userid,
+      offset:0,
+      limit:25,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mygoodslist = result.data;
+        if (result.rows==0) this.show_no_goods=true;
       } else {
         alert("get goods msg fail:" + result.msg);
       }
     }, error => { console.log("GetMyMsg" + error) });
   }
 
-  //get my collect goods information 🍍 🔥
+  //get my collect goods information 🍍 🍉 
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
       targetid: this.userid,
+      offset:0,
+      limit:25,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mycollectlist = result.data;
+        if (result.rows==0) this.show_no_collect=true;
       } else {
         alert("get my collect message fail:" + result.msg);
       }
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
 
-  // get my mail message  🍍 🔥
+  // get my mail message  🍍 🍉
   getmymessage() {
     let postdata: RequestProto = {
       api: "message",
       targetid: this.userid,
+      offset:0,
+      limit:25,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mymessagelist = result.data;
+        if(result.rows==0) this.show_no_message=true;
       } else {
         alert("get my messges fail:" + result.msg);
       }
     }, error => { console.log("GetMyMsg() fail:" + error); });
   }
 
-  //get users rank message  🍍 🔥
+  //get users rank message  🍍 
   getrank() {
     let postdata: RequestProto = {
       api: "rank",

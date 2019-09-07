@@ -11,7 +11,7 @@ import {RequestProto} from '../struct';
 export class GoodspageComponent implements OnInit {
   goodsdt = new GoodsDetail();
   state = { collect: false, like: false };
-  userid = "00001"    //当前浏览者的id
+  userid = "19070010"    //当前浏览者的id
   goodid = "";
   collectbtnshow = " 收藏 ";
   likebtnshow = " 点赞 "

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/astaxie/beego/logs"
@@ -35,39 +36,16 @@ tail:
 		return err
 	}
 	if num == 0 {
-		err = fmt.Errorf("the result is empty!")
-		logs.Error(err)
-		return err
+		logs.Warn("Search a goods and no result, type: %s, tag: %s", gstype, tag)
 	}
 	return nil
 }
 
-//get the total number of user
-func CountUser() int {
-	o := orm.NewOrm()
-	userNumber := 0
-	err := o.Raw("select count(*) from t_user").QueryRow(&userNumber)
-	if err != nil {
-		logs.Error(err)
-		return 0
-	}
-	return userNumber
-}
-
-//get the total number of upload goods
-func CountGoods() int {
-	o := orm.NewOrm()
-	goodsNumber := 0
-	err := o.Raw("select count(*) from t_goods").QueryRow(&goodsNumber)
-	if err != nil {
-		logs.Error(err)
-		return 0
-	}
-	return goodsNumber
-}
-
 //get all type name and tag
 func GetTagsData(gtype string, tag *[]GoodsSubType) error {
+	if gtype == "" {
+		return errors.New("Receive a null gtype")
+	}
 	o := orm.NewOrm()
 	var tSubType []GoodsSubType
 	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(&tSubType)
@@ -94,84 +72,102 @@ func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 
 //get a goods detail message
 func GetGoodsById(gid string, c *GoodsDetail) error {
+	if gid == "" {
+		return errors.New("Receive a null gid")
+	}
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_goods_detail where goodsid=$1`, gid).QueryRow(c)
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
-	fmt.Println(c.Time)
 	return nil
 }
 
-//get the data need to show in personal page
+//get the data need to show in personal page 🍊
 func GetUserData(uid string, u *UserMessage) error {
+	if uid == "" {
+		return errors.New("Receive a null uid")
+	}
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&u)
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
+	if u.Care, err = CountIcare(uid); err != nil {
+		logs.Error(err)
+		return err
+	}
+	if u.Becare, err = CountCareMe(uid); err != nil {
+		logs.Error(err)
+		return err
+	}
 	return nil
 }
 
-//get my messages
-func GetMyMessage(uid string, c *[]MyMessage) error {
+//get my messages 🍊 🍉
+func GetMyMessage(uid string, c *[]MyMessage, offset, limit int) error {
+	if uid == "" {
+		return errors.New("Receive a null uid")
+	}
+	if offset < 0 || limit <= 0 {
+		return errors.New("Unsuppose offset or limit argument")
+	}
 	o := orm.NewOrm()
-	num, err := o.Raw(`select * from v_mymessage where id = ?`, uid).QueryRows(c)
+	_, err := o.Raw(`select * from v_mymessage where id = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
-	if num == 0 {
-		err = fmt.Errorf("the result is empty!")
-		logs.Error(err)
-		return err
-	}
 	return nil
 }
 
-//get the goods list that i have collect
-func GetMyCollectGoods(uid string, c *[]GoodsShort) error {
+//get the goods list that i have collect 🍊 🍉
+func GetMyCollectGoods(uid string, c *[]GoodsShort, offset, limit int) error {
+	if uid == "" {
+		return errors.New("Receive a null uid")
+	}
+	if offset < 0 || limit <= 0 {
+		return errors.New("Unsuppose offset or limit argument")
+	}
 	o := orm.NewOrm()
-	num, err := o.Raw(`select * from v_mycollect where uid = ?`, uid).QueryRows(c)
+	_, err := o.Raw(`select * from v_mycollect where uid = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
-	if num == 0 {
-		err := fmt.Errorf("the result is empty!")
-		logs.Error(err)
-		return err
-	}
 	return nil
 }
 
-//get the goods list that i upload
-func GetMyGoods(uid string, c *[]GoodsShort) error {
+//get the goods list that i upload 🍉
+func GetMyGoods(uid string, c *[]GoodsShort, offset, limit int) error {
+	if uid == "" {
+		return errors.New("Receive a null uid")
+	}
+	if offset < 0 || limit <= 0 {
+		return errors.New("Unsuppose offset or limit argument")
+	}
 	o := orm.NewOrm()
-	num, err := o.Raw(`select * from v_mygoods where uid = ?`, uid).QueryRows(c)
+	_, err := o.Raw(`select * from v_mygoods where uid = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
-	if num == 0 {
-		err := fmt.Errorf("the result is empty!")
-		logs.Error(err)
-		return err
-	}
 	return nil
 }
 
-//get the list of user i care and which acre me
+//get the list of user i care and which acre me 🍊
 func GetCareMeData(uid string, c *[2][]UserShort) error {
 	o := orm.NewOrm()
-	_, err := o.Raw(`select * from v_concern where myid=?`, uid).QueryRows(&c[0])
+	//the list of user that care abtout me
+	_, err := o.Raw(`select headimg, name, id from v_concern where id2=?`, uid).QueryRows(&c[0])
 	if err != nil {
 		logs.Error(err)
 		return err
 	}
-	_, err = o.Raw(`select myid as id, name, headimg from v_concern where id = ?`, uid).QueryRows(&c[1])
+	//get the list of user that i care
+	_, err = o.Raw(`select headimg2 as headimg, id2 as  id, name2 as name  from v_concern where id = ?`, uid).QueryRows(&c[1])
 	if err != nil {
 		return err
 	}
@@ -237,4 +233,93 @@ func GetStatement(userid, goodid string) (int, error) {
 		result += tmp
 	}
 	return result, nil
+}
+
+//#################### count ###########################
+
+//get the user's number who car me
+func CountCareMe(myid string) (int, error) {
+	if myid == "" {
+		return 0, errors.New("Receive a null myid")
+	}
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_concern where id2 = ?", myid).QueryRow(&userNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0, err
+	}
+	return userNumber, nil
+}
+
+//get the user's number i am cared 🍊
+func CountIcare(myid string) (int, error) {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_concern where id1 = ?", myid).QueryRow(&userNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0, err
+	}
+	return userNumber, nil
+}
+
+//get the total number of user 🍊
+func CountUser() int {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_user").QueryRow(&userNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0
+	}
+	return userNumber
+}
+
+//get the total number of total upload goods
+func CountGoods() int {
+	o := orm.NewOrm()
+	goodsNumber := 0
+	err := o.Raw("select count(*) from t_goods").QueryRow(&goodsNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0
+	}
+	return goodsNumber
+}
+
+//count how many goods a user have upload 🍉
+func CountMyCoods(uid string) int {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_upload where userid = ?", uid).QueryRow(&userNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0
+	}
+	return userNumber
+}
+
+//count how many goods a user have collect 🍉
+func CountMyCollect(uid string) int {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_collect where userid = ?", uid).QueryRow(&userNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0
+	}
+	return userNumber
+}
+
+//count how many message a user have receive 🍉
+func CountMyAllMsg(uid string) int {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_message where senderid = ?", uid).QueryRow(&userNumber)
+	if err != nil {
+		logs.Error(err)
+		return 0
+	}
+	return userNumber
 }

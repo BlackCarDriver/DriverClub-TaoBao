@@ -10,11 +10,9 @@ export class ServerService {
 
   //important config !!!
   //线上运行配置
-  // private addr: string  = "/taobaoserver"
+  // private addr: string  = "https://blackcardriver.cn/taobaoserver"
   //本地开发配置
   private addr: string  = "/localserver"
- //服务器配置
-  // private addr: string  = "https://www.blackcardriver.cn/server"
   constructor( 
     private http: HttpClient
   ){ }

@@ -56,25 +56,42 @@ func (this *PersonalDataController) Post() {
 		}
 		goto tail
 
-	case "mygoods": //my goods data
+	case "mygoods": //my goods data 🍉
 		var data []md.GoodsShort
-		if err = md.GetMyGoods(targetid, &data); err != nil {
+		if err = md.GetMyGoods(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Can't get goods data: %v ", err)
 			logs.Error(response.Msg)
 		} else {
 			response.Data = data
+			response.Rows = len(data)
+			response.Sum = md.CountMyCoods(targetid)
 		}
 		goto tail
 
-	case "mycollect": //my collect goods data
+	case "mycollect": //my collect goods data 🍉
 		var data []md.GoodsShort
-		if err = md.GetMyCollectGoods(targetid, &data); err != nil {
+		if err = md.GetMyCollectGoods(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("Can't get collect data: %v ", err)
 			logs.Error(response.Msg)
 		} else {
 			response.Data = data
+			response.Rows = len(data)
+			response.Sum = md.CountMyCollect(targetid)
+		}
+		goto tail
+
+	case "message": //my receive messages 🍉
+		var data []md.MyMessage
+		if err = md.GetMyMessage(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("Can't get message data: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+			response.Rows = len(data)
+			response.Sum = md.CountMyAllMsg(targetid)
 		}
 		goto tail
 
@@ -112,17 +129,6 @@ func (this *PersonalDataController) Post() {
 		}
 		if err = md.UpdateUserVisit(targetid); err != nil {
 			logs.Error("Update visit number fail: %v", err)
-		}
-		goto tail
-
-	case "message": //my receive messages
-		var data []md.MyMessage
-		if err = md.GetMyMessage(targetid, &data); err != nil {
-			response.StatusCode = -9
-			response.Msg = fmt.Sprintf("Can't get message data: %v ", err)
-			logs.Error(response.Msg)
-		} else {
-			response.Data = data
 		}
 		goto tail
 

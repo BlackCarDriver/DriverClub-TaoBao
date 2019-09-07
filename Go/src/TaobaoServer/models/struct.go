@@ -6,7 +6,7 @@ import (
 )
 
 //######################################### 公用协议 ##########################################
-//public struct that used to request 🍌
+//public struct that used to request 🍌 🍉
 type RequestProto struct {
 	Tag       string      `json:"tag"`
 	Api       string      `json:"api"`
@@ -14,13 +14,17 @@ type RequestProto struct {
 	TargetId  string      `json:"targetid"`
 	CacheTime int         `json:"cachetime"`
 	Data      interface{} `json:"data"`
+	Offset    int         `json:"offset"`
+	Limit     int         `json:"limit"`
 }
 
-//public struct that response by server 🍌
+//public struct that response by server 🍌 🍉
 type ReplyProto struct {
 	StatusCode int         `json:"statuscode"`
 	Msg        string      `json:"msg"`
 	Data       interface{} `json:"data"`
+	Rows       int         `json:"rows"`
+	Sum        int         `json:"sum"`
 }
 
 //########################################## 主页结构和模拟数据 ################################
@@ -58,21 +62,23 @@ type GoodsSubType struct {
 
 //########################################## 商品详情页面结构体和模拟数据 #################################################
 
+//goods data shown in goodsdetail page 🍉
 type GoodsDetail struct {
-	Headimg string    `json:"headimg"`
-	Userid  string    `json:"userid"`
-	Time    time.Time `json:"time"`
-	Title   string    `json:"title"`
-	Type    string    `json:"type"`
-	Tag     string    `json:"tag"`
-	Price   float64   `json:"price"`
-	Id      string    `json:"id"`
-	Name    string    `json:"name"`
-	Visit   int       `json:"visit"`
-	Like    int       `json:"like"`
-	Talk    int       `json:"talk"`
-	Collect int       `json:"collect"`
-	Detail  string    `json:"detail"`
+	Headimg  string    `json:"headimg"`
+	Userid   string    `json:"userid"`
+	Username string    `json:"username"`
+	Time     time.Time `json:"time"`
+	Title    string    `json:"title"`
+	Type     string    `json:"type"`
+	Tag      string    `json:"tag"`
+	Price    float64   `json:"price"`
+	Id       string    `json:"id"`
+	Name     string    `json:"name"`
+	Visit    int       `json:"visit"`
+	Like     int       `json:"like"`
+	Talk     int       `json:"talk"`
+	Collect  int       `json:"collect"`
+	Detail   string    `json:"detail"`
 }
 
 type GoodsComment struct { //comment of goods

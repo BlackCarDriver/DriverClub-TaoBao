@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -197,8 +198,11 @@ func AddUserLike(uid1, uid2 string) error {
 	return nil
 }
 
-//save a goods comment
+//save a goods comment 🍉
 func AddGoodsComment(uid, gid, conetnt string) error {
+	if uid == "" || gid == "" || conetnt == "" {
+		return errors.New("Argument not right, get a empty id or comment content")
+	}
 	o := orm.NewOrm()
 	var err error
 	var result sql.Result
