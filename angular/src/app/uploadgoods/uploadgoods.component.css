@@ -53,6 +53,9 @@
     float: right;
 }
 /* ============================== */
+.selectimg{
+    margin-right: 1em;
+}
 .setting-box{
     padding: 0px 20px;
     height: 100%;
@@ -69,8 +72,14 @@
     margin-right: 8px;
 }
 .setting-box input{
-    width: 200px;
-    text-indent: 10px;	
+    width: 100%;
+    text-indent: 10px;
+    line-height: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin-top: 1em;
+    height: 2em;
 }
 .editer{
     margin:20px 0px 40px 0px;

@@ -1,91 +1,118 @@
-#singin{
-    background: #ff411c;
-    border-radius: 20px;
-    color: #fff;
-    line-height: 24px;
-    padding: 2px 0;
-    margin-top: 12px;
-    margin-left: 10px;
-    padding: 2px 20px 0 20px;
+.search-row {
+    height: 100px;
+    text-align: center;
+    padding: 30px;
 }
-#singin:hover {
-    background: #fe6000;
+
+.search-input {
+    padding-left: 15px;
+    color: #333333;
+    width: 500px;
+    border-radius: 30px 0px 0px 30px;
+    border: 3px solid #337ab7;
+    height: 40px;
+    font-size: 1.2em;
 }
-.search-div{
-    background-color: #f5f5f5;
+
+.search-btn {
+    width: 80px;
+    height: 40px;
+    border-radius: 0px 30px 30px 0px;
+    color: white;
+    font-size: 1.2em;
+    background: linear-gradient(120deg, #337ab7, #3193e8);
+    border: 3px solid #337ab7;
+    border-right: none;
 }
-.seach-box{
-    position: relative;
-    width: 100%;
-    min-width: 600px;
-    top: 25px;
+
+.search-btn:hover {
+    background: linear-gradient(120deg, #0080ff, #337ab7);
 }
-.main-body{
+
+.main-body {
     min-height: 400px;
 }
-.goodtype{
+
+.goodtype {
     width: 100%;
     height: auto;
     text-align: center;
     background-color: rgb(245, 245, 245);
 }
-/* 商品大分类连接 */
-.typelink{
+
+/* ####################### 商品分类标签 ################*/
+
+.typelink {
     height: 30px;
     line-height: 30px;
-    margin:0px 25px 0px 25px;
+    margin: 0px 25px 0px 25px;
     font-size: 17px;
     font-weight: 600;
 }
-.typelink:hover{
+
+.typelink:hover {
     border-bottom: 4px solid rgb(106, 146, 207);
 }
-.well2{
+
+.well2 {
     padding: 5px 20px;
     background-color: #337ab7;
 }
-.goods-area{
+
+.goodstype {
+    margin: 5px 15px;
+    line-height: 15px;
+    border: 1px solid #a6a0a040;
+    font-weight: 600;
+    font-size: 1em;
+}
+
+/*################ goods showing ################# */
+
+.goods-area {
     padding: 5px;
-    box-shadow: 0 0 20px rgba(50,50,50,0.1);
+    box-shadow: 0 0 20px rgba(50, 50, 50, 0.1);
     background-color: #fff;
     margin: 0px 7%;
 }
-.goodrow{
-    margin:5px;
+
+.goodrow {
+    margin: 5px;
     text-align: center;
     margin-bottom: 10px;
 }
-.goods-box{
+
+.goods-box {
     float: left;
     text-align: center;
-    margin: 1px 15px 20px 15px;
-}
-.goods-box2{
-    height: 255px;
+    margin: 10px 15px 20px 15px;
+    height: 286px;
     width: 200px;
-    border: 1px solid #ccc;
+    border: 1px solid #cccccc7a;
     background-color: #ffffff;
     font-size: 1.1em;
     color: rgb(156, 173, 173);
     overflow: hidden;
 }
-.goods-box2:hover{
+
+.goods-box:hover {
     border: 1px solid #337ab7;
 }
-.goods-box2 img{
-    height: 76%;
+
+.goods-box img {
+    height: 200px;
     padding: 0px;
     border-radius: 0px;
 }
-.goodstype{
-    margin: 5px 15px;
-    line-height: 15px;
-    color: white;
-    font-weight: 600;
-    font-size: 1em;
+
+.good-name {
+    height: 1.3em;
+    margin: 0px;
+    font-size: 1.2em;
+    color: #4b899b;
 }
 
-.good-title{
+.good-title {
     height: 21px;
     line-height: 21px;
     margin: 0px 19px;
@@ -94,54 +121,71 @@
     text-overflow: ellipsis;
     color: #337ab7;
 }
-.good-user{
+
+.user-date {
+    height: 50px;
+    width: 60%;
     float: left;
-    margin-left: 25px;
-    margin-bottom: 4px;
     font-size: 0.9em;
     overflow: hidden;
     color: #999;
+    padding: 0px 0px 0px 20px;
+    line-height: 1em;
+    text-align: left;
 }
-.good-date{
-    margin-left: 20px;
-    font-size: 0.8em;
+
+.user-date p {
+    margin: 0 0 5px;
 }
-.good-price{
-    color: orangered;
-    font-size: 1.3em;
-    font-weight: 600;
-    /* margin-top: 0px; */
-    margin: 0px;
+
+.price-box {
+    height: 50px;
+    width: 40%;
+    float: left;
+    padding-right: 16px;
+}
+
+.goods-price {
+    border: none;
+    width: 80px;
+    height: 29px;
+    background-color: #4eb1c6;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px 5px 0px 0px;
     position: relative;
-    bottom: 10px;
-    right: 5px;
-}
-.page-box{
-    text-align: center;
+    top: 10px;
+    overflow: hidden;
+    padding: 4px;
 }
 
 /* =================================== 公用样式 */
-.nopad{
-    padding: 0px; 
+
+.nopad {
+    padding: 0px;
     text-align: center;
 }
 
-
 /* =============================================淘宝翻页框 */
+
 .m-page {
     position: relative;
     margin-top: 20px;
     padding: 10px 0;
 }
+
 .m-page .wraper {
     display: block;
     float: left;
     margin-left: 50%;
 }
+
 .m-page .inner {
     float: left;
     margin-left: -50%;
 }
+
 .m-page .active, .m-page .active:hover {
     position: relative;
     background: #f40;
@@ -153,9 +197,11 @@
 .m-page a:focus, .m-page a:hover {
     color: #f40;
 }
+
 .m-page .items {
     float: left;
 }
+
 .m-page .item {
     position: relative;
     float: left;
@@ -167,30 +213,36 @@
     text-align: center;
     line-height: 35px;
     cursor: pointer;
-} 
+}
+
 .m-page .next, .m-page .prev {
     width: 70px;
     font-weight: 400;
 }
+
 .m-page .item .num {
     position: relative;
     display: inline-block;
     width: 100%;
     font-size: 14px;
 }
+
 .m-page .total {
     margin-left: 10px;
     margin-right: 10px;
     float: left;
     line-height: 37px;
 }
+
 .m-page .form {
     float: left;
 }
+
 .m-page .text {
     float: left;
     line-height: 37px;
 }
+
 .m-page .input {
     width: 40px;
     border: solid 1px #ededed;
@@ -200,6 +252,7 @@
     float: left;
     color: #999;
 }
+
 .m-page .btn {
     height: 21px;
     width: 43px;
@@ -210,9 +263,5 @@
     margin-top: 4px;
     padding: 1px;
 }
-/* ==================================================== */
 
-.label{
-    position: relative;
-    left: 10px;
-}
+/* ==================================================== */

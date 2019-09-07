@@ -186,7 +186,7 @@ func AddUserLike(uid1, uid2 string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_user_like(userid1, userid2)VALUES (?, ?)`, uid1, uid2).Exec()
 	if err != nil {
-		logs.Error(err)
+		logs.Error("uid1: %s, uid2:%s, error:%v", uid1, uid2, err)
 		return err
 	}
 	effect, _ := result.RowsAffected()

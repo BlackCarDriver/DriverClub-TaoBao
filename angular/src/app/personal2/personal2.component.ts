@@ -8,16 +8,20 @@ import { ServerService } from '../server.service';
   styleUrls: ['./personal2.component.css']
 })
 export class Personal2Component implements OnInit {
-
   data = new UserMessage();
   lookcerid = "19070010"; 
   userid = "";          //user which is showing in the page
+  btn_concern_sho = "关注";
+  btn_like_sho = "点赞";
+  is_concern = true;
+  is_like= false;
   constructor(private server: ServerService) { }
 
   ngOnInit() {
     let rawStr = window.location.pathname;
     this.userid = rawStr.substring(11, 21);
     this.getOtherMsg(this.userid);
+    this.getStatement();
   }
 
   //get some other message need to show in the page 🍍🔥
@@ -89,6 +93,29 @@ export class Personal2Component implements OnInit {
       }
     }, error=>{
         alert("sendMessage() fail: "+error);
+    });
+  }
+  
+  //get concern and like statement  🍉 
+  getStatement(){
+    let postdata : RequestProto = {
+      api:"getuserstatement",
+      targetid:this.userid,
+      userid:this.lookcerid,
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if(result.statuscode!=0){
+        alert("获取用户状态失败："+result.msg);
+      }else{
+        let state = {concern:false, like:false};
+        state = result.data;
+        this.is_concern = state.concern;
+        this.is_like = state.like;
+        if(this.is_concern) this.btn_concern_sho = "已关注";
+        if(this.is_like) this.btn_like_sho="已点赞";
+      }
+    },error=>{
+      console.log("getStatement() fail: "+error);
     });
   }
 }

@@ -35,7 +35,8 @@ const unsafe = -999;
 export class NavigComponent implements OnInit {
   data1 = new RegisterData();
   data2 = new LoginData();
-  userid = "19070010";  //mock
+  // userid = "19070010";  //mock
+  userid = "20190008";  //mock
   usermsg = new MyStatus();
 
 constructor(
@@ -53,7 +54,6 @@ ngOnInit() {
 //load userid from cookie if it is not empty then  🍋
 //hide the login box, and show the user message box and require user short data
 setstate() {
-  this.userid = "19070010";
   //TODO:get real userid
   if (this.userid != "") {
     $("#singin").addClass("hidden");

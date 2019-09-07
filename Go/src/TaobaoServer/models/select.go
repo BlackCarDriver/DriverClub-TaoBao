@@ -214,7 +214,7 @@ func GetGoodsComment(goodsid string, c *[]GoodsComment) error {
 
 //get statement of user-goods from database  🍌
 //return result = like*1 + collect*2
-func GetStatement(userid, goodid string) (int, error) {
+func GetGoodsStatement(userid, goodid string) (int, error) {
 	var result = 0
 	var tmp = 0
 	o := orm.NewOrm()
@@ -227,6 +227,29 @@ func GetStatement(userid, goodid string) (int, error) {
 	}
 	//check if have like
 	if err := o.Raw(`SELECT count(*) FROM public.t_goods_like where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
+		logs.Error(err)
+		return result, err
+	} else {
+		result += tmp
+	}
+	return result, nil
+}
+
+//get statement of user-user from database 🍉
+//return result = like*1 + concern*2
+func GetUserStatement(uid1, uid2 string) (int, error) {
+	var result = 0
+	var tmp = 0
+	o := orm.NewOrm()
+	//check if have concern
+	if err := o.Raw(`SELECT count(*) FROM public.t_concern where id1=? and id2=?`, uid1, uid2).QueryRow(&tmp); err != nil {
+		logs.Error(err)
+		return 0, err
+	} else {
+		result += tmp * 2
+	}
+	//check if have like
+	if err := o.Raw(`SELECT count(*) FROM public.t_user_like where userid1=? and userid2=?`, uid1, uid2).QueryRow(&tmp); err != nil {
 		logs.Error(err)
 		return result, err
 	} else {

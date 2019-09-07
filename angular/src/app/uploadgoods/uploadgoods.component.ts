@@ -19,10 +19,11 @@ export class UploadgoodsComponent implements OnInit {
   typelist = GoodSubType[100];
   //以下是打包上传到服务端的数据
   headImgUrl = "http://localhost:8090/source/images?tag=headimg&&name=testcover.jpg"
-  title = "黑车司机二手交易平台大法好！";
-  username = "blackcardriver";
+  userid = "20190008";
   date = "2019-04-07";
-  price = 0.0;
+  price:number;
+  title = "";
+  goodsname = "";
   typename = "";
   tagname = "";
   usenewtag = false;
@@ -102,7 +103,7 @@ export class UploadgoodsComponent implements OnInit {
     )
   };
 
-  //upload a goods to server  🍋
+  //upload a goods to server  🍋🍉 
   Upload() {
     //注意这里跟常规用法不同
     if ($("#check").prop("checked") == false) {
@@ -111,7 +112,7 @@ export class UploadgoodsComponent implements OnInit {
     }
     if (this.checkData() == true) {
       var data = new UploadGoods();
-      data.userid = "blackcardriver";
+      data.userid = "20190008";
       data.title = this.title;
       data.date = this.date;
       data.price = this.price;
@@ -212,8 +213,6 @@ export class UploadgoodsComponent implements OnInit {
       this.tagname = type;
     }
   }
-
-
 
   //得到当日的格式化后的日期
   formatDate() {

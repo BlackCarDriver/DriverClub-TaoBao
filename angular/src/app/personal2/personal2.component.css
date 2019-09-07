@@ -36,7 +36,7 @@
     margin: 20px;
 }
 .send-text-box{
-    width: 400px;
+    width: 400px; 
     height: 200px;
     padding: 6px;
     background-color: aliceblue;
@@ -53,13 +53,17 @@
     color: aqua;
 }
 .ico2{
-    color: #FF5722;
+    color: #679BAA;
+    font-size: 1.2em;
+    margin: 10px;
+    margin-left: 2em;
+    cursor: pointer;
+}
+.already{
+    color: #F74B14;
     font-size: 1.4em;
     margin: 10px;
-    padding: 3px 6px 0px 6px;
-    cursor: pointer;
-    border: 1px solid;
-    border-radius: 5px;
+    margin-left: 2em;
 }
 .msg-box{
     margin-top: 6px;

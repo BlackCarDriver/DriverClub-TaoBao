@@ -3,8 +3,8 @@
 <div class="container"><!--路径导航-->
   <div class="row">
     <ol class="breadcrumb nopadbtm">
-      <li><a href="#">首页</a></li>
-      <li class="active"><a href="#">商品11220</a></li>
+      <li><a href="/homepage">首页</a></li>
+      <li class="active">商品{{goodid}}</li>
     </ol>
   </div>
 </div>
@@ -46,7 +46,7 @@
   </div>
   <div class="col-md-3 gp-right">
     <div class="list-group">
-      <a class="list-group-item disabled">更多信息</a>
+      <a class="list-group-item disabled"><span class="glyphicon glyphicon-pushpin"></span> 更多信息 </a>
       <a class="list-group-item" [routerLink]="['/personals', goodsdt.userid ]">上传作者：{{goodsdt.username}}</a>
       <a class="list-group-item">上传日期：{{goodsdt.time | date:'yyyy-MM-dd hh:mm'}}</a>
       <a class="list-group-item">浏览次数：{{goodsdt.visit}} </a>

@@ -112,7 +112,8 @@ func (this *UploadImagesController) Post() {
 	}
 	//DOTO: use true image url
 	// response.Data = imgUrlRoot + h.Filename
-	response.Data = "https://blackcardriver.cn/images/huawei.jpg"
+	// response.Data = "https://blackcardriver.cn/images/huawei.jpg"
+	response.Data = "https://blackcardriver.cn/images/huaji.png"
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

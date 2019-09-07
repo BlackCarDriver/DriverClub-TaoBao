@@ -123,7 +123,7 @@ func (this *GoodsDetailController) Post() {
 		tmp := md.UserGoodsState{Like: false, Collect: false}
 		if userid == "" { // if user havn't login then return default date
 			response.Data = tmp
-		} else if res, err := md.GetStatement(userid, goodId); err != nil {
+		} else if res, err := md.GetGoodsStatement(userid, goodId); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("Getstatement fail: %v", err)
 			logs.Error(response.Msg)
@@ -173,7 +173,6 @@ func (this *UploadGoodsController) Post() {
 			this.ServeJSON()
 		}
 	}()
-	logs.Info(postBody.Data)
 	//parse postBody.Data
 	if err := json.Unmarshal([]byte(postBody.Data.(string)), &goodsdata); err != nil {
 		response.StatusCode = -2

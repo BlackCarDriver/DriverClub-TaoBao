@@ -45,8 +45,12 @@
                     <span class="ico1"><i class="glyphicon glyphicon glyphicon-stats"></i> 排名 :{{data.rank}} </span>
                     <span class="ico1"><i class="glyphicon glyphicon-heart"></i> 被关注: {{data.becare}} </span>
                     <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i> 被点赞:  {{data.likes}}</span>
-                    <span class="ico2" (click)="addConcern()" title="收藏"><i class="glyphicon glyphicon-heart"></i></span>
-                    <span class="ico2" (click)="updateLike()" title="点赞"><i class="glyphicon glyphicon-thumbs-up"></i></span>
+                    <span class="ico2" (click)="addConcern()" [ngClass]="{'already': is_concern}" title="{{btn_concern_sho}}">
+                        <i class="glyphicon glyphicon-heart"></i>
+                    </span>
+                    <span class="ico2" (click)="updateLike()" [ngClass]="{'already': is_like}" title="{{btn_like_sho}}">
+                        <i class="glyphicon glyphicon-thumbs-up"></i>
+                    </span>
               </div>
               <!--信息主体-->
               <div class="row swicth-box">  

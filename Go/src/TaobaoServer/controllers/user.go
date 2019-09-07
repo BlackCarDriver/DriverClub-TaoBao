@@ -132,9 +132,28 @@ func (this *PersonalDataController) Post() {
 		}
 		goto tail
 
+	case "getuserstatement": //the statement of user to user 🍉
+		tmp := md.UserState{Like: false, Concern: false}
+		if postBody.UserId == "" { // if user havn't login then return default date
+			response.Data = tmp
+		} else if res, err := md.GetUserStatement(postBody.UserId, targetid); err != nil {
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("UserGoodsState fail: %v", err)
+			logs.Error(response.Msg)
+		} else {
+			if res&1 != 0 {
+				tmp.Like = true
+			}
+			if res&2 != 0 {
+				tmp.Concern = true
+			}
+			response.Data = tmp
+		}
+		goto tail
+
 	case "rank": //user rank
 		response.Data = md.UserRank
-		//TODO: make a function
+		//TODO: make a function 🍉
 		goto tail
 
 	case "setdata": //??

@@ -12,7 +12,7 @@
         <div class="col-md-7">
             <div class="row   mainbody">
             <!--预览效果-->
-            <div class="col-md-6">
+            <div class="col-md-5">
                     <span class="label  label-primary yulan">预览效果</span>
                     <div class="goods-box">
                         <img class="img-thumbnail" src={{headImgUrl}}>
@@ -24,22 +24,22 @@
                     <strong class="warning">{{warnmsg}}</strong>    
             </div>
             <!--封面设置-->
-            <div class="col-md-6 h260px">
+            <div class="col-md-7 h260px">
                 <div class="panel panel-primary">
                     <div class="panel-heading" >基本设置</div>
                      <dl class="setting-box">
                                     <dt>
                                     <form enctype="multipart/form-data">
                                     <input type="file" class="hidden" id="upload">
-                                    <button class="btn btn-default" id="heading" (click)="selectImg()">选择封面</button>
+                                    <button class="btn btn-default selectimg" id="heading" (click)="selectImg()">选择封面</button>
                                     <button id="uploadbtn" class="hidden" (click)="uploadcover()"></button>
                                     <span id="filename"></span>
                                     </form>    
                                     </dt>
-                                    <dt>封面标题</dt>
-                                    <dd><input [(ngModel)]="title" type="text" id="title"></dd>
-                                    <dt>出售价格</dt>
-                                    <dd><input [(ngModel)]="price" type="number" class="price"></dd>
+
+                                     <input [(ngModel)]="goodsname" type="text" id="name" placeholder="商品名称">
+                                    <input [(ngModel)]="title" type="text" id="title" placeholder="商品标题">
+                                    <input [(ngModel)]="price" type="number" class="price" placeholder="开价">
                                     <dt>
                                         <div class="btn-group">
                                              <button type="button" id="btn-type" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" >

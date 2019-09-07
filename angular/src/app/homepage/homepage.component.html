@@ -2,20 +2,15 @@
 
 <div class="container" class="main-body">
 
-<div class=" search-div  marbotn">
-
-    <div class="row">
-        <div class="hidden-xs col-sm-2 col-md-3 h100px "></div>
-        <div class="col-md-6 col-sm-8 h100px nopad">
-          <div class="seach-box">
-            <input id="searchgoods" type="text" class="inputbox" placeholder="搜索商品...">
-            <button class="inputbtn" type="button" (click)="SearchGoods()">
-              <span class="glyphicon glyphicon-search"></span>
-            </button>  
-          </div><!--search-box over-->
-      </div>
-      <div class="hidden-xs col-sm-2 col-md-3 h100px"></div>
-    </div>  <!--row  search is over-->
+<div class="marbotn">
+    <div class="row search-row">
+      <form>
+        <input id="searchgoods" type="text" class="search-input" placeholder="搜索商品...">
+        <button class="search-btn" type="button"  (click)="SearchGoods()">
+          <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </form>
+    </div>
 
     <div class="row"><!--type of goods-->
         <div class="goodtype">
@@ -91,25 +86,24 @@
 
 <div class=" goods-area green martop">
       <div class="row goodrow"><!--goods list-->
-          <div class="goods-box" *ngFor="let goods of goodsarray">
-            <div class="goods-box2" [routerLink]="['/goodsdetail', goods.id ]">
+          <div class="goods-box" *ngFor="let goods of goodsarray" [routerLink]="['/goodsdetail', goods.id ]">
               <img class="img-thumbnail" src={{goods.headimg}}>
+              <div class="row">
+                  <p class="good-name">{{goods.name}}</p>
+                </div>
               <div class="row">
                 <p class="good-title">{{goods.title}}</p>
               </div>
               <div class="row">
-                  <a class="good-user"><span class="glyphicon glyphicon-user"></span>{{goods.username}}</a>
-              </div>
-              <div class="row">
-                  <div class="col-sm-6">
-                    <div class="row"><p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{goods.time | date:'yyyy-MM-dd' }}</p></div>
+                  <div class="user-date">
+                    <p><span class="glyphicon glyphicon-user"></span> {{goods.username}}</p>
+                    <p><span class="glyphicon glyphicon-calendar"></span> {{goods.time | date:'yyyy-MM-dd' }}</p>
                   </div>
-                  <div class="col-sm-6">
-                    <p class="good-price"> <span class="label label-info"><span class="glyphicon glyphicon-yen"></span>{{goods.price}}</span></p>
-                  </div>
+                  <div class="price-box"> 
+                    <div class="goods-price">￥{{goods.price}}</div>
+                  </div>   
               </div>
-              
-            </div><!--goods-box2 end-->
+            
           </div><!--good-box end-->
       </div>
       <br><br>  

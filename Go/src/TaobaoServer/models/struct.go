@@ -173,6 +173,11 @@ type UserShort struct {
 	Id      string `json:"id"`
 }
 
+type UserState struct {
+	Like    bool `json:"like"`
+	Concern bool `json:"concern"`
+}
+
 //########################################## 修改信息页面数据结构和模拟数据 #################################################
 
 //修改数据请求的主体结构
