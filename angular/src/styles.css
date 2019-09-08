@@ -24,7 +24,85 @@ img{
 input[type="number"]{
     -moz-appearance: textfield;
 }
+/* homepage goods show box */
 
+.goods-box {
+    float: left;
+    text-align: center;
+    margin: 10px 15px 20px 15px;
+    height: 286px;
+    width: 200px;
+    border: 1px solid #cccccc7a;
+    background-color: #ffffff;
+    font-size: 1.1em;
+    color: rgb(156, 173, 173);
+    overflow: hidden;
+}
+
+.goods-box:hover {
+    border: 1px solid #778da0;
+}
+
+.goods-box img {
+    height: 200px;
+    padding: 0px;
+    border-radius: 0px;
+}
+
+.good-name {
+    height: 1.3em;
+    margin: 0px;
+    font-size: 1.2em;
+    color: #4b899b;
+}
+
+.good-title {
+    height: 21px;
+    line-height: 21px;
+    margin: 0px 19px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    color: #337ab7;
+}
+
+.user-date {
+    height: 50px;
+    width: 60%;
+    float: left;
+    font-size: 0.9em;
+    overflow: hidden;
+    color: #999;
+    padding: 0px 0px 0px 20px;
+    line-height: 1em;
+    text-align: left;
+}
+
+.user-date p {
+    margin: 0 0 5px;
+}
+
+.price-box {
+    height: 50px;
+    width: 40%;
+    float: left;
+    padding-right: 16px;
+}
+
+.goods-price {
+    border: none;
+    width: 80px;
+    height: 29px;
+    background-color: #4eb1c6;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px 5px 0px 0px;
+    position: relative;
+    top: 10px;
+    overflow: hidden;
+    padding: 4px;
+}
 /* ==========================收藏样式============================ */
 .inlink{
     display: inline-block;

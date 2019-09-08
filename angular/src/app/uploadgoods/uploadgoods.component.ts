@@ -17,9 +17,10 @@ export class UploadgoodsComponent implements OnInit {
   warnmsg = "";
   typearray = GoodsType[10];
   typelist = GoodSubType[100];
+  username = "username";
   //以下是打包上传到服务端的数据
-  headImgUrl = "http://localhost:8090/source/images?tag=headimg&&name=testcover.jpg"
   userid = "20190008";
+  headImgUrl = "http://localhost:8090/source/images?tag=headimg&&name=testcover.jpg"
   date = "2019-04-07";
   price:number;
   title = "";

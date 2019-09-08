@@ -26,7 +26,7 @@
 }
 
 .search-btn:hover {
-    background: linear-gradient(120deg, #0080ff, #337ab7);
+    background: #337ab7;
 }
 
 .main-body {
@@ -54,18 +54,23 @@
     border-bottom: 4px solid rgb(106, 146, 207);
 }
 
-.well2 {
-    padding: 5px 20px;
-    background-color: #337ab7;
-}
-
 .goodstype {
     margin: 5px 15px;
     line-height: 15px;
-    border: 1px solid #a6a0a040;
     font-weight: 600;
     font-size: 1em;
+    color: white;
+    font-size: 1.1em;
 }
+.goodstype:hover {
+    color: cornflowerblue;
+}
+
+.well2 {
+    padding: 15px 20px;
+    background-color: #337ab7;
+}
+
 
 /*################ goods showing ################# */
 
@@ -82,90 +87,6 @@
     margin-bottom: 10px;
 }
 
-.goods-box {
-    float: left;
-    text-align: center;
-    margin: 10px 15px 20px 15px;
-    height: 286px;
-    width: 200px;
-    border: 1px solid #cccccc7a;
-    background-color: #ffffff;
-    font-size: 1.1em;
-    color: rgb(156, 173, 173);
-    overflow: hidden;
-}
-
-.goods-box:hover {
-    border: 1px solid #337ab7;
-}
-
-.goods-box img {
-    height: 200px;
-    padding: 0px;
-    border-radius: 0px;
-}
-
-.good-name {
-    height: 1.3em;
-    margin: 0px;
-    font-size: 1.2em;
-    color: #4b899b;
-}
-
-.good-title {
-    height: 21px;
-    line-height: 21px;
-    margin: 0px 19px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #337ab7;
-}
-
-.user-date {
-    height: 50px;
-    width: 60%;
-    float: left;
-    font-size: 0.9em;
-    overflow: hidden;
-    color: #999;
-    padding: 0px 0px 0px 20px;
-    line-height: 1em;
-    text-align: left;
-}
-
-.user-date p {
-    margin: 0 0 5px;
-}
-
-.price-box {
-    height: 50px;
-    width: 40%;
-    float: left;
-    padding-right: 16px;
-}
-
-.goods-price {
-    border: none;
-    width: 80px;
-    height: 29px;
-    background-color: #4eb1c6;
-    color: white;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-radius: 5px 5px 0px 0px;
-    position: relative;
-    top: 10px;
-    overflow: hidden;
-    padding: 4px;
-}
-
-/* =================================== 公用样式 */
-
-.nopad {
-    padding: 0px;
-    text-align: center;
-}
 
 /* =============================================淘宝翻页框 */
 

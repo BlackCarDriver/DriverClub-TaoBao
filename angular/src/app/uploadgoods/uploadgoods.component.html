@@ -10,17 +10,28 @@
     </div>
     <div class="row">
         <div class="col-md-7">
-            <div class="row   mainbody">
+            <div class="row  mainbody">
             <!--预览效果-->
             <div class="col-md-5">
-                    <span class="label  label-primary yulan">预览效果</span>
-                    <div class="goods-box">
+                    <div class="goods-box2">
                         <img class="img-thumbnail" src={{headImgUrl}}>
-                        <p class="good-title">{{title}}</p>
-                            <a class="good-user"><span class="glyphicon glyphicon-user"></span> {{username}}</a>
-                            <p class="good-date"><span class="glyphicon glyphicon-calendar"></span>{{date}}</p>
-                            <p class="good-price"><span class="glyphicon glyphicon-yen"></span>{{price}}</p>
-                    </div><!--goods-box2 end-->       
+                        <div class="row">
+                            <p class="good-name">{{goodsname}}</p>
+                          </div>
+                        <div class="row">
+                          <p class="good-title">{{title}}</p>
+                        </div>
+                        <div class="row">
+                            <div class="user-date">
+                              <p><span class="glyphicon glyphicon-user"></span> {{username}}</p>
+                              <p><span class="glyphicon glyphicon-calendar"></span> {{date}}</p>
+                            </div>
+                            <div class="price-box"> 
+                              <div class="goods-price">￥{{price}}</div>
+                            </div>   
+                        </div>
+                      
+                    </div><!--good-box end-->
                     <strong class="warning">{{warnmsg}}</strong>    
             </div>
             <!--封面设置-->
