@@ -257,13 +257,13 @@ type UserSetData struct {
 //########################################## 导航栏页面数据结构和模拟数据 #################################################
 
 type MyStatus struct {
-	Name       string `json:"name"`
-	Headimg    string `json:"headimg"`
-	Leave      int    `json:"leave"`
-	Credits    int    `json:"credits"`
-	MessageNUm int    `json:"messagenum"`
-	GoodsNum   int    `json:"goodsnum"`
-	Lasttime   string `json:"lasttime"`
+	Name       string    `json:"name"`
+	Headimg    string    `json:"headimg"`
+	Leave      int       `json:"leave"`
+	Credits    int       `json:"credits"`
+	MessageNUm int       `json:"messagenum"`
+	GoodsNum   int       `json:"goodsnum"`
+	Lasttime   time.Time `json:"lasttime"`
 }
 
 type EntranceBody struct {

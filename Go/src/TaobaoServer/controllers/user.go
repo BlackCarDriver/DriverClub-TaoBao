@@ -28,7 +28,7 @@ func (this *PersonalDataController) Post() {
 	//check that the data is complete
 	if api == "" || targetid == "" {
 		response.StatusCode = -2
-		response.Msg = fmt.Sprintf("Can't get api or goodsid from request data")
+		response.Msg = fmt.Sprintf("Can't get api or targetid from request data")
 		logs.Error(response.Msg)
 		goto tail
 	}

@@ -2,20 +2,41 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {  HomePageGoods , GoodsType,UploadAnyResult,UploadIImgResult,UploadGoods } from '../app/struct';
 import {  RequertResult, MyStatus,RequestProto,ReplyProto} from '../app/struct';
+import { last } from '@angular/router/src/utils/collection';
 @Injectable({
   providedIn: 'root'
 })
 
 export class ServerService {
 
-  //important config !!!
-  //线上运行配置
-  // private addr: string  = "https://blackcardriver.cn/taobaoserver"
-  //本地开发配置
+  //global variable 🍈
+  userid = "";
+  username = "";
+
+  //private addr: string  = "https://blackcardriver.cn/taobaoserver"
   private addr: string  = "/localserver"
+
   constructor( 
     private http: HttpClient
   ){ }
+ 
+ //====================================== public phsical function =================================
+//check whether the user is login, show the warm message if not 🍈
+ IsNotLogin(){
+  if(this.userid == ""){
+    alert("你好，该功能需要先登录呦!");
+    return true;
+  }
+  return false;
+ }
+
+ //get last section of persent url
+ LastSection(){
+  let rawStr = window.location.pathname;
+  let lastSlash = rawStr.lastIndexOf("/");
+  let result = rawStr.substring(lastSlash+1);
+  return result;
+ }
 
  //======================================= large  interface =============================================================
 
@@ -84,14 +105,6 @@ GetHomePageType(){
   var url = this.addr + "/homepage/goodstypemsg";
   return this.http.get<GoodsType[]>(url);
 }
-
- //=======================================  重做  =====================================================================
-
-
-
-
-
-
 
 // ================================== the following function reference to login or register ========================================================  
   

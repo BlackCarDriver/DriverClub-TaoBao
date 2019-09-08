@@ -165,7 +165,7 @@ export class MyStatus{
     credits : number ;
     messagenum:number ;    //precial
     goodsnum:number ;      //pricial
-    lasttime:string ;    
+    lasttime:any ;    
 }
 
 //注册账号发送数据

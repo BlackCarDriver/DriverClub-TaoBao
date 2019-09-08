@@ -35,8 +35,6 @@ const unsafe = -999;
 export class NavigComponent implements OnInit {
   data1 = new RegisterData();
   data2 = new LoginData();
-  // userid = "19070010";  //mock
-  userid = "20190008";  //mock
   usermsg = new MyStatus();
 
 constructor(
@@ -55,16 +53,17 @@ ngOnInit() {
 //hide the login box, and show the user message box and require user short data
 setstate() {
   //TODO:get real userid
-  if (this.userid != "") {
+  if (this.server.userid != "") {
     $("#singin").addClass("hidden");
     $("#userbox").removeClass("hidden");
     let postdata: RequestProto = {
       api: "naving",
-      targetid: this.userid,
+      targetid: this.server.userid,
     };
     this.server.GetCredentMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.usermsg = result.data;
+        this.server.username = this.usermsg.name;
       } else {
         console.log("Get naving data fail: " + result.msg);
       }
@@ -207,7 +206,7 @@ loging() {
     alert("请正确输入信息");
     return;
   }
-  this.server.Entrance(this.userid, "login", this.data2).subscribe(result => {
+  this.server.Entrance(this.server.userid, "login", this.data2).subscribe(result => {
     let loginresult = new RequertResult();
     loginresult = result
     if (loginresult.status > 0) {
@@ -228,7 +227,7 @@ confirm() {
   this.data1.password = $("#regpasw1").val();
   this.data1.email = $("#regemail").val();
 
-  this.server.Entrance(this.userid, "CheckRegister", this.data1).subscribe(result => {
+  this.server.Entrance(this.server.userid, "CheckRegister", this.data1).subscribe(result => {
     let checkResult = new RequertResult();
     checkResult = result;
     if (checkResult.status == enable) {
@@ -264,7 +263,7 @@ confirmcode() {
     alert("请输入正确的验证码！");
     return;
   }
-  this.server.Entrance(this.userid, "confirmcode", this.data1).subscribe(result => {
+  this.server.Entrance(this.server.userid, "confirmcode", this.data1).subscribe(result => {
     let confirmResult = new RequertResult();
     if (confirmResult.status == scuess) {
       alert("注册成功！");

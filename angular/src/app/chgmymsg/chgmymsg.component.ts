@@ -12,9 +12,9 @@ declare var $: any;
 })
 export class ChgmymsgComponent implements OnInit {
    headimgurl = "https://tb1.bdstatic.com/tb/r/image/2018-02-11/7ec7062f14307db6f1728bc108c3189c.jpeg";
-   userid = "20190006";
    data = new PersonalSetting();
   //绑定到表单的数据的默认值
+   userid="";
    username = "未设置";
    usersex = "BOY";
    sign = "Welcome to BlackCarDriver.cn";
@@ -30,6 +30,9 @@ export class ChgmymsgComponent implements OnInit {
   constructor(private server : ServerService) {}
 
   ngOnInit() {
+    if(this.server.IsNotLogin()){
+      window.history.back();
+    }
     //初始化组件事件
     $(document).ready(function(){
       //解决下拉菜单按钮不能下拉
@@ -72,18 +75,18 @@ export class ChgmymsgComponent implements OnInit {
     this.getmymsg();
   }
 
-  //get a user's base information   🍍
+  //get a user's base information   🍍🍈
   getmymsg(){
     let postdata : RequestProto = {
       api:"setdata",
-      userid:this.userid
+      userid:this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if(result.statuscode==0){
         this.data = result.data;
         this.headimgurl = this.data.headimg;
         this.username = this.data.name;
-        this.userid = this.data.id;
+        this.userid = this.server.userid;
         this.usersex = this.data.sex;
         this.sign = this.data.sign;
         this.grade = this.data.grade;
@@ -106,7 +109,7 @@ export class ChgmymsgComponent implements OnInit {
       }, error=>{console.log(error)});
   }
   
-  //update a profile image and get it url after saved by server 🍍
+  //update a profile image and get it url after saved by server 🍍🍈
   upload(){
     var imgfiles = $("#uploadheadimg").prop('files');
     //upload images
@@ -117,7 +120,7 @@ export class ChgmymsgComponent implements OnInit {
         //update database
         let postdata : RequestProto = {
           api:"MyHeadImage",
-          userid:this.userid,
+          userid:this.server.userid,
           data:result.data,
         };
         this.server.UpdateMessage(postdata).subscribe(result=>{
@@ -131,7 +134,7 @@ export class ChgmymsgComponent implements OnInit {
     }, error=>{console.log("UploadImg() fail: "+error)});
   }
 
-  //update user base message of profile  🍍
+  //update user base message of profile  🍍🍈
   ChangeBaseMsg(){
     this.data.name = $("#myname").val();
     this.data.colleage = $("mycolleage").val();
@@ -141,7 +144,7 @@ export class ChgmymsgComponent implements OnInit {
     this.data.grade = this.grade;
     let postdata : RequestProto = {
       api:"MyBaseMessage",
-      userid:this.userid,
+      userid:this.server.userid,
       data:this.data,
     };
     this.server.UpdateMessage(postdata).subscribe(result=>{
@@ -153,14 +156,14 @@ export class ChgmymsgComponent implements OnInit {
     }, error=>{console.log("UpdateMessage() fail: "+error);})
   }
   
-  //update user's connect message of profile  🍍
+  //update user's connect message of profile  🍍🍈
   ChangeContact(){
     this.data.emails = $("#myemail").val();
     this.data.qq = $("#myqq").val();
     this.data.phone = $("#myphone").val();
     let postdata : RequestProto = {
       api:"MyConnectMessage",
-      userid:this.userid,
+      userid:this.server.userid,
       data:this.data,
     };
     this.server.UpdateMessage(postdata).subscribe(result=>{

@@ -30,13 +30,6 @@ var MockTypeData = []GoodsType{
 	{"其他", []GoodsSubType{{"water", 111}, {"ruler", 123}, {"cap", 123}}},
 }
 
-//导航栏我的信息下拉框
-var MockMystatus = MyStatus{
-	"Blackcardriver",
-	"https://tb1.bdstatic.com/tb/电视剧.jpg",
-	122, 123213, 11, 33, "2019-22-22",
-}
-
 //个人主页,我的商品
 var MockGoodsShort = []GoodsShort{
 	{"http://www.mycodes.net/upload_files/article/162/1_20190319070316_nu1ok.jpg", "1234567", "1234567", "hahahahahhahahahaha", 123.123},

@@ -11,7 +11,6 @@ import {RequestProto} from '../struct';
 export class GoodspageComponent implements OnInit {
   goodsdt = new GoodsDetail();
   state = { collect: false, like: false };
-  userid = "19070010"    //当前浏览者的id
   goodid = "";
   collectbtnshow = " 收藏 ";
   likebtnshow = " 点赞 "
@@ -66,12 +65,12 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  //get goods statement 🍌🔥
+  //get goods statement 🍌🔥🍈
   getStatement() {
     let postdata : RequestProto = {
       api:"usergoodsstate",
       targetid:this.goodid,
-      userid:this.userid,
+      userid:this.server.userid,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if (result.statuscode != 0) {
@@ -88,11 +87,11 @@ export class GoodspageComponent implements OnInit {
 
   //########################## SmallUpdate() #############################################
 
-  //user like specified goods  🍍🔥
+  //user like specified goods  🍍🔥🍈
   likeGoods() { 
     let postdata : RequestProto = {
+      userid:this.server.userid,
       api:"likegoods",
-      userid:this.userid,
       targetid:this.goodid,
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
@@ -106,11 +105,14 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  //user add a goods to favorite 🍍🔥
+  //user add a goods to favorite 🍍🔥🍈
   collect() {
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let postdata : RequestProto = {
       api:"addcollect",
-      userid:this.userid,
+      userid:this.server.userid,
       targetid:this.goodid,
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
@@ -121,12 +123,19 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  // user send a message to owner 🍍🔥
+  // user send a message to owner 🍍🔥🍈
   sendMessage() {
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let message = $("#messagesender").val().toString();
+    if (message.length==0 || message.length>200){
+      alert("消息太长或为空");
+      return;
+    }
     let postdata : RequestProto = {
       api:"sendmessage",
-      userid:this.userid,
+      userid:this.server.userid,
       targetid:this.goodsdt.userid,
       data:{message:message},
     };
@@ -138,8 +147,11 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  //user comment on a goods 🍍🔥
+  //user comment on a goods 🍍🔥🍈
   sendComment() {
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let comment = $("#comment-area").val().toString();
     if (comment == "") {
       alert("内容不能为空");
@@ -147,7 +159,7 @@ export class GoodspageComponent implements OnInit {
     }
     let postdata : RequestProto = {
       api:"addcomment",
-      userid:this.userid,
+      userid:this.server.userid,
       targetid:this.goodid,
       data:{comment:comment},
     };

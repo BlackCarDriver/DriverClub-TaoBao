@@ -9,8 +9,7 @@ import { ServerService } from '../server.service';
 })
 export class Personal2Component implements OnInit {
   data = new UserMessage();
-  lookcerid = "19070010"; 
-  userid = "";          //user which is showing in the page
+  targetid = "";          //user which is showing in the page🍈
   btn_concern_sho = "关注";
   btn_like_sho = "点赞";
   is_concern = true;
@@ -18,17 +17,21 @@ export class Personal2Component implements OnInit {
   constructor(private server: ServerService) { }
 
   ngOnInit() {
-    let rawStr = window.location.pathname;
-    this.userid = rawStr.substring(11, 21);
-    this.getOtherMsg(this.userid);
+    this.targetid = this.server.LastSection();
+    if (this.targetid==""){
+      alert("获取目标用户ID错误");
+      window.history.back();
+      return;
+    }
+    this.getOtherMsg(this.targetid);
     this.getStatement();
   }
 
-  //get some other message need to show in the page 🍍🔥
+  //get some other message need to show in the page 🍍🔥🍈
   getOtherMsg(uid: string) {
     let postdata : RequestProto = {
       api:"othermsg",
-      targetid:this.userid
+      targetid:this.targetid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode==0){
@@ -40,12 +43,15 @@ export class Personal2Component implements OnInit {
     }, error=>{console.log("GetMymsg() fail" + error)});
   }
 
-  // add a like to a user profile  🍍🔥
+  // add a like to a user profile  🍍🔥🍈
   updateLike() {
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let postdata : RequestProto = {
       api:"likegoods",
-      userid:this.lookcerid,
-      targetid:this.userid, 
+      userid:this.server.userid,
+      targetid:this.targetid, 
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
@@ -58,13 +64,15 @@ export class Personal2Component implements OnInit {
     });
   }
 
-  //add a user into favorite 🍍🔥
+  //add a user into favorite 🍍🔥🍈
   addConcern() {
-    //todo: must login before following operation
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let postdata : RequestProto = {
       api:"addconcern",
-      userid:this.lookcerid,
-      targetid:this.userid,
+      userid:this.server.userid,
+      targetid:this.targetid,
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if(result.statuscode==0){alert("关注成功！");}
@@ -74,15 +82,20 @@ export class Personal2Component implements OnInit {
     });
   }
 
-  //send a private message to owner 🍍🔥
+  //send a private message to owner 🍍🔥🍈
   sendMessage() {
-    //todo: must login before following operation
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let message = $("#messagesender").val().toString();
-    //TODO: check the message
+    if (message=="" || message.length > 200){
+      alert("消息太长或为空");
+      return;
+    }
     let postdata : RequestProto = {
       api:"sendmessage",
-      userid:this.lookcerid,
-      targetid:this.userid,  
+      userid:this.server.userid,
+      targetid:this.targetid,  
       data:{message:message},
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
@@ -96,12 +109,12 @@ export class Personal2Component implements OnInit {
     });
   }
   
-  //get concern and like statement  🍉 
+  //get concern and like statement  🍉🍈
   getStatement(){
     let postdata : RequestProto = {
       api:"getuserstatement",
-      targetid:this.userid,
-      userid:this.lookcerid,
+      targetid:this.targetid,
+      userid:this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if(result.statuscode!=0){

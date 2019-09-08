@@ -10,10 +10,6 @@ declare let $: any;
 })
 
 export class PersonalComponent implements OnInit {
-  userid = "19070010";
-  // userid = "19070009";
-  key = "itisuserkey..";
-
   msg = new UserMessage(); //基本信息
   mygoodslist = GoodsShort[100];      //我的商品
   mycollectlist = GoodsShort[100];    //我收藏的商品
@@ -27,6 +23,9 @@ export class PersonalComponent implements OnInit {
   constructor(private server: ServerService) { }
 
   ngOnInit() {
+    if(this.server.IsNotLogin()){
+      window.history.back();
+    }
     // this.userid = this.server.Getusername();
     this.getmymsg();
     this.getmymgoods();
@@ -36,11 +35,11 @@ export class PersonalComponent implements OnInit {
     this.getcare();
   }
 
-  //get detail information 🍍
+  //get detail information 🍍🍈
   getmymsg() {
     let postdata: RequestProto = {
       api: "mymsg",
-      targetid: this.userid
+      targetid: this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) { this.msg = result.data; }
@@ -50,11 +49,11 @@ export class PersonalComponent implements OnInit {
     });
   }
 
-  //get the list of user i care and which acre me🍍
+  //get the list of user i care and which acre me🍍🍈
   getcare() {
     let postdata: RequestProto = {
       api: "mycare",
-      targetid: this.userid,
+      targetid: this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
@@ -66,11 +65,11 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log(error) });
   }
 
-  //get my goods information 🍍 🍉
+  //get my goods information 🍍 🍉🍈
   getmymgoods() {
     let postdata: RequestProto = {
       api: "mygoods",
-      targetid: this.userid,
+      targetid: this.server.userid,
       offset:0,
       limit:25,
     };
@@ -84,11 +83,11 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg" + error) });
   }
 
-  //get my collect goods information 🍍 🍉 
+  //get my collect goods information 🍍 🍉 🍈
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
-      targetid: this.userid,
+      targetid: this.server.userid,
       offset:0,
       limit:25,
     };
@@ -102,11 +101,11 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
 
-  // get my mail message  🍍 🍉
+  // get my mail message  🍍 🍉🍈
   getmymessage() {
     let postdata: RequestProto = {
       api: "message",
-      targetid: this.userid,
+      targetid: this.server.userid,
       offset:0,
       limit:25,
     };
@@ -120,11 +119,11 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg() fail:" + error); });
   }
 
-  //get users rank message  🍍 
+  //get users rank message  🍍🍈
   getrank() {
     let postdata: RequestProto = {
       api: "rank",
-      targetid: this.userid,
+      targetid: this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
