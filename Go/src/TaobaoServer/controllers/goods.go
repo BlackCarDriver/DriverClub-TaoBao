@@ -8,7 +8,7 @@ import (
 	"github.com/astaxie/beego/logs"
 )
 
-//return homepage goods list data 🍋🔥
+//return homepage goods list data 🍋🔥🍇
 func (this *HPGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -16,7 +16,6 @@ func (this *HPGoodsController) Post() {
 	var goodslist []md.Goods1
 	var err error
 	var goodstype, goodstag string
-	var goodsindex float64
 	var appendData map[string]interface{}
 	//parse postbody
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
@@ -25,25 +24,33 @@ func (this *HPGoodsController) Post() {
 		logs.Error(response.Msg)
 		goto tail
 	}
+	//check argument
+	if postBody.Limit <= 0 || postBody.Offset < 0 {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Unexpect limited or offset")
+		logs.Error(response.Msg)
+		goto tail
+	}
 	//get and chekc additional argument
 	appendData = postBody.Data.(map[string]interface{})
 	goodstype = appendData["goodstype"].(string)
 	goodstag = appendData["goodstag"].(string)
-	goodsindex = appendData["goodsindex"].(float64)
-	if goodstype == "" || goodstag == "" || int(goodsindex) == 0 {
+	if goodstype == "" || goodstag == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Unexpect argument")
 		logs.Error(response.Msg)
 		goto tail
 	}
 	//get data from database
-	if err = md.SelectHomePageGoods(goodstype, goodstag, int(goodsindex), &goodslist); err != nil {
+	if sum, err := md.SelectHomePageGoods(goodstype, goodstag, postBody.Offset, postBody.Limit, &goodslist); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Get goods list data fail: %v", err)
 		logs.Error(response.Msg)
 		goto tail
 	} else {
 		response.Data = goodslist
+		response.Rows = len(goodslist)
+		response.Sum = sum
 	}
 tail:
 	this.Data["json"] = response

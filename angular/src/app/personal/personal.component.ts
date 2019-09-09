@@ -65,7 +65,7 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log(error) });
   }
 
-  //get my goods information 🍍 🍉🍈
+  //get my goods information 🍍 🍉🍈 🍇
   getmymgoods() {
     let postdata: RequestProto = {
       api: "mygoods",
@@ -83,7 +83,7 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg" + error) });
   }
 
-  //get my collect goods information 🍍 🍉 🍈
+  //get my collect goods information 🍍 🍉 🍈 🍇
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
@@ -101,7 +101,7 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
 
-  // get my mail message  🍍 🍉🍈
+  // get my mail message  🍍 🍉🍈 🍇
   getmymessage() {
     let postdata: RequestProto = {
       api: "message",

@@ -12,6 +12,7 @@ export class ServerService {
   //global variable 🍈
   userid = "";
   username = "";
+  homepage_goods_perpage = 22;
 
   //private addr: string  = "https://blackcardriver.cn/taobaoserver"
   private addr: string  = "/localserver"
@@ -80,11 +81,13 @@ GetCredentMsg(request : RequestProto){
   return this.http.post<ReplyProto>(url, JSON.stringify(request), {withCredentials: true});
 }
 
-//get homepage goods list data 🍋🔥
-GetHomePageGoods(type:string, tag : string, index : number){
+//get homepage goods list data 🍋🔥🍇
+GetHomePageGoods(type:string, tag : string, page : number){
   let postdata : RequestProto = {
     api:"gethomepagegoods",
-    data:{goodstype: type, goodstag:tag, goodsindex:index},
+    offset: this.homepage_goods_perpage*(page-1),
+    limit:this.homepage_goods_perpage,
+    data:{goodstype: type, goodstag:tag},
   };
   var url = this.addr + "/homepage/goodsdata";
   return this.http.post<ReplyProto>(url, JSON.stringify(postdata));

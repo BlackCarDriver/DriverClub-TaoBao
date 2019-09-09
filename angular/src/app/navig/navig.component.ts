@@ -43,19 +43,15 @@ constructor(
 ) { }
 
 ngOnInit() {
-  this.initComp();
   this.setstate();
 }
 
 //########################## handlefunction ####################################
 
-//load userid from cookie if it is not empty then  🍋
+//load userid from cookie if it is not empty then  🍋🍇
 //hide the login box, and show the user message box and require user short data
 setstate() {
-  //TODO:get real userid
   if (this.server.userid != "") {
-    $("#singin").addClass("hidden");
-    $("#userbox").removeClass("hidden");
     let postdata: RequestProto = {
       api: "naving",
       targetid: this.server.userid,
@@ -64,13 +60,11 @@ setstate() {
       if (result.statuscode == 0) {
         this.usermsg = result.data;
         this.server.username = this.usermsg.name;
+        this.initComp();
       } else {
         console.log("Get naving data fail: " + result.msg);
       }
     }, error => { alert("GetMymsg fail:" + error) });
-  } else {
-    $("#userbox").addClass("hidden");
-    $("#singin").removeClass("hidden");
   }
 }
 
@@ -202,6 +196,9 @@ clearcookie() {
 loging() {
   this.data2.name = $("#loginname").val();
   this.data2.password = $("#loginpassword").val();
+  this.server.userid = this.data2.name;
+  this.setstate();
+  return;
   if (this.checkLogin() != true) {
     alert("请正确输入信息");
     return;

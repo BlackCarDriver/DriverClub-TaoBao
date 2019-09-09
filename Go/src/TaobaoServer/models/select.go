@@ -9,36 +9,47 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//get the goods list that need to show in homepage
-func SelectHomePageGoods(gstype string, tag string, skip int, g *[]Goods1) error {
+//get the goods list that need to show in homepage, return the total rows databse have 🍇
+func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]Goods1) (int, error) {
 	var err error
-	var num int64
-	skip = (skip - 1) * 40
+	totalrows := 0
 	o := orm.NewOrm()
-	if gstype == "all" { //不筛选
-		num, err = o.Raw(`select * from v_hpgoodslist offset ?`, skip).QueryRows(g)
-		goto tail
+	if gstype == "all" { // search all goods
+		if _, err = o.Raw(`select * from v_hpgoodslist offset ? limit ?`, offset, limit).QueryRows(g); err != nil {
+			logs.Error(err)
+			return 0, err
+		} else if err = o.Raw(`select count(*) from v_hpgoodslist`).QueryRow(&totalrows); err != nil {
+			logs.Error("Can't not count total rows number: %v", err)
+		}
+		return totalrows, err
 	}
-	if gstype == "like" { //模糊搜索
+	if gstype == "like" { //search by input keyword
 		tag = fmt.Sprintf("%%%s%%", tag)
-		num, err = o.Raw(`select distinct * from v_hpgoodslist where tag like ? or name like ? or title like ?`, tag, tag, tag).QueryRows(g)
-		goto tail
+		if _, err = o.Raw(`select distinct * from v_hpgoodslist where tag like ? or name like ? or title like ? offset ? limit ?`, tag, tag, tag, offset, limit).QueryRows(g); err != nil {
+			logs.Error(err)
+			return 0, err
+		} else if err = o.Raw(`select distinct count(*) from v_hpgoodslist where tag like ? or name like ? or title like ?`, tag, tag, tag).QueryRow(&totalrows); err != nil {
+			logs.Error("Can't not count total rows number: %v", err)
+		}
+		return totalrows, err
 	}
-	if tag == "全部" { //筛选类型
-		num, err = o.Raw(`select * from v_hpgoodslist where type=? offset ?`, gstype, skip).QueryRows(g)
-		goto tail
+	if tag == "全部" { //search by given type
+		if _, err = o.Raw(`select * from v_hpgoodslist where type=? offset ? limit ?`, gstype, offset, limit).QueryRows(g); err != nil {
+			logs.Error(err)
+			return 0, err
+		} else if err = o.Raw(`select count(*) from v_hpgoodslist where type=?`, gstype).QueryRow(&totalrows); err != nil {
+			logs.Error("Can't not count total rows number: %v", err)
+		}
+		return totalrows, err
 	}
-	//筛选标签
-	num, err = o.Raw(`select * from v_hpgoodslist where type=? and tag=? offset ?`, gstype, tag, skip).QueryRows(g)
-tail:
-	if err != nil {
+	//search by given type and tag
+	if _, err = o.Raw(`select * from v_hpgoodslist where type=? and tag=? offset ? limit ?`, gstype, tag, offset, limit).QueryRows(g); err != nil {
 		logs.Error(err)
-		return err
+		return 0, err
+	} else if o.Raw(`select count(*) from v_hpgoodslist where type=? and tag=?`, gstype, tag).QueryRow(&totalrows); err != nil {
+		logs.Error("Can't not count total rows number: %v", err)
 	}
-	if num == 0 {
-		logs.Warn("Search a goods and no result, type: %s, tag: %s", gstype, tag)
-	}
-	return nil
+	return totalrows, err
 }
 
 //get all type name and tag

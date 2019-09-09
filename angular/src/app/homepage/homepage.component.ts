@@ -16,11 +16,11 @@ declare let $ : any;
 })
 
 export class HomepageComponent implements OnInit {
-  //商品主页封面列表
+  //mainly data, goodslist
   goodsarray = HomePageGoods[100];  
-  //商品类型
+  //goods type and tag list
    typearray = GoodsType[10];
-   //商品类型对应的标签
+   //different tag in specified goods type
    studytype = GoodSubType[100];
    sporttype = GoodSubType[100];
    daliytype = GoodSubType[100];
@@ -28,14 +28,19 @@ export class HomepageComponent implements OnInit {
    diytype = GoodSubType[100];
    virtualtype = GoodSubType[100];
    othertype = GoodSubType[100];
-   //当前浏览的商品类型和标签
+   //the tag, type and page user is looking 
    lookingtype = "all"; 
    lookingtag="all";
    lookingpage=1;
+   offsetpage=0;
+   //total page can be shown in present type and tag 🍇
+   totalpage = 0; 
+   pageboxarray = new Array;
+
   constructor(
     private server : ServerService
   ) { }
-
+ 
   ngOnInit() {
     $(".goods-area").mouseenter(function(){ $('.collapse').collapse('hide');})
     this.GetGoods();
@@ -43,12 +48,21 @@ export class HomepageComponent implements OnInit {
     this.set_mainbody_height();
   }
 
-  //get a page of goods list data 🍋🔥
+  //get a page of goods list data 🍋🔥🍇
+  //note taht request protocal is write in server.service.ts
   GetGoods(){
     this.server.GetHomePageGoods(this.lookingtype, this.lookingtag, this.lookingpage).subscribe(
       result=>{
         if(result.statuscode==0){
+          if (result.rows==0){
+            alert("没有找到数据");
+          }
           this.goodsarray = result.data;
+          this.totalpage = Math.ceil(result.sum / this.server.homepage_goods_perpage);
+          this.pageboxarray = new Array;
+          for (let i=1;i<=this.totalpage && i<=5 ;i++){
+            this.pageboxarray.push(i);
+          }
         }else{
           alert("获取数据失败："+result.msg);
         }
@@ -92,6 +106,46 @@ export class HomepageComponent implements OnInit {
           this.virtualtype  = this.typearray[5].list;
           this.othertype  = this.typearray[6].list;  
       })
+  }
+
+  //================= change page function =====================
+  //display previous page
+  prepage(){ 
+    if(this.lookingpage==0) return;
+    this.lookingpage--;
+    this.GetGoods();
+    this.adjustPage()
+  }
+  //display next page
+  nextpage(){
+    if(this.lookingpage+1>this.totalpage) return;
+    this.lookingpage++;
+    this.GetGoods();
+    this.adjustPage()
+  }
+  //display specified page
+  gotopage(topage?:number){
+    if(topage==undefined){
+      let pageVal = $("#whichpage").val();
+      if(pageVal==undefined) return;
+      if(pageVal<=0 || pageVal>this.totalpage) return;
+      this.lookingpage = pageVal;
+      this.GetGoods();
+      this.adjustPage()
+    }else{
+      if(topage<=0 || topage>this.totalpage) return;
+      this.lookingpage = topage;
+      this.GetGoods();
+      this.adjustPage()
+    }
+  }
+
+  //adject the pagebox display
+  adjustPage(){
+    if(this.totalpage<=5) return;
+    if(this.lookingpage>3){
+      this.offsetpage = this.lookingpage - 3;
+    }
   }
 
 set_mainbody_height(){
