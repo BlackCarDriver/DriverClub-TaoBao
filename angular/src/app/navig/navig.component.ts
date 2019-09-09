@@ -36,7 +36,7 @@ export class NavigComponent implements OnInit {
   data1 = new RegisterData();
   data2 = new LoginData();
   usermsg = new MyStatus();
-
+  tuserid = "";
 constructor(
   // private localdata: LocalStorage,
   private server: ServerService
@@ -196,7 +196,8 @@ clearcookie() {
 loging() {
   this.data2.name = $("#loginname").val();
   this.data2.password = $("#loginpassword").val();
-  this.server.userid = this.data2.name;
+  this.tuserid = this.data2.name;
+  this.server.userid = this.tuserid;
   this.setstate();
   return;
   if (this.checkLogin() != true) {

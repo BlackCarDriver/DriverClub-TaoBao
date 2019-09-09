@@ -20,8 +20,8 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a routerLink="/about">关于本站</a></li>
-        <li *ngIf="server.userid==''"><a id="singin" (click)="showsinginbox()">登录/注册</a></li>
-        <li *ngIf="server.userid!=''" class="dropdown" id="userbox">
+        <li *ngIf="tuserid==''"><a id="singin" (click)="showsinginbox()">登录/注册</a></li>
+        <li *ngIf="tuserid!=''" class="dropdown" id="userbox">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button"
             aria-haspopup="true" aria-expanded="false" id="user-toggle">
             <span class="glyphicon glyphicon-user"></span> {{usermsg.name}}<span
