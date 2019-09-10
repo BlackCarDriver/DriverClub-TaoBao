@@ -82,7 +82,7 @@ func (this *PersonalDataController) Post() {
 		}
 		goto tail
 
-	case "message": //my receive messages 🍉
+	case "message": //my receive messages 🍉🍏
 		var data []md.MyMessage
 		if err = md.GetMyMessage(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -9
@@ -156,8 +156,15 @@ func (this *PersonalDataController) Post() {
 		//TODO: make a function 🍉
 		goto tail
 
-	case "setdata": //??
-		response.Data = md.MockUserSetData
+	case "settingdata": //user message in the changemsg page 🍏
+		data := md.UserSetData{}
+		if err = md.GetSettingMsg(targetid, &data); err != nil {
+			response.StatusCode = -10
+			response.Msg = fmt.Sprintf("获取数据失败：%v", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
 		goto tail
 
 	default:
@@ -216,6 +223,7 @@ func (this *UpdataMsgController) Post() {
 			logs.Error(response.Msg)
 			goto tail
 		}
+		logs.Info(postData)
 		if err = md.UpdateUserBaseMsg(postData); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Update message fail: %v", err)
@@ -259,7 +267,7 @@ tail:
 	this.ServeJSON()
 }
 
-//登录，注册，更换验证码， 获取验证码
+//登录，注册，更换验证码， 获取验证码 🍏
 func (this *EntranceController) Post() {
 	postBody := md.EntranceBody{}
 	var err error
@@ -280,6 +288,6 @@ func (this *EntranceController) Post() {
 	case "confirmcode":
 		fmt.Println("confirmcode...")
 	}
-	this.Data["json"] = &md.MockRequireResult
+	this.Data["json"] = md.RequireResult{Status: 1, Describe: "成功！"}
 	this.ServeJSON()
 }

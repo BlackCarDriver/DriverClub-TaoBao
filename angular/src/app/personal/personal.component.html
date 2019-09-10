@@ -93,6 +93,11 @@
                                         </div>
 
                                         <div class="row msg-box">
+                                            <div class="col-md-2 msg">年级</div>
+                                            <div class="col-md-10 describ">{{msg.grade}}</div>
+                                        </div>
+
+                                        <div class="row msg-box">
                                             <div class="col-md-2 msg">学院</div>
                                             <div class="col-md-10 describ">{{msg.colleage}}</div>
                                         </div>
@@ -152,31 +157,76 @@
                             <!--我的商品 tag box-->
                             <div class="tab-pane" id="panel-mygoods">
                                 <ul class="good-list">
-                                    <li class="goods-box" [routerLink]="['/goodsdetail', rows.id]" *ngFor="let rows of mygoodslist">
-                                        <img src={{rows.headimg}} alt="" class="goods-img">
-                                        <div class="goods-dsc">
-                                            <a class="goods-dsc">{{rows.title}}}</a>
-                                        </div>
-                                        <div class="price"><p><span>￥</span>{{rows.price}}</p></div>
+                                    <li class="goods-box" *ngFor="let rows of mygoodslist">
+                                        <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
+                                        <img src={{rows.headimg}}>
+                                        <div class="gname"
+                                            [routerLink]="['/goodsdetail',
+                                            rows.id]">{{rows.name}}</div>
                                     </li>
                                     <div class="nodata" *ngIf="show_no_goods"><p>暂时未有上传的商品</p></div>
                                 </ul>
+                                <!--分页框-->
+                                <div class="row textcenter" *ngIf="mg_sumpage>1">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            <li *ngIf="mg_nowat>1"
+                                                (click)="MgPrepage()">
+                                                <a aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li *ngFor="let row of mg_array"
+                                                (click)="setMgPagebox(row)"
+                                                [ngClass]="{'active':
+                                                row+mg_offset==mg_nowat}"><a>{{row
+                                                    + mg_offset}}</a></li>
+                                            <li *ngIf="mg_nowat<mg_sumpage"
+                                                (click)="MgNextpage()">
+                                                <a aria-label="Next"><span
+                                                        aria-hidden="true">&raquo;</span></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
 
                             <!--我的收藏 tag box-->
                             <div class="tab-pane" id="panel-shouchang">
                                 <ul class="good-list">
-                                    <li class="goods-box"
-                                        [routerLink]="['/goodsdetail', rows.id]" *ngFor="let rows of mycollectlist">
-                                        <img src={{rows.headimg}} alt=""
-                                            class="goods-img">
-                                        <div class="goods-dsc">
-                                            <a class="goods-dsc">{{rows.title}}}</a>
+                                    <li class="goods-box goods-box2"  [routerLink]="['/goodsdetail', rows.id]" *ngFor="let rows of mycollectlist">
+                                        <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
+                                        <img src={{rows.headimg}} alt="" class="goods-img">
+                                        <div class="gname"  [routerLink]="['/goodsdetail', rows.id]">{{rows.name}}
+                                            <span class="price">￥{{rows.price}}</span> 
                                         </div>
-                                        <div class="price"><p><span>￥</span>{{rows.price}}</p></div>
+                                        <div class="titlebox">{{rows.title}}</div>
                                     </li>
                                 </ul>
                                 <div class="nodata" *ngIf="show_no_collect"><p>暂时未有收藏物品</p></div>
+                                <!--分页框-->
+                                <div class="row textcenter" *ngIf="mc_sumpage>1">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination">
+                                            <li *ngIf="mc_nowat>1"
+                                                (click)="McgPrepage()">
+                                                <a aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            </li>
+                                            <li *ngFor="let row of mc_array"
+                                                (click)="setMcPagebox(row)"
+                                                [ngClass]="{'active':
+                                                row+mc_offset==mc_nowat}"><a>{{row
+                                                    + mc_offset}}</a></li>
+                                            <li *ngIf="mc_nowat<mc_sumpage"
+                                                (click)="McgNextpage()">
+                                                <a aria-label="Next"><span
+                                                        aria-hidden="true">&raquo;</span></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
 
                             <!--我的消息 tag box-->
@@ -189,48 +239,44 @@
                                     </div>
                                     <div class="col-sm-10 msg-text-box">
                                         <div class="row msg-head">
-                                            <div class="col-sm-6 heading">
-                                                <p>{{rows.id}}</p> <!--暂时没有标题-->
+                                            <div class="col-sm-3">
+                                                <p [routerLink]="['/personals',rows.id ]"> 
+                                                    <span class="glyphicon glyphicon-user"></span>
+                                                    {{rows.name}}
+                                                </p>
                                             </div>
                                             <div class="col-sm-3">
-                                                <p [routerLink]="['/personals',
-                                                    rows.id ]"> <span
-                                                        class="glyphicon
-                                                        glyphicon-user"></span>{{rows.name}}</p>
-                                            </div>
-                                            <div class="col-sm-3">
-                                                <p><span class="glyphicon
-                                                        glyphicon-time"></span>{{rows.time | date:'yyyy-MM-dd hh:mm'}}</p>
+                                                <p><span class="glyphicon glyphicon-time"></span>
+                                                    {{rows.time | date:'yyyy-MM-dd hh:mm'}}
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="row msg-body">
                                             <p>{{rows.content}}</p>
                                         </div>
                                     </div>
+                                    <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
                                 </div>
                                 <div class="nodata" *ngIf="show_no_message"><p>暂时未有消息</p></div>
-
-
-
                                 <!--分页框-->
-                                <div class="row textcenter">
+                                <div class="row textcenter" *ngIf="msg_sumpage>1">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
-                                            <li>
-                                                <a href="#"
-                                                    aria-label="Previous">
+                                            <li *ngIf="msg_nowat>1"
+                                                (click)="MsgPrepage()">
+                                                <a aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             </li>
-                                            <li><a href="#">1</a></li>
-                                            <li><a href="#">2</a></li>
-                                            <li><a href="#">3</a></li>
-                                            <li><a href="#">4</a></li>
-                                            <li><a href="#">5</a></li>
-                                            <li>
-                                                <a href="#" aria-label="Next">
-                                                    <span aria-hidden="true">&raquo;</span>
-                                                </a>
+                                            <li *ngFor="let row of msg_array"
+                                                (click)="setMsgPagebox(row)"
+                                                [ngClass]="{'active':
+                                                row+msg_offset==msg_nowat}"><a>{{row
+                                                    + msg_offset}}</a></li>
+                                            <li *ngIf="msg_nowat<msg_sumpage"
+                                                (click)="MsgNextpage()">
+                                                <a aria-label="Next"><span
+                                                        aria-hidden="true">&raquo;</span></a>
                                             </li>
                                         </ul>
                                     </nav>

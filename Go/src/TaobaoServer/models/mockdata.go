@@ -1,7 +1,7 @@
 package models
 
+/*
 import "time"
-
 //商品主页数据
 var MockGoodsMessage = GoodsDetail{
 	Headimg: "https://tb1.bdstatic.com/tb/r/image/2019-05-22/a5e3c00f38b64d9ff86b2015746e5584.jpg",
@@ -74,7 +74,7 @@ var MockUserSetData = UserSetData{
 	"it is sign used in update my message setting page....", "2019", "computer", "hahahahah",
 	"123123123.@122.comn", "123123213", "12354555666",
 }
-
 var MockRequireResult = RequireResult{
 	1, "成功！",
 }
+*/

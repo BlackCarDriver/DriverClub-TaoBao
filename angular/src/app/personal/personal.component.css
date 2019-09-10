@@ -83,49 +83,65 @@
 /* =================================商品展示样式2 */
 
 .goods-box {
-    width: 150px;
-    height: 200px;
+    width: 180px;
+    height: 220px;
     float: left;
     margin: 0px 30px 30px 0px;
     overflow: hidden;
-    background-color: #f1ebeb;
+    border-radius: 3px;
+    position: relative;
 }
-
-.goods-img {
+.goods-box2{
+    height: unset;
+}
+.goods-box img {
     border: #eee 1px solid;
-    width: 150px;
-    height: 150px;
+    width: 180px;
+    height: 180px;
 }
-
-.goods-dsc {
-    height: 23px;
+.goods-box .gname {
     overflow: hidden;
     text-overflow: ellipsis;
-    width: 140px;
-    margin: 2px;
-}
-
-.goods-dsc a {
-    color: #177ad1;
-    text-decoration: none;
     white-space: nowrap;
-    cursor: auto;
+    font-size: 1.2em;
+    height: 1.2em;
+    color: rgb(99, 130, 130);
+    cursor: pointer;
+    margin: 6px;
 }
-
-.goods-box .price {
-    color: #428bca;
-    font-weight: 700;
-    font-family: verdana, arial;
-    text-align: center;
+ .rmlable {
+    position: absolute;
+    right: 0px;
+    font-size: 0.8em; 
+    opacity: 0.3;  
+    padding: 6px 10px;   
+    margin: -1px;
+    cursor: pointer;
 }
-
-.goods-box .price p {
-    margin: 5px 5px;
+ .rmlable:hover {
+    opacity: 1;  
 }
-
+.goods-box .price{
+    color: #f06060;
+    font-size: 0.7em;
+    font-weight: 600;
+    background-color: antiquewhite;
+}
+.goods-box .titlebox{
+    height: 2em;
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0em 0.4em;
+}
+.goods-box .titlebox p{
+    text-overflow: ellipsis;
+}
 /* ===========================================我的消息展示样式 */
 
 .mymsg {
+    position: relative;
     height: 80px;
     margin: 20px 20px 10px;
     font-size: 14px;
@@ -149,8 +165,9 @@
 }
 
 .msg-text-box .msg-head {
-    height: 30px;
+    height: 20px;
     overflow: hidden;
+    background-color: #e6e6e647;
 }
 
 .msg-text-box .heading {
@@ -179,28 +196,24 @@
 }
 
 .msg-head .col-sm-3 p {
-    margin: 2px;
-    line-height: 30px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
 .msg-text-box .msg-body {
-    color: #555;
+    color: #a999b9;
     height: 38px;
-    padding: 0px 15px;
-    overflow: hidden;
+    padding: 0px 10px;
     margin-top: 4px;
+    overflow: hidden;
 }
 
-.msg-body p {
-    line-height: 19px;
-}
 
 /* ===================== 临时样式 */
 
 .textcenter {
     text-align: center;
+    clear: both;
 }
 
 /* ======================公用样式 */

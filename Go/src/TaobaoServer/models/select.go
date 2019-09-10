@@ -117,12 +117,13 @@ func GetUserData(uid string, u *UserMessage) error {
 	return nil
 }
 
-//get my messages 🍊 🍉
+//get my messages 🍊 🍉🍏
 func GetMyMessage(uid string, c *[]MyMessage, offset, limit int) error {
 	if uid == "" {
 		return errors.New("Receive a null uid")
 	}
 	if offset < 0 || limit <= 0 {
+		logs.Error("Unsuppose offset or limit argument, offset=%d, limit=%d", offset, limit)
 		return errors.New("Unsuppose offset or limit argument")
 	}
 	o := orm.NewOrm()
@@ -269,6 +270,22 @@ func GetUserStatement(uid1, uid2 string) (int, error) {
 	return result, nil
 }
 
+//get user's message to that needed to display in changmsg page 🍏
+func GetSettingMsg(uid string, c *UserSetData) error {
+	var err error
+	if uid == "" {
+		err = errors.New("Receive a null uid")
+		logs.Error(err)
+	}
+	o := orm.NewOrm()
+	err = o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&c)
+	if err != nil {
+		logs.Error(err)
+		return err
+	}
+	return nil
+}
+
 //#################### count ###########################
 
 //get the user's number who car me
@@ -286,7 +303,7 @@ func CountCareMe(myid string) (int, error) {
 	return userNumber, nil
 }
 
-//get the user's number i am cared 🍊
+//get the user's number i am cared 🍏
 func CountIcare(myid string) (int, error) {
 	o := orm.NewOrm()
 	userNumber := 0
@@ -298,7 +315,7 @@ func CountIcare(myid string) (int, error) {
 	return userNumber, nil
 }
 
-//get the total number of user 🍊
+//get the total number of user 🍏
 func CountUser() int {
 	o := orm.NewOrm()
 	userNumber := 0
@@ -350,7 +367,7 @@ func CountMyCollect(uid string) int {
 func CountMyAllMsg(uid string) int {
 	o := orm.NewOrm()
 	userNumber := 0
-	err := o.Raw("select count(*) from t_message where senderid = ?", uid).QueryRow(&userNumber)
+	err := o.Raw("select count(*) from v_mymessage where id = ?", uid).QueryRow(&userNumber)
 	if err != nil {
 		logs.Error(err)
 		return 0

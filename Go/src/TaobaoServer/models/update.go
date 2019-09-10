@@ -7,40 +7,39 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//更新用户基本信息
-//需要确保ID是用户自己的ID
+//update user base message 🍊
 func UpdateUserBaseMsg(d UpdeteMsg) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw("update t_user set name=?,sex=?,sign=?,dorm=?,major=?,grade=? where id=?",
 		d.Name, d.Sex, d.Sign, d.Dorm, d.Major, d.Grade, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		logs.Error("user: %s, error:%v", d.Id, err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err = fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		logs.Error("user: %s, error:%v", d.Id, err)
 		return err
 	}
 	return nil
 }
 
-//更新联系方式
+//update user's connection message 🍊
 func UpdateUserConnectMsg(d UpdeteMsg) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw("update t_user set emails=?, phone=?, qq=? where id=?;",
 		d.Emails, d.Phone, d.Qq, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		logs.Error("user:%s, error:%v", d.Id, err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		logs.Error("user: %s, error:%v", d.Id, err)
 		return err
 	}
 	return nil

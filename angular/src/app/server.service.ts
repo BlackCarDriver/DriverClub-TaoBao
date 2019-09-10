@@ -10,11 +10,11 @@ import { last } from '@angular/router/src/utils/collection';
 export class ServerService {
 
   //global variable 🍈
-  userid = "";
+  userid = "19070010";
   username = "";
-  homepage_goods_perpage = 22;
+  homepage_goods_perpage = 18;
 
-  //private addr: string  = "https://blackcardriver.cn/taobaoserver"
+  // private addr: string  = "https://blackcardriver.cn/taobaoserver"
   private addr: string  = "/localserver"
 
   constructor( 

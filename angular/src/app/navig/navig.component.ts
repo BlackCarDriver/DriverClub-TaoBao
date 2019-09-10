@@ -43,6 +43,7 @@ constructor(
 ) { }
 
 ngOnInit() {
+  this.showStat(false);
   this.setstate();
 }
 
@@ -60,6 +61,7 @@ setstate() {
       if (result.statuscode == 0) {
         this.usermsg = result.data;
         this.server.username = this.usermsg.name;
+        this.showStat(true);
         this.initComp();
       } else {
         console.log("Get naving data fail: " + result.msg);
@@ -73,8 +75,7 @@ setstate() {
 
 //init the function of compoment
 initComp() {
-  // hide or show the short-msg when click the owner name
-  $("#user-toggle").click(function () {
+  $("#user-toggle").click(function(){
     $("#shortmsg").dropdown('toggle');
   })
 }
@@ -92,6 +93,15 @@ logout() {
   }
 }
 
+showStat(islogin:boolean){
+  if (islogin){
+    $('#singin').attr("style","display:none;");
+    $('#userbox').attr("style","display:normal;");
+  }else{
+    $('#singin').attr("style","display:normal;");
+    $('#userbox').attr("style","display:none;");
+  }
+}
 //######################## 辅助 #########################################
 
 //check the input box of login before send the data to server

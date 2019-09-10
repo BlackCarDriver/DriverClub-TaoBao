@@ -273,3 +273,11 @@ a:hover{
     font-size: 13px;
     text-align: center;
 }
+
+/* try do use it public style */
+
+/* small and center font */
+.g_scf p{
+    font-size: 0.8em;
+    text-align: center;
+}

@@ -21,8 +21,11 @@ export class GoodspageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let rawStr = window.location.pathname;
-    this.goodid = rawStr.substring(13, 23);
+    this.goodid = this.server.LastSection();
+    if(this.goodid==""){
+      alert("获取商品ID失败！");
+      window.history.back();
+    }
     this.getItPage(this.goodid);
     this.getComment(this.goodid);
     this.getStatement();
