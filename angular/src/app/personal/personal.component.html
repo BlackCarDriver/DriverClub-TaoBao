@@ -194,7 +194,7 @@
                             <!--我的收藏 tag box-->
                             <div class="tab-pane" id="panel-shouchang">
                                 <ul class="good-list">
-                                    <li class="goods-box goods-box2"  [routerLink]="['/goodsdetail', rows.id]" *ngFor="let rows of mycollectlist">
+                                    <li class="goods-box goods-box2" *ngFor="let rows of mycollectlist">
                                         <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}} alt="" class="goods-img">
                                         <div class="gname"  [routerLink]="['/goodsdetail', rows.id]">{{rows.name}}

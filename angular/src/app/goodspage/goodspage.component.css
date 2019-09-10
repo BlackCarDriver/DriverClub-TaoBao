@@ -126,6 +126,16 @@
 .comment-row {
     padding: 2px;
     margin: 6px 2px;
+    border-bottom: 1px solid #dee7f0;
+}
+.userhead{
+    width: 50px;
+    height: 50px;
+    border-radius: 40px;
+    color: white;
+    font-size: 2.4em;
+    text-align: center;
+    font-weight: 600;
 }
 
 .comment-row-header {
@@ -135,9 +145,8 @@
 .com-user {
     font-size: 1.2em;
     font-weight: bold;
-    color: blue;
     display: inline-block;
-    width: 300px;
+    width: 160px;
 }
 
 .com-time {
@@ -148,7 +157,6 @@
 
 .comment-text {
     min-height: 30px;
-    border-bottom: 1px solid #dee7f0;
     margin-bottom: 10px;
 }
 

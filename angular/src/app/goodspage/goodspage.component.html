@@ -62,16 +62,22 @@
 
 <div class="container main-body textpage">
   <div class="page-header">商品评论</div>
-  <div class="comment-row" *ngFor="let row of commentdata">
-    <div class="comment-row-header">
-      <div class="com-user">{{row.username}}</div><div class="com-time">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
+  <div class="comment-row row" *ngFor="let row of commentdata">
+    <div class="col-md-1">
+        <div class="userhead" style="text-transform: uppercase" [ngStyle]="{'background-color': randomColor(row.username)}">{{row.username[0]}}</div>
     </div>
-    <div class="comment-text">
-      {{row.comment}}
+    <div class="col-md-11">
+        <div class="comment-row-header">
+            <div class="com-user" [ngStyle]="{'color': randomColor(row.username)}">{{row.username}}</div><div class="com-time">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
+          </div>
+          <div class="comment-text">
+            {{row.comment}}
+          </div>
     </div>
+
   </div>
   <div class="comment-pan">
     <textarea class="com-input" id="comment-area"></textarea>
     <button class="com-send" (click)="sendComment()">发送评论</button>
   </div>
-</div>
+</div> 

@@ -177,8 +177,14 @@ export class GoodspageComponent implements OnInit {
       alert("error happen in sendComment():"+error);
     });
   }
-}
 
+  //return a random color 🍏
+  randomColor(name:string){
+    let array = ["#f9a0a0", "#ea7b7b", "7bd54d","#57d2b3","#2594c8","#b325c8","#c1578d", "#d52c43", "#d4e814"];
+    let random = name.length * 47;
+    return array[random%array.length];
+  }
+}
 
 //detail data response from server
 class GoodsDetail {
