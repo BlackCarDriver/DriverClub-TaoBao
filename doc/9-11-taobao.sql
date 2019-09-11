@@ -26,6 +26,8 @@ drop table public.t_concern;
 
 drop table public.t_goods;
 
+drop table public.t_goods_like;
+
 drop table public.t_message;
 
 drop table public.t_upload;
@@ -47,6 +49,9 @@ create table public.t_collect (
    constraint pk_t_collect primary key (userid, goodsid)
 );
 
+comment on table public.t_collect is
+'商品收藏';
+
 comment on column t_collect.userid is
 '用户id';
 
@@ -60,11 +65,19 @@ comment on column t_collect."time" is
 /* Table: t_comment                                             */
 /*==============================================================*/
 create table public.t_comment (
+   id                   SERIAL               not null,
    userid               character varying(50) not null,
    goodsid              character varying(50) not null,
    content              character varying(400) null default '',
-   "time"               timestamp            null
+   "time"               timestamp            null,
+   constraint PK_T_COMMENT primary key (id)
 );
+
+comment on table public.t_comment is
+'商品评论数据';
+
+comment on column t_comment.id is
+'评论id';
 
 comment on column t_comment.userid is
 '评论者id';
@@ -87,6 +100,9 @@ create table public.t_concern (
    "time"               timestamp            null,
    constraint pk_t_concern primary key (id1, id2)
 );
+
+comment on table public.t_concern is
+'用户关注用户数据';
 
 comment on column t_concern.id1 is
 '主用户id';
@@ -114,6 +130,9 @@ create table public.t_goods (
    state                integer              null default '1',
    constraint pk_t_goods primary key (id)
 );
+
+comment on table public.t_goods is
+'商品信息';
 
 comment on column t_goods.id is
 'id';
@@ -149,15 +168,41 @@ comment on column t_goods.state is
 '商品状态';
 
 /*==============================================================*/
+/* Table: t_goods_like                                          */
+/*==============================================================*/
+create table public.t_goods_like (
+   userid               character varying(50) not null,
+   goodsid              character varying(50) not null,
+   constraint PK_T_GOODS_LIKE primary key (userid, goodsid)
+);
+
+comment on table public.t_goods_like is
+'商品被用户点赞的数据';
+
+comment on column t_goods_like.userid is
+'点赞者id';
+
+comment on column t_goods_like.goodsid is
+'被点赞商品id';
+
+/*==============================================================*/
 /* Table: t_message                                             */
 /*==============================================================*/
 create table public.t_message (
+   id                   SERIAL               not null,
    senderid             character varying(50) null,
    receiverid           character varying(50) null,
    content              character varying(400) null default '',
    "time"               timestamp            null,
-   state                integer              null default '0'
+   state                integer              null default '0',
+   constraint PK_T_MESSAGE primary key (id)
 );
+
+comment on table public.t_message is
+'用户消息数据';
+
+comment on column t_message.id is
+'消息id';
 
 comment on column t_message.senderid is
 '发送者id';
@@ -183,6 +228,9 @@ create table public.t_upload (
    "time"               timestamp            null,
    constraint pk_t_upload primary key (userid, goodsid)
 );
+
+comment on table public.t_upload is
+'用户上传商品记录数据';
 
 comment on column t_upload.userid is
 '上传者id';
@@ -219,6 +267,9 @@ create table public.t_user (
    likes                integer              null default '0',
    constraint pk_t_user primary key (id)
 );
+
+comment on table public.t_user is
+'用户信息';
 
 comment on column t_user.id is
 '账号';
@@ -285,6 +336,9 @@ create table public.t_user_like (
    userid2              character varying(50) not null,
    constraint t_user_like_pkey primary key (userid1, userid2)
 );
+
+comment on table public.t_user_like is
+'用户点赞用户数据';
 
 comment on column t_user_like.userid1 is
 '收藏者id';
@@ -423,7 +477,9 @@ SELECT u.id AS uid,
 /* View: v_mymessage                                            */
 /*==============================================================*/
 create or replace view v_mymessage as
-SELECT u2.id,
+CREATE OR REPLACE VIEW public.v_mymessage AS
+ SELECT u2.id as uid,
+ 	m.id as mid,
     m."time",
     m.content,
     u1.name,
@@ -431,7 +487,7 @@ SELECT u2.id,
    FROM t_message m,
     t_user u1,
     t_user u2
-  WHERE (((m.senderid) = (u1.id)) AND ((m.receiverid) = (u2.id)) AND (m.state = 0));
+  WHERE m.senderid::text = u1.id::text AND m.receiverid::text = u2.id::text AND m.state = 0;
 
 /*==============================================================*/
 /* View: v_navingmsg                                            */
@@ -490,6 +546,16 @@ alter table t_concern
 
 alter table t_concern
    add constraint concern_fk2 foreign key (id2)
+      references t_user (id)
+      on delete cascade on update restrict;
+
+alter table t_goods_like
+   add constraint FK_T_GOODS__REFERENCE_T_GOODS foreign key (goodsid)
+      references t_goods (id)
+      on delete restrict on update restrict;
+
+alter table t_goods_like
+   add constraint FK_T_GOODS__T_GOODS_L_T_USER foreign key (userid)
       references t_user (id)
       on delete cascade on update restrict;
 

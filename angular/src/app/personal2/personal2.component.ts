@@ -43,19 +43,20 @@ export class Personal2Component implements OnInit {
     }, error=>{console.log("GetMymsg() fail" + error)});
   }
 
-  // add a like to a user profile  🍍🔥🍈
+  // add a like to a user profile  🍍🔥🍈🍑
   updateLike() {
     if(this.server.IsNotLogin()){
       return;
     }
     let postdata : RequestProto = {
-      api:"likegoods",
+      api:"likeuser",
       userid:this.server.userid,
       targetid:this.targetid, 
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
         alert("点赞成功！");
+        this.is_like =true;
       }else{
         alert("点赞失败："+result.msg);
       }
@@ -64,22 +65,33 @@ export class Personal2Component implements OnInit {
     });
   }
 
-  //add a user into favorite 🍍🔥🍈
+  //add or remove a user from concern list 🍍🔥🍈🍑
   addConcern() {
     if(this.server.IsNotLogin()){
       return;
     }
     let postdata : RequestProto = {
-      api:"addconcern",
       userid:this.server.userid,
       targetid:this.targetid,
     };
-    this.server.SmallUpdate(postdata).subscribe(result => {
-      if(result.statuscode==0){alert("关注成功！");}
-      else{alert("关注失败："+result.msg);}
-    },err=>{
-      alert("addConcern() fail: "+err);
-    });
+    if(this.is_concern==false){  //cancel concern
+      postdata.api = "addconcern";
+      this.server.SmallUpdate(postdata).subscribe(result => {
+        if(result.statuscode==0){alert("关注成功！"); this.is_concern = true;}
+        else{alert("关注失败："+result.msg);}
+      },err=>{
+        alert("addConcern fail: "+err);
+      });
+    }else{  //add into concern list
+      postdata.api = "uncollectuser";
+      this.server.DeleteMyData(postdata).subscribe(result => {
+        if(result.statuscode==0){alert("已取消关注！"); this.is_concern = false;}
+        else{alert("取消关注失败："+result.msg);}
+      },err=>{
+        alert("uncollectuser fail: "+err);
+      });
+    }
+   
   }
 
   //send a private message to owner 🍍🔥🍈
@@ -131,4 +143,5 @@ export class Personal2Component implements OnInit {
       console.log("getStatement() fail: "+error);
     });
   }
+
 }

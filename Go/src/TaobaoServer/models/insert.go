@@ -167,7 +167,7 @@ func AddGoodsLike(uid, gid string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_goods_like(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
 	if err != nil {
-		logs.Error(err)
+		logs.Error("Insert t_goods_like fail: %v, user:%s, goods:%s", err, uid, gid)
 		return err
 	}
 	effect, _ := result.RowsAffected()

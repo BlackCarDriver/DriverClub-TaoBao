@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/astaxie/beego/logs"
@@ -93,6 +94,37 @@ func UpdateGoodsVisit(gid string) error {
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
+		logs.Error(err)
+		return err
+	}
+	return nil
+}
+
+//set a goods state as -1 which mean it goods have been delete 🍑
+func UpdateMyGoodsState(uid, gid string) error {
+	if uid == "" || gid == "" {
+		err := errors.New("Got a null userid or goodsid")
+		logs.Error(err)
+		return err
+	}
+	o := orm.NewOrm()
+	//check whether this goods exit and the user is right
+	count := 0
+	if err := o.Raw(`select count(*) from v_mygoods where uid =? and id=?`, uid, gid).QueryRow(&count); err != nil {
+		logs.Error("Count row in v_mygoods fail: %v", err)
+		return err
+	} else if count == 0 {
+		err = fmt.Errorf("No row found in v_mygoods when want to delete: uid:%s gid:%s", uid, gid)
+		logs.Error(err)
+		return err
+	}
+	if res, err := o.Raw("update t_goods set state = -1 where id = ?", gid).Exec(); err != nil {
+		logs.Error(err)
+		return err
+	} else if af, err := res.RowsAffected(); err != nil {
+		logs.Warn(err)
+	} else if af == 0 {
+		err = fmt.Errorf("No rows affacted when user %s update goods %s state", uid, gid)
 		logs.Error(err)
 		return err
 	}

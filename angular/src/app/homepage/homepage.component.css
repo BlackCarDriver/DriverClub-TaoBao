@@ -12,6 +12,7 @@
     border: 3px solid #337ab7;
     height: 40px;
     font-size: 1.2em;
+    margin-right: 80px;
 }
 
 .search-btn {
@@ -23,6 +24,7 @@
     background: linear-gradient(120deg, #337ab7, #3193e8);
     border: 3px solid #337ab7;
     border-right: none;
+    margin-left: -80px;
 }
 
 .search-btn:hover {

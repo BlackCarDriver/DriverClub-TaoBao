@@ -147,7 +147,8 @@ type GoodsShort struct {
 }
 
 type MyMessage struct {
-	Id      string    `json:"id"`
+	Uid     string    `json:"uid"` //senderid
+	Mid     string    `json:"mid"`
 	Time    time.Time `json:"time"`
 	Name    string    `json:"name"`
 	Title   string    `json:"title"`

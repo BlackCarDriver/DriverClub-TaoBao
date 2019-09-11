@@ -14,7 +14,7 @@ export class ServerService {
   username = "";
   homepage_goods_perpage = 18;
 
-  // private addr: string  = "https://blackcardriver.cn/taobaoserver"
+  //private addr: string  = "https://blackcardriver.cn/taobaoserver"
   private addr: string  = "/localserver"
 
   constructor( 
@@ -79,6 +79,12 @@ GetMyMsg(request : RequestProto){
 GetCredentMsg(request : RequestProto){
   var url = this.addr + "/personal/data";
   return this.http.post<ReplyProto>(url, JSON.stringify(request), {withCredentials: true});
+}
+
+//delete something  🍑
+DeleteMyData(request:RequestProto){
+  var url = this.addr + "/deleteapi";
+  return this.http.post<ReplyProto>(url, JSON.stringify(request));
 }
 
 //get homepage goods list data 🍋🔥🍇

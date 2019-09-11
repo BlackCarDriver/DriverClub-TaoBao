@@ -158,7 +158,7 @@
                             <div class="tab-pane" id="panel-mygoods">
                                 <ul class="good-list">
                                     <li class="goods-box" *ngFor="let rows of mygoodslist">
-                                        <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
+                                        <span class="label label-default rmlable" (click)="deleteMyGoods(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}}>
                                         <div class="gname"
                                             [routerLink]="['/goodsdetail',
@@ -195,7 +195,7 @@
                             <div class="tab-pane" id="panel-shouchang">
                                 <ul class="good-list">
                                     <li class="goods-box goods-box2" *ngFor="let rows of mycollectlist">
-                                        <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
+                                        <span class="label label-default rmlable" (click)="cancelCollect(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}} alt="" class="goods-img">
                                         <div class="gname"  [routerLink]="['/goodsdetail', rows.id]">{{rows.name}}
                                             <span class="price">￥{{rows.price}}</span> 
@@ -255,7 +255,7 @@
                                             <p>{{rows.content}}</p>
                                         </div>
                                     </div>
-                                    <span class="label label-default rmlable"><span class="glyphicon glyphicon-trash"></span></span>
+                                    <span class="label label-default rmlable" (click)="deleteMessage(rows.mid)"><span class="glyphicon glyphicon-trash"></span></span>
                                 </div>
                                 <div class="nodata" *ngIf="show_no_message"><p>暂时未有消息</p></div>
                                 <!--分页框-->
@@ -294,28 +294,24 @@
             <div class="col-md-3 right_box hidden-xs hidden-sm">
                 <div class="right-box-son">
                     <div class="row">
-                        <div class="col-md-6 float-left-blue">关注我的: <span
-                                class="mun-ico">{{msg.becare}}</span></div>
+                        <div class="col-md-6 float-left-blue">关注我的: <span class="mun-ico">{{msg.becare}}</span></div>
                     </div>
                     <div class="row">
                         <ul class="headimg-list">
                             <li class="headimg" *ngFor="let rows of icare">
-                                <a routerLink="/personals"><img
-                                        src={{rows.headimg}}
-                                        title={{rows.name}}></a>
+                                <a [routerLink]="[ '/personals', rows.id ]"><img src={{rows.headimg}}  title={{rows.name}}></a>
                             </li>
                         </ul>
                     </div>
                 </div><!--box son 1 -->
                 <div class="right-box-son">
                     <div class="row">
-                        <div class="col-md-6 float-left-blue">我关注的: <span
-                                class="mun-ico">{{msg.care}}</span></div>
+                        <div class="col-md-6 float-left-blue">我关注的: <span class="mun-ico">{{msg.care}}</span></div>
                     </div>
                     <div class="row">
                         <ul class="headimg-list">
                             <li class="headimg" *ngFor="let rows of carei">
-                                <a href="#"><img src={{rows.headimg}}
+                                <a  [routerLink]="[ '/personals', rows.id ]"><img src={{rows.headimg}}
                                         title={{rows.name}}></a>
                             </li>
                         </ul>

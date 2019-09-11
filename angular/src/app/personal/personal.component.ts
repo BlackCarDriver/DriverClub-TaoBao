@@ -128,7 +128,7 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
 
-  // get my mail message  🍍 🍉🍈 🍇 🍏
+  // get my mail message  🍍 🍉🍈 🍇 🍏 🍑
   getmymessage() {
     let postdata: RequestProto = {
       api: "message",
@@ -167,6 +167,58 @@ export class PersonalComponent implements OnInit {
       }
     }, error => { console.log("GetMyMsg() fail: " + error) });
   }
+
+  //delete my upload goods 🍑
+  deleteMyGoods(gid : string){
+    let postdata: RequestProto = {
+      api: "deletemygoods",
+      targetid: gid,
+      userid:this.server.userid,
+    };
+    this.server.DeleteMyData(postdata).subscribe(result => {
+      if (result.statuscode == 0) {
+        alert("删除成功!");
+        this.getmymgoods();
+      } else {
+        alert("DeleteMyData() fail:" + result.msg);
+      }
+    }, error => { console.log(error) });
+  }
+
+  //cancel collect a goods 🍑
+  cancelCollect(gid:string){
+    let postdata: RequestProto = {
+      api: "uncollectgoods",
+      targetid: gid,
+      userid:this.server.userid,
+    };
+    this.server.DeleteMyData(postdata).subscribe(result => {
+      if (result.statuscode == 0) {
+        alert("取消收藏成功!");
+        this.getmycollect();
+      } else {
+        alert("cancelCollect() fail:" + result.msg);
+      }
+    }, error => { console.log(error) });
+  }
+
+    //cancel collect a goods 🍑
+    deleteMessage(mid:string){
+      let postdata: RequestProto = {
+        api: "deletemymessage",
+        targetid: mid,
+        userid:this.server.userid,
+      };
+      this.server.DeleteMyData(postdata).subscribe(result => {
+        if (result.statuscode == 0) {
+          alert("删除消息成功!");
+          this.getmymessage();
+        } else {
+          alert("deleteMessage() fail:" + result.msg);
+        }
+      }, error => { console.log(error) });
+    }
+//#################### reference to pagebox #######################
 
   //functions reference to my_message area pageboxx 🍏
   setMsgPagebox(topage:number){

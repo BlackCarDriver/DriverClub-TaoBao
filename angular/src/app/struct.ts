@@ -85,13 +85,15 @@ export class GoodsShort{
     price:number;
 }
 
-//个人主页里面的我的消息
+//user's receive message that show in personal page 🍑
 export class MyMessage{
     title:string;
     time:string;
-    name:string;      //(precial)
+    name:string; 
     headimg:string;
     content:string;
+    mid:string;
+    uid:string;
 }
 
 //我关注的和关注我的用户列表

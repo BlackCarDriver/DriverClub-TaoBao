@@ -67,6 +67,10 @@ type UpdateController struct {
 	beego.Controller
 }
 
+type DeleteController struct {
+	beego.Controller
+}
+
 //test interface 🍍
 func (this *TestController) Get() {
 	logs.Info("Soneont test the program by it iterface")
@@ -215,6 +219,74 @@ func (this *UpdateController) Post() {
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such api %s", api)
+		logs.Error(response.Msg)
+	}
+tail:
+	this.Data["json"] = response
+	this.ServeJSON()
+}
+
+//delete data such as collect's goods and user and receive message 🍑
+//DeleteMyData()
+func (this *DeleteController) Post() {
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	response.StatusCode = 0
+	var err error
+	var api, targetid, userid string
+	//parse request protocol
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
+		goto tail
+	}
+	api = postBody.Api
+	userid = postBody.UserId
+	targetid = postBody.TargetId
+	//check whether the data is complete
+	if api == "" || targetid == "" || userid == "" {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Can't get targetid, userid, or api from request data")
+		logs.Error(response.Msg)
+		goto tail
+	}
+	switch api {
+	case "deletemygoods": //user delete his/her goods, temply change the goods's state
+		if err = md.UpdateMyGoodsState(userid, targetid); err != nil {
+			response.StatusCode = -3
+			response.Msg = fmt.Sprintf("删除商品失败： %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+
+	case "deletemymessage": //delete user's message from database
+		if err = md.DeleteMyMessage(userid, targetid); err != nil {
+			response.StatusCode = -4
+			response.Msg = fmt.Sprintf("删除消息失败： %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+
+	case "uncollectgoods": //delete user collect's goods from database
+		if err = md.DeleteMyCollect(userid, targetid); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("取消收藏失败： %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+
+	case "uncollectuser": //delete the record of user concern another user
+		if err = md.DeleteMyConcern(userid, targetid); err != nil {
+			response.StatusCode = -3
+			response.Msg = fmt.Sprintf("取消关注失败： %v", err)
+			logs.Error(response.Msg)
+		}
+		goto tail
+
+	default:
+		response.StatusCode = -99
+		response.Msg = fmt.Sprintf("No such api: %s", api)
 		logs.Error(response.Msg)
 	}
 tail:

@@ -10,6 +10,7 @@ import (
 )
 
 //get the goods list that need to show in homepage, return the total rows databse have 🍇
+//note: v_goodslist only select goods with state = 1;
 func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]Goods1) (int, error) {
 	var err error
 	totalrows := 0
@@ -117,7 +118,7 @@ func GetUserData(uid string, u *UserMessage) error {
 	return nil
 }
 
-//get my messages 🍊 🍉🍏
+//get my messages 🍊 🍉🍏 🍑
 func GetMyMessage(uid string, c *[]MyMessage, offset, limit int) error {
 	if uid == "" {
 		return errors.New("Receive a null uid")
@@ -127,7 +128,7 @@ func GetMyMessage(uid string, c *[]MyMessage, offset, limit int) error {
 		return errors.New("Unsuppose offset or limit argument")
 	}
 	o := orm.NewOrm()
-	_, err := o.Raw(`select * from v_mymessage where id = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
+	_, err := o.Raw(`select * from v_mymessage where uid = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
 		logs.Error(err)
 		return err
@@ -153,6 +154,7 @@ func GetMyCollectGoods(uid string, c *[]GoodsShort, offset, limit int) error {
 }
 
 //get the goods list that i upload 🍉
+//note: v_mygoods only return the goods with sate = 1;
 func GetMyGoods(uid string, c *[]GoodsShort, offset, limit int) error {
 	if uid == "" {
 		return errors.New("Receive a null uid")
@@ -367,7 +369,7 @@ func CountMyCollect(uid string) int {
 func CountMyAllMsg(uid string) int {
 	o := orm.NewOrm()
 	userNumber := 0
-	err := o.Raw("select count(*) from v_mymessage where id = ?", uid).QueryRow(&userNumber)
+	err := o.Raw("select count(*) from v_mymessage where uid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
 		logs.Error(err)
 		return 0
