@@ -82,6 +82,7 @@ export class GoodspageComponent implements OnInit {
         this.state = result.data;
         if (this.state.collect) { $("#collect-btn").removeClass('btn-info'); this.collectbtnshow=" 已收藏 ";}
         if (this.state.like) { $("#like-btn").removeClass('btn-info'); this.likebtnshow=" 已点赞 "}
+        this.getStatement();
       }
     }, err => {
       alert("getStatement unresponse:" + err);
@@ -100,6 +101,7 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         alert("点赞成功!");
+        this.getStatement();
       } else {
         alert("点赞失败："+result.statuscode+result.msg);
       }

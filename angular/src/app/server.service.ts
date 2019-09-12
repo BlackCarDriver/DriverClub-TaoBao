@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {  HomePageGoods , GoodsType,UploadAnyResult,UploadIImgResult,UploadGoods } from '../app/struct';
-import {  RequertResult, MyStatus,RequestProto,ReplyProto} from '../app/struct';
-import { last } from '@angular/router/src/utils/collection';
+import {  GoodsType,UploadGoods } from '../app/struct';
+import {  RequertResult,RequestProto,ReplyProto} from '../app/struct';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,10 +11,10 @@ export class ServerService {
   //global variable 🍈
   userid = "19070010";
   username = "";
-  homepage_goods_perpage = 18;
+  homepage_goods_perpage = 10;
 
-  //private addr: string  = "https://blackcardriver.cn/taobaoserver"
-  private addr: string  = "/localserver"
+  private addr: string  = "https://blackcardriver.cn/taobaoserver"
+  // private addr: string  = "/localserver"
 
   constructor( 
     private http: HttpClient

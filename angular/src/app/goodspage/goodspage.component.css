@@ -1,103 +1,100 @@
 .main-body {
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
-    padding-top: 25px;
+    border: 1px solid var(--thin-bdc);
     border-radius: 4px;
+    padding: 10px;
     margin-bottom: 20px;
+    color: #6c6c6c;
 }
-
+.textpage {
+    border-left-width: 5px;
+    border-left-color: #5bc0de;
+}
 .gp-head {
-    background-color: #fff;
-    border: 1px solid #e6e6e6;
     border-radius: 4px;
     padding: 3px;
     margin-bottom: 20px;
 }
 
 .gp-img {
-    display: inline-block;
     padding: 0px;
     height: 300px;
+    border-right: 2px solid #eaeaea;
+}
+.gp-img img{
+    width: auto;
+    height: 100%;
 }
 
 .gp-mid {
     height: 300px;
     padding: 1em;
 }
-
 .gp-right {
-    height: 300px;
-    padding: 5px;
+    margin-top: 10px;
 }
-
+.ptlable{
+    padding: 10px 20px;
+    border-radius: 4px;
+}
 .gp-mid-name {
     font-size: 2em;
-    color: #797777;
     font-weight: bold;
 }
 .gp-mid-name::before {
     content: "名称： ";
-    font-size: 0.5em;
-    width: 100px;
+    font-size: 14px;
+}
+.gp-mid-price {
+    background-color: #ffe4e4;
+    color: #ff554d;
+    font-size: 2em;
+    font-weight: 600;
+}
+.gp-mid-price::before{
+    content: "转让价：￥ ";
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.gp-mid-desc {
+    background-color: #f1f2ff;
+    font-size: 1.2em;
+    color: #0e909b;
+    margin-top: 1em;
+}
+.gp-mid-desc::before{
+    content: "标题： ";
+    font-size: 12px;
+}
+.pg-mid-butrow {
+    position: relative;
+    top: 20px;
+    width: 100%;
+    text-align: center;
+}
+.pg-mid-butrow button {
+    margin: 0px 0.5em;
+    padding: 6px 10px;
 }
 .gp-mid-lbrow{
     height: 2em; 
-}
-.gp-mid-price {
-    padding: 10px 20px;
-    background-color: #ffebeb;
-    font-size: 2em;
-    color: #ff554d;
-    border-radius: 4px;
-}
-.gp-mid-price::before{
-    content: "转让价： ￥";
-    font-size: 0.5em;
-    width: 100px;
 }
 .label {
     margin: 5px;
     font-size: 0.9em;
 }
-
-.gp-mid-desc {
-    padding: 10px 20px;
-    background-color: #f1f2ff;
-    font-size: 1.3em;
-    color: #0e909b;
-    min-height: 3em;
-    margin-top: 1em;
-    border-radius: 4px;
-}
-.gp-mid-desc::before{
-    content: "标题： ";
-    font-size: 0.6;
-}
-.pg-mid-butrow {
-    margin: 6px;
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-}
-
-.pg-mid-butrow button {
-    margin-right: 1em;
-    padding: 6px 10px;
-}
-
 .nopadbtm {
     margin-bottom: 0px;
 }
-
-.textpage {
-    padding: 5px 20px;
-    border: 1px solid #eee;
-    border-left-width: 5px;
-    border-radius: 3px;
-    border-left-color: #5bc0de;
+.gmag{
+    display: inline;
+    font-size: 1.1em;
+    color: #2f8199;
+    font-weight: bold;
 }
-
+.list-group-item{
+    padding: 8px 10px; 
+}
 .send-text-box {
     width: 400px;
     height: 200px;
@@ -115,7 +112,14 @@
     height: 40px;
     width: 90px;
 }
-
+.showbox{
+    overflow: hidden;
+    border: 1px solid var(--thin-bdc);
+}
+.showbox img{
+    width: 100% !important;
+    height: auto !important;
+}
 .page-header {
     border-bottom: 1px solid #dbd4d4;
     margin: 10px;
@@ -127,15 +131,29 @@
     padding: 2px;
     margin: 6px 2px;
     border-bottom: 1px solid #dee7f0;
+    padding: 2px;
+}
+.cm-head{
+    height: 100%;
+    float: left;
+    width: 50px;
+}
+.msgbody{
+    padding-left: 60px;
+    margin-left: -50px;
+    float: left;
+    clear: right;
+    width: 100%;
 }
 .userhead{
     width: 50px;
     height: 50px;
-    border-radius: 40px;
+    border-radius: 50px;
     color: white;
-    font-size: 2.4em;
     text-align: center;
+    font-size: 35px;
     font-weight: 600;
+    line-height: 50px;
 }
 
 .comment-row-header {
@@ -146,18 +164,19 @@
     font-size: 1.2em;
     font-weight: bold;
     display: inline-block;
-    width: 160px;
+    width: 130px;
 }
 
 .com-time {
     margin: 2px;
     display: inline-block;
     color: #999494;
+    font-size: 0.9em;
 }
 
 .comment-text {
-    min-height: 30px;
-    margin-bottom: 10px;
+    min-height: 1em;
+    margin-bottom: 1em;
 }
 
 .comment-row td {
@@ -187,4 +206,18 @@
     border-radius: 3px;
     height: 30px;
     width: 90px;
+}
+
+/* 🍅 */
+@media screen and (max-width:600px) {
+    .gp-img img{
+        width: 100%;
+        max-height:100% ;
+    }
+    .showbox{
+        overflow: scroll;
+    }
+    .com-time {
+        font-size: 0.8em;
+    }
 }

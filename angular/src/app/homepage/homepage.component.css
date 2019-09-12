@@ -5,34 +5,41 @@
 }
 
 .search-input {
-    padding-left: 15px;
-    color: #333333;
-    width: 500px;
+    
     border-radius: 30px 0px 0px 30px;
-    border: 3px solid #337ab7;
-    height: 40px;
+    padding-left: 15px;
+    color: var(--ip-fk);
     font-size: 1.2em;
-    margin-right: 80px;
 }
 
-.search-btn {
+.search-input-c {
+    border: 3px solid var(--tmcl-1);
+    margin-right: 80px;
+    width: 500px;
+    height: 40px;
+}
+
+.search-bt {  
+    border-radius: 0px 30px 30px 0px;
+    color: var(--bt-fk);
+    background: var(--liner-bc);
+    font-size: 1.2em;
+}
+
+.search-bt:hover {
+    background: var(--tmcl-1);
+}
+
+.search-bt-c {
+    border: 3px solid var( --liner-bc);
+    margin-left: -80px;
     width: 80px;
     height: 40px;
-    border-radius: 0px 30px 30px 0px;
-    color: white;
-    font-size: 1.2em;
-    background: linear-gradient(120deg, #337ab7, #3193e8);
-    border: 3px solid #337ab7;
-    border-right: none;
-    margin-left: -80px;
-}
-
-.search-btn:hover {
-    background: #337ab7;
 }
 
 .main-body {
     min-height: 400px;
+    min-width: 380px;
 }
 
 .goodtype {
@@ -42,59 +49,55 @@
     background-color: rgb(245, 245, 245);
 }
 
-/* ####################### 商品分类标签 ################*/
+/*======== type and tag =======*/
 
-.typelink {
-    height: 30px;
-    line-height: 30px;
-    margin: 0px 25px 0px 25px;
-    font-size: 17px;
+.type-row {
+    
+    text-align: center;
+    margin-bottom: 10px;
+    padding: 0px 5px;
+}
+
+.typelink-c {
+    
+    line-height: 1.3em;
+    margin: 0px 15px;
+    font-size: 1.2em;
     font-weight: 600;
-}
-
-.typelink:hover {
-    border-bottom: 4px solid rgb(106, 146, 207);
-}
-
-.goodstype {
-    margin: 5px 15px;
-    line-height: 15px;
-    font-weight: 600;
-    font-size: 1em;
-    color: white;
-    font-size: 1.1em;
-}
-.goodstype:hover {
-    color: cornflowerblue;
+    cursor: pointer;
 }
 
 .well2 {
+    
     padding: 15px 20px;
-    background-color: #337ab7;
+    background-color: var(--tmcl-1);
 }
 
+.well2 span {
+    
+    font-size: 0.8em;
+    margin-left: 5px;
+}
 
-/*################ goods showing ################# */
+/*======== goods showing =======*/
 
 .goods-area {
     padding: 5px;
-    box-shadow: 0 0 20px rgba(50, 50, 50, 0.1);
-    background-color: #fff;
-    margin: 0px 7%;
+    margin: 0px auto;
+    width: 1170px;
 }
 
 .goodrow {
+    
     margin: 5px;
     text-align: center;
-    margin-bottom: 10px;
 }
 
+/*======== page box =======*/
 
-/* =============================================淘宝翻页框 */
+
 
 .pagebox {
-    display: block;
-    width: 100%;
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
@@ -102,7 +105,6 @@
 }
 
 .pagebox .wraper {
-    display: block;
     float: left;
     margin-left: 50%;
 }
@@ -115,54 +117,36 @@
 .pagebox .items {
     float: left;
 }
+
 .pagebox .num {
     font-size: 1.1em;
     font-weight: 600;
 }
+
 .pitem {
-    padding: 0px 10px;
     height: 35px;
     line-height: 35px;
     margin: 4px;
     border: solid 1px #dbdce1b0;
     cursor: pointer;
     display: inline-block;
-    color: #757677;
+    width: 2.2em;
+    color: var(--tmcl-2);
 }
 
-.pagebox .active, .pitem:hover{
-    background-color: #3e98e6;
+.pagebox .active, .pitem:hover {
+    background-color: var(--tmcl-2);
     color: white;
 }
-
-.m-page a:focus, .m-page a:hover {
-    color: #f40;
-}
-
-
-
 
 .next, .prev {
     width: 70px;
     font-weight: 400;
 }
 
-.total {
-    margin-left: 10px;
-    margin-right: 10px;
-    float: left;
-    line-height: 37px;
-}
-
-
-.text {
-    float: left;
-    line-height: 37px;
-}
-
 .pagebox .pbform {
     margin: 10px 2px 0px 20px;
-    float: left;  
+    float: left;
     height: 30px;
 }
 
@@ -171,8 +155,8 @@
     border: solid 1px #ededed;
     height: 25px;
     text-align: center;
-    margin: 0px 5px;   
-    color: #6c5d5d;  
+    margin: 0px 5px;
+    color: #6c5d5d;
     line-height: 25px;
 }
 
@@ -182,4 +166,182 @@
     padding: 3px 8px;
 }
 
-/* ==================================================== */
+/* ########################################################## */
+
+/* homepage goods show box */
+
+.goods-box {
+    
+    float: left;
+    margin: 10px 15px;
+    width: 200px;
+    border: 1px solid var(--thin-bdc);
+    font-size: 1.1em;
+    overflow: hidden;
+    height: 286px;
+}
+
+.goods-box:hover {
+    
+    box-shadow: 0px 0px 5px var(--thin-bdc);
+}
+
+.goods-box img {
+    height: 200px;
+    width: 200px;
+    padding: 0px;
+    border-radius: 0px;
+}
+
+.good-name {
+    
+    height: 1.3em;
+    margin: 0px 29px;
+    font-size: 1.2em;
+    color: #4b899b;
+}
+
+.good-title {
+    height: 21px;
+    margin: 0px 2px;
+    color: #337ab7;
+}
+
+.user-date {
+    width: 60%;
+    float: left;
+    font-size: 0.9em;
+    color: #999;
+    padding: 0px 0px 0px 20px;
+    line-height: 1em;
+    text-align: left;
+}
+
+.user-date p {
+    margin: 0 0 5px;
+}
+
+.price-box {
+    
+    height: 50px;
+    width: 40%;
+    float: left;
+    padding-right: 16px;
+}
+
+.goods-price {
+    
+    width: 80px;
+    background-color: #4eb1c6;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px 5px 0px 0px;
+    position: relative;
+    top: 10px;
+    padding: 4px;
+}
+
+/* ########################################################## */
+
+@media screen and (max-width:1200px) {
+    .goods-area {
+        width: 940px;
+    }
+}
+ 
+@media screen and (max-width:900px) {
+    .goods-area {
+        width: 720px;
+    }
+}
+@media screen and (max-width:700px) {
+    .goods-area {
+        width: 490px;
+    }
+}
+
+@media screen and (max-width:600px) {
+    .search-row {
+        height: 80px;
+    }
+    .search-input-c {
+        margin-right: 70px;
+        width: 280px;
+    }
+    .search-bt-c {
+        margin-left: -70px;
+        width: 70px;
+    }
+    .typelink-c {
+        font-size: 1em;
+        font-weight: 500;
+    }
+    .goods-area {
+        width: 100%;
+        padding: 0px 10px 0px 5px;
+    }
+    .goods-box {
+        --gbheight: 140px;
+        height: var(--gbheight);
+        width: 100%;
+        position: relative;
+        margin: 10px 0px;
+        overflow: hidden;
+        font-size: 1.1em;
+    }
+    .goods-box img {
+        height: var(--gbheight);
+        width: var(--gbheight);
+        float: left;
+    }
+    .good-name {
+        margin: 0;
+        position: absolute;
+        top: 4px;
+        left: 150px;
+    }
+    .good-title {
+        position: absolute;
+        top: 30px;
+        padding: 0px 5px 0px 150px;
+        width: 100%;
+        margin: 0px;
+        text-align: left;
+        height: 70px;
+        overflow: hidden;
+    }
+    .good-title p {
+        white-space: pre-line;
+        text-overflow: inherit; 
+    } 
+    .user-date {
+        position: absolute;
+        top: 100px;
+        left: 130px;
+    }
+    .goods-price {
+        border-radius: 5px 0px 0px 0px;
+        padding: 4px;
+        position: absolute;
+        top: 105px;
+        right: 0px;
+    }
+    .pagebox .wraper {
+        float: unset; 
+        margin:0px;
+    }
+    .pagebox .inner {
+        float: unset;
+        margin: 0px;
+    }
+    .pagebox .items{
+        float: unset;
+        padding: 0px;
+        font-size: 0.9em;
+    }
+    .pagebox .pbform{
+        margin: 10px auto;
+        float: unset;
+    }
+}

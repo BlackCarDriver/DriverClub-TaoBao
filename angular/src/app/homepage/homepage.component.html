@@ -3,121 +3,110 @@
   <div class="marbotn">
     <div class="row search-row">
       <form>
-        <input id="searchgoods" type="text" class="search-input"
+        <input id="searchgoods" type="text" class="search-input search-input-c"
           placeholder="搜索商品...">
-        <button class="search-btn" type="button" (click)="SearchGoods()">
+        <button class="search-bt search-bt-c" type="button" (click)="SearchGoods()">
           <span class="glyphicon glyphicon-search"></span>
         </button>
       </form>
     </div>
 
-    <div class="row"><!--type of goods-->
-      <div class="goodtype">
-        <a class="typelink" data-toggle="collapse" (click)="collapse('#study')">
+    <div class="row type-row"><!--type of goods-->
+        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#study')">
           学习用品
         </a>
-        <a class="typelink" data-toggle="collapse" (click)="collapse('#sport')">
+        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#sport')">
           体育用品
         </a>
-        <a class="typelink" data-toggle="collapse" (click)="collapse('#daliy')">
+        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#daliy')">
           生活用品
         </a>
-        <a class="typelink" data-toggle="collapse"
+        <a class="typelink-c" data-toggle="collapse"
           (click)="collapse('#electri')">
           电子产品
         </a>
-        <a class="typelink" data-toggle="collapse" (click)="collapse('#diy')">
+        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#diy')">
           手工diy
         </a>
-        <a class="typelink" data-toggle="collapse"
+        <a class="typelink-c" data-toggle="collapse"
           (click)="collapse('#virtual')">
           虚拟商品
         </a>
-        <a class="typelink" data-toggle="collapse" (click)="collapse('#other')">
+        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#other')">
           其他
         </a>
 
         <div class="collapse" id="study">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of studytype"
-              (click)="GetSpecalGoods('学习用品', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of studytype"
+              (click)="GetSpecalGoods('学习用品', row.tag)">{{row.tag}}<span>({{row.number}})</span>
+            </a>
           </div>
         </div>
 
         <div class="collapse" id="sport">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of sporttype"
-              (click)="GetSpecalGoods('体育用品', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of sporttype"
+              (click)="GetSpecalGoods('体育用品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
           </div>
         </div>
 
         <div class="collapse" id="daliy">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of daliytype"
-              (click)="GetSpecalGoods('生活用品', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of daliytype"
+              (click)="GetSpecalGoods('生活用品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
           </div>
         </div>
 
         <div class="collapse" id="electri">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of electritype"
-              (click)="GetSpecalGoods('电子产品', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of electritype"
+              (click)="GetSpecalGoods('电子产品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
           </div>
         </div>
         <div class="collapse" id="diy">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of diytype"
-              (click)="GetSpecalGoods('手工diy', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of diytype"
+              (click)="GetSpecalGoods('手工diy', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
           </div>
         </div>
 
         <div class="collapse" id="virtual">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of virtualtype"
-              (click)="GetSpecalGoods('虚拟商品', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of virtualtype"
+              (click)="GetSpecalGoods('虚拟商品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
           </div>
         </div>
 
         <div class="collapse" id="other">
           <div class="well2">
-            <a class="goodstype" *ngFor="let row of othertype"
-              (click)="GetSpecalGoods('其他', row.tag)">{{row.tag}}
-              ({{row.number}})</a>
+            <a class="g-tag" *ngFor="let row of othertype"
+              (click)="GetSpecalGoods('其他', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
           </div>
         </div>
-
-
-      </div><!--row goodtype is over-->
-
     </div> <!--row type is over-->
 
   </div><!--container-fulid is over-->
 
-  <div class="goods-area green martop">
+  <div class="goods-area g-bg-box">
     <div class="row goodrow"><!--goods list-->
       <div class="goods-box" *ngFor="let goods of goodsarray"
         [routerLink]="['/goodsdetail', goods.id ]">
         <img class="img-thumbnail" src={{goods.headimg}}>
         <div class="row">
-          <p class="good-name">{{goods.name}}</p>
+          <p class="good-name g-sharnk">{{goods.name}}</p>
+        </div>
+        <div class="row good-title">
+          <p class="g-sharnk">{{goods.title}}</p>
         </div>
         <div class="row">
-          <p class="good-title">{{goods.title}}</p>
-        </div>
-        <div class="row">
-          <div class="user-date">
-            <p><span class="glyphicon glyphicon-user"></span> {{goods.username}}</p>
-            <p><span class="glyphicon glyphicon-calendar"></span> {{goods.time |
+          <div class="user-date g-sharnk">
+            <p style="font-size: 1em"><span class="glyphicon glyphicon-user"></span> {{goods.username}}</p>
+            <p style="font-size: 0.9em"><span class="glyphicon glyphicon-calendar"></span> {{goods.time |
               date:'yyyy-MM-dd' }}</p>
           </div>
           <div class="price-box">
-            <div class="goods-price">￥{{goods.price}}</div>
+            <div class="goods-price g-sharnk">￥{{goods.price}}</div>
           </div>
         </div>
 

@@ -1,28 +1,30 @@
 <div class="container"><!--路径导航-->
   <div class="row">
     <ol class="breadcrumb nopadbtm">
-      <li><a href="/homepage">首页</a></li>
       <li class="active">商品{{goodid}}</li>
     </ol>
   </div>
 </div>
 
-<div class="container gp-head">
-  <div class="col-md-4 gp-img"><img src={{goodsdt.headimg}} alt="head-image of goods"></div>
-  <div class="col-md-5 gp-mid">
+<div class="container gp-head g-bg-box">
+  <div class="col-md-4 col-sm-12 gp-img"><img src={{goodsdt.headimg}}
+      alt="head-image of goods"></div>
+  <div class="col-md-5 col-sm-12 gp-mid">
     <h4 class="gp-mid-name">{{goodsdt.name}}</h4>
     <div class="gp-mid-lbrow">
       <span class="label label-primary">类别：{{goodsdt.type}}</span>
       <span class="label label-primary">标签：{{goodsdt.tag}}</span>
     </div>
-    <h4 class="gp-mid-price">{{goodsdt.price}}</h4>
-    <div class="gp-mid-desc">
-        {{goodsdt.title}}
+    <h4 class="gp-mid-price ptlable g-sharnk">{{goodsdt.price}}</h4>
+    <div class="gp-mid-desc ptlable">
+      {{goodsdt.title}}
     </div>
     <div class="pg-mid-butrow">
-      <button type="button" class="btn btn-info" (click)="collect()" id="collect-btn">
+      <button type="button" class="btn btn-default btn-info" (click)="collect()"
+        id="collect-btn">
         <span class="glyphicon glyphicon-heart"></span>{{collectbtnshow}}</button>
-      <button type="button" class="btn btn-info" (click)="likeGoods()" id="like-btn">
+      <button type="button" class="btn btn-info" (click)="likeGoods()"
+        id="like-btn">
         <span class="glyphicon glyphicon-thumbs-up"></span>{{likebtnshow}}</button>
       <button type="button" class="btn btn-info" data-toggle="modal"
         data-target=".bs-example-modal-sm">
@@ -42,37 +44,43 @@
     </div>
 
   </div>
-  <div class="col-md-3 gp-right">
+  <div class="col-md-3 col-sm-12 gp-right">
     <div class="list-group">
-      <a class="list-group-item disabled"><span class="glyphicon glyphicon-pushpin"></span> 更多信息 </a>
-      <a class="list-group-item" [routerLink]="['/personals', goodsdt.userid ]">上传作者：{{goodsdt.username}}</a>
-      <a class="list-group-item">上传日期：{{goodsdt.time | date:'yyyy-MM-dd hh:mm'}}</a>
-      <a class="list-group-item">浏览次数：{{goodsdt.visit}} </a>
-      <a class="list-group-item">点赞次数：{{goodsdt.like}}</a>
-      <a class="list-group-item">收藏次数：{{goodsdt.collect}}</a>
-      <a class="list-group-item">私信数量：{{goodsdt.talk}}</a>
+      <a class="list-group-item disabled"><span class="glyphicon
+          glyphicon-pushpin"></span> 更多信息 </a>
+      <a class="list-group-item g-sharnk" [routerLink]="['/personals',
+        goodsdt.userid ]">上传作者：<p class="gmag">{{goodsdt.username}}</p></a>
+      <a class="list-group-item g-sharnk">上传时间：<p class="gmag">{{goodsdt.time |
+          date:'yyyy-MM-dd hh:mm'}}</p></a>
+      <a class="list-group-item g-sharnk">浏览次数：<p class="gmag">{{goodsdt.visit}}</p></a>
+      <a class="list-group-item g-sharnk">点赞次数：<p class="gmag">{{goodsdt.like}}</p></a>
+      <a class="list-group-item g-sharnk">收藏次数：<p class="gmag">{{goodsdt.collect}}</p></a>
+      <a class="list-group-item g-sharnk">私信数量：<p class="gmag">{{goodsdt.talk}}</p></a>
     </div>
   </div>
 </div>
 
-<div class="container main-body textpage">
+<div class="container main-body textpage g-bg-box">
   <div class="page-header">商品描述</div>
-  <p id="text-targer"></p>
+  <p class="showbox" id="text-targer"></p>
 </div>
 
-<div class="container main-body textpage">
+<div class="container main-body  textpage g-bg-box">
   <div class="page-header">商品评论</div>
   <div class="comment-row row" *ngFor="let row of commentdata">
-    <div class="col-md-1">
-        <div class="userhead" style="text-transform: uppercase" [ngStyle]="{'background-color': randomColor(row.username)}">{{row.username[0]}}</div>
+    <div class="cm-head">
+      <div class="userhead" style="text-transform: uppercase"[ngStyle]="{'background-color': randomColor(row.username)}">
+        {{row.username[0]}}
+      </div>
     </div>
-    <div class="col-md-11">
-        <div class="comment-row-header">
-            <div class="com-user" [ngStyle]="{'color': randomColor(row.username)}">{{row.username}}</div><div class="com-time">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
-          </div>
-          <div class="comment-text">
-            {{row.comment}}
-          </div>
+    <div class="msgbody">
+      <div class="comment-row-header">
+        <div class="com-user g-sharnk" [ngStyle]="{'color': randomColor(row.username)}">{{row.username}}</div><div
+          class="com-time g-sharnk">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
+      </div>
+      <div class="comment-text">
+        {{row.comment}}
+      </div>
     </div>
 
   </div>
@@ -80,4 +88,4 @@
     <textarea class="com-input" id="comment-area"></textarea>
     <button class="com-send" (click)="sendComment()">发送评论</button>
   </div>
-</div> 
+</div>

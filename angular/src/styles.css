@@ -1,108 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
 html{
-    margin-top:8.59375%; 
-    position:relative;
-    display: block;
-    overflow-x: hidden;
-    color: #222;
-    font: 14px/1.5 tahoma,arial,"Microsoft YaHei";
-    background-color: #f5f6f7;
     margin: 0px;
     padding: 0px;
-}
-body {
-
-    background-color: #f3f3f3;
-    font-family: "ff-tisa-web-pro-1","ff-tisa-web-pro-2","Lucida Grande","Helvetica Neue",Helvetica,Arial,"Hiragino Sans GB","Hiragino Sans GB W3","WenQuanYi Micro Hei",sans-serif;
-}
-img{
-    height: 100%;
     width: 100%;
 }
 
+body {
+    font-size: 14px;
+    line-height: 1.42;
+    color: #333;
+    background-color: #f3f3f3;
+}
 
 input[type="number"]{
     -moz-appearance: textfield;
 }
-/* homepage goods show box */
 
-.goods-box {
-    float: left;
-    text-align: center;
-    margin: 10px 15px 20px 15px;
-    height: 286px;
-    width: 200px;
-    border: 1px solid #cccccc7a;
-    background-color: #ffffff;
-    font-size: 1.1em;
-    color: rgb(156, 173, 173);
-    overflow: hidden;
-}
-
-.goods-box:hover {
-    border: 1px solid #778da0;
-}
-
-.goods-box img {
-    height: 200px;
-    padding: 0px;
-    border-radius: 0px;
-}
-
-.good-name {
-    height: 1.3em;
-    margin: 0px;
-    font-size: 1.2em;
-    color: #4b899b;
-}
-
-.good-title {
-    height: 21px;
-    line-height: 21px;
-    margin: 0px 19px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    color: #337ab7;
-}
-
-.user-date {
-    height: 50px;
-    width: 60%;
-    float: left;
-    font-size: 0.9em;
-    overflow: hidden;
-    color: #999;
-    padding: 0px 0px 0px 20px;
-    line-height: 1em;
-    text-align: left;
-}
-
-.user-date p {
-    margin: 0 0 5px;
-}
-
-.price-box {
-    height: 50px;
-    width: 40%;
-    float: left;
-    padding-right: 16px;
-}
-
-.goods-price {
-    border: none;
-    width: 80px;
-    height: 29px;
-    background-color: #4eb1c6;
-    color: white;
-    font-size: 1.2em;
-    font-weight: bold;
-    border-radius: 5px 5px 0px 0px;
-    position: relative;
-    top: 10px;
-    overflow: hidden;
-    padding: 4px;
-}
 /* ==========================收藏样式============================ */
 .inlink{
     display: inline-block;
@@ -113,7 +26,6 @@ input[type="number"]{
     height: 15px;
     display: inline-block;
 }
-
 .loginbutton{
     width: 280px;
     height: 40px;
@@ -135,24 +47,8 @@ input[type="number"]{
     margin-right: 50px;
     float: right;
 }
-
 ol, ul {
     list-style: none;
-}
-
-
-/* ============================================== */
-
-
-
-
-
-
-.head{
-    border-bottom: 1px solid #303030;
-    color: #aaa;
-    border-radius: 0px;
-    background: #313131;
 }
 a{
     display:inline-block;
@@ -161,123 +57,61 @@ a:hover{
     cursor: pointer;
     text-decoration : none ;
 }
-.norad{
-    border-radius: 0px;
-}
-.nopadtop{
-    padding-top: 0px;
-    margin-top: 0px;
-}
-.nomarbot{
-    margin: 0px;
-}
-.closebot{
-   bottom: 5px;
-   margin-bottom: 5px;
-}
-.nav-chose{
-    border-bottom: 7px solid #17a2e7;
-}
-.marright{
-    margin-right: 30px;
-}
-.marbotn{
-    margin-bottom: 10px;
-}
-.martop{
-    margin-top: 10px;
-}
-.green{
-    background-color: rgb(196, 207, 196);
-}
-.yellow{
-    background-color: rgb(110, 110, 89);
-}
-.h100px{
-    height: 100px;
-}
-.blue{
-    background-color: rgb(156, 160, 160);
-}
-.alicen{
-    text-align: center;
-}
-
-.heifull{
-    height: 100%;
-}
-.pad0px{
-    padding-right: 0px;
-    padding-left: 0px;
-}
 
 /* ================================================== */
-.main-footer {
-    background: #202020;
-    padding: 35px 0 0;
-    color: #959595;
-    box-sizing: border-box;
-    border-bottom: 1px solid #303030;
-}
-.widget .title:after {
-    content: "";
-    width: 90px;
-    height: 1px;
-    background: #337ab7;
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-}
-.main-footer .widget .tag-cloud a {
-    border: 1px solid #494747;
-}
-.main-footer .widget {
-    padding: 0 30px;
-    box-sizing: border-box;
-    text-align: initial;
-}
-.widget .tag-cloud a {
-    border: 1px solid #ebebeb;
-    padding: 2px 7px;
-    color: #959595;
-    line-height: 1.5em;
-    display: inline-block;
-    margin: 0 7px 7px 0;
-    -webkit-transition: all .2s ease;
-    -o-transition: all .2s ease;
-    transition: all .2s ease;
-    text-decoration: none;
-}
-.title {
-    font-weight: 500;
-    line-height: 1.1;
-    font-size: 18px;
-    margin-top: 0;
-    padding-bottom: 7px;
-    border-bottom: 1px solid #ebebeb;
-    margin-bottom: 21px;
-    position: relative;
-}
-.copyright {
-    background: #111;
-    font-size: 13px;
-    text-align: center;
-    color: #555;
-    padding-top: 14px;
-    padding-bottom: 20px;
-    border-top: 1px solid #303030;
-}
-.copyright a {
-    color: #555;
-    background-color: transparent;
-    font-size: 13px;
-    text-align: center;
-}
-
-/* try do use it public style */
-
 /* small and center font */
-.g_scf p{
+.g_scf p{/* 🍅 */
     font-size: 0.8em;
     text-align: center;
+}
+/* sharnk text */
+.g-sharnk{/* 🍅 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
+}
+/* height images */
+.g-himg{/* 🍅 */
+    height: 100%;
+    max-width: 100%;
+}
+/* weithg images *//* 🍅 */
+.g-wimg{
+    width: 100%;
+    max-height: 100% ;
+}
+/* galbo varial */
+:root {/* 🍅 */
+     /*theme-color*/
+    --tmcl-1: #3193e8; 
+    --tmcl-2: #337ab7; 
+    --tmcl-3: #b9e7ff;
+    /*front-color*/
+    --ip-fk:#333333; /*input-front-color*/
+    --bt-fk:#ffffff;  /*button-font-color*/
+    /* backgroud-color */
+    --liner-bc: linear-gradient(120deg,#3193e8,#337ab7);
+    /*border-color*/
+    --thin-bdc:#ddd;
+
+}  
+/* galbol background board */
+.g-bg-box{/* 🍅 */
+    box-shadow: 0 0 20px rgba(50, 50, 50, 0.1);
+    background-color: #fff;
+}
+.g-tag{/* 🍅 */
+    color: #ffffff;
+    font-size: 1.1em;
+    margin: 0px 10px;
+    font-weight: 600;
+}
+.g-tag:hover .g-tag:focus .g-tag:active{/* 🍅 */
+    color:var(--tmcl-3);
+}
+
+@media screen and (max-width:600px) {/* 🍅 */
+    .g-bg-box{
+        box-shadow: none;
+    }
 }
