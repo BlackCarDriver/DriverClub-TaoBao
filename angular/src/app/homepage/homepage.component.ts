@@ -142,6 +142,7 @@ export class HomepageComponent implements OnInit {
 
   //adject the pagebox display
   adjustPage(){
+    this.server.totop();
     if(this.totalpage<=5) return;
     if(this.lookingpage>3){
       this.offsetpage = this.lookingpage - 3;

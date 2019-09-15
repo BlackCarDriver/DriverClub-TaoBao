@@ -5,7 +5,7 @@
 }
 
 .search-input {
-    
+    border-right: none;
     border-radius: 30px 0px 0px 30px;
     padding-left: 15px;
     color: var(--ip-fk);
@@ -39,7 +39,7 @@
 
 .main-body {
     min-height: 400px;
-    min-width: 380px;
+    min-width: var(--min-width)
 }
 
 .goodtype {
@@ -263,11 +263,12 @@
 
 @media screen and (max-width:600px) {
     .search-row {
-        height: 80px;
+        height: 60px;
+        padding: 0px;
     }
     .search-input-c {
         margin-right: 70px;
-        width: 280px;
+        width: 240px;
     }
     .search-bt-c {
         margin-left: -70px;
@@ -279,7 +280,7 @@
     }
     .goods-area {
         width: 100%;
-        padding: 0px 10px 0px 5px;
+        padding: 10px;
     }
     .goods-box {
         --gbheight: 140px;
@@ -294,6 +295,9 @@
         height: var(--gbheight);
         width: var(--gbheight);
         float: left;
+    }
+    .goods-price{
+        width: 3.7em;
     }
     .good-name {
         margin: 0;

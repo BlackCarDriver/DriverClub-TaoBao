@@ -221,4 +221,7 @@
     .com-time {
         font-size: 0.8em;
     }
+    .textpage{
+        border-left-width: 0px;
+    }
 }

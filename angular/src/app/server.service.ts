@@ -38,6 +38,10 @@ export class ServerService {
   return result;
  }
 
+ //scoll to top
+ totop(){
+    scroll(0,150);
+ }
  //======================================= large  interface =============================================================
 
  //get all kind of data in goodspage 🍌🔥

@@ -2,10 +2,11 @@
 html{
     margin: 0px;
     padding: 0px;
-    width: 100%;
+    min-width: var(--min-width);
 }
 
 body {
+    min-width: var(--min-width);
     font-size: 14px;
     line-height: 1.42;
     color: #333;
@@ -15,7 +16,10 @@ body {
 input[type="number"]{
     -moz-appearance: textfield;
 }
-
+.row{
+    margin-left: 0px;
+    margin-right:0px;
+}
 /* ==========================收藏样式============================ */
 .inlink{
     display: inline-block;
@@ -93,6 +97,7 @@ a:hover{
     --liner-bc: linear-gradient(120deg,#3193e8,#337ab7);
     /*border-color*/
     --thin-bdc:#ddd;
+    --min-width:300px;
 
 }  
 /* galbol background board */
