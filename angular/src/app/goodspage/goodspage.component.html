@@ -23,10 +23,10 @@
       <button type="button" class="btn btn-default btn-info" (click)="collect()"
         id="collect-btn">
         <span class="glyphicon glyphicon-heart"></span>{{collectbtnshow}}</button>
-      <button type="button" class="btn btn-info" (click)="likeGoods()"
+      <button type="button" class="btn btn-default btn-info" (click)="likeGoods()"
         id="like-btn">
         <span class="glyphicon glyphicon-thumbs-up"></span>{{likebtnshow}}</button>
-      <button type="button" class="btn btn-info" data-toggle="modal"
+      <button type="button" class="btn btn-default btn-info" data-toggle="modal"
         data-target=".bs-example-modal-sm">
         <span class="glyphicon glyphicon-comment"></span> 私聊
       </button>
@@ -48,8 +48,7 @@
     <div class="list-group">
       <a class="list-group-item disabled"><span class="glyphicon
           glyphicon-pushpin"></span> 更多信息 </a>
-      <a class="list-group-item g-sharnk" [routerLink]="['/personals',
-        goodsdt.userid ]">上传作者：<p class="gmag">{{goodsdt.username}}</p></a>
+      <a class="list-group-item g-sharnk" [routerLink]="['/personals', goodsdt.userid ]">上传作者：<p class="gmag">{{goodsdt.username}}</p></a>
       <a class="list-group-item g-sharnk">上传时间：<p class="gmag">{{goodsdt.time |
           date:'yyyy-MM-dd hh:mm'}}</p></a>
       <a class="list-group-item g-sharnk">浏览次数：<p class="gmag">{{goodsdt.visit}}</p></a>
@@ -70,7 +69,7 @@
   <div class="comment-row row" *ngFor="let row of commentdata">
     <div class="cm-head">
       <div class="userhead" style="text-transform: uppercase"[ngStyle]="{'background-color': randomColor(row.username)}">
-        {{row.username[0]}}
+        <a style="color:unset">{{row.username[0]}}</a>
       </div>
     </div>
     <div class="msgbody">

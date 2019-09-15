@@ -172,6 +172,8 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
         alert("评论成功！");
+        this.getComment(this.goodid);
+        $("#comment-area").val("");
       }else{
         alert("评论失败："+result.msg);
       }
@@ -210,5 +212,6 @@ class GoodsDetail {
 type comment = {
   time: string;
   username: string;
+  userid:string;
   comment: string;
 }
