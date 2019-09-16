@@ -61,8 +61,16 @@ a:hover{
     cursor: pointer;
     text-decoration : none ;
 }
-
-/* ================================================== */
+/* ======= public style ======== */
+.breadcrumb {
+    margin: 0px 0px 5px 30px;
+    padding: 4px;
+}
+.g-input{
+    border: 1px solid #ddd;
+    color: #34495e;
+    border-radius: 3px;
+}
 /* small and center font */
 .g_scf p{/* 🍅 */
     font-size: 0.8em;
@@ -84,6 +92,162 @@ a:hover{
     width: 100%;
     max-height: 100% ;
 }
+/*======== public goods box ======*/
+.goods-box {
+    float: left;
+    margin: 10px 15px;
+    width: 200px;
+    border: 1px solid var(--thin-bdc);
+    font-size: 1.1em;
+    overflow: hidden;
+    height: 286px;
+}
+.goods-box:hover { 
+    box-shadow: 0px 0px 5px var(--thin-bdc);
+}
+.goods-box img {
+    height: 200px;
+    width: 200px;
+    padding: 0px;
+    border-radius: 0px;
+}
+.good-name { 
+    height: 1.3em;
+    margin: 0px 29px;
+    font-size: 1.2em;
+    color: #4b899b;
+}
+.good-title {
+    height: 21px;
+    margin: 0px 2px;
+    color: #337ab7;
+}
+.user-date {
+    width: 60%;
+    float: left;
+    font-size: 0.9em;
+    color: #999;
+    padding: 0px 0px 0px 20px;
+    line-height: 1em;
+    text-align: left;
+}
+.user-date p {
+    margin: 0 0 5px;
+}
+.price-box {  
+    height: 50px;
+    width: 40%;
+    float: left;
+    padding-right: 16px;
+}
+.goods-price {
+    width: 80px;
+    background-color: #4eb1c6;
+    color: white;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px 5px 0px 0px;
+    position: relative;
+    top: 10px;
+    padding: 4px;
+}
+
+/* personal page share */
+.personal-msg {
+    margin: 6px 0px;
+    border-bottom: 1px solid #cac8c8;
+}
+.personal-msg .head-img {
+    height: 120px;
+    width: 120px;
+    border-radius: 120px;
+    margin: 10px auto;
+    border: 1px solid #e6e6e6;
+}
+.personal-msg .nameandsign{
+    padding: 1em;
+}
+.g-ico {
+    color: #877b7b;
+    margin: 0.3em 1em;
+}
+.swicth-box {
+    margin: 0px 20px;
+}
+.right-child {
+    min-height: 30px;
+    margin: 10px 15px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.msg-box {
+    margin: 1px;
+    padding-left: 10px;
+    margin-top: 1em;
+}
+.msg {
+    color: #555;
+    padding: 0;
+}
+.mymsg {
+    position: relative;
+    height: 80px;
+    margin: 20px 20px 10px;
+    font-size: 14px;
+    color: #999;
+    border-radius: 4px;
+    border: 1px solid #E5E5E5;
+    background: #FAFAFA;
+}
+.mymsg .msg-img-box {
+    text-align: center;
+    height: 100%;
+    background-color: #e6e6e6;
+}
+.msg-img-box img {
+    height: 65px;
+    width: 65px;
+    border-radius: 65px;
+    margin: 8px;
+}
+.msg-text-box .msg-head {
+    height: 20px;
+    overflow: hidden;
+    background-color: #e6e6e647;
+}
+.msg-text-box .heading {
+    color: #177ad1;
+    font-size: 1.3em;
+    height: 30px;
+    padding: 2px 25px;
+    white-space: nowrap;
+    cursor: auto;
+}
+.msg-text-box span {
+    margin-right: 10px;
+}
+.msg-head .col-sm-3 {
+    white-space: nowrap;
+    padding: 2px 2px 2px 10px;
+}
+.msg-head .col-sm-3 p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.msg-text-box .msg-body {
+    color: #a999b9;
+    height: 38px;
+    padding: 0px 10px;
+    margin-top: 4px;
+    overflow: hidden;
+}
+.describ {
+    font-weight: 600;
+    color: #337ab7;
+}
+.my-panel {
+    margin: 20px;
+}
+
 /* galbo varial */
 :root {/* 🍅 */
      /*theme-color*/
@@ -98,7 +262,6 @@ a:hover{
     /*border-color*/
     --thin-bdc:#ddd;
     --min-width:300px;
-
 }  
 /* galbol background board */
 .g-bg-box{/* 🍅 */
@@ -118,5 +281,17 @@ a:hover{
 @media screen and (max-width:600px) {/* 🍅 */
     .g-bg-box{
         box-shadow: none;
+    }
+    .personal-msg{
+        text-align: center;
+    }
+    .personal-msg .nameandsign{
+        margin-top: -2em;
+    }
+    .mymsg{
+        margin: 20px 0px 10px;
+    }
+    .my-panel{
+        margin: 1em 0em;
     }
 }

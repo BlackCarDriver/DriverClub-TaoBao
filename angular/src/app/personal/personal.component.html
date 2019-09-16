@@ -1,4 +1,4 @@
-<div class="full">
+<div>
     <div class="container-fluid">
         <div class="row path">
             <ol class="breadcrumb">
@@ -7,154 +7,136 @@
             </ol>
         </div>
 
-        <div class="row main-body">
-            <div class="col-md-9 left-box">
-                <!--头像 + 名字 + 个性签名 部分-->
-                <div class="row msg1">
-                    <div class="col-sm-3 head-img-box">
-                        <img src={{msg.headimg}} alt="head-img"
-                            class="head-img">
+        <div class="row main-body g-bg-box">
+            <div class="col-md-9" style="border-right: 1px solid #e6e6e6;">
+                <div class="row personal-msg">
+                    <div class="col-md-3 col-sm-4">
+                        <img class="head-img" src={{msg.headimg}} alt="profile images">
                     </div>
                     <!--person mesage simple descripb-->
-                    <div class="col-sm-7 myname">
-                        <h3 class="name">BlackCarDriver</h3>
-                        <h4 class="head-sign">{{msg.sign}}</h4>
+                    <div class="col-md-7 col-sm-8 nameandsign">
+                        <h3>BlackCarDriver</h3>
+                        <h4 style="color: #03A9F4;">{{msg.sign}}</h4>
                     </div>
-                    <div class="col-sm-2">
+                    <div class="col-md-2 col-sm-12" style="margin-bottom: 1em;">
                         <a class="btn btn-primary btn-sm button1"
                             routerLink="/changemsg">修改信息</a>
                         <a class="btn btn-info btn-sm button1"
                             routerLink="/uploadgoods">上传商品</a>
                     </div>
-                </div><!--msg1-->
+                </div>
 
-                <!--小图标行-->
-                <div class="row msg2">
-                    <span class="ico1"><i class="glyphicon glyphicon-king"></i>
-                        等级 : {{msg.leave}}</span>
-                    <span class="ico1"><i class="glyphicon
-                            glyphicon-piggy-bank"></i> 积分 : {{msg.credits}}</span>
-                    <span class="ico1"><i class="glyphicon glyphicon
-                            glyphicon-stats"></i> 排名 : {{msg.rank}}</span>
-                    <span class="ico1"><i class="glyphicon glyphicon-heart"></i>
-                        被关注: {{msg.becare}}</span>
-                    <span class="ico1"><i class="glyphicon glyphicon-thumbs-up"></i>
-                        被点赞: {{msg.likes}}</span>
-                </div><!--msg2-->
+                <div class="row" style="margin:3px;">
+                    <span class="g-ico glyphicon glyphicon-king"> 等级:{{msg.leave}}</span>
+                    <span class="g-ico glyphicon glyphicon-piggy-bank"> 积分:{{msg.credits}}</span>
+                    <span class="g-ico glyphicon glyphicon glyphicon-stats"> 排名:{{msg.rank}}</span>
+                    <span class="g-ico glyphicon glyphicon-heart"> 关注:{{msg.becare}}</span>
+                    <span class="g-ico glyphicon glyphicon-thumbs-up"> 点赞:{{msg.likes}}</span>
+                </div>
 
-                <!--tab box-->
-                <div class="tabbable" id="tabs-727927">
+                <div class="tabtable" id="tabs-727927" style="margin-top: 1em;">
                     <div class="row swicth-box">
-
-                        <!--tab-->
                         <ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab"
-                                    href="#panel-xxxs">详细信息</a></li>
+                            <li class="active"><a data-toggle="tab" href="#panel-xxxs">详细信息</a></li>
                             <li><a data-toggle="tab" href="#panel-mygoods">我的商品</a></li>
                             <li><a data-toggle="tab" href="#panel-shouchang">我的收藏</a></li>
                             <li><a data-toggle="tab" href="#panel-mymsg">我的消息</a></li>
                         </ul>
 
-                        <!-- contant-->
                         <div class="tab-content">
 
-                            <!-- 详细信息tag box -->
+                            <!-- detail tag box -->
                             <div class="tab-pane active" id="panel-xxxs">
-                                <!--基本信息 page-->
+                                <!--base message-->
                                 <div class="panel panel-info my-panel">
-                                    <div class="panel-heading"><span
-                                            class="glyphicon glyphicon-th-list">
-                                        </span> 基本信息</div>
+                                    <div class="panel-heading"><span class="glyphicon glyphicon-th-list"></span> 基本信息</div>
                                     <div class="panel-body">
-
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">司机ID</div>
-                                            <div class="col-md-10 describ">{{msg.id}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">司机ID</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.id}}</div>
                                         </div>
 
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">账号昵称</div>
-                                            <div class="col-md-10 describ">{{msg.name}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">账号昵称</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.name}}</div>
                                         </div>
 
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">个性签名</div>
-                                            <div class="col-md-10 describ">{{msg.sign}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">个性签名</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.sign}}</div>
                                         </div>
 
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">性别</div>
-                                            <div class="col-md-10 describ">{{msg.sex}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">性别</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.sex}}</div>
                                         </div>
 
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">专业</div><!--不显示-->
-                                            <div class="col-md-10 describ">{{msg.major}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">专业</div><!--不显示-->
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.major}}</div>
                                         </div>
 
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">年级</div>
-                                            <div class="col-md-10 describ">{{msg.grade}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">年级</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.grade}}</div>
                                         </div>
 
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">学院</div>
-                                            <div class="col-md-10 describ">{{msg.colleage}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">学院</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.colleage}}</div>
                                         </div>
 
                                     </div>
                                 </div>
-                                <!--联系方式 page-->
+                                <!--connect message-->
                                 <div class="panel panel-info my-panel">
                                     <div class="panel-heading"><span
                                             class="glyphicon glyphicon-phone">
                                         </span> 联系方式</div>
                                     <div class="panel-body">
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">手机号码</div>
-                                            <div class="col-md-10 describ">{{msg.phone}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">手机号码</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.phone}}</div>
                                         </div>
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">QQ</div>
-                                            <div class="col-md-10 describ">{{msg.qq}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">QQ</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.qq}}</div>
                                         </div>
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">邮箱</div>
-                                            <div class="col-md-10 describ">{{msg.emails}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">邮箱</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.emails}}</div>
                                         </div>
-
                                     </div>
                                 </div>
-                                <!--统计数据 page-->
+                                <!--static-->
                                 <div class="panel panel-info my-panel">
                                     <div class="panel-heading"><span
                                             class="glyphicon glyphicon-stats">
                                         </span> 其他数据</div>
                                     <div class="panel-body">
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">上次登录</div>
-                                            <div class="col-md-10 describ">{{msg.lasttime
+                                            <div class="col-md-2 col-xs-3 msg">上次登录</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.lasttime
                                                 | date:'yyyy-MM-dd hh:mm'}}</div>
                                         </div>
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">商品数量</div>
-                                            <div class="col-md-10 describ">{{msg.goodsnum}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">商品数量</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.goodsnum}}</div>
                                         </div>
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">交易成功数</div>
-                                            <div class="col-md-10 describ">{{msg.scuess}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">交易数</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.scuess}}</div>
                                         </div>
                                         <div class="row msg-box">
-                                            <div class="col-md-2 msg">主页访问量</div>
-                                            <div class="col-md-10 describ">{{msg.visit}}</div>
+                                            <div class="col-md-2 col-xs-3 msg">访问量</div>
+                                            <div class="col-md-10 col-xs-9 describ">{{msg.visit}}</div>
                                         </div>
-
                                     </div>
                                 </div>
-
+                                
                             </div>
 
-                            <!--我的商品 tag box-->
+                            <!--my goods-->
                             <div class="tab-pane" id="panel-mygoods">
                                 <ul class="good-list">
                                     <li class="goods-box" *ngFor="let rows of mygoodslist">
@@ -170,37 +152,28 @@
                                 <div class="row textcenter" *ngIf="mg_sumpage>1">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
-                                            <li *ngIf="mg_nowat>1"
-                                                (click)="MgPrepage()">
-                                                <a aria-label="Previous">
-                                                    <span aria-hidden="true">&laquo;</span>
-                                                </a>
+                                            <li *ngIf="mg_nowat>1" (click)="MgPrepage()">
+                                                <a aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
                                             </li>
-                                            <li *ngFor="let row of mg_array"
-                                                (click)="setMgPagebox(row)"
-                                                [ngClass]="{'active':
-                                                row+mg_offset==mg_nowat}"><a>{{row
-                                                    + mg_offset}}</a></li>
-                                            <li *ngIf="mg_nowat<mg_sumpage"
-                                                (click)="MgNextpage()">
-                                                <a aria-label="Next"><span
-                                                        aria-hidden="true">&raquo;</span></a>
+                                            <li *ngFor="let row of mg_array" (click)="setMgPagebox(row)" [ngClass]="{'active': row+mg_offset==mg_nowat}"><a>{{row + mg_offset}}</a></li>
+                                            <li *ngIf="mg_nowat<mg_sumpage" (click)="MgNextpage()">
+                                                <a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                                             </li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
 
-                            <!--我的收藏 tag box-->
+                            <!--my collect-->
                             <div class="tab-pane" id="panel-shouchang">
                                 <ul class="good-list">
-                                    <li class="goods-box goods-box2" *ngFor="let rows of mycollectlist">
+                                    <li class="goods-box" style="height: unset;" *ngFor="let rows of mycollectlist">
                                         <span class="label label-default rmlable" (click)="cancelCollect(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}} alt="" class="goods-img">
-                                        <div class="gname"  [routerLink]="['/goodsdetail', rows.id]">{{rows.name}}
+                                        <div class="gname g-sharnk"  [routerLink]="['/goodsdetail', rows.id]">{{rows.name}}
                                             <span class="price">￥{{rows.price}}</span> 
                                         </div>
-                                        <div class="titlebox">{{rows.title}}</div>
+                                        <div class="titlebox g-sharnk">{{rows.title}}</div>
                                     </li>
                                 </ul>
                                 <div class="nodata" *ngIf="show_no_collect"><p>暂时未有收藏物品</p></div>
@@ -229,23 +202,22 @@
                                 </div>
                             </div>
 
-                            <!--我的消息 tag box-->
+                            <!--my message-->
                             <div class="tab-pane" id="panel-mymsg">
-
                                 <div class="row mymsg" *ngFor="let rows of
                                     mymessagelist">
-                                    <div class="col-sm-2 msg-img-box">
+                                    <div class="col-md-2 msg-img-box hidden-xs">
                                         <img src={{rows.headimg}}>
                                     </div>
-                                    <div class="col-sm-10 msg-text-box">
+                                    <div class="col-md-10 col-xs-12 msg-text-box">
                                         <div class="row msg-head">
-                                            <div class="col-sm-3">
+                                            <div class="col-xs-6">
                                                 <p [routerLink]="['/personals',rows.id ]"> 
                                                     <span class="glyphicon glyphicon-user"></span>
                                                     {{rows.name}}
                                                 </p>
                                             </div>
-                                            <div class="col-sm-3">
+                                            <div class="col-xs-6 ">
                                                 <p><span class="glyphicon glyphicon-time"></span>
                                                     {{rows.time | date:'yyyy-MM-dd hh:mm'}}
                                                 </p>
@@ -262,21 +234,14 @@
                                 <div class="row textcenter" *ngIf="msg_sumpage>1">
                                     <nav aria-label="Page navigation">
                                         <ul class="pagination">
-                                            <li *ngIf="msg_nowat>1"
-                                                (click)="MsgPrepage()">
+                                            <li *ngIf="msg_nowat>1" (click)="MsgPrepage()">
                                                 <a aria-label="Previous">
                                                     <span aria-hidden="true">&laquo;</span>
                                                 </a>
                                             </li>
-                                            <li *ngFor="let row of msg_array"
-                                                (click)="setMsgPagebox(row)"
-                                                [ngClass]="{'active':
-                                                row+msg_offset==msg_nowat}"><a>{{row
-                                                    + msg_offset}}</a></li>
-                                            <li *ngIf="msg_nowat<msg_sumpage"
-                                                (click)="MsgNextpage()">
-                                                <a aria-label="Next"><span
-                                                        aria-hidden="true">&raquo;</span></a>
+                                            <li *ngFor="let row of msg_array" (click)="setMsgPagebox(row)" [ngClass]="{'active': row+msg_offset==msg_nowat}"><a>{{row + msg_offset}}</a></li>
+                                            <li *ngIf="msg_nowat<msg_sumpage" (click)="MsgNextpage()">
+                                                <a aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -290,11 +255,11 @@
                 </div>
 
             </div><!--col md 9 is over-->
-            <!-- ============================================= -->
-            <div class="col-md-3 right_box hidden-xs hidden-sm">
-                <div class="right-box-son">
+
+            <div class="col-md-3 hidden-xs hidden-sm" style="height: 100%;">
+                <div class="right-child">
                     <div class="row">
-                        <div class="col-md-6 float-left-blue">关注我的: <span class="mun-ico">{{msg.becare}}</span></div>
+                        <div class="col-md-6 left-blue">关注我的: <span class="mun-ico">{{msg.becare}}</span></div>
                     </div>
                     <div class="row">
                         <ul class="headimg-list">
@@ -303,10 +268,11 @@
                             </li>
                         </ul>
                     </div>
-                </div><!--box son 1 -->
-                <div class="right-box-son">
+                </div>
+
+                <div class="right-child">
                     <div class="row">
-                        <div class="col-md-6 float-left-blue">我关注的: <span class="mun-ico">{{msg.care}}</span></div>
+                        <div class="col-md-6 left-blue">我关注的: <span class="mun-ico">{{msg.care}}</span></div>
                     </div>
                     <div class="row">
                         <ul class="headimg-list">
@@ -316,16 +282,21 @@
                             </li>
                         </ul>
                     </div>
-                </div><!--right box son 2-->
-                <div class="right-box-son see-num">
-                    <p><span class="glyphicon glyphicon-eye-open"></span>
-                        主页访问量:{{msg.visit}}</p>
                 </div>
-                <!--榜单-->
-                <div class="right-box-son rank-list">
+
+                <div class="right-child" style="  color: #428bca;font-weight:600;">
+                    <p><span class="glyphicon glyphicon-eye-open"></span>
+                        主页访问量:{{msg.visit}}
+                    </p>
+                </div>
+
+                <div class="right-child rank-list">
                     <h3>用户排名榜</h3>
                     <ul *ngFor="let rows of hero">
-                        <li [routerLink]="['/personals', rows.userid ]"><span>{{rows.rank}}</span><p>{{rows.name}}</p></li>
+                        <li [routerLink]="['/personals', rows.userid ]" class="g-sharnk">
+                            <span>{{rows.rank}}</span>
+                            <p>{{rows.name}}</p>
+                        </li>
                     </ul>
                 </div>
 

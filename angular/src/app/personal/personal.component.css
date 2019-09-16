@@ -2,112 +2,39 @@
     margin: 20px 5%;
 }
 
-.path .breadcrumb {
-    margin: 0px 0px 5px 30px;
-    padding: 4px;
-}
-
-.full {
-    margin: 0px;
-    margin-bottom: 40px;
-    padding-bottom: 20px;
-    background-color: #f3f3f3;
-}
-
 .main-body {
     margin: 0 15px;
-    background-color: #fff;
     border: 2px solid #e6e6e6;
     border-radius: 4px;
-    box-sizing: border-box;
-    display: block;
 }
-
 .head-sign {
-    position: relative;
     color: #03A9F4;
+    position: relative;
     top: 10px;
 }
 
-.msg1 {
-    height: 140px;
-    margin: 6px 0px;
-    border-bottom: 1px solid #cac8c8;
-}
-
-.msg1 .head-img-box {
-    text-align: center;
-}
-
-.msg1 .head-img {
-    height: 120px;
-    width: 120px;
-    border-radius: 120px;
-    margin: 10px auto;
-    border: 1px solid #e6e6e6;
-}
-
-.msg1 .myname {
-    padding: 10px;
-}
-
-.msg2 {
-    height: 40px;
-    margin: 3px;
-    /* border-bottom: 1px solid #cac8c8; */
-}
-
-.left-box {
-    border-right: 1px solid #e6e6e6;
-}
-
-.right_box {
-    height: 100%;
-}
-
-.swicth-box {
-    margin: 0px 20px;
-}
-
-.right-box-son {
-    min-height: 30px;
-    margin: 10px 15px;
-    border-bottom: 1px solid #e6e6e6;
-}
-
-.see-num {
-    color: #428bca;
-    font-weight: 600;
-}
-
-/* =================================商品展示样式2 */
-
+/* my goods */
 .goods-box {
-    width: 180px;
-    height: 220px;
+    --boxh : 180px;
+    width: var(--boxh);
+    height: 210px;
     float: left;
     margin: 0px 30px 30px 0px;
     overflow: hidden;
-    border-radius: 3px;
     position: relative;
-}
-.goods-box2{
-    height: unset;
 }
 .goods-box img {
     border: #eee 1px solid;
-    width: 180px;
-    height: 180px;
+    width: var(--boxh);
+    height: var(--boxh);
 }
 .goods-box .gname {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-align: center;
     font-size: 1.2em;
     height: 1.2em;
     color: rgb(99, 130, 130);
     cursor: pointer;
-    margin: 6px;
+    margin: 0.2em;
 }
  .rmlable {
     position: absolute;
@@ -130,178 +57,63 @@
 .goods-box .titlebox{
     height: 2em;
     font-size: 0.9em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
     padding: 0em 0.4em;
 }
 .goods-box .titlebox p{
     text-overflow: ellipsis;
 }
-/* ===========================================我的消息展示样式 */
-
-.mymsg {
-    position: relative;
-    height: 80px;
-    margin: 20px 20px 10px;
-    font-size: 14px;
-    color: #999;
-    border-radius: 4px;
-    border: 1px solid #E5E5E5;
-    background: #FAFAFA;
-}
-
-.mymsg .msg-img-box {
-    text-align: center;
-    height: 100%;
-    background-color: #e6e6e6;
-}
-
-.msg-img-box img {
-    height: 65px;
-    width: 65px;
-    border-radius: 65px;
-    margin: 8px;
-}
-
-.msg-text-box .msg-head {
-    height: 20px;
-    overflow: hidden;
-    background-color: #e6e6e647;
-}
-
-.msg-text-box .heading {
-    color: #177ad1;
-    font-size: 1.3em;
-    height: 30px;
-    padding: 2px 25px;
-    white-space: nowrap;
-    cursor: auto;
-}
-
+/* my messages */
 .heading p {
     font-weight: 600;
     line-height: 30px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
-
-.msg-text-box span {
-    margin-right: 10px;
-}
-
-.msg-head .col-sm-3 {
-    white-space: nowrap;
-    padding: 2px 2px 2px 10px;
-}
-
-.msg-head .col-sm-3 p {
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.msg-text-box .msg-body {
-    color: #a999b9;
-    height: 38px;
-    padding: 0px 10px;
-    margin-top: 4px;
-    overflow: hidden;
-}
-
-
-/* ===================== 临时样式 */
-
 .textcenter {
     text-align: center;
     clear: both;
 }
-
-/* ======================公用样式 */
-
+/* public */
 .button1 {
     width: 70px;
     height: 30px;
     margin: 5px 10px;
 }
-
-.ico1 {
-    margin-left: 25px;
-    float: left;
-    margin-top: 10px;
-    color: #877b7b;
-}
-
-.float-left-blue {
+.left-blue {
     color: #428bca;
     float: left;
     padding-left: 0px;
     padding-right: 0px;
 }
-
-.float-right-blue {
-    color: #428bca;
-    float: right;
-    text-align: right;
-}
-
 .mun-ico {
-    display: inline-block;
     padding: 2px 6px;
-    background: #ccc;
-    background-color: rgb(204, 204, 204);
-    background-color: rgb(204, 204, 204);
-    min-width: 10px;
-    font-size: 12px;
-    font-weight: 700;
+    font-weight: 600;
     color: #fff;
     background-color: #7f9495;
-    border-radius: 10px;
-    line-height: 1;
+    border-radius: 1em;
 }
-
 .headimg-list {
     float: left;
     padding: 4px;
     margin-top: 6px;
 }
-
 .headimg-list .headimg {
     width: 50px;
     height: 50px;
     overflow: hidden;
-    margin: 4px;
     border-radius: 55px;
     margin: 2px;
-    ;
     border: 1px solid rgb(247, 239, 239);
-    /* background-color: rgb(145, 91, 91); */
     display: inline-block;
 }
-
-.my-panel {
-    margin: 20px;
+.headimg img{
+    width: 100%;
+    height: 100%;
 }
 
 .tab-pane:focus {
     outline: none;
 }
-
-.msg-box {
-    margin: 1px;
-    padding-left: 10px;
-    margin-top: 4px;
-}
-
-.msg {
-    font-weight: 500;
-    color: #555;
-}
-
-.describ {
-    font-weight: 600;
-    color: #337ab7;
-}
-
 .nodata p {
     text-align: center;
     color: #aaa3a3;
@@ -309,29 +121,24 @@
     margin: 1em;
 }
 
-/* ========================= 本站排名榜 =========================*/
+/* ranklist*/
 
 .rank-list {
     border: 1px solid #e6e6e6;
     margin-top: 30px;
-    overflow: hidden;
 }
-
 .rank-list h3 {
-    font-size: 13px;
-    color: #3d3d3d;
+    font-size: 1em;
+    color: #938989;
     background: #f5f5f5;
     padding: 0 16px;
     margin-top: 0px;
-    height: 38px;
     line-height: 38px;
     font-weight: 600;
 }
-
 .rank-list ul {
     padding-left: 0px;
 }
-
 .rank-list span {
     width: 60px;
     float: left;
@@ -339,8 +146,29 @@
     font-weight: 600;
     color: #c88326;
 }
-
 .rank-list li {
     font-size: 15px;
     color: #858585;
+}
+
+/* ------------ */
+@media screen and (max-width:660px){
+    .container-fluid{
+        margin: 0px;
+        padding: 0px;
+    }
+    .main-body{
+        margin: 0;
+        border: none;
+    }
+    .swicth-box{
+        margin: 0;
+    }
+    .nav-tabs a{
+        padding: 5px 3px;
+    }
+
+    .panel-body{
+        padding: 0.5em 0em;
+    }
 }

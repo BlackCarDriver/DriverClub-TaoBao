@@ -8,32 +8,33 @@
     </div>
     <div class="row">
         <div class="col-md-7">
-            <div class="row  mainbody">
+            <div class="row  mainbody g-bg-box">
             <!--预览效果-->
-            <div class="col-md-5">
-                    <div class="goods-box2">
+            <div class="col-md-5 col-sm-12">
+                    <div class="goods-box">
                         <img class="img-thumbnail" src={{headImgUrl}}>
-                        <div class="row">
-                            <p class="good-name">{{goodsname}}</p>
+                        <div class="row  g-sharnk">
+                            <p class="good-name g-sharnk">{{goodsname}}</p>
                           </div>
-                        <div class="row">
+                        <div class="row good-title  g-sharnk">
                           <p class="good-title">{{title}}</p>
                         </div>
                         <div class="row">
-                            <div class="user-date">
-                              <p><span class="glyphicon glyphicon-user"></span> {{username}}</p>
-                              <p><span class="glyphicon glyphicon-calendar"></span> {{date}}</p>
+                            <div class="user-date g-sharnk">
+                              <p style="font-size: 1em"><span class="glyphicon glyphicon-user"></span> {{username}}</p>
+                              <p  style="font-size: 0.9em"><span class="glyphicon glyphicon-calendar"></span> {{date}}</p>
                             </div>
                             <div class="price-box"> 
-                              <div class="goods-price">￥{{price}}</div>
+                              <div class="goods-price g-sharnk">￥{{price}}</div>
                             </div>   
                         </div>
                       
                     </div><!--good-box end-->
                     <strong class="warning">{{warnmsg}}</strong>    
             </div>
+
             <!--封面设置-->
-            <div class="col-md-7 h260px">
+            <div class="col-md-7 col-sm-12">
                 <div class="panel panel-primary">
                     <div class="panel-heading" >基本设置</div>
                      <dl class="setting-box">
@@ -84,7 +85,7 @@
         </div>    
         </div>
         <!--规则说明-->
-        <div class="col-md-5 upload-rule" > 
+        <div class="col-md-5 col-sm-12 upload-rule" > 
             <div class="panel panel-default">
                 <div class="panel-heading"><span class="glyphicon glyphicon-pushpin"></span>上传规则</div>
                 <div class="panel-body ">

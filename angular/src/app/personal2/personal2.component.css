@@ -1,14 +1,7 @@
 .message{
-    background-color: #fff;
-    border: 2px solid #e6e6e6;
-    border-radius: 4px;
-    box-sizing: border-box;
-    display: block;
     padding: 10px 40px 10px 40px;
-    margin-bottom: 10px;
-}
-.msg1{
-    height: 150px;
+    margin: 10px auto;
+    max-width: 800px;
 }
 .msg2{
     height: 30px;
@@ -17,16 +10,11 @@
     color: #FFC107;
     font-size: x-large;
 }
-.ico1{
-    margin: 0px 10px;
-    color: #607D8B;
-}
 .head-img{
     width: 120px;
     height: 120px;
     border-radius: 120px;
 }
-
 .name{
     width: 60%;
     display: inline-block;
@@ -65,11 +53,10 @@
     margin: 10px;
     margin-left: 2em;
 }
-.msg-box{
-    margin-top: 6px;
-    color: #6e6d6d;
-}
-.msg{
-    font-size: 1.2em;
-    font-weight: 600;
+
+@media screen and (max-width:600px) {
+    .message{
+        margin: 0;
+        padding: 1em;
+    }
 }

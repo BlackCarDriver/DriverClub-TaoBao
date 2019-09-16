@@ -1,62 +1,55 @@
 
-<div class="container">
+<div class="container" style="color: #888;">
 
-    <div class="row path">
-        <ol class="breadcrumb">
-            <li><a routerLink="/homepage">交易区</a></li>
-            <li><a routerLink="/personal">我的主页</a></li>
-            <li class="active">修改信息</li>
-        </ol>
-    </div>
-
-  <!--第一行-->
-    <div class="row msghead">
-      <div class="col-md-2 headimg">
-         <img src={{headimgurl}} class="img1">
+<!--head row-->
+    <div class="row pbox msghead">
+      <div class="col-md-2 col-xs-12" style="height: 100%;">
+         <img src={{headimgurl}} class="myimg">
       </div>
-      <div class="col-md-7">
-            <div class="row username"><h3>{{username}}</h3></div>
-            <div class="row usersign"><p>{{sign}}</p></div>
+      <div class="col-md-7 col-xs-12">
+            <div class="row username"><h3 style="color: #35a1c1">{{username}}</h3></div>
+            <div class="row"><p style="font-weight: 600;">{{sign}}</p></div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 col-xs-12">
           <input type="file" class="hidden" id="uploadheadimg">
           <button id="upload" class="hidden" (click)="upload()"></button>
           <button class="btn btn-info" (click)="selectImg()"><span class="glyphicon glyphicon-camera"></span> 修改头像</button>
       </div>
     </div>
-    <div class="row msgbox1 basemsg">
+<!-- base message -->
+    <div class="row pbox">
         <div class="msgboxhead">
             <h4>基本信息</h4>
-            <span class="userid">( ID: {{userid}} )</span>
+            <span style="margin-left: 1em;">( ID: {{userid}} )</span>
             <button class="btn btn-info" (click)="ChangeBaseMsg()">保存</button>
             <button class="btn btn-default hidden" (click)="ClearBaseMsg()" id="cancel1">取消</button>
         </div>
-        <div class="information">
-            <dl>
-                <dt>我的昵称</dt>
-                <dd class="info_name">
-                <input id="myname" type="text" class="info_val baseinput" value={{username}}>
-                </dd>
-            </dl>
-            <dl>
-                <dt>我的性别</dt>
-                <dd class="info_name">
-                    <a class="sexalbtn" id="boybtn" (click)="setboy(1)">BOY</a>
-                    <a class="sexalbtn isnot" id="girlbtn" (click)="setboy(0)">GIRL</a>
-                </dd>
-            </dl>
-            <dl>
-                <dt>个性签名</dt>
-                <dd class="info_name">
-                <input id="mysign" type="text" class="info_val baseinput" value={{sign}}>
-                </dd>
-            </dl>
-            <dl>
-                <dt>所在年级</dt>
-                <dd class="info_name">
+        <div class="info-box">
+            <div class="row info-row">
+                <div class="dn dr">我的昵称</div>
+                <div class="dv dr">
+                    <input id="myname" type="text" class="g-input" value={{username}}>
+                </div>
+            </div>
+            <div class="row info-row">
+                <div class="dn dr">我的性别</div>
+                <div class="dv dr">
+                    <a class="sexalbtn" style="background-color: #71dd5d;" id="boybtn" (click)="setboy(1)">BOY</a>
+                    <a class="sexalbtn isnot" style="background-color: #ff3086;" id="girlbtn" (click)="setboy(0)">GIRL</a>
+                </div>
+            </div>
+            <div class="row info-row">
+                    <div class="dn dr">个性签名</div>
+                    <div class="dv dr">
+                        <input id="mysign" type="text" class="g-input" value={{sign}}>
+                    </div>
+            </div>
+            <div class="row info-row">
+                <div class="dn dr">所在年级</div>
+                <div class="dv dr">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          {{grade}} <span class="caret"></span>
+                            {{grade}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                             <li (click)="setgrade(2013)"><a>2013</a></li>
@@ -68,51 +61,48 @@
                             <li (click)="setgrade(2019)"><a>2019</a></li>
                         </ul>
                     </div>
-                </dd>
-            </dl>
-            <dl>
-                <dt>所属学院</dt>
-                <dd class="info_name">
-                <input id="mycolleage" type="text" class="info_val" value={{colleage}}>
-                </dd>
-            </dl>
-            <dl>
-                <dt>宿舍楼栋</dt>
-                <dd class="info_name">
-                <input id="mydorm" type="text" class="info_val" value={{dorm}}>
-                </dd>
-            </dl>
+                </div>
+            </div>
+            <div class="row info-row">
+                    <div class="dn dr">所属学院</div>
+                    <div class="dv dr">
+                        <input id="mycolleage" type="text" class="g-input" value={{colleage}}>
+                    </div>
+            </div>
+            <div class="row info-row">
+                    <div class="dn dr">宿舍楼栋</div>
+                    <div class="dv dr">
+                        <input id="mydorm" type="text" class="g-input" value={{dorm}}>
+                    </div>
+            </div>
         </div>
-
     </div>
-
-    <div class="row msgbox1 basemsg2">
+<!-- connect board -->
+    <div class="row pbox">
         <div class="msgboxhead">
             <h4>联系方式</h4>
-            <span class="userid">(以下信息只能被已注册的用户看见)</span>
             <button class="btn btn-info" (click)="ChangeContact()">保存</button>
             <button id="cancel2" class="btn btn-default hidden" (click)="ClearContactMsg()">取消</button>
         </div>
-        <div class="information">
-            <dl>
-                <dt>邮箱地址</dt>
-                <dd class="info_name">
-                <input id="myemail" type="text" class="info_val contactinput" value={{email}}>
-                </dd>
-            </dl>
-            <dl>
-                <dt>QQ号码</dt>
-                <dd class="info_name">
-                <input id="myqq" type="text" class="info_val contactinput" value={{qq}}>
-                </dd>
-            </dl>
-            <dl>
-                <dt>手机号码</dt>
-                <dd class="info_name">
-                <input id="myphone" type="text" class="info_val contactinput" value={{phone}}>
-                </dd>
-            </dl>
-
+        <div class="info-box">
+        <div class="row info-row">
+                <div class="dn dr">邮箱地址</div>
+                <div class="dv dr">
+                    <input id="myemail" type="text" class="g-input" value={{email}}>
+                </div>
+        </div>
+        <div class="row info-row">
+                <div class="dn dr">QQ号码</div>
+                <div class="dv dr">
+                    <input id="myqq" type="text" class="g-input" value={{qq}}>
+                </div>
+        </div>
+        <div class="row info-row">
+                <div class="dn dr">手机号码</div>
+                <div class="dv dr">
+                    <input id="myphone" type="text" class="g-input" value={{phone}}>
+                </div>
+        </div>
         </div>
     </div>
 
