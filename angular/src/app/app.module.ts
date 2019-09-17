@@ -12,7 +12,6 @@ import { ChgmymsgComponent } from './chgmymsg/chgmymsg.component';
 import { UploadgoodsComponent } from './uploadgoods/uploadgoods.component';
 import { GoodspageComponent } from './goodspage/goodspage.component';
 import { HttpClientModule }    from '@angular/common/http';
-import { AboutComponent } from './about/about.component';
 import { Personal2Component } from './personal2/personal2.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { Personal2Component } from './personal2/personal2.component';
     ChgmymsgComponent,
     UploadgoodsComponent,
     GoodspageComponent,
-    AboutComponent,
     Personal2Component
   ],
   imports: [

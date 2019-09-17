@@ -4,7 +4,7 @@ import { RegisterData, LoginData, MyStatus, RequertResult, RequestProto } from '
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
-//  import * as $ from 'jquery';
+// import * as $ from 'jquery';
 declare let $: any;
 
 //  regex of email
@@ -25,7 +25,7 @@ const repectname  = -20;
 const repectemail = -30;
 const othererror  = -99;
 const unsafe = -999;
-
+var iscoll = true;
 @Component({
   selector: 'app-navig',
   templateUrl: './navig.component.html',
@@ -75,9 +75,7 @@ setstate() {
 
 //init the function of compoment
 initComp() {
-  $("#user-toggle").click(function(){
-    $("#shortmsg").dropdown('toggle');
-  })
+
 }
 
 //show sing/regist box when click singin/reginst

@@ -3,14 +3,13 @@
     bottom: 0px;
     margin-top: 60px;
 }
-
 .main-footer {
     padding-top: 20px;
     background: #202020;
     color: #e1dcdc;
     border-bottom: 1px solid #303030;
+    margin-top: 2em;
 }
-
 .title {
     margin-top: 0;
     padding-bottom: 7px;
@@ -18,7 +17,6 @@
     margin-bottom: 21px;
     position: relative;
 }
-
 .widget .title:after {
     content: "";
     width: 40%;
@@ -28,24 +26,20 @@
     left: 0;
     bottom: -1px;
 }
-
 .main-footer .widget .tag-cloud a {
     border: 1px solid #494747;
 }
-
 .main-footer .widget {
     padding: 10px 30px;
     box-sizing: border-box;
     text-align: initial;
 }
-
 .widget .tag-cloud a {
     padding: 2px 4px;
     color: #959595;
     margin: 0 7px 7px 0;
     font-size: 0.9em;
 }
-
 .copyright {
     background: #111;
     color: #555;
