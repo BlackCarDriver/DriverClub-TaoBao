@@ -1,29 +1,35 @@
 /* user message box */
-.user{
+
+.user {
     background-color: #fff;
     text-align: center;
     padding: 0.4em 1em;
 }
-.headimg{
-    --width : 70px;
-    width:var(--width);
+
+.headimg {
+    --width: 70px;
+    width: var(--width);
     height: var(--width);
     border-radius: var(--width);
 }
-.username{
+
+.username {
     border-bottom: 1px solid #d4dfdf;
     padding-bottom: 0.4em;
     font-size: 1.6em;
     margin-top: 0;
 }
-.mesage{
+
+.mesage {
     width: 180px;
 }
-.msgval{
+
+.msgval {
     font-weight: 600;
     padding-left: 0.3em;
 }
-.mesage dt{
+
+.mesage dt {
     text-align: left;
     margin: 3px 5px 3px 5px;
     font-size: 1.1em;
@@ -31,20 +37,24 @@
     font-weight: 500;
     color: #777;
 }
-.block{
+
+.block {
     display: block;
 }
+
 .dropdown-menu {
     padding: 0px;
     overflow: hidden;
 }
 
 /*注册登录框 */
-.sethigth{
+
+.sethigth {
     width: 450px;
     padding-bottom: 20px;
 }
-.clearfix{
+
+.clearfix {
     background: #313131;
     padding: 20px 0px 0px 0px;
     margin-top: 35px;
@@ -53,13 +63,15 @@
     color: #aaa;
     font-size: 14px;
 }
+
 .login-center {
     width: 400px;
     box-sizing: border-box;
     padding: 0 40px;
     margin: 20px 10px 10px 20px;
 }
-.inputbox{
+
+.inputbox {
     height: 30px;
     width: 260px;
     border: 1px solid #337ab7;
@@ -67,27 +79,30 @@
     margin-left: 10px;
 }
 
-.checkbox1{
-    margin-right:5px;
-    width:15px;
+.checkbox1 {
+    margin-right: 5px;
+    width: 15px;
     height: 15px;
     display: inline-block;
 }
-.taller{
+
+.taller {
     position: relative;
     bottom: 3px;
 }
-.emailbox{
-    width:190px;
+
+.emailbox {
+    width: 190px;
     margin-right: 5px;
 }
 
-.warm{
+.warm {
     color: red;
     left: 20%;
     position: absolute;
 }
-.disablebtn{
+
+.disablebtn {
     width: 280px;
     height: 40px;
     line-height: 40px;
@@ -100,21 +115,25 @@
     color: #ffffff;
 }
 
+
 @media screen and (max-width:600px) {
-    .user{
+    .user {
         background-color: unset;
     }
-    .mesage dt, .msgval{
+    .mesage dt, .msgval {
         color: #d2d7ff;
     }
     .mesage {
         width: 80%;
         margin: 0em auto;
     }
-    .username{
+    .username {
         border-bottom: 1px solid #7b7b7b;
     }
     .username a, .block {
-        color:var(--tmcl-1);
+        color: var(--tmcl-1);
+    }
+    .public-box {
+        width: 90%;
     }
 }

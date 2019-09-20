@@ -1,0 +1,36 @@
+.left-ico {
+    float: left;
+    width: 50px;
+}
+
+.right-msg {
+    float: left;
+    width: 100%;
+    padding-left: 50px;
+    margin-left: -50px;
+    text-align: center;
+}
+
+.public-box {
+    width: 23em;
+    margin: 4em auto;
+    padding: 0.5em 1em 0;
+    color: #888;
+    font-weight: 600;
+    font-size: 1.3em;
+    word-break: break-word;
+}
+
+#eos {
+    border-radius: 3em;
+    padding: 8px;
+    float: left;
+    font-size: 30px;
+    color: white;
+}
+
+@media screen and (max-width:600px) {
+    .public-box {
+        width: 90%;
+    }
+}

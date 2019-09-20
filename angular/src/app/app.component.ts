@@ -6,5 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'mywebsite';
+  showMsg = ""; //the text show in model box
+  showStatus = 0; //the status of model box
+  ngOnInit() {
+    
+  }
+  public showMsgBox(status:number, msg:string, err?:string){
+    this.showMsg = msg;
+    this.showStatus = status;
+    console.log(msg+":"+err);
+    $('#showbtn').click();
+  }
+
 }

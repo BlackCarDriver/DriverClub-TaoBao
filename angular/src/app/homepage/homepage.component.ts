@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
+import { AppComponent } from '../app.component';
 import {  HomePageGoods,GoodsType,GoodSubType } from '../struct';
 
 // Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
@@ -38,7 +39,8 @@ export class HomepageComponent implements OnInit {
    pageboxarray = new Array;
 
   constructor(
-    private server : ServerService
+    private server : ServerService,
+    private app:AppComponent,
   ) { }
  
   ngOnInit() {
@@ -46,6 +48,7 @@ export class HomepageComponent implements OnInit {
     this.GetGoods();
     this.GetType();
     this.set_mainbody_height();
+    // this.nav.showMsgBox(1,"dfdfdfdf");
   }
 
   //get a page of goods list data 🍋🔥🍇
@@ -55,7 +58,7 @@ export class HomepageComponent implements OnInit {
       result=>{
         if(result.statuscode==0){
           if (result.rows==0){
-            alert("没有找到数据");
+            this.app.showMsgBox(1,"没有找到数据！")
           }
           this.goodsarray = result.data;
           this.totalpage = Math.ceil(result.sum / this.server.homepage_goods_perpage);
@@ -64,7 +67,7 @@ export class HomepageComponent implements OnInit {
             this.pageboxarray.push(i);
           }
         }else{
-          alert("获取数据失败："+result.msg);
+          this.app.showMsgBox(-1,"获取数据失败："+result.msg)
         }
       },
       error=>{console.log("GetHomePageGoods() fail: "+ error);}
@@ -85,7 +88,7 @@ export class HomepageComponent implements OnInit {
       return;
     }
     if (input.length > 20) {
-      alert("名字太长！");
+      this.app.showMsgBox(1,"名字太长！");
       return;
     }
     this.lookingtype = "like";

@@ -100,7 +100,8 @@
     width: 400px;
     height: 200px;
     padding: 6px;
-    background-color: aliceblue;
+    background-color: #d3dde6;
+    margin: 5em auto;
 }
 
 .send-text-box textarea {
@@ -108,10 +109,7 @@
 }
 
 .send-text-box button {
-    margin-right: 1em;
-    padding: 6px 10px;
-    height: 40px;
-    width: 90px;
+    margin: 3px 1em;
 }
 .showbox{
     overflow: hidden;
@@ -223,5 +221,8 @@
     }
     .textpage{
         border-left-width: 0px;
+    }
+    .send-text-box{
+        width: 90%;
     }
 }

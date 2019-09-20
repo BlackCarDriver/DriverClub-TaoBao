@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
 import { RegisterData, LoginData, MyStatus, RequertResult, RequestProto } from '../struct';
+import { AppComponent } from '../app.component';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
@@ -16,16 +17,9 @@ const passwordreg = /^[a-zA-Z._0-9]{6,20}$/;
 // the regex of comfirm code
 const codereg = /^[0-9]{6}$/;
 // the return state 
-const worng     = -1;
 const	scuess    = 1;
 const	enable    = 2;
 const	disable   = -2;
-const unknowerr = -3;
-const repectname  = -20;
-const repectemail = -30;
-const othererror  = -99;
-const unsafe = -999;
-var iscoll = true;
 @Component({
   selector: 'app-navig',
   templateUrl: './navig.component.html',
@@ -37,9 +31,12 @@ export class NavigComponent implements OnInit {
   data2 = new LoginData();
   usermsg = new MyStatus();
   tuserid = "";
+
 constructor(
   // private localdata: LocalStorage,
-  private server: ServerService
+  private server: ServerService,
+  private app:AppComponent,
+  
 ) { }
 
 ngOnInit() {
@@ -66,16 +63,18 @@ setstate() {
       } else {
         console.log("Get naving data fail: " + result.msg);
       }
-    }, error => { alert("GetMymsg fail:" + error) });
+    }, error => { this.app.showMsgBox(-1,"GetMymsg fail:" + error) });
   }
 }
 
 
 //######################### 组件控制 ###########################################
 
+
+
 //init the function of compoment
 initComp() {
-
+   
 }
 
 //show sing/regist box when click singin/reginst

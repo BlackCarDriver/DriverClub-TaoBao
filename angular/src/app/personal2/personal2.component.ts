@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserMessage, RequestProto } from '../struct';
 import { ServerService } from '../server.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-personal2',
@@ -14,12 +15,15 @@ export class Personal2Component implements OnInit {
   btn_like_sho = "点赞";
   is_concern = true;
   is_like= false;
-  constructor(private server: ServerService) { }
+  constructor(
+    private server: ServerService,
+    private app:AppComponent,
+  ) { }
 
   ngOnInit() {
     this.targetid = this.server.LastSection();
     if (this.targetid==""){
-      alert("获取目标用户ID错误");
+      this.app.showMsgBox(-1, "无法获取用户id，请稍后再试");
       window.history.back();
       return;
     }
@@ -38,7 +42,7 @@ export class Personal2Component implements OnInit {
         this.data = result.data;
         console.log(this.data)
       }else{
-        alert("get other message fail: "+ result.msg);
+        this.app.showMsgBox(-1, "获取页面数据失败，请刷新试试" , result.msg );
       }
     }, error=>{console.log("GetMymsg() fail" + error)});
   }
@@ -55,13 +59,13 @@ export class Personal2Component implements OnInit {
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
-        alert("点赞成功！");
+        this.app.showMsgBox(0, "点赞成功");
         this.is_like =true;
       }else{
-        alert("点赞失败："+result.msg);
+        this.app.showMsgBox(-1, "点赞失败，请稍后再试");
       }
     },error=>{
-      alert("updateLike() fail: "+error); 
+      this.app.showMsgBox(-1, "请求错误，请稍后再试" , error);
     });
   }
 
@@ -77,18 +81,26 @@ export class Personal2Component implements OnInit {
     if(this.is_concern==false){  //cancel concern
       postdata.api = "addconcern";
       this.server.SmallUpdate(postdata).subscribe(result => {
-        if(result.statuscode==0){alert("关注成功！"); this.is_concern = true;}
-        else{alert("关注失败："+result.msg);}
+        if(result.statuscode==0){
+          this.app.showMsgBox(0, "关注成功");
+          this.is_concern = true;
+      }else{
+        this.app.showMsgBox(-1, "关注失败，请稍后再试");
+      }
       },err=>{
-        alert("addConcern fail: "+err);
+        this.app.showMsgBox(-1, "请求失败，请稍后再试", err);
       });
     }else{  //add into concern list
       postdata.api = "uncollectuser";
       this.server.DeleteMyData(postdata).subscribe(result => {
-        if(result.statuscode==0){alert("已取消关注！"); this.is_concern = false;}
-        else{alert("取消关注失败："+result.msg);}
+        if(result.statuscode==0){
+          this.app.showMsgBox(0, "取消关注成功");
+          this.is_concern = false;
+        }else{
+          this.app.showMsgBox(-1, "取消关注失败，请稍后再试",result.msg);
+        }
       },err=>{
-        alert("uncollectuser fail: "+err);
+        this.app.showMsgBox(-1, "请求错误", err);
       });
     }
    
@@ -101,7 +113,7 @@ export class Personal2Component implements OnInit {
     }
     let message = $("#messagesender").val().toString();
     if (message=="" || message.length > 200){
-      alert("消息太长或为空");
+      this.app.showMsgBox(1, "消息太长或为空");
       return;
     }
     let postdata : RequestProto = {
@@ -112,12 +124,12 @@ export class Personal2Component implements OnInit {
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
-        alert("发送成功！");
+        this.app.showMsgBox(0, "发送成功");
       }else{
-        alert("发送失败："+result.msg);
+        this.app.showMsgBox(-1, "发送失败，请稍后再试");
       }
     }, error=>{
-        alert("sendMessage() fail: "+error);
+        this.app.showMsgBox(-1, "请求失败，请稍后再试",error);
     });
   }
   
@@ -130,7 +142,7 @@ export class Personal2Component implements OnInit {
     };
     this.server.GetMyMsg(postdata).subscribe(result=>{
       if(result.statuscode!=0){
-        alert("获取用户状态失败："+result.msg);
+        this.app.showMsgBox(-1, "获取用户状态失败，请稍后再试", result.msg);
       }else{
         let state = {concern:false, like:false};
         state = result.data;

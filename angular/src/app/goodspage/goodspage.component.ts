@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
 import {RequestProto} from '../struct';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-goodspage',
@@ -18,12 +19,13 @@ export class GoodspageComponent implements OnInit {
 
   constructor(
     private server: ServerService,
+    private app:AppComponent,
   ) { }
 
   ngOnInit() {
     this.goodid = this.server.LastSection();
     if(this.goodid==""){
-      alert("获取商品ID失败！");
+      this.app.showMsgBox(-1, "无法获取商品ip,请刷新试试" );
       window.history.back();
     }
     this.getItPage(this.goodid);
@@ -41,13 +43,13 @@ export class GoodspageComponent implements OnInit {
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if(result.statuscode!=0){ 
-          alert("getItPage():"+result.msg);
+          this.app.showMsgBox(-1, "获取页面数据失败，请刷新试试" , result.msg );
       }else{
         this.goodsdt = result.data;
         $("#text-targer").html(this.goodsdt.detail);
       }
     },err=>{
-        alert("getItPage fail: "+err);
+        this.app.showMsgBox(-1, "请求失败，请稍后再试" , err);
     });
   }
 
@@ -59,12 +61,12 @@ export class GoodspageComponent implements OnInit {
     };
     this.server.GetGoodsDeta(postdata).subscribe(result=>{
       if(result.statuscode!=0){
-        alert("getComment():"+result.msg);
+        this.app.showMsgBox(-1, "获取评论数据失败，请稍后再试" , result.msg);
       }else{
         this.commentdata = result.data;
       }
     }, err=>{
-       alert("getComment fail: "+err);
+      this.app.showMsgBox(-1, "请求失败，请稍后再试" , err);
     });
   }
 
@@ -77,15 +79,14 @@ export class GoodspageComponent implements OnInit {
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if (result.statuscode != 0) {
-        alert("获取数据失败: "+result.msg);
+        this.app.showMsgBox(-1, "获取商品状态失败，请稍后再试" , result.msg);
       } else {
         this.state = result.data;
         if (this.state.collect) { $("#collect-btn").removeClass('btn-info'); this.collectbtnshow=" 已收藏 ";}
         if (this.state.like) { $("#like-btn").removeClass('btn-info'); this.likebtnshow=" 已点赞 "}
-        this.getStatement();
       }
     }, err => {
-      alert("getStatement unresponse:" + err);
+      this.app.showMsgBox(-1, "获取数据失败，请稍后再试", err);
     })
   }
 
@@ -100,13 +101,13 @@ export class GoodspageComponent implements OnInit {
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        alert("点赞成功!");
+        this.app.showMsgBox(0, "点赞成功");
         this.getStatement();
       } else {
-        alert("点赞失败："+result.statuscode+result.msg);
+        this.app.showMsgBox(-1, "点赞失败，请稍后再试" , result.msg);
       }
     },error=>{
-        alert("error happen in likeGoods: "+error)
+      this.app.showMsgBox(-1, "获取数据失败，请稍后再试" , error);
     });
   }
 
@@ -121,10 +122,13 @@ export class GoodspageComponent implements OnInit {
       targetid:this.goodid,
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
-      if (result.statuscode==0){alert("收藏成功！");}
-      else{alert("收藏失败："+result.msg);}
+      if (result.statuscode==0){
+        this.app.showMsgBox(0, "收藏成功");
+        ;}else{
+        this.app.showMsgBox(-1, "收藏失败");
+      }
     },error=>{
-      alert("error happen in  collect():"+error);
+      this.app.showMsgBox(-1, "请求收藏失败，请稍后再试" , error);
     });
   }
 
@@ -135,7 +139,8 @@ export class GoodspageComponent implements OnInit {
     }
     let message = $("#messagesender").val().toString();
     if (message.length==0 || message.length>200){
-      alert("消息太长或为空");
+      this.app.showMsgBox(1, "消息太长或为空");
+      $("#sendcancel").click();
       return;
     }
     let postdata : RequestProto = {
@@ -145,10 +150,18 @@ export class GoodspageComponent implements OnInit {
       data:{message:message},
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
-        if (result.statuscode==0){alert("发送成功！");}
-        else{alert("发送失败："+result.statuscode+":"+result.msg);}
+        if (result.statuscode==0){
+          this.app.showMsgBox(0, "发送成功");
+          $("#messagesender").val("");
+          $("#sendcancel").click();
+        }
+        else{
+          this.app.showMsgBox(-1, "发送失败" , result.msg);
+          $("#sendcancel").click();
+        }
     },error=>{
-        alert("error happen in sendMessage():"+error);
+      this.app.showMsgBox(-1, "发送信息，请稍后再试" , error);
+      $("#sendcancel").click();
     });
   }
 
@@ -159,7 +172,7 @@ export class GoodspageComponent implements OnInit {
     }
     let comment = $("#comment-area").val().toString();
     if (comment == "") {
-      alert("内容不能为空");
+      this.app.showMsgBox(1, "发送内容不能为空");
       return;
     }
     let postdata : RequestProto = {
@@ -171,14 +184,14 @@ export class GoodspageComponent implements OnInit {
     //todo:检查评论内容
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
-        alert("评论成功！");
+        this.app.showMsgBox(0, "评论成功");
         this.getComment(this.goodid);
         $("#comment-area").val("");
       }else{
-        alert("评论失败："+result.msg);
+        this.app.showMsgBox(-1, "评论失败，请扫后再试" , result.msg);
       }
     }, error=>{
-      alert("error happen in sendComment():"+error);
+      this.app.showMsgBox(-1, "连接错误，请稍后再试" , error);
     });
   }
 

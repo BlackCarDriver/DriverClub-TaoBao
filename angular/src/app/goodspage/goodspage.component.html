@@ -27,17 +27,18 @@
         id="like-btn">
         <span class="glyphicon glyphicon-thumbs-up"></span>{{likebtnshow}}</button>
       <button type="button" class="btn btn-default btn-info" data-toggle="modal"
-        data-target=".bs-example-modal-sm">
+        data-target="#sendbox">
         <span class="glyphicon glyphicon-comment"></span> 私聊
       </button>
       <!--模态框-->
-      <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog"
+      <div class="modal fade" id="sendbox" tabindex="-1" role="dialog"
         aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm" role="document">
           <div class="modal-content send-text-box">
             <textarea id="messagesender" type="text" class="form-control"
-              placeholder="这里输入你想发送的私信..."></textarea>
+              placeholder="这里输入你想发送的信息..."></textarea>
             <button type="button" class="btn btn-info" (click)="sendMessage()">私聊</button>
+            <button type="button" class="btn btn-info" data-dismiss="modal" id="sendcancel">取消</button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserMessage, GoodsShort, MyMessage, Rank, User, RequestProto } from '../struct';
 import { ServerService } from '../server.service';
+import { AppComponent } from '../app.component';
 declare let $: any;
 
 @Component({
@@ -35,7 +36,10 @@ export class PersonalComponent implements OnInit {
   mc_nowat = 1;
   mc_offset = 0;
   mc_array = new Array;
-  constructor(private server: ServerService) { }
+  constructor(
+    private server: ServerService,
+    private app:AppComponent,
+    ) { }
 
   ngOnInit() {
     if(this.server.IsNotLogin()){
@@ -58,7 +62,9 @@ export class PersonalComponent implements OnInit {
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) { this.msg = result.data; }
-      else { alert("get mymsg fail: " + result.msg); }
+      else { 
+        this.app.showMsgBox(-1, "请求个人信息失败,请刷新试试" , result.msg )
+      }
     }, error => {
       console.log("GetMyMsg() fail: " + error)
     });
@@ -75,7 +81,7 @@ export class PersonalComponent implements OnInit {
         this.icare = result.data[0];
         this.carei = result.data[1];
       } else {
-        alert("GetMyMsg fail:" + result.msg);
+        this.app.showMsgBox(-1, "请求关注信息失败,请刷新试试" , result.msg )
       }
     }, error => { console.log(error) });
   }
@@ -123,7 +129,7 @@ export class PersonalComponent implements OnInit {
           }
         }
       } else {
-        alert("get my collect message fail:" + result.msg);
+        this.app.showMsgBox(-1, "请求收藏数据失败,请刷新试试" , result.msg )
       }
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
@@ -148,7 +154,7 @@ export class PersonalComponent implements OnInit {
           }
         }
       } else {
-        alert("get my messges fail:" + result.msg);
+        this.app.showMsgBox(-1, "请求私信数据失败,请刷新试试" , result.msg );
       }
     }, error => { console.log("GetMyMsg() fail:" + error); });
   }
@@ -163,7 +169,7 @@ export class PersonalComponent implements OnInit {
       if (result.statuscode == 0) {
         this.hero = result.data;
       } else {
-        alert("get userrank fail:" + result.msg);
+        this.app.showMsgBox(-1, "请求排名数据失败,请刷新试试" , result.msg );
       }
     }, error => { console.log("GetMyMsg() fail: " + error) });
   }
@@ -177,10 +183,10 @@ export class PersonalComponent implements OnInit {
     };
     this.server.DeleteMyData(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        alert("删除成功!");
+        this.app.showMsgBox(0, "删除成功!");
         this.getmymgoods();
       } else {
-        alert("DeleteMyData() fail:" + result.msg);
+        this.app.showMsgBox(-1, "请求删除商品失败,请刷新试试" , result.msg );
       }
     }, error => { console.log(error) });
   }
@@ -194,10 +200,10 @@ export class PersonalComponent implements OnInit {
     };
     this.server.DeleteMyData(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        alert("取消收藏成功!");
+        this.app.showMsgBox(0, "取消收藏成功");
         this.getmycollect();
       } else {
-        alert("cancelCollect() fail:" + result.msg);
+        this.app.showMsgBox(-1, "请求取消收藏失败,请刷新试试" , result.msg );
       }
     }, error => { console.log(error) });
   }
@@ -211,10 +217,10 @@ export class PersonalComponent implements OnInit {
       };
       this.server.DeleteMyData(postdata).subscribe(result => {
         if (result.statuscode == 0) {
-          alert("删除消息成功!");
+          this.app.showMsgBox(0, "删除成功" );
           this.getmymessage();
         } else {
-          alert("deleteMessage() fail:" + result.msg);
+          this.app.showMsgBox(-1, "请求删除消息失败，请稍后重试" + result.msg);
         }
       }, error => { console.log(error) });
     }

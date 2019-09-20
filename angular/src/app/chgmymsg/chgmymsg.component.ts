@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
 import { PersonalSetting, RequestProto } from '../struct';
+import { AppComponent } from '../app.component';
 
 declare var $: any;
 
@@ -27,7 +28,10 @@ export class ChgmymsgComponent implements OnInit {
   //上传到服务器和请求获取的数据
   maindata = new PersonalSetting();
 
-  constructor(private server: ServerService) { }
+  constructor(
+    private server: ServerService,
+    private app:AppComponent,
+  ) { }
 
   ngOnInit() {
     if (this.server.IsNotLogin()) {
@@ -52,14 +56,14 @@ export class ChgmymsgComponent implements OnInit {
         var pos = filename.lastIndexOf(".");
         var filetype = filename.substring(pos, filename.length)  //此处文件后缀名也可用数组方式获得str.split(".") 
         if (filetype.toLowerCase() != ".jpg" && filetype.toLowerCase() != ".png") {
-          alert("请上传 png 或 jpg 格式的图片");
+          this.app.showMsgBox(1, "请上传 png 或 jpg 格式的图片");
           return;
         }
         //判断文件大小
         var files = evt.currentTarget.files;
         var filesize = files[0].size;
         if (filesize > 50 * 1024) {
-          alert("请上传50kb 以下的图片");
+          this.app.showMsgBox(1, "请上传50kb 以下的图片");
           return;
         }
         //检查无误，可以上传,通过按钮点击时间间接激发
@@ -104,7 +108,7 @@ export class ChgmymsgComponent implements OnInit {
           this.usersex = "BOY";
         }
       } else {
-        alert("get my messgage fail:" + result.msg);
+        this.app.showMsgBox(1, "请求失败,请稍后再试", result.msg);
       }
     }, error => { console.log(error) });
   }
@@ -125,12 +129,14 @@ export class ChgmymsgComponent implements OnInit {
         };
         this.server.UpdateMessage(postdata).subscribe(result => {
           if (result.statuscode == 0) {
-            alert("修改成功！");
+            this.app.showMsgBox(0, "修改成功");
           } else {
-            alert("修改失败：" + result.msg);
+            this.app.showMsgBox(-1, "修改失败，请稍后再试",result.msg);
           }
         }, error => { console.log("UpdateMessage() fail: " + error); });
-      } else { alert("上传失败：" + result.msg); }
+      } else {
+         this.app.showMsgBox(-1, "上传失败", result.msg);
+        }
     }, error => { console.log("UploadImg() fail: " + error) });
   }
 
@@ -149,9 +155,9 @@ export class ChgmymsgComponent implements OnInit {
     };
     this.server.UpdateMessage(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        alert("修改成功");
+        this.app.showMsgBox(0, "修改成功");
       } else {
-        alert("修改失败：" + result.msg);
+        this.app.showMsgBox(-1, "修改失败，请稍后再试", result.msg);
       }
     }, error => { console.log("UpdateMessage() fail: " + error); })
   }
@@ -168,11 +174,14 @@ export class ChgmymsgComponent implements OnInit {
     };
     this.server.UpdateMessage(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        alert("修改成功！");
+        this.app.showMsgBox(0, "修改成功");
       } else {
-        alert("修改失败：" + result.msg);
+        this.app.showMsgBox(-1, "修改失败，请扫后再试",result.msg);
       }
-    }, error => { alert("UpdateMessage() fail: " + error); })
+    }, error => {
+        this.app.showMsgBox(-1, "请求失败，请扫后再试", error);
+      }
+    )
   }
   //=================== 设置组件 ==================
 

@@ -2,3 +2,24 @@
 <router-outlet></router-outlet>
 <app-footer></app-footer>
 
+<!-- public model box-->
+<button id="showbtn" data-toggle="modal" data-target="#msgbox" style="display: none;"></button>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" id="msgbox">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content public-box">
+      <div class="row" style="margin-bottom: 0.5em;">
+          <div class="left-ico">
+              <span class="glyphicon glyphicon-remove" id="eos" style="background-color:#ff2121;" *ngIf="showStatus<0"></span>
+              <span class="glyphicon glyphicon-ok" id="eos"  style="background-color:#1ece1e;" *ngIf="showStatus==0"></span>
+              <span class="glyphicon glyphicon-alert" id="eos"  style="background-color:#e6e923;" *ngIf="showStatus>0"></span>
+          </div>
+          <div class="right-msg">
+              <p>{{showMsg}}</p>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

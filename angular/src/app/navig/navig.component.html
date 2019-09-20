@@ -5,7 +5,8 @@
   </a>
   <div class="container-fluid">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navhide">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+        data-target="#navhide">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -16,7 +17,7 @@
         <li><a>关于本站</a></li>
         <li><a id="singin" (click)="showsinginbox()">登录/注册</a></li>
         <li class="dropdown" id="userbox">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button" 
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button"
             aria-haspopup="true" aria-expanded="false" id="user-toggle">
             <span class="glyphicon glyphicon-user"></span> {{usermsg.name}}<span
               class="caret"></span>
@@ -31,10 +32,12 @@
                   <dt>我的积分：<a class="msgval">{{usermsg.credits}}</a></dt>
                   <dt>未读消息：<a class="msgval">{{usermsg.messagenum}}</a></dt>
                   <dt>商品数量：<a class="msgval">{{usermsg.goodsnum}}</a></dt>
-                  <dt>上次登录：<a class="msgval">{{usermsg.lasttime | date:'yyyy-MM-dd'}}</a></dt>
+                  <dt>上次登录：<a class="msgval">{{usermsg.lasttime |
+                      date:'yyyy-MM-dd'}}</a></dt>
                 </dl>
               </div>
-              <a class="block" (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> 退出登录</a>
+              <a class="block" (click)="logout()"><span class="glyphicon
+                  glyphicon-log-out"></span> 退出登录</a>
             </div>
           </ul>
         </li>
@@ -42,8 +45,6 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-
-
 
 <!--模态框-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"

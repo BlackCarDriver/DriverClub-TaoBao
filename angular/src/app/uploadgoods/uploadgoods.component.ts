@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
 import { GoodsType, GoodSubType, UploadGoods } from '../struct';
+import { AppComponent } from '../app.component';
+
 declare var $: any;
 
 
@@ -31,7 +33,10 @@ export class UploadgoodsComponent implements OnInit {
   newtagname = "";
   godostext = "";
 
-  constructor(private server: ServerService) { }
+  constructor(
+    private server: ServerService,
+    private app:AppComponent,
+    ) { }
 
   ngOnInit() {
     //初始化富文本编辑器
@@ -63,7 +68,7 @@ export class UploadgoodsComponent implements OnInit {
         var filesize = files[0].size;
         //  console.log(filesize);
         if (filesize > 102400) {
-          alert("请上传100kb 以下的图片");
+          this.app.showMsgBox(1, "请上传100kb以下的图片");
           return;
         }
         //判断文件类型，并获取文件名到页面
@@ -71,7 +76,7 @@ export class UploadgoodsComponent implements OnInit {
         var pos = filename.lastIndexOf(".");
         var filetype = filename.substring(pos, filename.length)  //此处文件后缀名也可用数组方式获得str.split(".") 
         if (filetype.toLowerCase() != ".jpg" && filetype.toLowerCase() != ".png") {
-          alert("请上传 png 或 jpg 格式的图片");
+          this.app.showMsgBox(1, "请上传 png 或 jpg 格式的图片");
           return;
         } else {
           $("#filename").html(filename);
@@ -98,7 +103,7 @@ export class UploadgoodsComponent implements OnInit {
         if (result.statuscode == 0) {
           this.headImgUrl = result.data;
         } else {
-          alert("上传失败" + result.msg);
+          this.app.showMsgBox(-1, "上传失败，请稍后再试", result.msg);
         }
       }
     )
@@ -108,7 +113,7 @@ export class UploadgoodsComponent implements OnInit {
   Upload() {
     //注意这里跟常规用法不同
     if ($("#check").prop("checked") == false) {
-      alert("请先了解上传规则");
+      this.app.showMsgBox(1, "请先了解上传规则");
       return;
     }
     if (this.checkData() == true) {
@@ -130,13 +135,13 @@ export class UploadgoodsComponent implements OnInit {
         result => {
           if (result.statuscode == 0) {
             this.headImgUrl = result.data;
-            alert("上传成功！")
+            this.app.showMsgBox(0, "上传成功");
           } else {
-            alert("上次失败："+result.msg);
+            this.app.showMsgBox(-1, "上传失败");
           }
         },error=>{console.log("UploadGoodsData() fail:"+error);});
     } else {
-      alert("商品描述有误，请继续完善");
+      this.app.showMsgBox(1, "商品描述有误，请继续完善");
     }
   }
 
