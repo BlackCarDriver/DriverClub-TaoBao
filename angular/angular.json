@@ -23,12 +23,10 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
-              "src/plugin/summernote-lite.css"
+              "src/styles.css"
             ],
             "scripts": [
               "src/plugin/jquery-3.2.1.slim.min.js", 
-              "src/plugin/summernote-lite.js",
               "bootstrap/bootstrap.min.js"
             ]
           },

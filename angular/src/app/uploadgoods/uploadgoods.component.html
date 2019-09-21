@@ -10,8 +10,9 @@
         <div class="col-md-7">
             <div class="row  mainbody g-bg-box">
             <!--预览效果-->
-            <div class="col-md-5 col-sm-12">
-                    <div class="goods-box">
+            <div class="col-md-5 col-sm-12" style="min-width: 250px;">
+                <div class="goods-box">
+                        <span class="label label-primary" style="position: absolute;padding: 5px;">预览效果</span>
                         <img class="img-thumbnail" src={{headImgUrl}}>
                         <div class="row  g-sharnk">
                             <p class="good-name g-sharnk">{{goodsname}}</p>
@@ -34,8 +35,8 @@
             </div>
 
             <!--封面设置-->
-            <div class="col-md-7 col-sm-12">
-                <div class="panel panel-primary">
+            <div class="col-md-7 col-sm-12" style="max-width: 430px;">
+                <div class="panel panel-primary" style="clear: both;">
                     <div class="panel-heading" >基本设置</div>
                      <dl class="setting-box">
                                     <dt>
@@ -82,6 +83,7 @@
                      </dl>
                     </div><!--pannel-->  
             </div>
+
         </div>    
         </div>
         <!--规则说明-->
@@ -102,11 +104,12 @@
         </div>
     </div>
     
-    <div class="row editer">
-        <div id="summernote"></div>
+    <div class="row editer" style="background-color: white;z-index: 1;">
+        <div id="div3"></div>
     </div>
+
     <!--提交行-->
-    <div class="row">
+    <div class="row" >
         <span id="uploadcheck">
             <input id="check" type="checkbox">
             我已了解并同意上传规则

@@ -26,7 +26,6 @@
 }
 
 .gp-mid {
-    height: 300px;
     padding: 1em;
 }
 .gp-right {
@@ -67,10 +66,9 @@
     font-size: 12px;
 }
 .pg-mid-butrow {
-    position: relative;
-    top: 20px;
     width: 100%;
     text-align: center;
+    margin-top: 1em;
 }
 .pg-mid-butrow button {
     margin: 0px 0.5em;
@@ -114,6 +112,8 @@
 .showbox{
     overflow: hidden;
     border: 1px solid var(--thin-bdc);
+    padding: 5px;
+    border-radius: 5px;
 }
 .showbox img{
     width: 100% !important;
