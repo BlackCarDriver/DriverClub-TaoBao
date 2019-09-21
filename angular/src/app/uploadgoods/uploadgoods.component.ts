@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
 import { GoodsType, GoodSubType, UploadGoods } from '../struct';
 import { AppComponent } from '../app.component';
+import * as wangEditor from '../../assets/wangEditor.min.js';
 
-declare var $: any;
-
+declare var $:any; 
 
 @Component({
   selector: 'app-uploadgoods',
   templateUrl: './uploadgoods.component.html',
   styleUrls: ['./uploadgoods.component.css']
 })
-
 
 export class UploadgoodsComponent implements OnInit {
 
@@ -32,14 +31,12 @@ export class UploadgoodsComponent implements OnInit {
   usenewtag = false;
   newtagname = "";
   godostext = "";
-
-  E = window.wangEditor;
   editor:any;
 
   constructor(
     private server: ServerService,
     private app:AppComponent,
-    ) { }
+  ) { }
 
   ngOnInit() {
     if(this.server.IsNotLogin()){
@@ -50,7 +47,7 @@ export class UploadgoodsComponent implements OnInit {
     }
     
     //https://www.kancloud.cn/wangfupeng/wangeditor3/332599
-    this.editor = new this.E('#div3');
+    this.editor = new wangEditor('#div3');
     this.editor.customConfig.uploadImgShowBase64 = true; //allowed to save image in base64-encoding
     this.editor.customConfig.menus = [
       'head',
