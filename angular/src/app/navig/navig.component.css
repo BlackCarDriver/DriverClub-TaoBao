@@ -47,48 +47,40 @@
     overflow: hidden;
 }
 
-/*注册登录框 */
+/*login box */
 
-.sethigth {
-    width: 450px;
-    padding-bottom: 20px;
+.modal-body {
+    width: 30em;
+    margin: 1em 0.5em;
+    padding: 1em;
 }
 
-.clearfix {
-    background: #313131;
-    padding: 20px 0px 0px 0px;
-    margin-top: 35px;
+.loginbutton {
     width: 100%;
-    text-align: center;
-    color: #aaa;
-    font-size: 14px;
+    height: 2.5em;
+    line-height: 2.5em;
+    background-color: dodgerblue;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 3px auto;
+    color: white;
+    font-weight: 600;
+    font-size: 1.3em;
 }
 
-.login-center {
-    width: 400px;
-    box-sizing: border-box;
-    padding: 0 40px;
-    margin: 20px 10px 10px 20px;
+.login-row {
+    width: 100%;
+    padding: 0 1em;
+    margin-top: 1.6em;
+    text-align: center;
 }
 
 .inputbox {
-    height: 30px;
-    width: 260px;
-    border: 1px solid #337ab7;
-    border-radius: 2px;
-    margin-left: 10px;
-}
-
-.checkbox1 {
-    margin-right: 5px;
-    width: 15px;
-    height: 15px;
-    display: inline-block;
-}
-
-.taller {
-    position: relative;
-    bottom: 3px;
+    height: 2.3em;
+    width: 100%;
+    line-height: 2.3em;
+    margin-left: -2em;
+    padding-left: 2.5em;
 }
 
 .emailbox {
@@ -96,25 +88,19 @@
     margin-right: 5px;
 }
 
-.warm {
-    color: red;
-    left: 20%;
-    position: absolute;
+.rg-tag {
+    margin-right: 1em;
+    float: right;
+    font-size: 1.2em;
+    top: 1em;
+    position: relative;
 }
 
-.disablebtn {
-    width: 280px;
-    height: 40px;
-    line-height: 40px;
-    margin-top: 10px;
-    cursor: not-allowed;
-    background: rgb(113, 175, 183);
-    text-align: center;
-    border-radius: 5px;
-    margin: 0 auto;
-    color: #ffffff;
+.liico {
+    position: relative;
+    top: 3px;
+    color: #5e656a;
 }
-
 
 @media screen and (max-width:600px) {
     .user {
@@ -135,5 +121,8 @@
     }
     .public-box {
         width: 90%;
+    }
+    .modal-body{
+        width: 25em;
     }
 }

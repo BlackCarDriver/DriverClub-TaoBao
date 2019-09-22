@@ -204,11 +204,10 @@ func GetRankList(c *[]Rank) error {
 	return nil
 }
 
-//get the data that need to show in naving componment
+//get the data that need to show in naving componment 🍓
 func GetNavingMsg(uid string, c *MyStatus) error {
 	o := orm.NewOrm()
-	err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c)
-	if err != nil {
+	if err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c); err != nil {
 		logs.Error(err)
 		return err
 	}
@@ -286,6 +285,54 @@ func GetSettingMsg(uid string, c *UserSetData) error {
 		return err
 	}
 	return nil
+}
+
+//comfirm the login request and return the true id 🍓
+//note that the password is md5 encoding
+func ComfirmLogin(identifi, password string) (id string, err error) {
+	if identifi == "" || password == "" {
+		err = errors.New("Receive null id or password")
+		logs.Error(err)
+		return "", err
+	}
+	count := 0
+	o := orm.NewOrm()
+	//use identifi as id firstly
+	if err := o.Raw("select count(*) from t_user where id=? and password=?", identifi, password).QueryRow(&count); err != nil {
+		logs.Error(err)
+		return "", err
+	} else {
+		if count == 1 {
+			return identifi, nil
+		} else if count > 1 {
+			err = errors.New("Find two account with same id!")
+			logs.Error(err)
+			return "", err
+		}
+	}
+	//if no result with finding id, then use identfi as name and search again
+	if err := o.Raw("select count(*) from t_user where name=? and password=?", identifi, password).QueryRow(&count); err != nil {
+		logs.Error(err)
+		return "", err
+	} else {
+		if count == 1 { //find true user id
+			err = o.Raw("select id from t_user where name=? and password=?", identifi, password).QueryRow(&id)
+			if err != nil {
+				logs.Error(err)
+				return "", err
+			}
+			return id, nil
+		} else if count > 1 {
+			err = errors.New("Find two account with same name!")
+			logs.Error(err)
+			return "", err
+		} else if count == 0 {
+			err = errors.New("No result")
+			logs.Warn(err)
+			return "", err
+		}
+	}
+	return id, err
 }
 
 //#################### count ###########################

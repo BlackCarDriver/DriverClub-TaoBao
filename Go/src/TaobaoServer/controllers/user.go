@@ -267,17 +267,54 @@ tail:
 	this.ServeJSON()
 }
 
-//登录，注册，更换验证码， 获取验证码 🍏
+//login, regeist, comfirm code, change password... 🍏🍓
 func (this *EntranceController) Post() {
-	postBody := md.EntranceBody{}
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	var api, targetid string
 	var err error
+	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
-		return
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		logs.Error(response.Msg)
+		goto tail
 	}
-	updateTag := postBody.Tag
-	switch updateTag {
-	case "login":
-		fmt.Println("user login ...")
+	//check that the data is complete
+	api = postBody.Api
+	targetid = postBody.TargetId
+	if api == "" || targetid == "" {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("Can't get api or id from request body")
+		logs.Error(response.Msg)
+		goto tail
+	}
+	switch api {
+	case "login": //login, note that the target id can be true id or name 🍓
+		//TODO: check to format of password
+		password := MD5Parse(postBody.Data.(string))
+		logs.Info(password)
+		//TODO: check if the identifi is student number and vertify it
+
+		//check the account from database and get true id
+		tid, err := md.ComfirmLogin(targetid, password)
+		if err != nil {
+			logs.Error(err)
+			response.StatusCode = -3
+			response.Msg = fmt.Sprintf("%v", err)
+			goto tail
+		}
+		//if the password is passed than return user data
+		var data md.MyStatus
+		if err = md.GetNavingMsg(tid, &data); err != nil {
+			response.StatusCode = -4
+			response.Msg = fmt.Sprintf("Can't get usre message: %v ", err)
+			logs.Error(response.Msg)
+		} else {
+			response.Data = data
+		}
+		goto tail
+
 	case "CheckRegister":
 		tregister := md.RegisterData{}
 		Parse(postBody.Data, &tregister)
@@ -288,6 +325,9 @@ func (this *EntranceController) Post() {
 	case "confirmcode":
 		fmt.Println("confirmcode...")
 	}
-	this.Data["json"] = md.RequireResult{Status: 1, Describe: "成功！"}
+	response.StatusCode = 0
+	response.Msg = "Success"
+tail:
+	this.Data["json"] = response
 	this.ServeJSON()
 }

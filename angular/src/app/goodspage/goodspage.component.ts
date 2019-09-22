@@ -94,6 +94,9 @@ export class GoodspageComponent implements OnInit {
 
   //user like specified goods  🍍🔥🍈
   likeGoods() { 
+    if(this.server.IsNotLogin()){
+      return;
+    }
     let postdata : RequestProto = {
       userid:this.server.userid,
       api:"likegoods",

@@ -258,6 +258,7 @@ type UserSetData struct {
 //########################################## 导航栏页面数据结构和模拟数据 #################################################
 
 type MyStatus struct {
+	ID         string    `json:"id"`
 	Name       string    `json:"name"`
 	Headimg    string    `json:"headimg"`
 	Leave      int       `json:"leave"`

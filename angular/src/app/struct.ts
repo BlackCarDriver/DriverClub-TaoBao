@@ -162,6 +162,7 @@ export class PersonalSetting{
 //首页-个人信息下拉框
 export class MyStatus{
     name:string;
+    id:string;
     headimg :string ;
     leave : number ;
     credits : number ;

@@ -2,6 +2,8 @@ package controllers
 
 import (
 	md "TaobaoServer/models"
+	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"math/rand"
@@ -340,4 +342,11 @@ func Parse(data interface{}, container interface{}) error {
 	err = json.Unmarshal(tdata, container)
 	logs.Error(err)
 	return err
+}
+
+//md5 encrypt
+func MD5Parse(s string) string {
+	h := md5.New()
+	h.Write([]byte(s))
+	return hex.EncodeToString(h.Sum(nil))
 }

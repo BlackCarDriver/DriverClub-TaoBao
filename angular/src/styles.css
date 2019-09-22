@@ -24,33 +24,6 @@ input[type="number"]{
 .inlink{
     display: inline-block;
 }
-.checkbox1{
-    margin-right:5px;
-    width:15px;
-    height: 15px;
-    display: inline-block;
-}
-.loginbutton{
-    width: 280px;
-    height: 40px;
-    line-height: 40px;
-    margin-top: 10px;
-    background-color: dodgerblue;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 5px;
-    margin: 0 auto;
-    color: white;
-}
-.floatcenter{
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-}
-.floatright{
-    margin-right: 50px;
-    float: right;
-}
 ol, ul {
     list-style: none;
 }

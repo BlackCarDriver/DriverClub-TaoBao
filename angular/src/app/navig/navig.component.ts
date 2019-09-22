@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServerService } from '../server.service';
-import { RegisterData, LoginData, MyStatus, RequertResult, RequestProto } from '../struct';
+import { LoginData, MyStatus, RequertResult, RequestProto } from '../struct';
 import { AppComponent } from '../app.component';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
@@ -8,18 +8,15 @@ import * as bootstrap from 'bootstrap';
 // import * as $ from 'jquery';
 declare let $: any;
 
-//  regex of email
-const emailreg = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
 // regex of account name 
 const namereg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/;
 // regex of password
 const passwordreg = /^[a-zA-Z._0-9]{6,20}$/;
-// the regex of comfirm code
-const codereg = /^[0-9]{6}$/;
+
 // the return state 
-const	scuess    = 1;
-const	enable    = 2;
-const	disable   = -2;
+const scuess = 1;
+const enable = 2;
+const disable = -2;
 @Component({
   selector: 'app-navig',
   templateUrl: './navig.component.html',
@@ -27,300 +24,116 @@ const	disable   = -2;
 })
 
 export class NavigComponent implements OnInit {
-  data1 = new RegisterData();
-  data2 = new LoginData();
+  lidata = new LoginData();
   usermsg = new MyStatus();
-  tuserid = "";
 
-constructor(
-  // private localdata: LocalStorage,
-  private server: ServerService,
-  private app:AppComponent,
-  
-) { }
+  constructor(
+    // private localdata: LocalStorage,
+    private server: ServerService,
+    private app: AppComponent,
+  ) { }
 
-ngOnInit() {
-  this.showStat(false);
-  this.setstate();
-}
-
-//########################## handlefunction ####################################
-
-//load userid from cookie if it is not empty then  🍋🍇
-//hide the login box, and show the user message box and require user short data
-setstate() {
-  if (this.server.userid != "") {
-    let postdata: RequestProto = {
-      api: "naving",
-      targetid: this.server.userid,
-    };
-    this.server.GetCredentMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) {
-        this.usermsg = result.data;
-        this.server.username = this.usermsg.name;
-        this.showStat(true);
-        this.initComp();
-      } else {
-        console.log("Get naving data fail: " + result.msg);
-      }
-    }, error => { this.app.showMsgBox(-1,"GetMymsg fail:" + error) });
+  ngOnInit() {
+    this.InitloginChech();
+    this.showStat(false);
+    this.setstate();
   }
-}
 
-
-//######################### 组件控制 ###########################################
-
-
-
-//init the function of compoment
-initComp() {
-   
-}
-
-//show sing/regist box when click singin/reginst
-showsinginbox() {
-  $("#exampleModal").modal('show');
-}
-
-//clear the cookie
-logout() {
-  if (confirm("你确定要清楚登录状态并退出此账号？")) {
-    this.clearcookie();
-    window.location.reload();
+  //===================== component control  =====================
+  //show sing/regist box when click singin/reginst
+  showsinginbox() {
+    $("#exampleModal").modal('show');
   }
-}
-
-showStat(islogin:boolean){
-  if (islogin){
-    $('#singin').attr("style","display:none;");
-    $('#userbox').attr("style","display:normal;");
-  }else{
-    $('#singin').attr("style","display:normal;");
-    $('#userbox').attr("style","display:none;");
-  }
-}
-//######################## 辅助 #########################################
-
-//check the input box of login before send the data to server
-checkLogin() {
-  let worngnum = 0;
-  if (namereg.test($("#loginname").val()) == false) {
-    worngnum++;
-  }
-  if (passwordreg.test($("#loginpassword").val()) == false) {
-    worngnum++;
-  }
-  return worngnum == 0;
-}
-
-// check the intput box content in login and register
-// part autotily after it have been change
-checkinput() {
-  // input of uesrname in register
-  $("#regname").change(function () {
-    if (namereg.test($("#regname").val()) == false) {
-      $("#regnamew").html("* 不能包含空格，符号，长度范围 2~15");
-    } else $("#regnamew").html("");
-  });
-  // input of first password in register
-  $("#regpasw1").change(function () {
-    if (passwordreg.test($("#regpasw1").val()) == false) {
-      $("#regpasw1w").html("* 密码应又6~20个字母或数字或._组成");
-    } else $("#regpasw1w").html("");
-  });
-  // input of second password in register
-  $("#regpasw2").change(function () {
-    if ($("#regpasw1").val() != $("#regpasw2").val()) {
-      $("#regpasw2w").html("* 两个密码不一致");
-    } else $("#regpasw2w").html("");
-  });
-  // input of email in register 
-  $("#regemail").change(function () {
-    if (emailreg.test($("#regemail").val()) == false) {
-      $("#regemailw").html("* 邮箱格式不正确");
-    } else $("#regemailw").html("");
-  });
-  // input of uesrname in login
-  $("#loginname").change(function () {
-    if (namereg.test($("#loginname").val()) == false) {
-      $("#loginnamew").html("* 不能包含空格，符号，长度范围 2~15");
-    } else $("#loginnamew").html("");
-  });
-  // input of password in login 
-  $("#loginpassword").change(function () {
-    if (passwordreg.test($("#loginpassword").val()) == false) {
-      $("#loginpasswordw").html("* 密码应又6~20个字母或数字或._组成");
-    } else $("#loginpasswordw").html("");
-  });
-}
-
-//get userid and password in the cookie and push the nin input box
-getloginmessage() {
-  var ck = this.server.getCookie("BCDCNCK")
-  if (ck == "") return;
-  var cks = this.server.decode(ck);
-  var name = cks.split("@")[0]
-  var psw = cks.split("@")[1]
-  $("#loginname").val(name);
-  $("#loginpassword").val(psw);
-}
-
-// initiatly check the register input data before send to server
-checkRegister() {
-  let worngnum = 0;
-  if (namereg.test($("#regname").val()) == false) {
-    $("#regnamew").html("* 不能包含空格，符号，长度范围 2~15");
-    worngnum++;
-  } else $("#regnamew").html("");
-
-  if (passwordreg.test($("#regpasw1").val()) == false) {
-    $("#regpasw1w").html("* 密码应又6~20个字母或数字或._组成");
-    worngnum++;
-  } else $("#regpasw1w").html("");
-
-  if ($("#regpasw1").val() != $("#regpasw2").val()) {
-    $("#regpasw2w").html("* 两个密码不一致");
-    worngnum++;
-  } else $("#regpasw2w").html("");
-
-  if (emailreg.test($("#regemail").val()) == false) {
-    $("#regemailw").html("* 邮箱格式不正确");
-    worngnum++;
-  } else $("#regemailw").html("");
-
-  return worngnum == 0 ? enable : disable;
-}
-
-clearcookie() {
-  var clstr = new Date();
-  clstr.setTime(clstr.getTime() + 0);
-  document.cookie = "BCDCNCK= ;expires=" + clstr //name and password
-  document.cookie = "driverlei= ;expires=" + clstr; //userid
-  document.cookie = "dvurst= ;expires=" + clstr;  //time tag
-}
-
-// 登录
-loging() {
-  this.data2.name = $("#loginname").val();
-  this.data2.password = $("#loginpassword").val();
-  this.tuserid = this.data2.name;
-  this.server.userid = this.tuserid;
-  this.setstate();
-  return;
-  if (this.checkLogin() != true) {
-    alert("请正确输入信息");
-    return;
-  }
-  this.server.Entrance(this.server.userid, "login", this.data2).subscribe(result => {
-    let loginresult = new RequertResult();
-    loginresult = result
-    if (loginresult.status > 0) {
-      alert("登录成功！")
-      // this.server.setTimeTag("dvurst",120);
+  //clear the cookie 🍓
+  logout() {
+    if (confirm("你确定要清楚登录状态并退出此账号？")) {
+      //TODO: clear the cookie
       window.location.reload();
-    } else {
-      alert(loginresult.describe);
     }
-  });
-}
-
-//初步确认注册信息是否可用，若可用会发送验证码到注册邮箱。
-confirm() {
-  $("#registerbtn").attr("disabled", true);
-  if (this.checkRegister() == disable) return;
-  this.data1.name = $("#regname").val();
-  this.data1.password = $("#regpasw1").val();
-  this.data1.email = $("#regemail").val();
-
-  this.server.Entrance(this.server.userid, "CheckRegister", this.data1).subscribe(result => {
-    let checkResult = new RequertResult();
-    checkResult = result;
-    if (checkResult.status == enable) {
-      alert("验证码已发送至你的邮箱!");
-      //forbid to change the input
-      $("#regname").attr("disabled", "disabled");
-      $("#regpasw1").attr("disabled", "disabled");
-      $("#regpasw2").attr("disabled", "disabled");
-      $("#regemail").attr("disabled", "disabled");
-      //forbit to click get code for a while
-      $("#codebox").removeClass("hidden");
-      $("#registerbtn").removeClass("disablebtn");
-      $("#registerbtn").addClass("loginbutton");
-      $("#registerbtn").attr("disabled", false);
-      $("#getcode").addClass("hidden");
-      $("#getcode").html("重新获取");
-      $("#getcode2").removeClass("hidden");
-      //show the button again after a minue
-      setTimeout(function () {
-        $("#getcode2").addClass("hidden");
-        $("#getcode").removeClass("hidden");
-      }, 60000);
-    } else {
-      alert(checkResult.describe)
-    }
-  });
-}
-
-// 发送注册信息和验证码到服务器，得到注册结果。
-confirmcode() {
-  this.data1.code = $("#regcode").val();
-  if (codereg.test(this.data1.code) == false) { //先用正则验证
-    alert("请输入正确的验证码！");
-    return;
   }
-  this.server.Entrance(this.server.userid, "confirmcode", this.data1).subscribe(result => {
-    let confirmResult = new RequertResult();
-    if (confirmResult.status == scuess) {
-      alert("注册成功！");
-      $(".modal-body  a[href='#home']").tab("show");
+  //decide the style of nav-user box
+  showStat(islogin: boolean) {
+    if (islogin) {
+      $('#singin').attr("style", "display:none;");
+      $('#userbox').attr("style", "display:normal;");
     } else {
-      alert(confirmResult.describe);
+      $('#singin').attr("style", "display:normal;");
+      $('#userbox').attr("style", "display:none;");
     }
-  });
-}
-
-
-
-  /*
-   //check the check box and choose to set userid and password in cookie
-  setcookie(){
-        if($("#remember").is(':checked')==false){
-           //erase the cookie if checkbox value is false 
-           document.cookie =  "BCDCNCK=";
-          return;
-        }
-        var Days = 10;  //the time of days saving cookie
-        var exp = new Date();
-        var ck = $("#loginname").val()+"@"+$("#loginpassword").val();
-        var nap = this.server.encryption(ck);  
-        var un = this.server.encryption($("#loginname").val());
-        exp.setTime(exp.getTime() + Days*24*3600*1000);  
-        document.cookie = "BCDCNCK=" + nap + ";expires=" +exp.toUTCString();
-        document.cookie = "driverlei=" + un + ";expires=" +exp.toUTCString();
   }
-   
-  
-  // initiatly checke the login input data before send to server 
-  checkSignin(){
+  //=========================== safety verification ===================== 
+
+  // check the intput box content in login box 🍓
+  // canll autotily after it have been change
+  InitloginChech() {
+    $("#loginname").change(function () {
+      if (namereg.test($("#loginname").val()) == false) {
+        this.app.showMsgBox(1,"用户名格式不正确,提示：不包含空格,符号,长度为2~15");
+      }
+    });
+    $("#loginpassword").change(function () {
+      if (passwordreg.test($("#loginpassword").val()) == false) {
+        this.app.showMsgBox(1,"密码格式不正确,提示：6~20个字母或数字或._组成");
+      }
+    });
+  }
+  //check the input of login input🍓
+  checkLogin() {
     let worngnum = 0;
-    if(namereg.test( $("#loginname").val())==false){
-      $("#loginnamew").html("* 不能包含空格，符号，长度范围 2~15");
-      worngnum ++;
-    }else  $("#loginnamew").html("");
-  
-    if( passwordreg.test( $("#loginpassword").val())==false ){
-      $("#loginpasswordw").html("* 密码应又6~20个字母或数字或._组成");
-      worngnum ++;
-    }else  $("#loginpasswordw").html("");
-    return worngnum==0?enable:disable;
+    if (namereg.test($("#loginname").val()) == false) {
+      worngnum++;
+    }
+    if (passwordreg.test($("#loginpassword").val()) == false) {
+      worngnum++;
+    }
+    return (worngnum == 0);
   }
-  
-  //call after click forget password tmeply
-  seecookie(){
+  //========================= request function =====================
+  //load userid from cookie if it is not empty then  🍋🍇🍓
+  //select the style of nav according to login history
+  setstate() {
+    if (this.server.userid != "") {
+      let postdata: RequestProto = {
+        api: "naving",
+        targetid: this.server.userid,
+      };
+      this.server.GetCredentMsg(postdata).subscribe(result => {
+        if (result.statuscode == 0) {
+          this.usermsg = result.data;
+          this.server.username = this.usermsg.name;
+          this.showStat(true);  //show user message in naving bar
+        } else {
+          this.app.showMsgBox(-1, "获取登录数据失败,请稍后重试：" + result.msg);
+        }
+      }, error => { this.app.showMsgBox(-1, "GetMymsg fail:" + error) });
+    }
   }
-  
-  //clear all cookie
-  
-  */
+
+  //user login, note that the username input can be id or username 🍓
+  loging() {
+    this.lidata.name = $("#loginname").val();
+    this.lidata.password = $("#loginpassword").val();
+    this.setstate();
+    if (this.checkLogin() != true) {
+      this.app.showMsgBox(1,"输入的格式不正确,请检查");
+      return;
+    }
+    let postdata: RequestProto = {
+      api: "login",
+      targetid: this.lidata.name, //note that it can be username or true id
+      data:this.lidata.password,
+    };
+    this.server.Entrance(postdata).subscribe(result => {
+      if (result.statuscode!=0){
+        this.app.showMsgBox(-1, "登录失败："+result.msg);
+        return;
+      }
+      this.app.showMsgBox(0, "登录成功！");
+      this.usermsg = result.data;
+      this.server.userid = this.usermsg.id;
+      this.server.username = this.usermsg.name;
+      //TODO: save cookie
+    });
+  }
 
 }

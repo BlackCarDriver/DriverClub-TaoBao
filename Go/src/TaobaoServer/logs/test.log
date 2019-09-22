@@ -1,0 +1,25 @@
+2019/09/22 12:06:31.863 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:06:45.617 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0022ms|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/22 12:06:45.697 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    82.9141ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/22 12:06:48.820 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/22 12:06:48.909 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   100.7799ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/22 12:06:48.925 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|   117.3359ms|   match|[46m POST    [0m /goodsdeta   r:/goodsdeta
+2019/09/22 12:06:51.258 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/22 12:06:51.289 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    32.0858ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/22 12:06:59.048 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0036ms|   match|[46m POST    [0m /entrance   r:/entrance
+2019/09/22 12:08:24.054 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|           0s|   match|[44m GET     [0m /homepage/goodstypemsg   r:/homepage/goodstypemsg
+2019/09/22 12:08:24.105 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    52.1366ms|   match|[46m POST    [0m /homepage/goodsdata   r:/homepage/goodsdata
+2019/09/22 12:08:30.917 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     1.0018ms|   match|[46m POST    [0m /entrance   r:/entrance
+2019/09/22 12:14:12.229 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:16:41.930 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:16:44.749 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|     2.0079ms|   match|[46m POST    [0m /entrance   r:/entrance
+2019/09/22 12:20:29.056 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:30:16.595 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:37:42.863 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:55:10.430 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:56:12.236 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 12:59:42.144 [I] [app.go:215]  http server Running on http://:4747
+2019/09/22 13:00:02.751 [I] [user.go:296]  e10adc3949ba59abbe56e057f20f883e
+2019/09/22 13:00:02.795 [W] [select.go:331]  No result
+2019/09/22 13:00:02.796 [E] [user.go:302]  No result
+2019/09/22 13:00:02.797 [D] [router.go:925]  |      127.0.0.1|[42m 200 [0m|    46.1243ms|   match|[46m POST    [0m /entrance   r:/entrance

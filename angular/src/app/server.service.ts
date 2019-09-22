@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {  GoodsType,UploadGoods } from '../app/struct';
 import {  RequertResult,RequestProto,ReplyProto} from '../app/struct';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -9,22 +10,21 @@ import {  RequertResult,RequestProto,ReplyProto} from '../app/struct';
 export class ServerService {
 
   //global variable 🍈
-  userid = "19070010";
+  userid = "";    //this usrid only can be true usre id
   username = "";
   homepage_goods_perpage = 10;
-
-  private addr: string  = "https://blackcardriver.cn/taobaoserver"
-  // private addr: string  = "/localserver"
+  // private addr: string  = "https://blackcardriver.cn/taobaoserver"
+  private addr: string  = "/localserver"
 
   constructor( 
-    private http: HttpClient
+    private http: HttpClient,
   ){ }
  
  //====================================== public phsical function =================================
 //check whether the user is login, show the warm message if not 🍈
  IsNotLogin(){
   if(this.userid == ""){
-    alert("你好，该功能需要先登录呦!");
+    alert("你好，要先登录呦!");
     return true;
   }
   return false;
@@ -111,22 +111,20 @@ UploadGoodsData(data:UploadGoods){
   };
   return this.http.post<ReplyProto>(url,JSON.stringify(postdata));
 }
-
+ 
 //get the list of goods type and tag 
 GetHomePageType(){
   var url = this.addr + "/homepage/goodstypemsg";
   return this.http.get<GoodsType[]>(url);
 }
 
-// ================================== the following function reference to login or register ========================================================  
-  
-Entrance(userid:string, tag:string, data:any){
+//login or register interface  🍓
+Entrance(data:RequestProto){
   var url = this.addr + "/entrance";
-  var postdata = {userid:userid, tag:tag, data:data};
-  return this.http.post<RequertResult>(url,JSON.stringify(postdata));
+  return this.http.post<ReplyProto>(url, JSON.stringify(data), {withCredentials: true});
 }
 
-  // ==========================  the following function is related to cookie ==================================  
+// ==========================  the following function is related to cookie ==================================  
 
 //use to make the cookie can't be undestant directly
 encryption(code : string){
