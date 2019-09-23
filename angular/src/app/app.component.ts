@@ -18,4 +18,8 @@ export class AppComponent {
     $('#showbtn').click();
   }
 
+  //display a wang dialogy to show that connect fail🍄
+  public cFail(reason:string){
+      this.showMsgBox(1,"请求失败，请稍后再试 :(" , reason);
+  }
 }

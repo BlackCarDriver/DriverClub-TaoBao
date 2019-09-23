@@ -5,29 +5,54 @@
 
 
 改名时要确保id 与 用户名不冲突
+
+
+t_goods 修改：
+ALTER TABLE public.t_goods ADD COLUMN collect integer DEFAULT 0;
+COMMENT ON COLUMN public.t_goods.collect IS '收藏数';
+ALTER TABLE public.t_goods ADD COLUMN talk integer DEFAULT 0;
+COMMENT ON COLUMN public.t_goods.talk IS '评论次数';
+v_goods_detail 改为：
+CREATE OR REPLACE VIEW public.v_goods_detail
+    WITH (security_barrier=false)
+    AS
+     SELECT g.id AS goodsid,
+    u.name AS username,
+    u.id AS userid,
+    g.name,
+    p."time",
+    g.headimg,
+    g.price,
+    g.title,
+    g.type,
+    g.tag,
+    g.visit,
+    g."like",
+    g.file AS detail,
+	g.collect,
+	g.talk
+   FROM t_goods g,
+    t_upload p,
+    t_user u
+  WHERE p.goodsid::text = g.id::text AND p.userid::text = u.id::text AND g.state = 1;
+
 ##################################### 支线任务 ###################################
-[密码存储验证方式]
+[商品点赞次数数据修复] 🍄
+[数据库商品表增加收藏数和评论数] 🍄
 
-[登录验证功能]
-
-[后端返回的naving信息Mystatus增加id字段]
-
-[登录功能重新修复]
-
-[删除东西前需要询问] 🍒
+[图片正确位置保存]🍄
 
 [将登陆页面做到固定的组件]
 
-[回复消息功能] 
+[回复消息状态页面功能] 
 
 [排名数据需要定时更新到数据表]
 
-[上传商品页面的商品显示样式与主页统一]
 [消息分成已读消息和未读消息并且在导航浪和个人主页提示未读]
-
 
 #################################### 后期工作 ################################
 [通过学号登录的接口]
+[用户真实身份验证]
 [注册用户做成独立页面]
 [加入反馈页面]
 [加入举报功能]
@@ -203,3 +228,12 @@ psersonal2 页面显示是否点赞关注以及相应功能
 9-22 🍓
 登录框样式修复
 清理无效代码，移除注册组件
+登录账号查询登录数据的相关逻辑
+
+9-23 🍄
+用户账号信息cookie保存。
+梳理上传商品页面ts代码
+商品上传数据丢失问题修复
+删除东西前先进行询问
+修改数据库，商品表增加收藏数和评论数字段
+增加收藏数，评论数，点赞数的维护函数

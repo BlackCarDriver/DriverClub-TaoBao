@@ -10,6 +10,9 @@ tempDate.go保存一些全局的数据,避免每次前端请求都查询一次�
 func initAllTempData() {
 	UpdateGoodsTypeTempDate()
 	UpdateUserRank()
+	MainTainGoodLike()
+	MainTainGoodCollect()
+	MainTainGoodTalk()
 }
 
 //商品类型及标签的数据

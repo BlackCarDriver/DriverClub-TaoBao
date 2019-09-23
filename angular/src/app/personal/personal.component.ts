@@ -38,11 +38,11 @@ export class PersonalComponent implements OnInit {
   mc_array = new Array;
   constructor(
     private server: ServerService,
-    private app:AppComponent,
-    ) { }
+    private app: AppComponent,
+  ) { }
 
   ngOnInit() {
-    if(this.server.IsNotLogin()){
+    if (this.server.IsNotLogin()) {
       window.history.back();
     }
     // this.userid = this.server.Getusername();
@@ -62,8 +62,8 @@ export class PersonalComponent implements OnInit {
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) { this.msg = result.data; }
-      else { 
-        this.app.showMsgBox(-1, "请求个人信息失败,请刷新试试" , result.msg )
+      else {
+        this.app.showMsgBox(-1, "请求个人信息失败,请刷新试试", result.msg)
       }
     }, error => {
       console.log("GetMyMsg() fail: " + error)
@@ -81,7 +81,7 @@ export class PersonalComponent implements OnInit {
         this.icare = result.data[0];
         this.carei = result.data[1];
       } else {
-        this.app.showMsgBox(-1, "请求关注信息失败,请刷新试试" , result.msg )
+        this.app.showMsgBox(-1, "请求关注信息失败,请刷新试试", result.msg)
       }
     }, error => { console.log(error) });
   }
@@ -91,17 +91,17 @@ export class PersonalComponent implements OnInit {
     let postdata: RequestProto = {
       api: "mygoods",
       targetid: this.server.userid,
-      offset:(this.mg_nowat-1)*this.mg_maxrow,
-      limit:this.mg_maxrow,
+      offset: (this.mg_nowat - 1) * this.mg_maxrow,
+      limit: this.mg_maxrow,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mygoodslist = result.data;
-        this.mg_sumpage = Math.ceil(result.sum/this.mg_maxrow);
-        if (result.rows==0) this.show_no_goods=true;
-        else if ( this.mg_sumpage>1){
+        this.mg_sumpage = Math.ceil(result.sum / this.mg_maxrow);
+        if (result.rows == 0) this.show_no_goods = true;
+        else if (this.mg_sumpage > 1) {
           this.mg_array = new Array;
-          for(let i=1;i<=this.mg_sumpage && i<=9;i++){
+          for (let i = 1; i <= this.mg_sumpage && i <= 9; i++) {
             this.mg_array.push(i);
           }
         }
@@ -114,22 +114,22 @@ export class PersonalComponent implements OnInit {
     let postdata: RequestProto = {
       api: "mycollect",
       targetid: this.server.userid,
-      offset: (this.mc_nowat-1)*this.mc_maxrow,
-      limit:this.mc_maxrow,
+      offset: (this.mc_nowat - 1) * this.mc_maxrow,
+      limit: this.mc_maxrow,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mycollectlist = result.data;
-        if (result.rows==0) this.show_no_collect=true;
-        else if (result.sum>1){
+        if (result.rows == 0) this.show_no_collect = true;
+        else if (result.sum > 1) {
           this.mc_array = new Array;
-          this.mc_sumpage = Math.ceil(result.sum/this.mc_maxrow);
-          for(let i=1;i<=this.mc_sumpage && i<=9;i++){
+          this.mc_sumpage = Math.ceil(result.sum / this.mc_maxrow);
+          for (let i = 1; i <= this.mc_sumpage && i <= 9; i++) {
             this.mc_array.push(i);
           }
         }
       } else {
-        this.app.showMsgBox(-1, "请求收藏数据失败,请刷新试试" , result.msg )
+        this.app.showMsgBox(-1, "请求收藏数据失败,请刷新试试", result.msg)
       }
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
@@ -139,22 +139,22 @@ export class PersonalComponent implements OnInit {
     let postdata: RequestProto = {
       api: "message",
       targetid: this.server.userid,
-      offset:(this.msg_nowat-1)*this.msg_maxrow,
-      limit:this.msg_maxrow,
+      offset: (this.msg_nowat - 1) * this.msg_maxrow,
+      limit: this.msg_maxrow,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mymessagelist = result.data;
-        if(result.rows==0) this.show_no_message=true;
-        else if (result.sum>1){
+        if (result.rows == 0) this.show_no_message = true;
+        else if (result.sum > 1) {
           this.msg_array = new Array;
-          this.msg_sumpage = Math.ceil(result.sum/this.msg_maxrow);
-          for(let i=1;i<=this.msg_sumpage && i<=9;i++){
+          this.msg_sumpage = Math.ceil(result.sum / this.msg_maxrow);
+          for (let i = 1; i <= this.msg_sumpage && i <= 9; i++) {
             this.msg_array.push(i);
           }
         }
       } else {
-        this.app.showMsgBox(-1, "请求私信数据失败,请刷新试试" , result.msg );
+        this.app.showMsgBox(-1, "请求私信数据失败,请刷新试试", result.msg);
       }
     }, error => { console.log("GetMyMsg() fail:" + error); });
   }
@@ -169,132 +169,135 @@ export class PersonalComponent implements OnInit {
       if (result.statuscode == 0) {
         this.hero = result.data;
       } else {
-        this.app.showMsgBox(-1, "请求排名数据失败,请刷新试试" , result.msg );
+        this.app.showMsgBox(-1, "请求排名数据失败,请刷新试试", result.msg);
       }
     }, error => { console.log("GetMyMsg() fail: " + error) });
   }
 
   //delete my upload goods 🍑
-  deleteMyGoods(gid : string){
+  deleteMyGoods(gid: string) {
+    if(!confirm("确定删除这个商品吗？")) return;
     let postdata: RequestProto = {
       api: "deletemygoods",
       targetid: gid,
-      userid:this.server.userid,
+      userid: this.server.userid,
     };
     this.server.DeleteMyData(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.app.showMsgBox(0, "删除成功!");
         this.getmymgoods();
       } else {
-        this.app.showMsgBox(-1, "请求删除商品失败,请刷新试试" , result.msg );
+        this.app.showMsgBox(-1, "请求删除商品失败,请刷新试试", result.msg);
       }
     }, error => { console.log(error) });
   }
 
   //cancel collect a goods 🍑
-  cancelCollect(gid:string){
+  cancelCollect(gid: string) {
+    if (!confirm("确定取消收藏吗？")) return;
     let postdata: RequestProto = {
       api: "uncollectgoods",
       targetid: gid,
-      userid:this.server.userid,
+      userid: this.server.userid,
     };
     this.server.DeleteMyData(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.app.showMsgBox(0, "取消收藏成功");
         this.getmycollect();
       } else {
-        this.app.showMsgBox(-1, "请求取消收藏失败,请刷新试试" , result.msg );
+        this.app.showMsgBox(-1, "请求取消收藏失败,请刷新试试", result.msg);
       }
     }, error => { console.log(error) });
   }
 
-    //cancel collect a goods 🍑
-    deleteMessage(mid:string){
-      let postdata: RequestProto = {
-        api: "deletemymessage",
-        targetid: mid,
-        userid:this.server.userid,
-      };
-      this.server.DeleteMyData(postdata).subscribe(result => {
-        if (result.statuscode == 0) {
-          this.app.showMsgBox(0, "删除成功" );
-          this.getmymessage();
-        } else {
-          this.app.showMsgBox(-1, "请求删除消息失败，请稍后重试" + result.msg);
-        }
-      }, error => { console.log(error) });
-    }
-//#################### reference to pagebox #######################
+  //cancel collect a goods 🍑
+  deleteMessage(mid: string) {
+    if (!confirm("确定要删除这条消息吗？")) return;
+    let postdata: RequestProto = {
+      api: "deletemymessage",
+      targetid: mid,
+      userid: this.server.userid,
+    };
+    this.server.DeleteMyData(postdata).subscribe(result => {
+      if (result.statuscode == 0) {
+        this.app.showMsgBox(0, "删除成功");
+        this.getmymessage();
+      } else {
+        this.app.showMsgBox(-1, "请求删除消息失败，请稍后重试" + result.msg);
+      }
+    }, error => { console.log(error) });
+  }
+  //#################### reference to pagebox #######################
 
   //functions reference to my_message area pageboxx 🍏
-  setMsgPagebox(topage:number){
-    if (topage<0 || topage>this.msg_sumpage) return;
+  setMsgPagebox(topage: number) {
+    if (topage < 0 || topage > this.msg_sumpage) return;
     this.msg_nowat = topage;
     this.getmymessage();
   }
-  MsgPrepage(){
-    if(this.msg_nowat==0) return;
+  MsgPrepage() {
+    if (this.msg_nowat == 0) return;
     this.msg_nowat--;
     this.getmymessage();
     this.adjustMsgPage();
   }
-  MsgNextpage(){
-    if(this.msg_nowat+1>this.msg_sumpage) return;
+  MsgNextpage() {
+    if (this.msg_nowat + 1 > this.msg_sumpage) return;
     this.msg_nowat++;
     this.getmymessage();
     this.adjustMsgPage();
   }
-  adjustMsgPage(){
-    if(this.msg_sumpage<=9) return;
-    if(this.msg_nowat>5){
+  adjustMsgPage() {
+    if (this.msg_sumpage <= 9) return;
+    if (this.msg_nowat > 5) {
       this.msg_offset = this.msg_nowat - 5;
     }
   }
   //functions reference to my_goods area pagebox 🍏
-  setMgPagebox(topage:number){
-    if (topage<0 || topage>this.mg_sumpage) return;
+  setMgPagebox(topage: number) {
+    if (topage < 0 || topage > this.mg_sumpage) return;
     this.mg_nowat = topage;
     this.getmymgoods();
   }
-  MgPrepage(){
-    if(this.mg_nowat==0) return;
+  MgPrepage() {
+    if (this.mg_nowat == 0) return;
     this.mg_nowat--;
     this.getmymgoods();
     this.adjustMgPage();
   }
-  MgNextpage(){
-    if(this.mg_nowat+1>this.mg_sumpage) return;
+  MgNextpage() {
+    if (this.mg_nowat + 1 > this.mg_sumpage) return;
     this.mg_nowat++;
     this.getmymgoods();
     this.adjustMgPage();
   }
-  adjustMgPage(){
-    if(this.mg_sumpage<=9) return;
-    if(this.mg_nowat>5){
+  adjustMgPage() {
+    if (this.mg_sumpage <= 9) return;
+    if (this.mg_nowat > 5) {
       this.mg_offset = this.mg_nowat - 5;
     }
   }
   //functions reference to my_collect area pagebox 🍏
-  setMcPagebox(topage:number){
-    if (topage<0 || topage>this.mc_sumpage) return;
+  setMcPagebox(topage: number) {
+    if (topage < 0 || topage > this.mc_sumpage) return;
     this.mc_nowat = topage;
     this.getmycollect();
   }
-  McgPrepage(){
-    if(this.mc_nowat==0) return;
+  McgPrepage() {
+    if (this.mc_nowat == 0) return;
     this.mc_nowat--;
     this.getmycollect();
     this.adjustMcgPage();
   }
-  McgNextpage(){
-    if(this.mc_nowat+1>this.mc_sumpage) return;
+  McgNextpage() {
+    if (this.mc_nowat + 1 > this.mc_sumpage) return;
     this.mc_nowat++;
     this.getmycollect();
     this.adjustMcgPage();
   }
-  adjustMcgPage(){
-    if(this.mc_sumpage<=9) return;
-    if(this.mc_nowat>5){
+  adjustMcgPage() {
+    if (this.mc_sumpage <= 9) return;
+    if (this.mc_nowat > 5) {
       this.mc_offset = this.mc_nowat - 5;
     }
   }

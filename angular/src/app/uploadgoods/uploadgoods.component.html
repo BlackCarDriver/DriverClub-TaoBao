@@ -15,7 +15,7 @@
                         <span class="label label-primary" style="position: absolute;padding: 5px;">预览效果</span>
                         <img class="img-thumbnail" src={{headImgUrl}}>
                         <div class="row  g-sharnk">
-                            <p class="good-name g-sharnk">{{goodsname}}</p>
+                            <p class="good-name g-sharnk" style="text-align: center;">{{goodsname}}</p>
                           </div>
                         <div class="row good-title  g-sharnk">
                           <p class="good-title">{{title}}</p>
@@ -71,8 +71,8 @@
                                             物品标签 <span class="caret"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                               <li *ngFor="let rows of typelist" (click)="GetSubType(rows.tag)"><a>{{rows.tag}}</a></li>
-                                               <li  (click)="GetSubType('新标签')"><a>添加新标签</a></li>
+                                               <li *ngFor="let rows of typelist" (click)="selectTag(rows.tag)"><a>{{rows.tag}}</a></li>
+                                               <li  (click)="selectTag('新标签')"><a>添加新标签</a></li>
                                             </ul>
                                         </div><!--btn-group-->
                                         <div *ngIf="usenewtag==true" id="newtypediv">

@@ -57,12 +57,6 @@ tail:
 	this.ServeJSON()
 }
 
-//return goods type list and tag list 🍋🔥
-func (this *GoodsTypeController) Get() {
-	this.Data["json"] = &md.GoodsTypeTempDate
-	this.ServeJSON()
-}
-
 //get all kind of data in goodspage  🍌🔥
 //response for GetGoodsDeta() in fontend
 func (this *GoodsDetailController) Post() {
@@ -100,7 +94,7 @@ func (this *GoodsDetailController) Post() {
 	}()
 	//handle the request
 	switch api {
-	case "goodsmessage": // base message in goodsdetail page
+	case "goodsmessage": // base message in goodsdetail page 🍄
 		var gooddata md.GoodsDetail
 		if err := md.GetGoodsById(goodId, &gooddata); err != nil {
 			response.StatusCode = -3
@@ -160,7 +154,6 @@ tail:
 func (this *UploadGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
-	response.StatusCode = 0
 	var goodsdata md.UploadGoodsData
 	var err error
 	//parse request protocol
@@ -194,7 +187,16 @@ func (this *UploadGoodsController) Post() {
 		logs.Error(response.Msg)
 		goto tail
 	}
+	response.StatusCode = 0
+	response.Msg = "Success!"
 tail:
 	this.Data["json"] = response
+	this.ServeJSON()
+}
+
+//note that it is GET method
+//return goods type list and tag list 🍋🔥
+func (this *GoodsTypeController) Get() {
+	this.Data["json"] = &md.GoodsTypeTempDate
 	this.ServeJSON()
 }

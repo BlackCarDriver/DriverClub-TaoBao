@@ -9,6 +9,11 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
+var (
+	NoResultErr = errors.New("No Result")
+	MutiRowsErr = errors.New("More than noe rows were found")
+)
+
 //get the goods list that need to show in homepage, return the total rows databse have 🍇
 //note: v_goodslist only select goods with state = 1;
 func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]Goods1) (int, error) {
@@ -53,7 +58,7 @@ func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]
 	return totalrows, err
 }
 
-//get all type name and tag
+//get all tag name and tag number of a type
 func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	if gtype == "" {
 		return errors.New("Receive a null gtype")
@@ -287,7 +292,7 @@ func GetSettingMsg(uid string, c *UserSetData) error {
 	return nil
 }
 
-//comfirm the login request and return the true id 🍓
+//comfirm the login request and return the true id 🍓🍄
 //note that the password is md5 encoding
 func ComfirmLogin(identifi, password string) (id string, err error) {
 	if identifi == "" || password == "" {
@@ -327,9 +332,7 @@ func ComfirmLogin(identifi, password string) (id string, err error) {
 			logs.Error(err)
 			return "", err
 		} else if count == 0 {
-			err = errors.New("No result")
-			logs.Warn(err)
-			return "", err
+			return "", NoResultErr
 		}
 	}
 	return id, err

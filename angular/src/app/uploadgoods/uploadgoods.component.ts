@@ -4,7 +4,7 @@ import { GoodsType, GoodSubType, UploadGoods } from '../struct';
 import { AppComponent } from '../app.component';
 import * as wangEditor from '../../assets/wangEditor.min.js';
 
-declare var $:any; 
+declare var $: any;
 
 @Component({
   selector: 'app-uploadgoods',
@@ -13,40 +13,96 @@ declare var $:any;
 })
 
 export class UploadgoodsComponent implements OnInit {
-
-  headImgName = "未选择文件...";
-  warnmsg = "";
   typearray = GoodsType[10];
   typelist = GoodSubType[100];
-  username = "username";
-  //以下是打包上传到服务端的数据
+  headImgName = "未选择文件...";
+  warnmsg = "";
+  username = "";
+  editor: any;
+  //the following value will be send to server
   userid = "";
-  headImgUrl = "http://localhost:8090/source/images?tag=headimg&&name=testcover.jpg"
-  date = "2019-04-07";
-  price:number;
-  title = "";
   goodsname = "";
+  headImgUrl = ""
+  date = "";
+  price = 0;
+  title = "";
   typename = "";
   tagname = "";
   usenewtag = false;
   newtagname = "";
   godostext = "";
-  editor:any;
 
   constructor(
     private server: ServerService,
-    private app:AppComponent,
+    private app: AppComponent,
   ) { }
 
   ngOnInit() {
-    if(this.server.IsNotLogin()){
+    if (this.server.IsNotLogin()) {
       window.history.back();
-    }else{
-      this.username = this.server.username;
-      this.userid = this.server.userid;
+      return;
     }
-    
-    //https://www.kancloud.cn/wangfupeng/wangeditor3/332599
+    this.initImgUpload();
+    this.initEditer();
+    this.GetType();
+    this.date = this.server.formatDate();
+    this.username = this.server.username;
+    this.userid = this.server.userid;
+  }
+
+  //=================== request server =======================
+  //upload select picture to server and get a url. 🍋🔥🍄
+  uploadcover() {
+    var files = $("#upload").prop('files');
+    this.server.UploadImg("uploadname", files[0]).subscribe(result => {
+      if (result.statuscode == 0) {
+        this.headImgUrl = result.data;
+        return;
+      }
+      this.app.showMsgBox(-1, "上传失败，请稍后再试", result.msg);
+    }, err => { this.app.cFail(err) });
+  };
+  //upload a goods to server  🍋🍉🍄
+  Upload() {
+    if ($("#check").prop("checked") == false) {
+      this.app.showMsgBox(1, "请先了解上传规则");
+      return;
+    }
+    if (this.checkData() != true) {
+      this.app.showMsgBox(1, "商品描述有误:"+this.warnmsg);
+      return;
+    }
+    let data: UploadGoods = {
+      userid: this.userid,
+      imgurl: this.headImgUrl,
+      name: this.goodsname,
+      title: this.title,
+      price: this.price,
+      date: this.date,
+      text: this.godostext,
+      type: this.typename,
+      usenewtag: this.usenewtag,
+      tag: (this.usenewtag ? $("#newtypeinput").val() : this.tagname),
+    };
+    //note taht Request protocol is write in UploadGoodsData
+    this.server.UploadGoodsData(data).subscribe( result => {
+        if (result.statuscode != 0) {
+          this.app.showMsgBox(-1, "对不起,上传失败,请稍后再试试：" + result.msg);
+          return;
+        }
+        this.app.showMsgBox(0, "上传成功");
+        window.location.reload();
+      }, err => { this.app.cFail(err) });
+  }
+  //get goods type list that need to show in select button. 🍋🍄
+  GetType() {
+    this.server.GetHomePageType().subscribe(
+      result => { this.typearray = result; });
+  }
+
+  //=================== init component =================
+  //deiter setting up : https://www.kancloud.cn/wangfupeng/wangeditor3/332599🍄
+  initEditer() {
     this.editor = new wangEditor('#div3');
     this.editor.customConfig.uploadImgShowBase64 = true; //allowed to save image in base64-encoding
     this.editor.customConfig.menus = [
@@ -58,112 +114,66 @@ export class UploadgoodsComponent implements OnInit {
       'image',
       'emoticon',
       'link',
-      'justify', 
-  ]
+      'justify',
+    ]
     this.editor.customConfig.zIndex = 1;
     this.editor.create();
     this.editor.txt.html('<p>请在这里编辑你的商品页面，建议在电脑版上进行操作。</p>')
-
-    $(document).ready(function () {
-      //上传头像框改变后，获取文件名，判断文件大小，上传文件，获得imgurl
-      $("#upload").change(function (evt) {
-        //如果文件为空 
-        if ($(this).val() == '') {
-          return;
-        }
-        //判断文件大小
-        var files = evt.currentTarget.files;
-        var filesize = files[0].size;
-        //  console.log(filesize);
-        if (filesize > 102400) {
-          this.app.showMsgBox(1, "请上传100kb以下的图片");
-          return;
-        }
-        //判断文件类型，并获取文件名到页面
-        var filename = $(this).val().replace(/.*(\/|\\)/, "");
-        var pos = filename.lastIndexOf(".");
-        var filetype = filename.substring(pos, filename.length)  //此处文件后缀名也可用数组方式获得str.split(".") 
-        if (filetype.toLowerCase() != ".jpg" && filetype.toLowerCase() != ".png") {
-          this.app.showMsgBox(1, "请上传 png 或 jpg 格式的图片");
-          return;
-        } else {
-          $("#filename").html(filename);
-          //上传图片到服务端并获imgurl
-          $("#uploadbtn").trigger("click");
-        }
-      });
-      //解决下拉菜单按钮不能下拉
-      $(".dropdown-toggle").on('click', function () {
-        $('.dropdown-toggle').dropdown();
-      });
-
-    });//ready() is over
-    this.date = this.formatDate();
-    //获得分类数据
-    this.GetType();
-  }//oninit() is over
-
-  //upload select picture to server and get a url. 🍋🔥
-  uploadcover() {
-    var files = $("#upload").prop('files');
-    this.server.UploadImg("uploadname", files[0]).subscribe(
-      result => {
-        if (result.statuscode == 0) {
-          this.headImgUrl = result.data;
-        } else {
-          this.app.showMsgBox(-1, "上传失败，请稍后再试", result.msg);
-        }
+  }
+  //if images select was changed, then upload to server and get a visit url 🍄
+  initImgUpload() {
+    $("#upload").change(function (evt) {
+      if ($(this).val() == '') return;
+      //check file size, max size is 100kb
+      var files = evt.currentTarget.files;
+      var filesize = files[0].size;
+      if (filesize > 102400) {
+        this.app.showMsgBox(1, "服务器配置太低，请上传低于100kb的图片，谢谢！");
+        return;
       }
-    )
-  };
-
-  //upload a goods to server  🍋🍉 
-  Upload() {
-    //注意这里跟常规用法不同
-    if ($("#check").prop("checked") == false) {
-      this.app.showMsgBox(1, "请先了解上传规则");
-      return;
-    }
-    if (this.checkData() == true) {
-      var data = new UploadGoods();
-      data.userid = this.userid;
-      data.title = this.title;
-      data.date = this.date;
-      data.price = this.price;
-      data.type = this.typename;
-      data.usenewtag = this.usenewtag;
-      data.imgurl = this.headImgUrl;
-      data.text = this.godostext;
-      if (this.usenewtag) {
-        data.tag = $("#newtypeinput").val();
+      //check the file type 
+      var filename = $(this).val().replace(/.*(\/|\\)/, "");
+      var filetype = filename.substring(filename.lastIndexOf("."), filename.length).toLowerCase();
+      if (filetype != ".jpg" && filetype != ".png") {
+        this.app.showMsgBox(1, "请上传 png 或 jpg 格式的图片, 谢谢！");
+        return;
       } else {
-        data.tag = this.tagname
+        $("#filename").html(filename);
+        //begain to upload images
+        $("#uploadbtn").trigger("click");
       }
-      this.server.UploadGoodsData(data).subscribe(
-        result => {
-          if (result.statuscode == 0) {
-            this.headImgUrl = result.data;
-            this.app.showMsgBox(0, "上传成功");
-          } else {
-            this.app.showMsgBox(-1, "上传失败");
-          }
-        },error=>{console.log("UploadGoodsData() fail:"+error);});
-    } else {
-      this.app.showMsgBox(1, "商品描述有误，请继续完善");
+    });
+  }
+  //trigger to open the images select dialogue 
+  selectImg() {
+    $("#upload").trigger("click");
+  }
+  //set up the data display in type select box
+  selecttype(type: string, index: number) {
+    $("#btn-type").html(type + " <span class='caret'>");
+    this.typename = type;
+    this.typelist = this.typearray[index].list;
+    this.usenewtag = false;
+  }
+  //set up the data display in tag select box
+  selectTag(type: string) {
+    $("#subtype").html(type + " <span class='caret'>")
+    if (type == '新标签') this.usenewtag = true;
+    else {
+      this.tagname = type;
     }
   }
 
-  //get goods type list that need to show in select button. 🍋
-  GetType() {
-    this.server.GetHomePageType().subscribe(
-      result => { this.typearray = result; });
-  }
-
-  //在页面中获得需要上传的值并且检查是否正确
+  //=================== input checking =================
+  //check the upload goods data before send to server 🍄
   checkData() {
-    if (this.headImgUrl == "http://imdg5.duitang.com/uploads/item/201601/17/20160117222537_3vCcm.jpeg") {
-      this.warnmsg = "未选择商品封面"
+    if (this.headImgUrl == "") {
+      this.warnmsg = "未选择商品封面";
       return false;
+    }
+    if (this.goodsname == "" || this.goodsname.length > 20) {
+      this.warnmsg = "商品名为空或太长";
+      return false
     }
     if (this.price < 0 || this.price > 10000) {
       this.warnmsg = "请检查出售价格是否有误";
@@ -193,7 +203,7 @@ export class UploadgoodsComponent implements OnInit {
         return false;
       }
     }
-    this.godostext =this.editor.txt.html();
+    this.godostext = this.editor.txt.html();
     if (this.godostext.length < 100) {
       this.warnmsg = "你的商品描叙太短，请增加一些描叙";
       return false;
@@ -205,43 +215,4 @@ export class UploadgoodsComponent implements OnInit {
     this.warnmsg = "";
     return true;
   }
-
-  //点击选择封面后激活input标签选择文件
-  selectImg() {
-    $("#upload").trigger("click");
-  }
-
-  //选择分类后记录这个值并更新到按钮显示
-  selecttype(type: string, index: number) {
-    $("#btn-type").html(type + " <span class='caret'>");
-    this.typename = type;
-    this.typelist = this.typearray[index].list;
-    this.usenewtag = false;
-  }
-
-  //选择子分类后将子分类显示到按钮
-  GetSubType(type: string) {
-    $("#subtype").html(type + " <span class='caret'>")
-    if (type == '新标签') this.usenewtag = true;
-    else {
-      this.tagname = type;
-    }
-  }
-
-  //得到当日的格式化后的日期
-  formatDate() {
-    var date = new Date();
-    var myyear: any = date.getFullYear();
-    var mymonth: any = date.getMonth() + 1;
-    var myweekday: any = date.getDate();
-    if (mymonth < 10) {
-      mymonth = "0" + mymonth;
-    }
-    if (myweekday < 10) {
-      myweekday = "0" + myweekday;
-    }
-    return (myyear + "-" + mymonth + "-" + myweekday);
-  }
-
-
 }

@@ -267,7 +267,7 @@ tail:
 	this.ServeJSON()
 }
 
-//login, regeist, comfirm code, change password... 🍏🍓
+//login, regeist, comfirm code, change password... 🍏🍓🍄
 func (this *EntranceController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -290,7 +290,7 @@ func (this *EntranceController) Post() {
 		goto tail
 	}
 	switch api {
-	case "login": //login, note that the target id can be true id or name 🍓
+	case "login": //login, note that the target id can be true id or name 🍓🍄
 		//TODO: check to format of password
 		password := MD5Parse(postBody.Data.(string))
 		logs.Info(password)
@@ -301,7 +301,12 @@ func (this *EntranceController) Post() {
 		if err != nil {
 			logs.Error(err)
 			response.StatusCode = -3
-			response.Msg = fmt.Sprintf("%v", err)
+			if err == md.NoResultErr {
+				response.Msg = "没有此账号或密码错误"
+			} else {
+				response.Msg = fmt.Sprint(err)
+				logs.Error(response.Msg)
+			}
 			goto tail
 		}
 		//if the password is passed than return user data
@@ -311,6 +316,7 @@ func (this *EntranceController) Post() {
 			response.Msg = fmt.Sprintf("Can't get usre message: %v ", err)
 			logs.Error(response.Msg)
 		} else {
+			data.ID = tid
 			response.Data = data
 		}
 		goto tail

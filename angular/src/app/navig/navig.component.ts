@@ -47,7 +47,7 @@ export class NavigComponent implements OnInit {
   //clear the cookie 🍓
   logout() {
     if (confirm("你确定要清楚登录状态并退出此账号？")) {
-      //TODO: clear the cookie
+      this.server.clearAllCookie();
       window.location.reload();
     }
   }
@@ -61,8 +61,11 @@ export class NavigComponent implements OnInit {
       $('#userbox').attr("style", "display:none;");
     }
   }
+  //hide login box
+  hidelib(){
+    this.server.getEle("libox-hide").click();
+  }
   //=========================== safety verification ===================== 
-
   // check the intput box content in login box 🍓
   // canll autotily after it have been change
   InitloginChech() {
@@ -88,14 +91,17 @@ export class NavigComponent implements OnInit {
     }
     return (worngnum == 0);
   }
+
   //========================= request function =====================
-  //load userid from cookie if it is not empty then  🍋🍇🍓
+  //load userid from cookie if it is not empty then  🍋🍇🍓🍄
   //select the style of nav according to login history
   setstate() {
-    if (this.server.userid != "") {
+    let userid = this.server.getCookie("ui");
+    if (userid!="") {
+      this.server.userid = userid;
       let postdata: RequestProto = {
         api: "naving",
-        targetid: this.server.userid,
+        targetid: userid,
       };
       this.server.GetCredentMsg(postdata).subscribe(result => {
         if (result.statuscode == 0) {
@@ -111,6 +117,7 @@ export class NavigComponent implements OnInit {
 
   //user login, note that the username input can be id or username 🍓
   loging() {
+    console.log(document.cookie);
     this.lidata.name = $("#loginname").val();
     this.lidata.password = $("#loginpassword").val();
     this.setstate();
@@ -129,10 +136,17 @@ export class NavigComponent implements OnInit {
         return;
       }
       this.app.showMsgBox(0, "登录成功！");
+      this.hidelib();
       this.usermsg = result.data;
       this.server.userid = this.usermsg.id;
+      console.log(this.server.userid);
       this.server.username = this.usermsg.name;
+      this.server.setCookie("un", this.usermsg.name);
+      this.server.setCookie("up",this.lidata.password);
+      this.server.setCookie("ui",this.server.userid);
+      this.showStat(true);
       //TODO: save cookie
+     
     });
   }
 
