@@ -58,6 +58,9 @@
 				p {
 					margin: 0px 0px 10px;
 				}
+				pre{
+					overflow: auto;
+				}
 			</style>
 		</head>
 	

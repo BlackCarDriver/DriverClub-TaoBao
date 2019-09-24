@@ -19,6 +19,7 @@ import (
 )
 
 //config varlue
+//https://blackcardriver.cn/mkimg/
 var (
 	imgPath               = ""
 	imgUrlTP              = ""
@@ -99,8 +100,10 @@ func (this *TestController) Get() {
 	this.Data["Site"] = this.Ctx.Input.Site()
 	this.Data["UserAgent"] = this.Ctx.Input.UserAgent()
 	this.Data["Runhour"] = md.RunHour
-	this.Data["RouterLog"], _ = ParseFile("./logs/router.log")
-	this.Data["ModelsLog"], _ = ParseFile("./logs/models.log")
+	tlog, _ := ParseFile("./logs/router.log")
+	this.Data["RouterLog"] = strings.ReplaceAll(tlog, "[I]", "🍉")
+	tlog, _ = ParseFile("./logs/models.log")
+	this.Data["ModelsLog"] = strings.ReplaceAll(tlog, "[I]", "🍉")
 	this.TplName = "test.tpl"
 }
 
@@ -140,7 +143,7 @@ func (this *UploadImagesController) Post() {
 		goto tail
 	}
 	response.StatusCode = 0
-	response.Data = fmt.Sprintf("%s", h.Filename)
+	response.Data = fmt.Sprintf(imgUrlTP, h.Filename)
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()
