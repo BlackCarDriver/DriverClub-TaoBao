@@ -129,13 +129,13 @@ type UserMessage struct {
 	Dorm     string    `json:"dorm"`
 	Leave    int       `json:"leave"`
 	Credits  int       `json:"credits"`
-	Rank     int       `json:"rank"`
 	Becare   int       `json:"becare"`
-	Likes    int       `json:"likes"`
 	Visit    int       `json:"visit"`
 	Goodsnum int       `json:"goodsnum"`
 	Scuess   int       `json:"scuess"`
 	Care     int       `json:"care"`
+	Likes    int       `json:"likes"`
+	Rank     int       `json:"rank"`
 }
 
 type GoodsShort struct {

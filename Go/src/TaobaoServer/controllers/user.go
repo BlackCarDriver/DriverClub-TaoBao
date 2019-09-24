@@ -4,8 +4,6 @@ import (
 	md "TaobaoServer/models"
 	"encoding/json"
 	"fmt"
-
-	"github.com/astaxie/beego/logs"
 )
 
 //get myprofile data or other user profile data 🍋 🔥
@@ -20,7 +18,7 @@ func (this *PersonalDataController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	api = postBody.Api
@@ -29,7 +27,7 @@ func (this *PersonalDataController) Post() {
 	if api == "" || targetid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get api or targetid from request data")
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//catch the unexpect panic
@@ -37,12 +35,12 @@ func (this *PersonalDataController) Post() {
 		if err, ok := recover().(error); ok {
 			response.StatusCode = -99
 			response.Msg = fmt.Sprintf("Unexpect error happen, api: %s , error: %v", api, err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			this.Data["json"] = response
 			this.ServeJSON()
 		}
 	}()
-	// logs.Info(api, "\t\t", targetid)
+	// rlog.Info(api, "\t\t", targetid)
 	//handle the request
 	switch api {
 	case "mymsg": //my profile data
@@ -50,7 +48,7 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetUserData(targetid, &data); err != nil {
 			response.StatusCode = -3
 			response.Msg = fmt.Sprintf("Get user data fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 		}
@@ -61,12 +59,13 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetMyGoods(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Can't get goods data: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 			response.Rows = len(data)
 			response.Sum = md.CountMyCoods(targetid)
 		}
+		md.Uas1.Add(targetid) //user see himself personal page, active+1
 		goto tail
 
 	case "mycollect": //my collect goods data 🍉
@@ -74,7 +73,7 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetMyCollectGoods(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("Can't get collect data: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 			response.Rows = len(data)
@@ -87,7 +86,7 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetMyMessage(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -9
 			response.Msg = fmt.Sprintf("Can't get message data: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 			response.Rows = len(data)
@@ -100,7 +99,7 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetCareMeData(targetid, &data); err != nil {
 			response.StatusCode = -6
 			response.Msg = fmt.Sprintf("Can't get care data: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 		}
@@ -111,7 +110,7 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetNavingMsg(targetid, &data); err != nil {
 			response.StatusCode = -7
 			response.Msg = fmt.Sprintf("Can't get naving data: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 		}
@@ -122,13 +121,13 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetUserData(targetid, &data); err != nil {
 			response.StatusCode = -8
 			response.Msg = fmt.Sprintf("Can't get user data: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			goto tail
 		} else {
 			response.Data = data
 		}
 		if err = md.UpdateUserVisit(targetid); err != nil {
-			logs.Error("Update visit number fail: %v", err)
+			rlog.Error("Update visit number fail: %v", err)
 		}
 		goto tail
 
@@ -139,7 +138,7 @@ func (this *PersonalDataController) Post() {
 		} else if res, err := md.GetUserStatement(postBody.UserId, targetid); err != nil {
 			response.StatusCode = -9
 			response.Msg = fmt.Sprintf("UserGoodsState fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			if res&1 != 0 {
 				tmp.Like = true
@@ -161,7 +160,7 @@ func (this *PersonalDataController) Post() {
 		if err = md.GetSettingMsg(targetid, &data); err != nil {
 			response.StatusCode = -10
 			response.Msg = fmt.Sprintf("获取数据失败：%v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = data
 		}
@@ -170,7 +169,7 @@ func (this *PersonalDataController) Post() {
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("Unsupose metho: %s", api)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 
@@ -191,7 +190,7 @@ func (this *UpdataMsgController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	api = postBody.Api
@@ -200,7 +199,7 @@ func (this *UpdataMsgController) Post() {
 	if api == "" || userid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get api or userid from request data")
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//catch the unexpect panic
@@ -208,7 +207,7 @@ func (this *UpdataMsgController) Post() {
 		if err, ok := recover().(error); ok {
 			response.StatusCode = -99
 			response.Msg = fmt.Sprintf("Unexpect error, api: %s , des: %v", api, err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			this.Data["json"] = response
 			this.ServeJSON()
 		}
@@ -220,14 +219,13 @@ func (this *UpdataMsgController) Post() {
 		if err = Parse(postBody.Data, &postData); err != nil {
 			response.StatusCode = -3
 			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			goto tail
 		}
-		logs.Info(postData)
 		if err = md.UpdateUserBaseMsg(postData); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Update message fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		}
 		goto tail
 	case "MyConnectMessage": //connect information
@@ -235,32 +233,32 @@ func (this *UpdataMsgController) Post() {
 		if err = Parse(postBody.Data, &postData); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			goto tail
 		}
 		if err = md.UpdateUserConnectMsg(postData); err != nil {
 			response.StatusCode = -6
 			response.Msg = fmt.Sprintf("Update connection message fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		}
 		goto tail
 	case "MyHeadImage": //update profile picture
 		if postBody.Data.(string) == "" { //here imgurl save in data directrly
 			response.StatusCode = -9
 			response.Msg = fmt.Sprintf("Can't get imagurl from postbody")
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			goto tail
 		}
 		if err = md.UpdateUserHeadIMg(userid, postBody.Data.(string)); err != nil {
 			response.StatusCode = -8
 			response.Msg = fmt.Sprintf("Update profile iamge fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		}
 		goto tail
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such method: %s", api)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 	}
 tail:
 	this.Data["json"] = response
@@ -277,7 +275,7 @@ func (this *EntranceController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//check that the data is complete
@@ -286,26 +284,26 @@ func (this *EntranceController) Post() {
 	if api == "" || targetid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get api or id from request body")
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	switch api {
 	case "login": //login, note that the target id can be true id or name 🍓🍄
 		//TODO: check to format of password
 		password := MD5Parse(postBody.Data.(string))
-		logs.Info(password)
+		rlog.Info(password)
 		//TODO: check if the identifi is student number and vertify it
 
 		//check the account from database and get true id
 		tid, err := md.ComfirmLogin(targetid, password)
 		if err != nil {
-			logs.Error(err)
+			rlog.Error("%v", err)
 			response.StatusCode = -3
 			if err == md.NoResultErr {
 				response.Msg = "没有此账号或密码错误"
 			} else {
 				response.Msg = fmt.Sprint(err)
-				logs.Error(response.Msg)
+				rlog.Error(response.Msg)
 			}
 			goto tail
 		}
@@ -314,7 +312,7 @@ func (this *EntranceController) Post() {
 		if err = md.GetNavingMsg(tid, &data); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Can't get usre message: %v ", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			data.ID = tid
 			response.Data = data
@@ -326,7 +324,7 @@ func (this *EntranceController) Post() {
 		Parse(postBody.Data, &tregister)
 		err := md.CreateAccount(tregister)
 		if err != nil {
-			logs.Error(err)
+			rlog.Error("%v", err)
 		}
 	case "confirmcode":
 		fmt.Println("confirmcode...")

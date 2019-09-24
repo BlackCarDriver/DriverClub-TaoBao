@@ -65,10 +65,10 @@
 	  		<header class="hero-unit" style="background-color:#A9F16C">
 				<div class="container">
 				<div class="row">
-				  <div class="hero-text">
-				    <h1>It is a test interface!</h1>
+				  <div class="hero-text" style="background-color: whitesmoke;padding: 1em;">
+				    <h1>WelCome, BlackCarDriver!</h1>
 				    <p class="description">
-					<br />IP: {{.Ip}}
+					IP: {{.Ip}}
 				    <br />Domain: {{.Domain}}
 				    <br />Scheme: {{.Scheme}}
 				    <br />Host: {{.Host}}
@@ -78,7 +78,18 @@
 				    <br />SubDomains: {{.SubDomains}}
 				    <br />Refer: {{.Refer}}
 				    <br />Referer: {{.Referer}}
+					<br />RunHour:{{.Runhour}}
 				    </p>
+				  </div>
+				  <br>
+				  <div style="background-color: #f0ede9;padding: 1em;">
+				  <h1>Router Log</h1>
+				  		<pre> {{.RouterLog}} </pre>
+				  </div>
+				  <br>
+				  <div style="background-color: #f0ede9;padding: 1em;">
+				  <h1>Models Log</h1>
+				  		<pre> {{.ModelsLog}} </pre>
 				  </div>
 				</div>
 				</div>

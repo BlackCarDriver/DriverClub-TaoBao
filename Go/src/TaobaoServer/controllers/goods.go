@@ -4,8 +4,6 @@ import (
 	md "TaobaoServer/models"
 	"encoding/json"
 	"fmt"
-
-	"github.com/astaxie/beego/logs"
 )
 
 //return homepage goods list data 🍋🔥🍇
@@ -21,14 +19,14 @@ func (this *HPGoodsController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//check argument
 	if postBody.Limit <= 0 || postBody.Offset < 0 {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Unexpect limited or offset")
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//get and chekc additional argument
@@ -38,14 +36,14 @@ func (this *HPGoodsController) Post() {
 	if goodstype == "" || goodstag == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Unexpect argument")
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//get data from database
 	if sum, err := md.SelectHomePageGoods(goodstype, goodstag, postBody.Offset, postBody.Limit, &goodslist); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Get goods list data fail: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	} else {
 		response.Data = goodslist
@@ -69,7 +67,7 @@ func (this *GoodsDetailController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	api = postBody.Api
@@ -79,7 +77,7 @@ func (this *GoodsDetailController) Post() {
 	if api == "" || goodId == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get api or goodsid from request data")
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//catch the unexpect panic
@@ -87,7 +85,7 @@ func (this *GoodsDetailController) Post() {
 		if err, ok := recover().(error); ok {
 			response.StatusCode = -99
 			response.Msg = fmt.Sprintf("Unexpect error happen, api: %s , error: %v", api, err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			this.Data["json"] = response
 			this.ServeJSON()
 		}
@@ -99,14 +97,15 @@ func (this *GoodsDetailController) Post() {
 		if err := md.GetGoodsById(goodId, &gooddata); err != nil {
 			response.StatusCode = -3
 			response.Msg = fmt.Sprintf("Get goodsmessage fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = &gooddata
 		}
 		//update some statistical
 		if err = md.UpdateGoodsVisit(goodId); err != nil {
-			logs.Error(err)
+			rlog.Error("%v", err)
 		}
+		md.Uas1.Add(userid) //user see other goods
 		goto tail
 
 	case "goodscomment": //comment or discuss date in goodsdetail page
@@ -114,7 +113,7 @@ func (this *GoodsDetailController) Post() {
 		if err := md.GetGoodsComment(goodId, &comment); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Get goods %s 's comment fail: %v", goodId, err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			response.Data = comment
 		}
@@ -127,7 +126,7 @@ func (this *GoodsDetailController) Post() {
 		} else if res, err := md.GetGoodsStatement(userid, goodId); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("Getstatement fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 		} else {
 			if res&1 != 0 {
 				tmp.Like = true
@@ -142,7 +141,7 @@ func (this *GoodsDetailController) Post() {
 	default:
 		response.StatusCode = -10
 		response.Msg = "No such method"
-		logs.Warn(response.Msg)
+		rlog.Warn(response.Msg)
 		goto tail
 	}
 tail:
@@ -160,7 +159,7 @@ func (this *UploadGoodsController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//catch the unexpect panic
@@ -168,7 +167,7 @@ func (this *UploadGoodsController) Post() {
 		if err, ok := recover().(error); ok {
 			response.StatusCode = -99
 			response.Msg = fmt.Sprintf("Unexpect error happen, error: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error(response.Msg)
 			this.Data["json"] = response
 			this.ServeJSON()
 		}
@@ -177,18 +176,19 @@ func (this *UploadGoodsController) Post() {
 	if err := json.Unmarshal([]byte(postBody.Data.(string)), &goodsdata); err != nil {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Marshal fail: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	//save to database
 	if err = md.CreateGoods(goodsdata); err != nil {
 		response.StatusCode = -3
 		response.Msg = fmt.Sprintf("Save goods fail: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error(response.Msg)
 		goto tail
 	}
 	response.StatusCode = 0
 	response.Msg = "Success!"
+	md.Uas2.Add(goodsdata.UserId) //upload goods scuess, credits+1
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

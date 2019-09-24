@@ -7,6 +7,9 @@ import (
 )
 
 func init() {
+	//setting up logger
+	beego.SetLogger("file", `{"filename":"logs/default.log"}`)
+
 	beego.Router("/test", &controllers.TestController{})
 	beego.Router("/homepage/goodsdata", &controllers.HPGoodsController{})
 	beego.Router("/homepage/goodstypemsg", &controllers.GoodsTypeController{})

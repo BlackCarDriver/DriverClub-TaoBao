@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/astaxie/beego/logs"
-
 	"database/sql"
 
 	"github.com/astaxie/beego/orm"
@@ -30,7 +28,7 @@ func CreateAccount(user RegisterData) error {
 		userid, user.Email, user.Password, user.Name, dfUserHeadimg)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 	}
 	return err
 }
@@ -42,26 +40,26 @@ func CreateGoods(goods UploadGoodsData) error {
 	goodsNumber := CountGoods() + 1
 	t := time.Now()
 	goodsid := fmt.Sprintf("%02d%02d%02d%04d", t.Year()%100, t.Month(), t.Day(), goodsNumber)
-	logs.Info(goods.UserId, goodsid)
+	mlog.Info(goods.UserId, goodsid)
 	insertGoods := o.Raw("insert into t_goods(id, name, title, type, tag, price, file, headimg)values(?,?,?,?,?,?,?,?)",
 		goodsid, goods.Name, goods.Title, goods.Type, goods.Tag, goods.Price, goods.Text, goods.Imgurl)
 	insertUpload := o.Raw("insert into t_upload(userid, goodsid) values(?, ?)", goods.UserId, goodsid)
 
 	err = o.Begin()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	_, err1 := insertGoods.Exec()
 	_, err2 := insertUpload.Exec()
 
 	if err1 != nil || err2 != nil {
-		logs.Warn("Need to Rollback!! t_goods: %v ,  t_upload: %v ", err1, err2)
+		mlog.Warn("Need to Rollback!! t_goods: %v ,  t_upload: %v ", err1, err2)
 		//rollback
 		if err3 := o.Rollback(); err3 != nil {
-			logs.Error("Rollback fail: ", err3)
+			mlog.Error("Rollback fail: ", err3)
 		} else {
-			logs.Info("RollBack success!")
+			mlog.Info("RollBack success!")
 		}
 		if err1 != nil {
 			err = fmt.Errorf("updata t_goods fail: %v", err1)
@@ -69,7 +67,7 @@ func CreateGoods(goods UploadGoodsData) error {
 			err = fmt.Errorf("update t_upload fail: %v", err2)
 		}
 	} else {
-		logs.Info("Create Goods Scuueed!!")
+		mlog.Info("Create Goods Scuueed!!")
 		err = o.Commit()
 	}
 	return err
@@ -81,8 +79,9 @@ func AddCollectRecord(uid, gid string) error {
 	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 	}
+	Uas2.Add(uid) 	//user collect a goods, credits+1
 	return err
 }
 
@@ -92,38 +91,38 @@ func AddUserMessage(uid, targetid, message string) error {
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, uid, targetid, message)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 	}
+	Uas2.Add(uid) //user send message, credits+1
 	return err
 }
 
-//某商品被收藏，更新收藏表
+//user collect a goods, update t_user_collect
 func AddGoodsCollect(uid, gid string) error {
 	o := orm.NewOrm()
 	var err error
 	var result sql.Result
 	count := 0
-	fmt.Println(uid, gid)
 	err = o.Raw(`SELECT count(*) from t_collect where userid=? and goodsid=?`, uid, gid).QueryRow(&count)
 	if err != nil {
 		err := fmt.Errorf("Error when select: %s", err)
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	if count > 0 {
 		err := fmt.Errorf("You are already Collect it goods!")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	result, err = o.Raw(`INSERT INTO t_collect(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	return nil
@@ -138,25 +137,27 @@ func AddUserConcern(id1, id2 string) error {
 	err = o.Raw(`SELECT count(*) FROM t_concern where id1=? and id2=?`, id1, id2).QueryRow(&count)
 	if err != nil {
 		err := fmt.Errorf("Error when select from t_concern: %s", err)
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	if count > 0 {
 		err := fmt.Errorf("You are already concern it user!")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	result, err = o.Raw(`INSERT INTO t_concern(id1, id2)VALUES (?, ?)`, id1, id2).Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
+	Uas2.Add(id1) //two user credits +1
+	Uas2.Add(id2) 
 	return nil
 }
 
@@ -167,15 +168,16 @@ func AddGoodsLike(uid, gid string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_goods_like(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
 	if err != nil {
-		logs.Error("Insert t_goods_like fail: %v, user:%s, goods:%s", err, uid, gid)
+		mlog.Error("Insert t_goods_like fail: %v, user:%s, goods:%s", err, uid, gid)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
+	Uas2.Add(uid)
 	return nil
 }
 
@@ -186,15 +188,16 @@ func AddUserLike(uid1, uid2 string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_user_like(userid1, userid2)VALUES (?, ?)`, uid1, uid2).Exec()
 	if err != nil {
-		logs.Error("uid1: %s, uid2:%s, error:%v", uid1, uid2, err)
+		mlog.Error("uid1: %s, uid2:%s, error:%v", uid1, uid2, err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
+	Uas2.Add(uid1)
 	return nil
 }
 
@@ -208,14 +211,15 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 	var result sql.Result
 	result, err = o.Raw(`INSERT INTO public.t_comment(userid, goodsid, content)VALUES (?, ?, ?)`, uid, gid, conetnt).Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v",err)
 		return err
 	}
+	Uas2.Add(uid)
 	return nil
 }

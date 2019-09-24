@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/astaxie/beego/logs"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -15,15 +14,16 @@ func UpdateUserBaseMsg(d UpdeteMsg) error {
 		d.Name, d.Sex, d.Sign, d.Dorm, d.Major, d.Grade, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error("user: %s, error:%v", d.Id, err)
+		mlog.Error("user: %s, error:%v", d.Id, err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err = fmt.Errorf("No Roow Affected !")
-		logs.Error("user: %s, error:%v", d.Id, err)
+		mlog.Error("user: %s, error:%v", d.Id, err)
 		return err
 	}
+	Uas2.Add(d.Id) 	//user change hiself profile, credits+1
 	return nil
 }
 
@@ -34,15 +34,16 @@ func UpdateUserConnectMsg(d UpdeteMsg) error {
 		d.Emails, d.Phone, d.Qq, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error("user:%s, error:%v", d.Id, err)
+		mlog.Error("user:%s, error:%v", d.Id, err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error("user: %s, error:%v", d.Id, err)
+		mlog.Error("user: %s, error:%v", d.Id, err)
 		return err
 	}
+	Uas2.Add(d.Id) 	//user change hiself profile, credits+1
 	return nil
 }
 
@@ -52,13 +53,13 @@ func UpdateUserHeadIMg(imgurl, userid string) error {
 	rawSeter := o.Raw("update t_user set headimg=? where id=?;", imgurl, userid)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err = fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -70,15 +71,16 @@ func UpdateUserVisit(uid string) error {
 	rawSeter := o.Raw(`UPDATE t_user SET visit=visit+1 WHERE id = ?`, uid)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err = fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
+	Uas2.Add(uid)	//homepage have been visited, credits+1
 	return nil
 }
 
@@ -88,13 +90,13 @@ func UpdateGoodsVisit(gid string) error {
 	rawSeter := o.Raw(`UPDATE t_goods SET visit=visit+1 WHERE id = ?`, gid)
 	result, err := rawSeter.Exec()
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -104,28 +106,28 @@ func UpdateGoodsVisit(gid string) error {
 func UpdateMyGoodsState(uid, gid string) error {
 	if uid == "" || gid == "" {
 		err := errors.New("Got a null userid or goodsid")
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	o := orm.NewOrm()
 	//check whether this goods exit and the user is right
 	count := 0
 	if err := o.Raw(`select count(*) from v_mygoods where uid =? and id=?`, uid, gid).QueryRow(&count); err != nil {
-		logs.Error("Count row in v_mygoods fail: %v", err)
+		mlog.Error("Count row in v_mygoods fail: %v", err)
 		return err
 	} else if count == 0 {
 		err = fmt.Errorf("No row found in v_mygoods when want to delete: uid:%s gid:%s", uid, gid)
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	if res, err := o.Raw("update t_goods set state = -1 where id = ?", gid).Exec(); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	} else if af, err := res.RowsAffected(); err != nil {
-		logs.Warn(err)
+		mlog.Warn("%v", err)
 	} else if af == 0 {
 		err = fmt.Errorf("No rows affacted when user %s update goods %s state", uid, gid)
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil

@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/astaxie/beego/logs"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -22,69 +20,40 @@ func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]
 	o := orm.NewOrm()
 	if gstype == "all" { // search all goods
 		if _, err = o.Raw(`select * from v_hpgoodslist offset ? limit ?`, offset, limit).QueryRows(g); err != nil {
-			logs.Error(err)
+			mlog.Error("%v", err)
 			return 0, err
 		} else if err = o.Raw(`select count(*) from v_hpgoodslist`).QueryRow(&totalrows); err != nil {
-			logs.Error("Can't not count total rows number: %v", err)
+			mlog.Error("Can't not count total rows number: %v", err)
 		}
 		return totalrows, err
 	}
 	if gstype == "like" { //search by input keyword
 		tag = fmt.Sprintf("%%%s%%", tag)
 		if _, err = o.Raw(`select distinct * from v_hpgoodslist where tag like ? or name like ? or title like ? offset ? limit ?`, tag, tag, tag, offset, limit).QueryRows(g); err != nil {
-			logs.Error(err)
+			mlog.Error("%v", err)
 			return 0, err
 		} else if err = o.Raw(`select distinct count(*) from v_hpgoodslist where tag like ? or name like ? or title like ?`, tag, tag, tag).QueryRow(&totalrows); err != nil {
-			logs.Error("Can't not count total rows number: %v", err)
+			mlog.Error("Can't not count total rows number: %v", err)
 		}
 		return totalrows, err
 	}
 	if tag == "全部" { //search by given type
 		if _, err = o.Raw(`select * from v_hpgoodslist where type=? offset ? limit ?`, gstype, offset, limit).QueryRows(g); err != nil {
-			logs.Error(err)
+			mlog.Error("%v", err)
 			return 0, err
 		} else if err = o.Raw(`select count(*) from v_hpgoodslist where type=?`, gstype).QueryRow(&totalrows); err != nil {
-			logs.Error("Can't not count total rows number: %v", err)
+			mlog.Error("Can't not count total rows number: %v", err)
 		}
 		return totalrows, err
 	}
 	//search by given type and tag
 	if _, err = o.Raw(`select * from v_hpgoodslist where type=? and tag=? offset ? limit ?`, gstype, tag, offset, limit).QueryRows(g); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0, err
 	} else if o.Raw(`select count(*) from v_hpgoodslist where type=? and tag=?`, gstype, tag).QueryRow(&totalrows); err != nil {
-		logs.Error("Can't not count total rows number: %v", err)
+		mlog.Error("Can't not count total rows number: %v", err)
 	}
 	return totalrows, err
-}
-
-//get all tag name and tag number of a type
-func GetTagsData(gtype string, tag *[]GoodsSubType) error {
-	if gtype == "" {
-		return errors.New("Receive a null gtype")
-	}
-	o := orm.NewOrm()
-	var tSubType []GoodsSubType
-	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(&tSubType)
-	if err != nil {
-		logs.Error(err)
-		return err
-	}
-	if num == 0 {
-		err = fmt.Errorf("the result is empty!")
-		logs.Warn(err)
-		return err
-	}
-	var sum int64 = 0
-	for i := 0; i < len(tSubType); i++ {
-		sum += tSubType[i].Number
-	}
-	slice := make([]GoodsSubType, len(tSubType)+1)
-	copy(slice, []GoodsSubType{{"全部", sum}})
-	copy(slice[1:], tSubType)
-	*tag = make([]GoodsSubType, len(tSubType)+1)
-	copy(*tag, slice)
-	return nil
 }
 
 //get a goods detail message
@@ -95,7 +64,7 @@ func GetGoodsById(gid string, c *GoodsDetail) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_goods_detail where goodsid=$1`, gid).QueryRow(c)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -109,15 +78,15 @@ func GetUserData(uid string, u *UserMessage) error {
 	o := orm.NewOrm()
 	err := o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&u)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	if u.Care, err = CountIcare(uid); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	if u.Becare, err = CountCareMe(uid); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -129,13 +98,13 @@ func GetMyMessage(uid string, c *[]MyMessage, offset, limit int) error {
 		return errors.New("Receive a null uid")
 	}
 	if offset < 0 || limit <= 0 {
-		logs.Error("Unsuppose offset or limit argument, offset=%d, limit=%d", offset, limit)
+		mlog.Error("Unsuppose offset or limit argument, offset=%d, limit=%d", offset, limit)
 		return errors.New("Unsuppose offset or limit argument")
 	}
 	o := orm.NewOrm()
 	_, err := o.Raw(`select * from v_mymessage where uid = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -152,7 +121,7 @@ func GetMyCollectGoods(uid string, c *[]GoodsShort, offset, limit int) error {
 	o := orm.NewOrm()
 	_, err := o.Raw(`select * from v_mycollect where uid = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -170,7 +139,7 @@ func GetMyGoods(uid string, c *[]GoodsShort, offset, limit int) error {
 	o := orm.NewOrm()
 	_, err := o.Raw(`select * from v_mygoods where uid = ? offset ? limit ?`, uid, offset, limit).QueryRows(c)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -182,7 +151,7 @@ func GetCareMeData(uid string, c *[2][]UserShort) error {
 	//the list of user that care abtout me
 	_, err := o.Raw(`select headimg, name, id from v_concern where id2=?`, uid).QueryRows(&c[0])
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	//get the list of user that i care
@@ -193,27 +162,11 @@ func GetCareMeData(uid string, c *[2][]UserShort) error {
 	return nil
 }
 
-//get the list of user's rank
-func GetRankList(c *[]Rank) error {
-	o := orm.NewOrm()
-	num, err := o.Raw(`select * from v_rank`).QueryRows(c)
-	if err != nil {
-		logs.Error(err)
-		return fmt.Errorf("GetMessage error: %v", err)
-	}
-	if num == 0 {
-		err := fmt.Errorf("the result is empty!")
-		logs.Error(err)
-		return err
-	}
-	return nil
-}
-
 //get the data that need to show in naving componment 🍓
 func GetNavingMsg(uid string, c *MyStatus) error {
 	o := orm.NewOrm()
 	if err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -224,7 +177,7 @@ func GetGoodsComment(goodsid string, c *[]GoodsComment) error {
 	o := orm.NewOrm()
 	_, err := o.Raw(`select u.name as "username", c.time as "time", c.content as "comment" from t_user as u, t_comment as c where u.id=c.userid and c.goodsid=?`, goodsid).QueryRows(c)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -238,14 +191,14 @@ func GetGoodsStatement(userid, goodid string) (int, error) {
 	o := orm.NewOrm()
 	//check if have collect
 	if err := o.Raw(`SELECT count(*) FROM public.t_collect where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0, err
 	} else {
 		result += tmp * 2
 	}
 	//check if have like
 	if err := o.Raw(`SELECT count(*) FROM public.t_goods_like where userid=? and goodsid=?`, userid, goodid).QueryRow(&tmp); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return result, err
 	} else {
 		result += tmp
@@ -261,14 +214,14 @@ func GetUserStatement(uid1, uid2 string) (int, error) {
 	o := orm.NewOrm()
 	//check if have concern
 	if err := o.Raw(`SELECT count(*) FROM public.t_concern where id1=? and id2=?`, uid1, uid2).QueryRow(&tmp); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0, err
 	} else {
 		result += tmp * 2
 	}
 	//check if have like
 	if err := o.Raw(`SELECT count(*) FROM public.t_user_like where userid1=? and userid2=?`, uid1, uid2).QueryRow(&tmp); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return result, err
 	} else {
 		result += tmp
@@ -281,12 +234,12 @@ func GetSettingMsg(uid string, c *UserSetData) error {
 	var err error
 	if uid == "" {
 		err = errors.New("Receive a null uid")
-		logs.Error(err)
+		mlog.Error("%v", err)
 	}
 	o := orm.NewOrm()
 	err = o.Raw(`select * from v_mydata where id = ?`, uid).QueryRow(&c)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -297,39 +250,39 @@ func GetSettingMsg(uid string, c *UserSetData) error {
 func ComfirmLogin(identifi, password string) (id string, err error) {
 	if identifi == "" || password == "" {
 		err = errors.New("Receive null id or password")
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return "", err
 	}
 	count := 0
 	o := orm.NewOrm()
 	//use identifi as id firstly
 	if err := o.Raw("select count(*) from t_user where id=? and password=?", identifi, password).QueryRow(&count); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return "", err
 	} else {
 		if count == 1 {
 			return identifi, nil
 		} else if count > 1 {
 			err = errors.New("Find two account with same id!")
-			logs.Error(err)
+			mlog.Error("%v", err)
 			return "", err
 		}
 	}
 	//if no result with finding id, then use identfi as name and search again
 	if err := o.Raw("select count(*) from t_user where name=? and password=?", identifi, password).QueryRow(&count); err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return "", err
 	} else {
 		if count == 1 { //find true user id
 			err = o.Raw("select id from t_user where name=? and password=?", identifi, password).QueryRow(&id)
 			if err != nil {
-				logs.Error(err)
+				mlog.Error("%v", err)
 				return "", err
 			}
 			return id, nil
 		} else if count > 1 {
 			err = errors.New("Find two account with same name!")
-			logs.Error(err)
+			mlog.Error("%v", err)
 			return "", err
 		} else if count == 0 {
 			return "", NoResultErr
@@ -349,7 +302,7 @@ func CountCareMe(myid string) (int, error) {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_concern where id2 = ?", myid).QueryRow(&userNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0, err
 	}
 	return userNumber, nil
@@ -361,7 +314,7 @@ func CountIcare(myid string) (int, error) {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_concern where id1 = ?", myid).QueryRow(&userNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0, err
 	}
 	return userNumber, nil
@@ -373,7 +326,7 @@ func CountUser() int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_user").QueryRow(&userNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0
 	}
 	return userNumber
@@ -385,7 +338,7 @@ func CountGoods() int {
 	goodsNumber := 0
 	err := o.Raw("select count(*) from t_goods").QueryRow(&goodsNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0
 	}
 	return goodsNumber
@@ -397,7 +350,7 @@ func CountMyCoods(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_upload where userid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0
 	}
 	return userNumber
@@ -409,7 +362,7 @@ func CountMyCollect(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_collect where userid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0
 	}
 	return userNumber
@@ -421,7 +374,7 @@ func CountMyAllMsg(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from v_mymessage where uid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
-		logs.Error(err)
+		mlog.Error("%v", err)
 		return 0
 	}
 	return userNumber

@@ -2,34 +2,52 @@ package controllers
 
 import (
 	md "TaobaoServer/models"
+	"bufio"
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
+	"os"
 	"strings"
 	"time"
 
-	"github.com/astaxie/beego/logs"
-
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/config"
+	"github.com/astaxie/beego/logs"
 )
 
-const (
-	//上传的图片保存到的位置
-	imgPath    = "E:\\tempfile\\taobaosource\\"
-	imgUrlRoot = "https://blackcardriver.com/images/"
-)
-
+//config varlue
 var (
-	tmpImgurl = "https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a"
-	random    *rand.Rand
+	imgPath               = ""
+	imgUrlTP              = ""
+	maxGoodsHeadImgSizekb = int64(0)
 )
+
+//random seed
+var random *rand.Rand
+var rlog *logs.BeeLogger
 
 func init() {
-	beego.SetLogFuncCall(true)
-	beego.SetLogger("file", `{"filename":"logs/test.log"}`)
-	logs.SetLogFuncCallDepth(3)
+	//make a logger specially used by router
+	rlog = logs.NewLogger()
+	rlog.SetLogger("file", `{"filename":"logs/router.log"}`)
+	rlog.EnableFuncCallDepth(true)
+	rlog.Info("Router logs init success!")
+
+	//read config from conf file
+	if iniconf, err := config.NewConfig("ini", "./conf/driver.conf"); err != nil {
+		rlog.Error("%v", err)
+		panic(err)
+	} else {
+		imgPath = iniconf.String("imgPath")
+		imgUrlTP = iniconf.String("imgUrlTP")
+		if maxGoodsHeadImgSizekb, err = iniconf.Int64("maxGoodsHeadImgSizekb"); err != nil {
+			panic(err)
+		}
+	}
+	imgPath = strings.TrimRight(imgPath, `\`)
 	random = rand.New(rand.NewSource(time.Now().UnixNano()))
 }
 
@@ -48,34 +66,28 @@ type GoodsDetailController struct {
 type PersonalDataController struct {
 	beego.Controller
 }
-
 type UpdataMsgController struct {
 	beego.Controller
 }
-
 type UploadGoodsController struct {
 	beego.Controller
 }
-
 type UploadImagesController struct {
 	beego.Controller
 }
-
 type EntranceController struct {
 	beego.Controller
 }
-
 type UpdateController struct {
 	beego.Controller
 }
-
 type DeleteController struct {
 	beego.Controller
 }
 
-//test interface 🍍
+//test interface 🍍🌰
 func (this *TestController) Get() {
-	logs.Info("Soneont test the program by it iterface")
+	rlog.Info("Soneont test the program by it iterface")
 	this.Data["Ip"] = this.Ctx.Input.IP()
 	this.Data["Host"] = this.Ctx.Input.Host()
 	this.Data["Domain"] = this.Ctx.Input.Domain()
@@ -86,40 +98,49 @@ func (this *TestController) Get() {
 	this.Data["Referer"] = this.Ctx.Input.Referer()
 	this.Data["Site"] = this.Ctx.Input.Site()
 	this.Data["UserAgent"] = this.Ctx.Input.UserAgent()
+	this.Data["Runhour"] = md.RunHour
+	this.Data["RouterLog"], _ = ParseFile("./logs/router.log")
+	this.Data["ModelsLog"], _ = ParseFile("./logs/models.log")
 	this.TplName = "test.tpl"
 }
 
-//saved user's upload images into dist and return a url that get it images 🍍
+//saved user's upload images into dist and return a url that get it images 🍍🌰
 //response to UploadImg() in fontend
+///upload/images
 func (this *UploadImagesController) Post() {
 	response := md.ReplyProto{}
-	response.StatusCode = 0
 	f, h, err := this.GetFile("file")
 	if err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not get file from request: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
+	//check the size of upload images
+	rlog.Info("Upload images name:%s,  size:%d", h.Filename, h.Size)
+	if h.Size > maxGoodsHeadImgSizekb<<10 {
+		response.StatusCode = -2
+		response.Msg = fmt.Sprintf("images size is too larger")
+		rlog.Error("%v", response.Msg)
+		goto tail
+	}
+	//check and change the images name
 	h.Filename, err = CheckImgName(h.Filename)
 	if err != nil {
-		response.StatusCode = -2
-		response.Msg = fmt.Sprintf("Can not get images name from request: %v", err)
-		logs.Error(response.Msg)
+		response.StatusCode = -3
+		response.Msg = fmt.Sprintf("File type not right: %v", err)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
 	defer f.Close()
-	err = this.SaveToFile("file", imgPath+h.Filename)
-	if err != nil {
-		response.StatusCode = -3
+	if err = this.SaveToFile("file", fmt.Sprintf("%s/%s", imgPath, h.Filename)); err != nil {
+		response.StatusCode = -4
 		response.Msg = fmt.Sprintf("Can not save file: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
-	//DOTO: use true image url
-	// response.Data = imgUrlRoot + h.Filename
-	// response.Data = "https://blackcardriver.cn/images/huawei.jpg"
-	response.Data = "https://blackcardriver.cn/images/huaji.png"
+	response.StatusCode = 0
+	response.Data = fmt.Sprintf("%s", h.Filename)
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()
@@ -127,6 +148,7 @@ tail:
 
 //small update all kind of record such as like numbers, collect numbers 🍍
 //response for SmallUpdate() in fontend
+//smallupdate
 func (this *UpdateController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -137,7 +159,7 @@ func (this *UpdateController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
 	api = postBody.Api
@@ -147,7 +169,7 @@ func (this *UpdateController) Post() {
 	if api == "" || targetid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get api or targetid from request data")
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
 	switch api {
@@ -156,24 +178,23 @@ func (this *UpdateController) Post() {
 		if err != nil {
 			response.StatusCode = -3
 			response.Msg = fmt.Sprintf("AddGoodsLike fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
 	case "sendmessage": //send a private message to goods owner 🔥
-		logs.Info(postBody.Data)
 		appendData := postBody.Data.(map[string]interface{})
 		message := ""
 		if message = appendData["message"].(string); message == "" {
 			response.StatusCode = -4
 			response.Msg = "Can't get message on postbody"
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 			goto tail
 		}
 		if err = md.AddUserMessage(userid, targetid, message); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("AddUserMssage() fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
@@ -181,8 +202,9 @@ func (this *UpdateController) Post() {
 		if err = md.AddGoodsCollect(userid, targetid); err != nil {
 			response.StatusCode = -6
 			response.Msg = fmt.Sprintf("AddGoodsCollect() fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
+		md.Uas2.Add(userid) //collect a goods, credits +1
 		goto tail
 
 	case "addcomment": // reviews a goods 🔥
@@ -191,13 +213,13 @@ func (this *UpdateController) Post() {
 		if comment = appendData["comment"].(string); comment == "" {
 			response.StatusCode = -10
 			response.Msg = "Can't get comment on postbody"
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 			goto tail
 		}
 		if err = md.AddGoodsComment(userid, targetid, comment); err != nil {
 			response.StatusCode = -11
 			response.Msg = fmt.Sprintf("AddGoodsComment() fail %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
@@ -205,7 +227,7 @@ func (this *UpdateController) Post() {
 		if err = md.AddUserLike(userid, targetid); err != nil {
 			response.StatusCode = -7
 			response.Msg = fmt.Sprintf("AddUserLike() fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
@@ -213,7 +235,7 @@ func (this *UpdateController) Post() {
 		if err = md.AddUserConcern(userid, targetid); err != nil {
 			response.StatusCode = -8
 			response.Msg = fmt.Sprintf("AddUserConcern() fail: %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 			goto tail
 		}
 		goto tail
@@ -221,7 +243,7 @@ func (this *UpdateController) Post() {
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such api %s", api)
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 	}
 tail:
 	this.Data["json"] = response
@@ -240,7 +262,7 @@ func (this *DeleteController) Post() {
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
 	api = postBody.Api
@@ -250,7 +272,7 @@ func (this *DeleteController) Post() {
 	if api == "" || targetid == "" || userid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get targetid, userid, or api from request data")
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 		goto tail
 	}
 	switch api {
@@ -258,7 +280,7 @@ func (this *DeleteController) Post() {
 		if err = md.UpdateMyGoodsState(userid, targetid); err != nil {
 			response.StatusCode = -3
 			response.Msg = fmt.Sprintf("删除商品失败： %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
@@ -266,7 +288,7 @@ func (this *DeleteController) Post() {
 		if err = md.DeleteMyMessage(userid, targetid); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("删除消息失败： %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
@@ -274,7 +296,7 @@ func (this *DeleteController) Post() {
 		if err = md.DeleteMyCollect(userid, targetid); err != nil {
 			response.StatusCode = -5
 			response.Msg = fmt.Sprintf("取消收藏失败： %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
@@ -282,14 +304,14 @@ func (this *DeleteController) Post() {
 		if err = md.DeleteMyConcern(userid, targetid); err != nil {
 			response.StatusCode = -3
 			response.Msg = fmt.Sprintf("取消关注失败： %v", err)
-			logs.Error(response.Msg)
+			rlog.Error("%v", response.Msg)
 		}
 		goto tail
 
 	default:
 		response.StatusCode = -99
 		response.Msg = fmt.Sprintf("No such api: %s", api)
-		logs.Error(response.Msg)
+		rlog.Error("%v", response.Msg)
 	}
 tail:
 	this.Data["json"] = response
@@ -314,19 +336,19 @@ func CheckImgName(filename string) (newName string, err error) {
 	c := strings.Count(filename, ".")
 	if c > 1 {
 		err := fmt.Errorf("Comma numbers in image name more than one!")
-		logs.Error(err)
+		rlog.Error("%v", err)
 		return "", err
 	}
 	l := strings.LastIndex(filename, ".")
 	if l < 0 {
 		err := fmt.Errorf("No comma in the image name!")
-		logs.Error(err)
+		rlog.Error("%v", err)
 		return "", err
 	}
 	suffix := strings.ToLower(filename[l+1:])
 	if suffix != "png" && suffix != "jpg" {
 		err := fmt.Errorf("not an png or jpg type images!")
-		logs.Error(err)
+		rlog.Error("%v", err)
 		return "", err
 	}
 	return GetRandomString(10) + "." + suffix, nil
@@ -336,11 +358,11 @@ func CheckImgName(filename string) (newName string, err error) {
 func Parse(data interface{}, container interface{}) error {
 	tdata, err := json.Marshal(data)
 	if err != nil {
-		logs.Error(err)
+		rlog.Error("%v", err)
 		return err
 	}
 	err = json.Unmarshal(tdata, container)
-	logs.Error(err)
+	rlog.Error("%v", err)
 	return err
 }
 
@@ -349,4 +371,19 @@ func MD5Parse(s string) string {
 	h := md5.New()
 	h.Write([]byte(s))
 	return hex.EncodeToString(h.Sum(nil))
+}
+
+//read a file and parse it into a string 📂
+func ParseFile(path string) (text string, err error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return "", fmt.Errorf("Open %s fall: %v", path, err)
+	}
+	defer file.Close()
+	buf := bufio.NewReader(file)
+	bytes, err := ioutil.ReadAll(buf)
+	if err != nil {
+		return "", fmt.Errorf("ioutil.ReadAll fall : %v", err)
+	}
+	return string(bytes), nil
 }
