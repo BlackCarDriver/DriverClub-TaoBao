@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { GoodsType, UploadGoods } from '../app/struct';
-import { RequertResult, RequestProto, ReplyProto } from '../app/struct';
+import { RequestProto, ReplyProto } from '../app/struct';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ export class ServerService {
   userid = "";    //this usrid only can be true usre id
   username = "";
   homepage_goods_perpage = 10;
-  // private addr: string  = "https://blackcardriver.cn/taobaoserver"
-  private addr: string = "/localserver"
+  private addr: string  = "https://blackcardriver.cn/taobaoserver"
+  // private addr: string = "/localserver"
 
   constructor(
     private http: HttpClient,
