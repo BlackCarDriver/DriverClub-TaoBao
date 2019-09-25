@@ -1,9 +1,11 @@
 <div class="container"><!--路径导航-->
-  <div class="row">
-    <ol class="breadcrumb nopadbtm">
-      <li class="active">商品{{goodid}}</li>
-    </ol>
+  <div class="row path">
+      <ol class="breadcrumb" style="margin: 0%;">
+          <li><a href="/homepage">交易区</a></li>
+          <li class="active">商品{{goodid}}</li>
+      </ol>
   </div>
+
 </div>
 
 <div class="container gp-head g-bg-box">
@@ -69,7 +71,7 @@
   <div class="page-header">商品评论</div>
   <div class="comment-row row" *ngFor="let row of commentdata">
     <div class="cm-head">
-      <div class="userhead" style="text-transform: uppercase"[ngStyle]="{'background-color': randomColor(row.username)}">
+      <div class="userhead" style="text-transform: uppercase" [ngStyle]="{'background-color': randomColor(row.username)}">
         <a style="color:unset">{{row.username[0]}}</a>
       </div>
     </div>

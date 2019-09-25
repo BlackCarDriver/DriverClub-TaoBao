@@ -15,6 +15,7 @@ export class Personal2Component implements OnInit {
   btn_like_sho = "点赞";
   is_concern = true;
   is_like= false;
+  myid = "";
   constructor(
     private server: ServerService,
     private app:AppComponent,
@@ -27,6 +28,7 @@ export class Personal2Component implements OnInit {
       window.history.back();
       return;
     }
+    this.myid = this.server.userid;
     this.getOtherMsg(this.targetid);
     this.getStatement();
   }

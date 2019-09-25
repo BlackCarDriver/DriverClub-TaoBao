@@ -2,8 +2,9 @@
 
     <div class="col-md-8-offset-2">
         <div class="row path">
-            <ol class="breadcrumb">
-                <li><a href="#">我的主页</a></li>
+            <ol class="breadcrumb" style="margin: 0%;">
+                <li><a href="/homepage">交易区</a></li>
+                <li *ngIf="myid!=''"><a href="/personal">我的主页</a></li>
                 <li class="active">{{data.id}}</li>
             </ol>
         </div>

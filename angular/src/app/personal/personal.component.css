@@ -7,6 +7,7 @@
     border: 2px solid #e6e6e6;
     border-radius: 4px;
 }
+
 .head-sign {
     color: #03A9F4;
     position: relative;
@@ -14,8 +15,9 @@
 }
 
 /* my goods */
+
 .goods-box {
-    --boxh : 180px;
+    --boxh: 180px;
     width: var(--boxh);
     height: 210px;
     float: left;
@@ -23,11 +25,13 @@
     overflow: hidden;
     position: relative;
 }
+
 .goods-box img {
     border: #eee 1px solid;
     width: var(--boxh);
     height: var(--boxh);
 }
+
 .goods-box .gname {
     text-align: center;
     font-size: 1.2em;
@@ -36,55 +40,75 @@
     cursor: pointer;
     margin: 0.2em;
 }
- .rmlable {
+
+.rmlable {
     position: absolute;
     right: 0px;
-    font-size: 0.8em; 
-    opacity: 0.3;  
-    padding: 6px 10px;   
+    font-size: 0.8em;
+    opacity: 0.3;
+    padding: 6px 10px;
     margin: -1px;
     cursor: pointer;
 }
- .rmlable:hover {
-    opacity: 1;  
+
+.rmlable:hover {
+    opacity: 1;
 }
-.goods-box .price{
+
+.goods-box .price {
     color: #f06060;
     font-size: 0.7em;
     font-weight: 600;
     background-color: antiquewhite;
 }
-.goods-box .titlebox{
+
+.goods-box .titlebox {
     height: 2em;
     font-size: 0.9em;
     padding: 0em 0.4em;
 }
-.goods-box .titlebox p{
+
+.goods-box .titlebox p {
     text-overflow: ellipsis;
 }
+
+.tad {
+    margin-left: 5px;
+    width: 45%;
+    line-break: anywhere;
+    overflow: hidden;
+    float: left;
+}
+
 /* my messages */
+
 .heading p {
     font-weight: 600;
     line-height: 30px;
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 .textcenter {
     text-align: center;
     clear: both;
 }
+
 /* public */
+
 .button1 {
     width: 70px;
     height: 30px;
     margin: 5px 10px;
 }
+
 .left-blue {
     color: #428bca;
     float: left;
     padding-left: 0px;
     padding-right: 0px;
 }
+
 .mun-ico {
     padding: 2px 6px;
     font-weight: 600;
@@ -92,11 +116,13 @@
     background-color: #7f9495;
     border-radius: 1em;
 }
+
 .headimg-list {
     float: left;
     padding: 4px;
     margin-top: 6px;
 }
+
 .headimg-list .headimg {
     width: 50px;
     height: 50px;
@@ -106,7 +132,8 @@
     border: 1px solid rgb(247, 239, 239);
     display: inline-block;
 }
-.headimg img{
+
+.headimg img {
     width: 100%;
     height: 100%;
 }
@@ -114,6 +141,7 @@
 .tab-pane:focus {
     outline: none;
 }
+
 .nodata p {
     text-align: center;
     color: #aaa3a3;
@@ -127,6 +155,7 @@
     border: 1px solid #e6e6e6;
     margin-top: 30px;
 }
+
 .rank-list h3 {
     font-size: 1em;
     color: #938989;
@@ -136,9 +165,11 @@
     line-height: 38px;
     font-weight: 600;
 }
+
 .rank-list ul {
     padding-left: 0px;
 }
+
 .rank-list span {
     width: 60px;
     float: left;
@@ -146,29 +177,35 @@
     font-weight: 600;
     color: #c88326;
 }
+
 .rank-list li {
     font-size: 15px;
     color: #858585;
 }
 
+.unread {
+    background-color: #b1ffb8;
+    color: #1d6a04;
+}
+
 /* ------------ */
-@media screen and (max-width:660px){
-    .container-fluid{
+
+@media screen and (max-width:660px) {
+    .container-fluid {
         margin: 0px;
         padding: 0px;
     }
-    .main-body{
+    .main-body {
         margin: 0;
         border: none;
     }
-    .swicth-box{
+    .swicth-box {
         margin: 0;
     }
-    .nav-tabs a{
+    .nav-tabs a {
         padding: 5px 3px;
     }
-
-    .panel-body{
+    .panel-body {
         padding: 0.5em 0em;
     }
 }

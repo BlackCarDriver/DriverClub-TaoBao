@@ -90,8 +90,9 @@ export class UploadgoodsComponent implements OnInit {
           this.app.showMsgBox(-1, "对不起,上传失败,请稍后再试试：" + result.msg);
           return;
         }
+        alert("上传成功");
         this.app.showMsgBox(0, "上传成功");
-        window.location.reload();
+        window.history.back();
       }, err => { this.app.cFail(err) });
   }
   //get goods type list that need to show in select button. 🍋🍄

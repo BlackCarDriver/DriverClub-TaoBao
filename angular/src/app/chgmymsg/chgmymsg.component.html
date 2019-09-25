@@ -1,54 +1,68 @@
 
 <div class="container" style="color: #888;">
-
-<!--head row-->
+    <div class="row path">
+        <ol class="breadcrumb" style="margin: 0%;">
+            <li><a href="/homepage">交易区</a></li>
+            <li *ngIf="userid!=''"><a href="/personal">我的主页</a></li>
+            <li class="active">修改信息</li>
+        </ol>
+    </div>
+    <!--head row-->
     <div class="row pbox msghead">
-      <div class="col-md-2 col-xs-12" style="height: 100%;">
-         <img src={{headimgurl}} class="myimg">
-      </div>
-      <div class="col-md-7 col-xs-12">
+        <div class="col-md-2 col-xs-12" style="height: 100%;">
+            <img src={{headimgurl}} class="myimg">
+        </div>
+        <div class="col-md-7 col-xs-12">
             <div class="row username"><h3 style="color: #35a1c1">{{username}}</h3></div>
             <div class="row"><p style="font-weight: 600;">{{sign}}</p></div>
-      </div>
-      <div class="col-md-3 col-xs-12">
-          <input type="file" class="hidden" id="uploadheadimg">
-          <button id="upload" class="hidden" (click)="upload()"></button>
-          <button class="btn btn-info" (click)="selectImg()"><span class="glyphicon glyphicon-camera"></span> 修改头像</button>
-      </div>
+        </div>
+        <div class="col-md-3 col-xs-12">
+            <input type="file" class="hidden" id="uploadheadimg">
+            <button id="upload" class="hidden" (click)="upload()"></button>
+            <button class="btn btn-info" (click)="selectImg()"><span
+                    class="glyphicon glyphicon-camera"></span> 修改头像</button>
+        </div>
     </div>
-<!-- base message -->
+    <!-- base message -->
     <div class="row pbox">
         <div class="msgboxhead">
             <h4>基本信息</h4>
             <span style="margin-left: 1em;">( ID: {{userid}} )</span>
             <button class="btn btn-info" (click)="ChangeBaseMsg()">保存</button>
-            <button class="btn btn-default hidden" (click)="ClearBaseMsg()" id="cancel1">取消</button>
+            <button class="btn btn-default hidden" (click)="ClearBaseMsg()"
+                id="cancel1">取消</button>
         </div>
         <div class="info-box">
             <div class="row info-row">
                 <div class="dn dr">我的昵称</div>
                 <div class="dv dr">
-                    <input id="myname" type="text" class="g-input" value={{username}}>
+                    <input id="myname" type="text" class="g-input"
+                        value={{username}}>
                 </div>
             </div>
             <div class="row info-row">
                 <div class="dn dr">我的性别</div>
                 <div class="dv dr">
-                    <a class="sexalbtn" style="background-color: #71dd5d;" id="boybtn" (click)="setboy(1)">BOY</a>
-                    <a class="sexalbtn isnot" style="background-color: #ff3086;" id="girlbtn" (click)="setboy(0)">GIRL</a>
+                    <a class="sexalbtn" style="background-color: #71dd5d;"
+                        id="boybtn" (click)="setboy(1)">BOY</a>
+                    <a class="sexalbtn isnot" style="background-color: #ff3086;"
+                        id="girlbtn" (click)="setboy(0)">GIRL</a>
                 </div>
             </div>
             <div class="row info-row">
-                    <div class="dn dr">个性签名</div>
-                    <div class="dv dr">
-                        <input id="mysign" type="text" class="g-input" value={{sign}}>
-                    </div>
+                <div class="dn dr">个性签名</div>
+                <div class="dv dr">
+                    <input id="mysign" type="text" class="g-input"
+                        value={{sign}}>
+                </div>
             </div>
             <div class="row info-row">
                 <div class="dn dr">所在年级</div>
                 <div class="dv dr">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" class="btn btn-default
+                            dropdown-toggle" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
                             {{grade}} <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -64,45 +78,50 @@
                 </div>
             </div>
             <div class="row info-row">
-                    <div class="dn dr">所属学院</div>
-                    <div class="dv dr">
-                        <input id="mycolleage" type="text" class="g-input" value={{colleage}}>
-                    </div>
+                <div class="dn dr">所属学院</div>
+                <div class="dv dr">
+                    <input id="mycolleage" type="text" class="g-input"
+                        value={{colleage}}>
+                </div>
             </div>
             <div class="row info-row">
-                    <div class="dn dr">宿舍楼栋</div>
-                    <div class="dv dr">
-                        <input id="mydorm" type="text" class="g-input" value={{dorm}}>
-                    </div>
+                <div class="dn dr">宿舍楼栋</div>
+                <div class="dv dr">
+                    <input id="mydorm" type="text" class="g-input"
+                        value={{dorm}}>
+                </div>
             </div>
         </div>
     </div>
-<!-- connect board -->
+    <!-- connect board -->
     <div class="row pbox">
         <div class="msgboxhead">
             <h4>联系方式</h4>
             <button class="btn btn-info" (click)="ChangeContact()">保存</button>
-            <button id="cancel2" class="btn btn-default hidden" (click)="ClearContactMsg()">取消</button>
+            <button id="cancel2" class="btn btn-default hidden"
+                (click)="ClearContactMsg()">取消</button>
         </div>
         <div class="info-box">
-        <div class="row info-row">
+            <div class="row info-row">
                 <div class="dn dr">邮箱地址</div>
                 <div class="dv dr">
-                    <input id="myemail" type="text" class="g-input" value={{email}}>
+                    <input id="myemail" type="text" class="g-input"
+                        value={{email}}>
                 </div>
-        </div>
-        <div class="row info-row">
+            </div>
+            <div class="row info-row">
                 <div class="dn dr">QQ号码</div>
                 <div class="dv dr">
                     <input id="myqq" type="text" class="g-input" value={{qq}}>
                 </div>
-        </div>
-        <div class="row info-row">
+            </div>
+            <div class="row info-row">
                 <div class="dn dr">手机号码</div>
                 <div class="dv dr">
-                    <input id="myphone" type="text" class="g-input" value={{phone}}>
+                    <input id="myphone" type="text" class="g-input"
+                        value={{phone}}>
                 </div>
-        </div>
+            </div>
         </div>
     </div>
 

@@ -154,6 +154,7 @@ type MyMessage struct {
 	Title   string    `json:"title"`
 	Content string    `json:"content"`
 	Headimg string    `json:"headimg"`
+	State   int       `json:"state"`
 }
 
 type User struct {
@@ -263,8 +264,8 @@ type MyStatus struct {
 	Headimg    string    `json:"headimg"`
 	Leave      int       `json:"leave"`
 	Credits    int       `json:"credits"`
-	MessageNUm int       `json:"messagenum"`
-	GoodsNum   int       `json:"goodsnum"`
+	Messagenum int       `json:"messagenum"`
+	Goodsnum   int       `json:"goodsnum"`
 	Lasttime   time.Time `json:"lasttime"`
 }
 

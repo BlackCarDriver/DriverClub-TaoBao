@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -162,13 +164,13 @@ func GetCareMeData(uid string, c *[2][]UserShort) error {
 	return nil
 }
 
-//get the data that need to show in naving componment 🍓
+//get the data that need to show in naving componment 🍓 🍞
 func GetNavingMsg(uid string, c *MyStatus) error {
 	o := orm.NewOrm()
 	if err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c); err != nil {
-		mlog.Error("%v", err)
 		return err
 	}
+	logs.Info(c)
 	return nil
 }
 
@@ -375,6 +377,18 @@ func CountMyAllMsg(uid string) int {
 	err := o.Raw("select count(*) from v_mymessage where uid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
 		mlog.Error("%v", err)
+		return 0
+	}
+	return userNumber
+}
+
+//count the unread number of user 🍞
+func CountUnreadMsg(uid string) int {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_message where receiverid=? and state=0", uid).QueryRow(&userNumber)
+	if err != nil {
+		mlog.Error("CountUnreadMsg fail: %v", err)
 		return 0
 	}
 	return userNumber

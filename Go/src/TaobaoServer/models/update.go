@@ -1,6 +1,7 @@
 package models
 
 import (
+	"github.com/astaxie/beego/logs"
 	"errors"
 	"fmt"
 
@@ -47,8 +48,8 @@ func UpdateUserConnectMsg(d UpdeteMsg) error {
 	return nil
 }
 
-//更新用户头像
-func UpdateUserHeadIMg(imgurl, userid string) error {
+//upadate the profile image url of user 
+func UpdateUserHeadIMg(userid,   imgurl string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw("update t_user set headimg=? where id=?;", imgurl, userid)
 	result, err := rawSeter.Exec()
@@ -58,14 +59,14 @@ func UpdateUserHeadIMg(imgurl, userid string) error {
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
-		err = fmt.Errorf("No Roow Affected !")
+		err = fmt.Errorf("No Row Affected !")
 		mlog.Error("%v", err)
 		return err
 	}
 	return nil
 }
 
-//主页被浏览，更新浏览量
+//update the visited times of a user profile page
 func UpdateUserVisit(uid string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`UPDATE t_user SET visit=visit+1 WHERE id = ?`, uid)
@@ -84,7 +85,7 @@ func UpdateUserVisit(uid string) error {
 	return nil
 }
 
-//商品被浏览，更新浏览量
+//update the visited times of a goods
 func UpdateGoodsVisit(gid string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`UPDATE t_goods SET visit=visit+1 WHERE id = ?`, gid)
@@ -128,6 +129,26 @@ func UpdateMyGoodsState(uid, gid string) error {
 	} else if af == 0 {
 		err = fmt.Errorf("No rows affacted when user %s update goods %s state", uid, gid)
 		mlog.Error("%v", err)
+		return err
+	}
+	return nil
+}
+
+//change the state of user message which mean already read  🍞
+func UpdateMessageState(mid string) error {
+	if mid=="" {
+		return errors.New("Receive a empty message")
+	}
+	logs.Warn(mid)
+	o := orm.NewOrm()
+	if res, err := o.Raw("update t_message set state=1 WHERE id = ?", mid).Exec(); err != nil {
+		mlog.Error("%v", err)
+		return err
+	}else if af, err := res.RowsAffected(); err != nil {
+		mlog.Warn("%v", err)
+	} else if af == 0 {
+		err = fmt.Errorf("No row affected when update state of message %s", mid)
+		mlog.Error("%v",err)
 		return err
 	}
 	return nil

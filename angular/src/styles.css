@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-html{
+
+html {
     margin: 0px;
     padding: 0px;
     min-width: var(--min-width);
@@ -13,59 +14,83 @@ body {
     background-color: #f3f3f3;
 }
 
-input[type="number"]{
+input[type="number"] {
     -moz-appearance: textfield;
 }
-.row{
+
+.row {
     margin-left: 0px;
-    margin-right:0px;
+    margin-right: 0px;
 }
+
 /* ==========================收藏样式============================ */
-.inlink{
+
+.inlink {
     display: inline-block;
 }
+
 ol, ul {
     list-style: none;
 }
-a{
-    display:inline-block;
+
+a {
+    display: inline-block;
 }
-a:hover{
+
+a:hover {
     cursor: pointer;
-    text-decoration : none ;
+    text-decoration: none;
 }
+
 /* ======= public style ======== */
+
 .breadcrumb {
     margin: 0px 0px 5px 30px;
     padding: 4px;
 }
-.g-input{
+
+.g-input {
     border: 1px solid #ddd;
     color: #34495e;
     border-radius: 3px;
 }
+
 /* small and center font */
-.g_scf p{/* 🍅 */
+
+.g_scf p {
+    /* 🍅 */
     font-size: 0.8em;
     text-align: center;
 }
+
 /* sharnk text */
-.g-sharnk{/* 🍅 */
+
+.g-sharnk {
+    /* 🍅 */
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis; 
+    text-overflow: ellipsis;
 }
+
 /* height images */
-.g-himg{/* 🍅 */
+
+.g-himg {
+    /* 🍅 */
     height: 100%;
     max-width: 100%;
 }
-/* weithg images *//* 🍅 */
-.g-wimg{
+
+/* weithg images */
+
+/* 🍅 */
+
+.g-wimg {
     width: 100%;
-    max-height: 100% ;
+    max-height: 100%;
 }
+
 /*======== public goods box ======*/
+
 .goods-box {
     float: left;
     margin: 10px 15px;
@@ -75,26 +100,31 @@ a:hover{
     overflow: hidden;
     height: 286px;
 }
-.goods-box:hover { 
+
+.goods-box:hover {
     box-shadow: 0px 0px 5px var(--thin-bdc);
 }
+
 .goods-box img {
     height: 200px;
     width: 200px;
     padding: 0px;
     border-radius: 0px;
 }
-.good-name { 
+
+.good-name {
     height: 1.3em;
     margin: 0px 29px;
     font-size: 1.2em;
     color: #4b899b;
 }
+
 .good-title {
     height: 21px;
     margin: 0px 2px;
     color: #337ab7;
 }
+
 .user-date {
     width: 60%;
     float: left;
@@ -104,15 +134,18 @@ a:hover{
     line-height: 1em;
     text-align: left;
 }
+
 .user-date p {
     margin: 0 0 5px;
 }
-.price-box {  
+
+.price-box {
     height: 50px;
     width: 40%;
     float: left;
     padding-right: 16px;
 }
+
 .goods-price {
     width: 80px;
     background-color: #4eb1c6;
@@ -126,10 +159,12 @@ a:hover{
 }
 
 /* personal page share */
+
 .personal-msg {
     margin: 6px 0px;
     border-bottom: 1px solid #cac8c8;
 }
+
 .personal-msg .head-img {
     height: 120px;
     width: 120px;
@@ -137,30 +172,37 @@ a:hover{
     margin: 10px auto;
     border: 1px solid #e6e6e6;
 }
-.personal-msg .nameandsign{
+
+.personal-msg .nameandsign {
     padding: 1em;
 }
+
 .g-ico {
     color: #877b7b;
     margin: 0.3em 1em;
 }
+
 .swicth-box {
     margin: 0px 20px;
 }
+
 .right-child {
     min-height: 30px;
     margin: 10px 15px;
     border-bottom: 1px solid #e6e6e6;
 }
+
 .msg-box {
     margin: 1px;
     padding-left: 10px;
     margin-top: 1em;
 }
+
 .msg {
     color: #555;
     padding: 0;
 }
+
 .mymsg {
     position: relative;
     min-height: 80px;
@@ -171,22 +213,37 @@ a:hover{
     border: 1px solid #E5E5E5;
     background: #FAFAFA;
 }
-.mymsg .msg-img-box {
+
+.msg-img-box {
+    width: 100px;
     text-align: center;
-    height: 100%;
-    background-color: #e6e6e6;
+    background-color: #e8e8e8;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
 }
+
+.msg-text-box {
+    padding-left: 100px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
 .msg-img-box img {
     height: 65px;
     width: 65px;
     border-radius: 65px;
     margin: 8px;
 }
+
 .msg-text-box .msg-head {
     height: 20px;
     overflow: hidden;
     background-color: #e6e6e647;
 }
+
 .msg-text-box .heading {
     color: #177ad1;
     font-size: 1.3em;
@@ -195,75 +252,100 @@ a:hover{
     white-space: nowrap;
     cursor: auto;
 }
-.msg-text-box span {
-    margin-right: 10px;
-}
+
 .msg-head .col-sm-3 {
     white-space: nowrap;
     padding: 2px 2px 2px 10px;
 }
+
 .msg-head .col-sm-3 p {
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 .msg-text-box .msg-body {
-    color: #a999b9;
-    padding: 0px 10px;
-    margin-top: 4px;
-    overflow: hidden;
+    color: #67646a;
+    padding: 2px;
+    font-size: 1.2em;
 }
+
 .describ {
     font-weight: 600;
     color: #337ab7;
 }
+
 .my-panel {
     margin: 20px;
 }
 
+.rpbtn {
+    position: absolute;
+    right: 0px;
+    bottom: 0;
+}
+
 /* galbo varial */
-:root {/* 🍅 */
-     /*theme-color*/
-    --tmcl-1: #3193e8; 
-    --tmcl-2: #337ab7; 
+
+:root {
+    /* 🍅 */
+    /*theme-color*/
+    --tmcl-1: #3193e8;
+    --tmcl-2: #337ab7;
     --tmcl-3: #b9e7ff;
     /*front-color*/
-    --ip-fk:#333333; /*input-front-color*/
-    --bt-fk:#ffffff;  /*button-font-color*/
+    --ip-fk: #333333;
+    /*input-front-color*/
+    --bt-fk: #ffffff;
+    /*button-font-color*/
     /* backgroud-color */
-    --liner-bc: linear-gradient(120deg,#3193e8,#337ab7);
+    --liner-bc: linear-gradient(120deg, #3193e8, #337ab7);
     /*border-color*/
-    --thin-bdc:#ddd;
-    --min-width:300px;
-}  
+    --thin-bdc: #ddd;
+    --min-width: 300px;
+}
+
 /* galbol background board */
-.g-bg-box{/* 🍅 */
+
+.g-bg-box {
+    /* 🍅 */
     box-shadow: 0 0 20px rgba(50, 50, 50, 0.1);
     background-color: #fff;
 }
-.g-tag{/* 🍅 */
+
+.g-tag {
+    /* 🍅 */
     color: #ffffff;
     font-size: 1.1em;
     margin: 0px 10px;
     font-weight: 600;
 }
-.g-tag:hover .g-tag:focus .g-tag:active{/* 🍅 */
-    color:var(--tmcl-3);
+
+.g-tag:hover .g-tag:focus .g-tag:active {
+    /* 🍅 */
+    color: var(--tmcl-3);
 }
 
-@media screen and (max-width:600px) {/* 🍅 */
-    .g-bg-box{
+@media screen and (max-width:600px) {
+    /* 🍅 */
+    .g-bg-box {
         box-shadow: none;
     }
-    .personal-msg{
+    .personal-msg {
         text-align: center;
     }
-    .personal-msg .nameandsign{
+    .personal-msg .nameandsign {
         margin-top: -2em;
     }
-    .mymsg{
+    .mymsg {
         margin: 20px 0px 10px;
     }
-    .my-panel{
+    .my-panel {
         margin: 1em 0em;
+    }
+    .msg-img-box {
+        display: none;
+    }
+    .msg-text-box {
+        padding-left: 0%;
     }
 }

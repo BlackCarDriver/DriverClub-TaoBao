@@ -88,12 +88,13 @@ export class GoodsShort {
 //user's receive message that show in personal page 🍑
 export class MyMessage {
     title: string;
-    time: string;
+    time: any;
     name: string;
     headimg: string;
     content: string;
     mid: string;
     uid: string;
+    state?:number;
 }
 
 //我关注的和关注我的用户列表

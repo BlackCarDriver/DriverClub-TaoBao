@@ -5,6 +5,7 @@ import { AppComponent } from '../app.component';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // import * as $ from 'jquery';
 declare let $: any;
 
@@ -37,6 +38,7 @@ export class NavigComponent implements OnInit {
     this.InitloginChech();
     this.showStat(false);
     this.setstate();
+    this.initNav();
   }
 
   //===================== component control  =====================
@@ -61,9 +63,16 @@ export class NavigComponent implements OnInit {
       $('#userbox').attr("style", "display:none;");
     }
   }
-  //hide login box
+    //hide login box
   hidelib(){
-    this.server.getEle("libox-hide").click();
+      this.server.getEle("libox-hide").click();
+  }
+
+  initNav(){
+    $(".navbar-inverse").mouseleave(function(){
+       $('#navhide').collapse('hide');
+      //  alert("hdfddf");
+      });
   }
   //=========================== safety verification ===================== 
   // check the intput box content in login box 🍓

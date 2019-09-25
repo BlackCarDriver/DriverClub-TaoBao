@@ -70,7 +70,7 @@ export class PersonalComponent implements OnInit {
     });
   }
 
-  //get the list of user i care and which acre me🍍🍈
+  //get the list of user i care and which acre me🍍🍈 🍞
   getcare() {
     let postdata: RequestProto = {
       api: "mycare",
@@ -78,15 +78,23 @@ export class PersonalComponent implements OnInit {
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        this.icare = result.data[0];
-        this.carei = result.data[1];
+        let temp:User[] = result.data[0];
+        temp.forEach(row=> {
+          row.headimg = this.server.changeImgUrl(row.headimg);
+        });
+        let temp2 = result.data[1];
+        temp2.forEach(row=> {
+          row.headimg = this.server.changeImgUrl(row.headimg);
+        });
+        this.icare = temp;
+        this.carei = temp2;
       } else {
         this.app.showMsgBox(-1, "请求关注信息失败,请刷新试试", result.msg)
       }
     }, error => { console.log(error) });
   }
 
-  //get my goods information 🍍 🍉🍈 🍇🍏
+  //get my goods information 🍍 🍉🍈 🍇🍏 🍞
   getmymgoods() {
     let postdata: RequestProto = {
       api: "mygoods",
@@ -96,6 +104,10 @@ export class PersonalComponent implements OnInit {
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
+        let temp:GoodsShort[] = result.data;
+        temp.forEach(row => {
+          row.headimg = this.server.changeImgUrl(row.headimg);
+        });
         this.mygoodslist = result.data;
         this.mg_sumpage = Math.ceil(result.sum / this.mg_maxrow);
         if (result.rows == 0) this.show_no_goods = true;
@@ -109,7 +121,7 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg" + error) });
   }
 
-  //get my collect goods information 🍍 🍉 🍈 🍇🍏
+  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
@@ -119,7 +131,11 @@ export class PersonalComponent implements OnInit {
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        this.mycollectlist = result.data;
+        let temp:GoodsShort[] = result.data;
+        temp.forEach(row => {
+          row.headimg = this.server.changeImgUrl(row.headimg);
+        });
+        this.mycollectlist = temp;
         if (result.rows == 0) this.show_no_collect = true;
         else if (result.sum > 1) {
           this.mc_array = new Array;
@@ -226,6 +242,27 @@ export class PersonalComponent implements OnInit {
         this.app.showMsgBox(-1, "请求删除消息失败，请稍后重试" + result.msg);
       }
     }, error => { console.log(error) });
+  }
+
+  //set a message as already read  🍞
+  setIsRead(index:number, id:string){
+    if(this.mymessagelist[index].state==1){
+      return;
+    }
+    this.mymessagelist[index].state = 1;
+    let postdata: RequestProto = {
+      api: "msgisread",
+      targetid: id,
+      userid: this.server.userid,
+    };
+    this.server.SmallUpdate(postdata).subscribe(result => {
+      if(result.statuscode!=0){
+        alert(result.msg);
+      }else{
+        alert("success")
+      }
+    }, error => { console.log(error) });
+
   }
   //#################### reference to pagebox #######################
 

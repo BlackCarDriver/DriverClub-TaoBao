@@ -44,7 +44,7 @@ export class ServerService {
   getEle(id: string) {
     return (<HTMLInputElement>document.getElementById(id));
   }
-  //get a timestamp string🍄
+  //get a timestamp string 🍄
   formatDate() {
     var date = new Date();
     var myyear: any = date.getFullYear();
@@ -58,7 +58,12 @@ export class ServerService {
     }
     return (myyear + "-" + mymonth + "-" + myweekday);
   }
-
+  //change a imgurl to out-of-focus url 🍞
+  changeImgUrl(imgUrl:string){
+    let id = imgUrl.lastIndexOf("/")
+    let newUrl = imgUrl.slice(0,id+1) + "_" + imgUrl.slice(id+1);
+    return newUrl;
+  }
   //======================================= large  interface =============================================================
 
   //get all kind of data in goodspage 🍌🔥

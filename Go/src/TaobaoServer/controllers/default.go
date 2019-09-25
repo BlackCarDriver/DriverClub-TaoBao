@@ -6,20 +6,27 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"io/ioutil"
 	"math/rand"
 	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 	"time"
 
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/config"
 	"github.com/astaxie/beego/logs"
+	"github.com/nfnt/resize"
 )
 
 //config varlue
-//https://blackcardriver.cn/mkimg/
+//https://blackcardriver.cn/mkimg/%s
 var (
 	imgPath               = ""
 	imgUrlTP              = ""
@@ -88,7 +95,6 @@ type DeleteController struct {
 
 //test interface 🍍🌰
 func (this *TestController) Get() {
-	rlog.Info("Soneont test the program by it iterface")
 	this.Data["Ip"] = this.Ctx.Input.IP()
 	this.Data["Host"] = this.Ctx.Input.Host()
 	this.Data["Domain"] = this.Ctx.Input.Domain()
@@ -101,9 +107,9 @@ func (this *TestController) Get() {
 	this.Data["UserAgent"] = this.Ctx.Input.UserAgent()
 	this.Data["Runhour"] = md.RunHour
 	tlog, _ := ParseFile("./logs/router.log")
-	this.Data["RouterLog"] = strings.ReplaceAll(tlog, "[I]", "🍉")
+	this.Data["RouterLog"] = strings.ReplaceAll(tlog, "[E]", "🍉")
 	tlog, _ = ParseFile("./logs/models.log")
-	this.Data["ModelsLog"] = strings.ReplaceAll(tlog, "[I]", "🍉")
+	this.Data["ModelsLog"] = strings.ReplaceAll(tlog, "[E]", "🍉")
 	this.TplName = "test.tpl"
 }
 
@@ -112,6 +118,7 @@ func (this *TestController) Get() {
 ///upload/images
 func (this *UploadImagesController) Post() {
 	response := md.ReplyProto{}
+	var savePath = ""
 	f, h, err := this.GetFile("file")
 	if err != nil {
 		response.StatusCode = -1
@@ -136,11 +143,17 @@ func (this *UploadImagesController) Post() {
 		goto tail
 	}
 	defer f.Close()
-	if err = this.SaveToFile("file", fmt.Sprintf("%s/%s", imgPath, h.Filename)); err != nil {
+	//save the file into dish
+	savePath = fmt.Sprintf("%s/%s", imgPath, h.Filename)
+	if err = this.SaveToFile("file", savePath); err != nil {
 		response.StatusCode = -4
 		response.Msg = fmt.Sprintf("Can not save file: %v", err)
 		rlog.Error("%v", response.Msg)
 		goto tail
+	}
+	//compress the image,
+	if err = CompressImg(savePath, 100); err != nil {
+		logs.Error(err)
 	}
 	response.StatusCode = 0
 	response.Data = fmt.Sprintf(imgUrlTP, h.Filename)
@@ -242,7 +255,13 @@ func (this *UpdateController) Post() {
 			goto tail
 		}
 		goto tail
-
+	case "msgisread": //change the state of user message, tag than as isread 🍞
+		if err = md.UpdateMessageState(targetid); err != nil {
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("Change message state fail:%v", err)
+			rlog.Error(response.Msg)
+			goto tail
+		}
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such api %s", api)
@@ -389,4 +408,61 @@ func ParseFile(path string) (text string, err error) {
 		return "", fmt.Errorf("ioutil.ReadAll fall : %v", err)
 	}
 	return string(bytes), nil
+}
+
+//compress a jpg or png format image, the new images will be named autoly 🌆
+func CompressImg(source string, hight uint) error {
+	var err error
+	var file *os.File
+	reg, _ := regexp.Compile(`^.*\.((png)|(jpg))$`)
+	if !reg.MatchString(source) {
+		err = errors.New("%s is not a .png or .jpg file")
+		logs.Error(err)
+		return err
+	}
+	if file, err = os.Open(source); err != nil {
+		logs.Error(err)
+		return err
+	}
+	defer file.Close()
+	name := file.Name()
+	var img image.Image
+	switch {
+	case strings.HasSuffix(name, ".png"):
+		if img, err = png.Decode(file); err != nil {
+			logs.Error(err)
+			return err
+		}
+	case strings.HasSuffix(name, ".jpg"):
+		if img, err = jpeg.Decode(file); err != nil {
+			logs.Error(err)
+			return err
+		}
+	default:
+		err = fmt.Errorf("Images %s name not right!", name)
+		logs.Error(err)
+		return err
+	}
+	resizeImg := resize.Resize(hight, 0, img, resize.Lanczos3)
+	newName := newName(source)
+	if outFile, err := os.Create(newName); err != nil {
+		logs.Error(err)
+		return err
+	} else {
+		defer outFile.Close()
+		err = jpeg.Encode(outFile, resizeImg, nil)
+		if err != nil {
+			logs.Error(err)
+			return err
+		}
+	}
+	abspath, _ := filepath.Abs(newName)
+	logs.Info("New imgs successfully save at: %s", abspath)
+	return nil
+}
+
+//create a file name for the iamges that after resize 🌆
+func newName(name string) string {
+	dir, file := filepath.Split(name)
+	return fmt.Sprintf("%s_%s", dir, file)
 }

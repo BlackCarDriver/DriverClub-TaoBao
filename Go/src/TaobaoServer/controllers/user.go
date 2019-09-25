@@ -81,7 +81,7 @@ func (this *PersonalDataController) Post() {
 		}
 		goto tail
 
-	case "message": //my receive messages 🍉🍏
+	case "message": //my receive messages 🍉🍏 🍞
 		var data []md.MyMessage
 		if err = md.GetMyMessage(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -9
@@ -251,7 +251,7 @@ func (this *UpdataMsgController) Post() {
 		}
 		if err = md.UpdateUserHeadIMg(userid, postBody.Data.(string)); err != nil {
 			response.StatusCode = -8
-			response.Msg = fmt.Sprintf("Update profile iamge fail: %v", err)
+			response.Msg = fmt.Sprintf("Update profile iamge fail, error:%v, uid:%s", err, userid)
 			rlog.Error(response.Msg)
 		}
 		goto tail

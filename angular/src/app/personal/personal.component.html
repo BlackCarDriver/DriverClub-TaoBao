@@ -1,8 +1,8 @@
 <div>
     <div class="container-fluid" style="max-width: 1340px; margin:0px auto">
         <div class="row path">
-            <ol class="breadcrumb">
-                <li><a href="#">交易区</a></li>
+            <ol class="breadcrumb" style="margin: 5px;">
+                <li><a href="/homepage">交易区</a></li>
                 <li class="active">我的主页</li>
             </ol>
         </div>
@@ -204,32 +204,35 @@
 
                             <!--my message-->
                             <div class="tab-pane" id="panel-mymsg">
-                                <div class="row mymsg" *ngFor="let rows of
-                                    mymessagelist">
-                                    <div class="col-md-2 msg-img-box hidden-sm">
-                                        <img src={{rows.headimg}}>
+                                
+                                <div class="row mymsg" *ngFor="let rows of mymessagelist; let i = index">
+                                    <div class="msg-img-box">
+                                        <img  [routerLink]="['/personals',rows.uid ]" src={{rows.headimg}}>
                                     </div>
-                                    <div class="col-md-10 col-xs-12 msg-text-box">
-                                        <div class="row msg-head">
-                                            <div class="col-xs-6">
-                                                <p [routerLink]="['/personals',rows.id ]"> 
-                                                    <span class="glyphicon glyphicon-user"></span>
-                                                    {{rows.name}}
-                                                </p>
+                                    <div class="msg-text-box" (click)="setIsRead(i, rows.mid)">
+                                        <div class="row msg-head" [ngClass]="{'unread': rows.state==0}">
+                                            <div [routerLink]="['/personals',rows.uid ]" class="tad" style="color: #337ab7;"> 
+                                                <span class="glyphicon glyphicon-user"></span>
+                                                {{rows.name}}{{rows.mid}}
                                             </div>
-                                            <div class="col-xs-6 ">
-                                                <p><span class="glyphicon glyphicon-time"></span>
-                                                    {{rows.time | date:'yyyy-MM-dd hh:mm'}}
-                                                </p>
-                                            </div>
+                                            <div class="tad">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                                {{rows.time | date:'yyyy-MM-dd hh:mm'}}
+                                            </div>   
                                         </div>
                                         <div class="row msg-body">
                                             <p>{{rows.content}}</p>
                                         </div>
                                     </div>
-                                    <span class="label label-default rmlable" (click)="deleteMessage(rows.mid)"><span class="glyphicon glyphicon-trash"></span></span>
+                                    <span class="label label-default rmlable" (click)="deleteMessage(rows.mid)">
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                    </span>
+                                    <span class="rpbtn label label-default">
+                                        <a style="color: white;" [routerLink]="['/personals',rows.uid ]">前往回复</a>
+                                    </span>
                                 </div>
                                 <div class="nodata" *ngIf="show_no_message"><p>暂时未有消息</p></div>
+
                                 <!--分页框-->
                                 <div class="row textcenter" *ngIf="msg_sumpage>1">
                                     <nav aria-label="Page navigation">

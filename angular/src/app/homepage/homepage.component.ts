@@ -44,11 +44,10 @@ export class HomepageComponent implements OnInit {
   ) { }
  
   ngOnInit() {
-    $(".goods-area").mouseenter(function(){ $('.collapse').collapse('hide');})
+    $(".goods-area").mouseenter(function(){ $('.gg').collapse('hide');})
     this.GetGoods();
     this.GetType();
     this.set_mainbody_height();
-    // this.nav.showMsgBox(1,"dfdfdfdf");
   }
 
   //get a page of goods list data 🍋🔥🍇
@@ -60,7 +59,11 @@ export class HomepageComponent implements OnInit {
           if (result.rows==0){
             this.app.showMsgBox(1,"没有找到数据！")
           }
-          this.goodsarray = result.data;
+          let temp:HomePageGoods[] = result.data; //let homepage show those out-of-focu images
+          temp.forEach(row => {
+            row.headimg = this.server.changeImgUrl(row.headimg);
+          });
+          this.goodsarray = temp;
           this.totalpage = Math.ceil(result.sum / this.server.homepage_goods_perpage);
           this.pageboxarray = new Array;
           for (let i=1;i<=this.totalpage && i<=5 ;i++){

@@ -17,15 +17,15 @@
         <li><a>关于本站</a></li>
         <li><a id="singin" (click)="showsinginbox()">登录/注册</a></li>
         <li class="dropdown" id="userbox">
-          <a class="dropdown-toggle" data-toggle="dropdown" role="button"
-            aria-haspopup="true" aria-expanded="false" id="user-toggle">
-            <span class="glyphicon glyphicon-user"></span> {{usermsg.name}}<span
-              class="caret"></span>
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="user-toggle">
+            <span class="glyphicon glyphicon-user">{{usermsg.name}}<span class="caret"></span></span>
           </a>
           <ul class="dropdown-menu" id="shortmsg">
             <div class="user">
               <img src={{usermsg.headimg}} class="headimg">
-              <h4 class="username"><a class="cfc" routerLink="/personal">{{usermsg.name}}</a></h4>
+              <h4 class="username">
+                <a class="cfc" routerLink="/personal">{{usermsg.name}}</a>
+              </h4>
               <div class="mesage">
                 <dl style="margin-bottom: 0.5em;">
                   <dt>我的等级：<a class="msgval">{{usermsg.leave}}</a></dt>
