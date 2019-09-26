@@ -76,7 +76,6 @@ func (a *ActiveNess) Add(uid string) {
 		return
 	}
 	a.active[uid]++
-	mlog.Warn("user %s active now is %d", uid, a.active[uid])
 }
 func (a *ActiveNess) ReBuild() {
 	a.active = make(map[string]int)

@@ -154,6 +154,7 @@ export class PersonalSetting {
     grade: string;
     colleage: string;
     dorm: string;
+    major:string;
     emails: string;
     qq: string;
     phone: string;

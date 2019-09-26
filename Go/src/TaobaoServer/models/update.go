@@ -8,11 +8,18 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//update user base message 🍊
+//update user base message 🍊 🍆
 func UpdateUserBaseMsg(d UpdeteMsg) error {
 	o := orm.NewOrm()
-	rawSeter := o.Raw("update t_user set name=?,sex=?,sign=?,dorm=?,major=?,grade=? where id=?",
-		d.Name, d.Sex, d.Sign, d.Dorm, d.Major, d.Grade, d.Id)
+	//check user name, can't be repeated
+	if nameNum := CountUserName(d.Name, d.Id); nameNum!=0 {
+		err := fmt.Errorf("User name %s was already have been used! Please change to another", d.Name)
+		mlog.Info("%v",err)
+		return err
+	}
+	rawSeter := o.Raw(`update t_user set name=?,sex=?,sign=?,
+	grade=?,major=?,colleage=?,dorm=? where id=?`,
+		d.Name, d.Sex, d.Sign, d.Grade, d.Major, d.Colleage, d.Dorm, d.Id)
 	result, err := rawSeter.Exec()
 	if err != nil {
 		mlog.Error("user: %s, error:%v", d.Id, err)

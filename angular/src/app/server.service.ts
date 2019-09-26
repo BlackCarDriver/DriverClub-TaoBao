@@ -13,9 +13,9 @@ export class ServerService {
   userid = "";    //this usrid only can be true usre id
   username = "";
   homepage_goods_perpage = 10;
-  private addr: string  = "https://blackcardriver.cn/taobaoserver"
-  // private addr: string = "/localserver"
-
+  private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
+  // private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }
@@ -66,36 +66,36 @@ export class ServerService {
   }
   //======================================= large  interface =============================================================
 
-  //get all kind of data in goodspage 🍌🔥
+  //get all kind of data in goodspage 🍌
   GetGoodsDeta(request: RequestProto) {
     var url = this.addr + "/goodsdeta";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //request to update some simple record such as collect number 🍍🔥
+  //request to update some simple record such as collect number 🍍
   SmallUpdate(request: RequestProto) {
     var url = this.addr + "/smallupdate";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //request to update some complex message such as profile 🍍🔥
+  //request to update some complex message such as profile 🍍
   UpdateMessage(request: RequestProto) {
     var url = this.addr + "/update";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //upload a images to server and receive a url to get it images 🍍🔥
+  //upload a images to server and receive a url to get it images 🍍🍆
   UploadImg(username: string, img: any) {
     var postdata = new FormData();
     postdata.append("name", username);
     postdata.append("file", img)
-    var url = this.addr + "/upload/images";
+    var url = this.rmaddr + "/upload/images"; //use remote host temply
     //post a multipart/form-data, can not use json.stringfiy
     return this.http.post<ReplyProto>(url, postdata);
   }
-  //get information in personal page 🍍🔥
+  //get information in personal page 🍍
   GetMyMsg(request: RequestProto) {
     var url = this.addr + "/personal/data";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //a little different from GetMyMsg 🍋🔥
+  //a little different from GetMyMsg 🍋
   GetCredentMsg(request: RequestProto) {
     var url = this.addr + "/personal/data";
     return this.http.post<ReplyProto>(url, JSON.stringify(request), { withCredentials: true });
@@ -105,7 +105,7 @@ export class ServerService {
     var url = this.addr + "/deleteapi";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //get homepage goods list data 🍋🔥🍇
+  //get homepage goods list data 🍋🍇
   GetHomePageGoods(type: string, tag: string, page: number) {
     let postdata: RequestProto = {
       api: "gethomepagegoods",

@@ -1,9 +1,9 @@
 <div class="container" class="main-body">
-  <div class="marbotn">
+  <div class="headrow">
     <div class="row search-row">
       <form>
         <input id="searchgoods" type="text" class="search-input search-input-c"
-          placeholder="搜索商品...923">
+          placeholder="搜索商品...">
         <button class="search-bt search-bt-c" type="button" (click)="SearchGoods()">
           <span class="glyphicon glyphicon-search"></span>
         </button>
@@ -89,8 +89,7 @@
 
   <div class="goods-area g-bg-box">
     <div class="row goodrow"><!--goods list-->
-      <div class="goods-box" *ngFor="let goods of goodsarray"
-        [routerLink]="['/goodsdetail', goods.id ]">
+      <div class="goods-box" *ngFor="let goods of goodsarray"  [routerLink]="['/goodsdetail', goods.id ]">
         <img class="img-thumbnail" src={{goods.headimg}}>
         <div class="row">
           <p class="good-name g-sharnk">{{goods.name}}</p>

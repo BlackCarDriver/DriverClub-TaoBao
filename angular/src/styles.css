@@ -4,6 +4,7 @@ html {
     margin: 0px;
     padding: 0px;
     min-width: var(--min-width);
+    background: url("./assets/bg.png") repeat;
 }
 
 body {
@@ -11,11 +12,12 @@ body {
     font-size: 14px;
     line-height: 1.42;
     color: #333;
-    background-color: #f3f3f3;
+    /* background-color: #f3f3f3; */
+    background-color: transparent;
 }
 
 input[type="number"] {
-    -moz-appearance: textfield;
+    -moz-appearance: textfield; 
 }
 
 .row {
@@ -36,7 +38,7 @@ ol, ul {
 a {
     display: inline-block;
 }
-
+ 
 a:hover {
     cursor: pointer;
     text-decoration: none;
@@ -47,6 +49,7 @@ a:hover {
 .breadcrumb {
     margin: 0px 0px 5px 30px;
     padding: 4px;
+    background-color: transparent;
 }
 
 .g-input {
@@ -88,7 +91,9 @@ a:hover {
     width: 100%;
     max-height: 100%;
 }
-
+.navbar{
+    margin-bottom:0px;
+}
 /*======== public goods box ======*/
 
 .goods-box {
@@ -123,6 +128,7 @@ a:hover {
     height: 21px;
     margin: 0px 2px;
     color: #337ab7;
+    text-align: center;
 }
 
 .user-date {
@@ -130,7 +136,7 @@ a:hover {
     float: left;
     font-size: 0.9em;
     color: #999;
-    padding: 0px 0px 0px 20px;
+    padding: 0px 0px 0px 10px;
     line-height: 1em;
     text-align: left;
 }
@@ -300,7 +306,7 @@ a:hover {
     /* backgroud-color */
     --liner-bc: linear-gradient(120deg, #3193e8, #337ab7);
     /*border-color*/
-    --thin-bdc: #ddd;
+    --thin-bdc: #ccc;
     --min-width: 300px;
 }
 

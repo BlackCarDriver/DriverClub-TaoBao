@@ -165,7 +165,10 @@
     color: #717373;
     padding: 3px 8px;
 }
-
+.headrow{
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+}
 /* ########################################################## */
 
 @media screen and (max-width:1200px) {
@@ -246,7 +249,7 @@
     .user-date {
         position: absolute;
         top: 100px;
-        left: 130px;
+        left: 140px;
     }
     .goods-price {
         border-radius: 5px 0px 0px 0px;

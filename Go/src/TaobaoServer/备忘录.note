@@ -71,21 +71,31 @@ CREATE OR REPLACE VIEW public.v_mymessage AS
     t_user u2
   WHERE m.senderid::text = u1.id::text AND m.receiverid::text = u2.id::text AND m.state >= 0
   ORDER BY m."time";
-
+---------------------------
+v_hpgoodslist增加排序依据
+ SELECT v_goodslist.uid AS userid,
+    v_goodslist.uname AS username,
+    v_goodslist.gid AS id,
+    v_goodslist.gname AS name,
+    v_goodslist.title,
+    v_goodslist.price,
+    v_goodslist.type,
+    v_goodslist.tag,
+    v_goodslist."time",
+    v_goodslist.headimg
+   FROM v_goodslist
+  WHERE v_goodslist.state = 1
+  ORDER BY v_goodslist."time" DESC;
 -------------------
 t_upload time增加默认值now()
 t_message time 增加默认值now()
 
 ##################################### 支线任务 ###################################
-[检查更改信息页面]
 
-[检查上传商品页面]
+[缓存] 🍆
 
-[将登陆页面做到固定的组件]
+[注册] 🍆
 
-[缓存]
-
-[上传页面的空白图片代替为找不到提示照片]
 ##################################### BUG ###################################
 
 
@@ -104,12 +114,13 @@ t_message time 增加默认值now()
 
 [加入举报功能]
 
-[重要变量全部写到配置文件中]
-
 [加入英文提示]
 
+[头像图标增加级别标记]
+
 #################################### 待完善 ##################################
-上传商品页面数据检查
+后端对修改信息上传的数据进行检查验证
+后端对上传的商品信息进行检查和验证
 
 
 ##################################### 工作日志 ###################################
@@ -296,3 +307,10 @@ models包引入配置文件设置路径等变量
 各个页面引入面包屑导航
 已读消息和未读消息分开样式显示
 修复导航栏无法正常显示未读消息和商品数量的问题
+
+9-26 🍆
+修改信息页面问题修复
+修复选择和上传图片没有错误提示的问题
+检查和修复完善上传商品页面
+完善更新个人信息方法，不允许用已有用户名
+增加背景图片填充

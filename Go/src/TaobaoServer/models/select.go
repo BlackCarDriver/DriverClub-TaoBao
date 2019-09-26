@@ -346,11 +346,11 @@ func CountGoods() int {
 	return goodsNumber
 }
 
-//count how many goods a user have upload 🍉
+//count how many goods a user have upload 🍉🍆
 func CountMyCoods(uid string) int {
 	o := orm.NewOrm()
 	userNumber := 0
-	err := o.Raw("select count(*) from t_upload where userid = ?", uid).QueryRow(&userNumber)
+	err := o.Raw("select count(*) from t_upload where userid = ? and state = 1", uid).QueryRow(&userNumber)
 	if err != nil {
 		mlog.Error("%v", err)
 		return 0
@@ -389,6 +389,18 @@ func CountUnreadMsg(uid string) int {
 	err := o.Raw("select count(*) from t_message where receiverid=? and state=0", uid).QueryRow(&userNumber)
 	if err != nil {
 		mlog.Error("CountUnreadMsg fail: %v", err)
+		return 0
+	}
+	return userNumber
+}
+
+//count the specificed name numbers of other user  🍆
+func CountUserName(name, id string) int {
+	o := orm.NewOrm()
+	userNumber := 0
+	err := o.Raw("select count(*) from t_user where name=? and id != ?", name, id).QueryRow(&userNumber)
+	if err != nil {
+		mlog.Error("CountUserName fail: %v", err)
 		return 0
 	}
 	return userNumber

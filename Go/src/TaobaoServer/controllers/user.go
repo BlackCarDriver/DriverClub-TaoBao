@@ -212,9 +212,9 @@ func (this *UpdataMsgController) Post() {
 			this.ServeJSON()
 		}
 	}()
-	//handle the request
+	//handle the request 🍆
 	switch api {
-	case "MyBaseMessage": //base information of users
+	case "changemybasemsg": //base information of users
 		postData := md.UpdeteMsg{}
 		if err = Parse(postBody.Data, &postData); err != nil {
 			response.StatusCode = -3

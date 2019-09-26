@@ -251,6 +251,7 @@ type UserSetData struct {
 	Grade    string `json:"grade"`
 	Colleage string `json:"colleage"`
 	Major    string `json:"major"`
+	Dorm     string `json:"dorm"`
 	Emails   string `json:"emails"`
 	Qq       string `json:"qq"`
 	Phone    string `json:"phone"`

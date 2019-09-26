@@ -1,9 +1,9 @@
 
 <div class="container" style="color: #888;">
     <div class="row path">
-        <ol class="breadcrumb" style="margin: 0%;">
-            <li><a href="/homepage">交易区</a></li>
-            <li *ngIf="userid!=''"><a href="/personal">我的主页</a></li>
+        <ol class="breadcrumb" style="margin: 0% auto; max-width: 650px;">
+            <li><a  routerLink="/homepage">交易区</a></li>
+            <li *ngIf="userid!=''"><a routerLink="/personal">我的主页</a></li>
             <li class="active">修改信息</li>
         </ol>
     </div>
@@ -28,15 +28,13 @@
         <div class="msgboxhead">
             <h4>基本信息</h4>
             <span style="margin-left: 1em;">( ID: {{userid}} )</span>
-            <button class="btn btn-info" (click)="ChangeBaseMsg()">保存</button>
-            <button class="btn btn-default hidden" (click)="ClearBaseMsg()"
-                id="cancel1">取消</button>
+            <button class="btn btn-info hidden hidden" id="savebtn1" (click)="ChangeBaseMsg()">保存</button>
         </div>
         <div class="info-box">
             <div class="row info-row">
                 <div class="dn dr">我的昵称</div>
                 <div class="dv dr">
-                    <input id="myname" type="text" class="g-input"
+                    <input id="myname" type="text" class="g-input bip"
                         value={{username}}>
                 </div>
             </div>
@@ -52,7 +50,7 @@
             <div class="row info-row">
                 <div class="dn dr">个性签名</div>
                 <div class="dv dr">
-                    <input id="mysign" type="text" class="g-input"
+                    <input id="mysign" type="text" class="g-input bip"
                         value={{sign}}>
                 </div>
             </div>
@@ -61,7 +59,7 @@
                 <div class="dv dr">
                     <div class="btn-group">
                         <button type="button" class="btn btn-default
-                            dropdown-toggle" data-toggle="dropdown"
+                            dropdown-toggle bip" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             {{grade}} <span class="caret"></span>
                         </button>
@@ -80,15 +78,19 @@
             <div class="row info-row">
                 <div class="dn dr">所属学院</div>
                 <div class="dv dr">
-                    <input id="mycolleage" type="text" class="g-input"
-                        value={{colleage}}>
+                    <input id="mycolleage" type="text" class="g-input bip"  value={{colleage}} maxlength="50">
                 </div>
             </div>
             <div class="row info-row">
+                    <div class="dn dr">我的专业</div>
+                    <div class="dv dr">
+                        <input id="mymajor" type="text" class="g-input bip" value={{major}} maxlength="50" maxlength="50"> 
+                    </div>
+                </div>
+            <div class="row info-row">
                 <div class="dn dr">宿舍楼栋</div>
                 <div class="dv dr">
-                    <input id="mydorm" type="text" class="g-input"
-                        value={{dorm}}>
+                    <input id="mydorm" type="text" class="g-input bip" value={{dorm}} maxlength="50">
                 </div>
             </div>
         </div>
@@ -97,7 +99,7 @@
     <div class="row pbox">
         <div class="msgboxhead">
             <h4>联系方式</h4>
-            <button class="btn btn-info" (click)="ChangeContact()">保存</button>
+            <button class="btn btn-info hidden" id="savebtn2" (click)="ChangeContact()">保存</button>
             <button id="cancel2" class="btn btn-default hidden"
                 (click)="ClearContactMsg()">取消</button>
         </div>
@@ -105,21 +107,19 @@
             <div class="row info-row">
                 <div class="dn dr">邮箱地址</div>
                 <div class="dv dr">
-                    <input id="myemail" type="text" class="g-input"
-                        value={{email}}>
+                    <input id="myemail" type="email" class="g-input cip" value={{email}} maxlength="50">
                 </div>
             </div>
             <div class="row info-row">
                 <div class="dn dr">QQ号码</div>
                 <div class="dv dr">
-                    <input id="myqq" type="text" class="g-input" value={{qq}}>
+                    <input id="myqq" type="text" class="g-input cip" value={{qq}} maxlength="50">
                 </div>
             </div>
             <div class="row info-row">
                 <div class="dn dr">手机号码</div>
                 <div class="dv dr">
-                    <input id="myphone" type="text" class="g-input"
-                        value={{phone}}>
+                    <input id="myphone" type="text" class="g-input cip" value={{phone}} maxlength="50">
                 </div>
             </div>
         </div>

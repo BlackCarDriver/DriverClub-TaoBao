@@ -1,8 +1,8 @@
 <div class="container">
     <div class="row path">
         <ol class="breadcrumb" style="margin: 0%;">
-            <li><a href="/homepage">交易区</a></li>
-            <li *ngIf="userid!=''"><a href="/personal">我的主页</a></li>
+            <li><a routerLink="/homepage">交易区</a></li>
+            <li *ngIf="userid!=''"><a routerLink="/personal">我的主页</a></li>
             <li class="active">上传商品</li>
         </ol>
     </div>
@@ -26,9 +26,10 @@
                             <div class="user-date g-sharnk">
                                 <p style="font-size: 1em"><span class="glyphicon
                                         glyphicon-user"></span> {{username}}</p>
-                                <p style="font-size: 0.9em"><span
-                                        class="glyphicon glyphicon-calendar"></span>
-                                    {{date}}</p>
+                                <p style="font-size: 0.9em">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                    {{date}}
+                                </p>
                             </div>
                             <div class="price-box">
                                 <div class="goods-price g-sharnk">￥{{price}}</div>
@@ -56,12 +57,9 @@
                                 </form>
                             </dt>
 
-                            <input [(ngModel)]="goodsname" type="text" id="name"
-                                placeholder="商品名称">
-                            <input [(ngModel)]="title" type="text" id="title"
-                                placeholder="商品标题">
-                            <input [(ngModel)]="price" type="number"
-                                class="price" placeholder="开价">
+                            <input [(ngModel)]="goodsname" type="text" id="name" maxlength="20" placeholder="商品名称">
+                            <input [(ngModel)]="title" type="text" id="title" maxlength="49" placeholder="商品标题">
+                            <input [(ngModel)]="price" type="number" id="priceinput">
                             <dt>
                                 <div class="btn-group">
                                     <button type="button" id="btn-type"
@@ -112,11 +110,11 @@
                         glyphicon-pushpin"></span>上传规则</div>
                 <div class="panel-body">
                     <ul class="list-group">
-                        <li class="list-group-item">封面图片应低于100kb,展示页面的总大小应低于300kb</li>
-                        <li class="list-group-item">一经发包含影响恶劣的信息,将作删除商品或封号处理</li>
-                        <li class="list-group-item">请设置适当的价格，标题和标签,发现有意乱填将作删除处理</li>
-                        <li class="list-group-item">商品卖出后，请及时到管理页面对此商品进行下架操作</li>
-                        <li class="list-group-item">展示商品的顺序将以上传者等级作为第一排序依据</li>
+                        <li class="list-group-item">鉴于网络压力，封面图片请小于100kb,页面总大小请小于300kb</li>
+                        <li class="list-group-item">请设置适当的转让价，标题和标签,发现有意乱填将作删除处理</li>
+                        <li class="list-group-item">禁止发布影响恶略的信息,一旦发现将会直接封闭账号</li>
+                        <li class="list-group-item">交易成功后请到个人主页将商品移除</li>
+                        <li class="list-group-item">展示的商品将按照上传时间作为排序依据</li>
                         <li class="list-group-item">本站不保证你上传的商品信息长期存在</li>
                     </ul>
                 </div>

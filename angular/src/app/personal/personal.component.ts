@@ -257,9 +257,7 @@ export class PersonalComponent implements OnInit {
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if(result.statuscode!=0){
-        alert(result.msg);
-      }else{
-        alert("success")
+        this.app.showMsgBox(1,result.msg);
       }
     }, error => { console.log(error) });
 
