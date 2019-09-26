@@ -308,6 +308,7 @@ a:hover {
     /*border-color*/
     --thin-bdc: #ccc;
     --min-width: 300px;
+    --footer-height:190px;
 }
 
 /* galbol background board */
@@ -332,7 +333,9 @@ a:hover {
 }
 
 @media screen and (max-width:600px) {
-    /* 🍅 */
+    :root{
+        --footer-height:70px;
+    }
     .g-bg-box {
         box-shadow: none;
     }

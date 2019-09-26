@@ -157,7 +157,7 @@ export class HomepageComponent implements OnInit {
 
 set_mainbody_height(){
   var hight=  $(window).height();
-  $(".main-body").css("min-height",hight-240+"px");
+  $(".main-body").css("min-height",hight+"px");
 }
  
 collapse(id:string){

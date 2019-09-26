@@ -19,7 +19,7 @@
     height: 40px;
 }
 
-.search-bt {  
+.search-bt {
     border-radius: 0px 30px 30px 0px;
     color: var(--bt-fk);
     background: var(--liner-bc);
@@ -39,7 +39,9 @@
 
 .main-body {
     min-height: 400px;
-    min-width: var(--min-width)
+    min-width: var(--min-width);
+    margin-bottom: calc(-1*var(--footer-height));
+    padding-bottom: var(--footer-height);
 }
 
 .goodtype {
@@ -52,14 +54,12 @@
 /*======== type and tag =======*/
 
 .type-row {
-    
     text-align: center;
     margin-bottom: 10px;
     padding: 0px 5px;
 }
 
 .typelink-c {
-    
     line-height: 1.3em;
     margin: 0px 15px;
     font-size: 1.2em;
@@ -68,13 +68,11 @@
 }
 
 .well2 {
-    
     padding: 15px 20px;
     background-color: var(--tmcl-1);
 }
 
 .well2 span {
-    
     font-size: 0.8em;
     margin-left: 5px;
 }
@@ -88,14 +86,11 @@
 }
 
 .goodrow {
-    
     margin: 5px;
     text-align: center;
 }
 
 /*======== page box =======*/
-
-
 
 .pagebox {
     margin-top: 20px;
@@ -165,10 +160,12 @@
     color: #717373;
     padding: 3px 8px;
 }
-.headrow{
+
+.headrow {
     margin-bottom: 1em;
     padding-bottom: 1em;
 }
+
 /* ########################################################## */
 
 @media screen and (max-width:1200px) {
@@ -176,12 +173,13 @@
         width: 940px;
     }
 }
- 
+
 @media screen and (max-width:900px) {
     .goods-area {
         width: 720px;
     }
 }
+
 @media screen and (max-width:700px) {
     .goods-area {
         width: 490px;
@@ -189,10 +187,6 @@
 }
 
 @media screen and (max-width:600px) {
-    .search-row {
-        height: 60px;
-        padding: 0px;
-    }
     .search-input-c {
         margin-right: 70px;
         width: 240px;
@@ -223,7 +217,7 @@
         width: var(--gbheight);
         float: left;
     }
-    .goods-price{
+    .goods-price {
         width: 3.7em;
     }
     .good-name {
@@ -244,8 +238,8 @@
     }
     .good-title p {
         white-space: pre-line;
-        text-overflow: inherit; 
-    } 
+        text-overflow: inherit;
+    }
     .user-date {
         position: absolute;
         top: 100px;
@@ -258,20 +252,23 @@
         top: 105px;
         right: 0px;
     }
+    .pagebox {
+        margin-bottom: 40px;
+    }
     .pagebox .wraper {
-        float: unset; 
-        margin:0px;
+        float: unset;
+        margin: 0px;
     }
     .pagebox .inner {
         float: unset;
         margin: 0px;
     }
-    .pagebox .items{
+    .pagebox .items {
         float: unset;
         padding: 0px;
         font-size: 0.9em;
     }
-    .pagebox .pbform{
+    .pagebox .pbform {
         margin: 10px auto;
         float: unset;
     }

@@ -4,11 +4,10 @@
     margin-top: 60px;
 }
 .main-footer {
-    padding-top: 20px;
+    padding-top: 1em;
     background: #202020;
     color: #e1dcdc;
     border-bottom: 1px solid #303030;
-    margin-top: 2em;
 }
 .title {
     margin-top: 0;

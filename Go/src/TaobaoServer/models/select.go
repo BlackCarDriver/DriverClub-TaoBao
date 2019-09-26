@@ -350,7 +350,7 @@ func CountGoods() int {
 func CountMyCoods(uid string) int {
 	o := orm.NewOrm()
 	userNumber := 0
-	err := o.Raw("select count(*) from t_upload where userid = ? and state = 1", uid).QueryRow(&userNumber)
+	err := o.Raw("select count(*) from v_mygoods where uid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
 		mlog.Error("%v", err)
 		return 0
