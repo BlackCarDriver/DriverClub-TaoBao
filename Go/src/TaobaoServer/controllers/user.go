@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+//🌽
 //get myprofile data or other user profile data 🍋 🔥
 //server for GetMyMsg() from frontend
 func (this *PersonalDataController) Post() {

@@ -6,6 +6,7 @@ import (
 	"fmt"
 )
 
+//🌽
 //return homepage goods list data 🍋🔥🍇
 func (this *HPGoodsController) Post() {
 	postBody := md.RequestProto{}
@@ -55,6 +56,7 @@ tail:
 	this.ServeJSON()
 }
 
+//🌽
 //get all kind of data in goodspage  🍌🔥
 //response for GetGoodsDeta() in fontend
 func (this *GoodsDetailController) Post() {

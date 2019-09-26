@@ -35,19 +35,28 @@ func init() {
 	mlog.SetLogger("file", `{"filename":"logs/models.log"}`)
 	mlog.EnableFuncCallDepth(true)
 	mlog.Info("Router logs init success!")
+
 	//get database config
-	if iniconf, err := config.NewConfig("ini", "./conf/database.conf"); err != nil {
+	iniconf, err := config.NewConfig("ini", "./conf/database.conf")
+	if err != nil {
 		mlog.Critical("%v", err)
 		panic(err)
-	} else {
-		userName = iniconf.String("userName")
-		database = iniconf.String("database")
-		password = iniconf.String("password")
-		host = iniconf.String("host")
-		if port, err = iniconf.Int("port"); err != nil {
-			mlog.Critical("%v", err)
-			panic(err)
-		}
+	}
+	userName = iniconf.String("userName")
+	database = iniconf.String("database")
+	password = iniconf.String("password")
+	host = iniconf.String("host")
+	if port, err = iniconf.Int("port"); err != nil {
+		mlog.Critical("%v", err)
+		panic(err)
+	}
+
+	//get cache config
+	rdadress = iniconf.String("rdadress")
+	rdpassword = iniconf.String("rdpassword")
+	if rdisuse, err = iniconf.Bool("rdisuse"); err != nil {
+		mlog.Critical("%v", err)
+		panic(err)
 	}
 
 	//get models config
@@ -60,7 +69,6 @@ func init() {
 			panic(err)
 		}
 	}
-
 	//connect to database
 	dataSource := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, userName, password, database)
 	err = orm.RegisterDataBase("default", "postgres", dataSource)
@@ -71,7 +79,22 @@ func init() {
 	} else {
 		mlog.Info("DataBase connect scuess!!")
 	}
-	//max unmbers of connection
+
+	//connect to redis database
+	if rdisuse {
+		UseCache = true
+		if err = initReids(); err != nil {
+			mlog.Critical("%v", err)
+			panic(err)
+		} else {
+			mlog.Info("Redis connect success!!")
+		}
+	} else {
+		mlog.Info("Resis is close...")
+		UseCache = false
+	}
+
+	//set up connection of database connection
 	orm.SetMaxIdleConns("default", 30)
 	orm.DefaultTimeLoc = time.UTC
 	initTempData()
