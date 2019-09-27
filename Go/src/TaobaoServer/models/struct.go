@@ -13,6 +13,7 @@ type RequestProto struct {
 	UserId    string      `json:"userid"`
 	TargetId  string      `json:"targetid"`
 	CacheTime int         `json:"cachetime"`
+	CacheKey  string      `json:"cachekey"`
 	Data      interface{} `json:"data"`
 	Offset    int         `json:"offset"`
 	Limit     int         `json:"limit"`

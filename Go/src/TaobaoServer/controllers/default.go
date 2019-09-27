@@ -38,6 +38,7 @@ var random *rand.Rand
 var rlog *logs.BeeLogger
 
 func init() {
+	logs.SetLogFuncCallDepth(3)
 	//make a logger specially used by router
 	rlog = logs.NewLogger()
 	rlog.SetLogger("file", `{"filename":"logs/router.log"}`)

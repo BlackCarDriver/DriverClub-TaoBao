@@ -6,8 +6,7 @@ import (
 	"fmt"
 )
 
-//🌽
-//return homepage goods list data 🍋🔥🍇
+//return homepage goods list data 🍋🔥🍇🌽
 func (this *HPGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -40,24 +39,33 @@ func (this *HPGoodsController) Post() {
 		rlog.Error(response.Msg)
 		goto tail
 	}
+	//get data from cache
+	if cache, err := md.GetCache(&postBody); err != nil {
+		if err = json.Unmarshal([]byte(cache), &response); err != nil {
+			rlog.Error("Unmarshal cache fail:%v", err)
+		} else {
+			goto tail
+		}
+	}
 	//get data from database
 	if sum, err := md.SelectHomePageGoods(goodstype, goodstag, postBody.Offset, postBody.Limit, &goodslist); err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Get goods list data fail: %v", err)
 		rlog.Error(response.Msg)
-		goto tail
 	} else {
 		response.Data = goodslist
 		response.Rows = len(goodslist)
 		response.Sum = sum
 	}
+	//save response to cache
+	md.SetCache(&postBody, &response)
+
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()
 }
 
-//🌽
-//get all kind of data in goodspage  🍌🔥
+//get all kind of data in goodspage  🍌🔥🌽
 //response for GetGoodsDeta() in fontend
 func (this *GoodsDetailController) Post() {
 	postBody := md.RequestProto{}
@@ -81,6 +89,14 @@ func (this *GoodsDetailController) Post() {
 		response.Msg = fmt.Sprintf("Can't get api or goodsid from request data")
 		rlog.Error(response.Msg)
 		goto tail
+	}
+	//get data from cache
+	if cache, err := md.GetCache(&postBody); err != nil {
+		if err = json.Unmarshal([]byte(cache), &response); err != nil {
+			rlog.Error("Unmarshal cache fail:%v", err)
+		} else {
+			goto tail
+		}
 	}
 	//catch the unexpect panic
 	defer func() {
@@ -108,7 +124,6 @@ func (this *GoodsDetailController) Post() {
 			rlog.Error("%v", err)
 		}
 		md.Uas1.Add(userid) //user see other goods
-		goto tail
 
 	case "goodscomment": //comment or discuss date in goodsdetail page
 		var comment []md.GoodsComment
@@ -119,7 +134,6 @@ func (this *GoodsDetailController) Post() {
 		} else {
 			response.Data = comment
 		}
-		goto tail
 
 	case "usergoodsstate": //user state for specified goods in goodsdetail page
 		tmp := md.UserGoodsState{Like: false, Collect: false}
@@ -138,7 +152,6 @@ func (this *GoodsDetailController) Post() {
 			}
 			response.Data = tmp
 		}
-		goto tail
 
 	default:
 		response.StatusCode = -10
@@ -146,6 +159,9 @@ func (this *GoodsDetailController) Post() {
 		rlog.Warn(response.Msg)
 		goto tail
 	}
+	//save response to cache
+	md.SetCache(&postBody, &response)
+
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

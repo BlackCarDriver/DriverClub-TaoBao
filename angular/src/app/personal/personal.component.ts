@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserMessage, GoodsShort, MyMessage, Rank, User, RequestProto } from '../struct';
 import { ServerService } from '../server.service';
 import { AppComponent } from '../app.component';
+import { post } from 'selenium-webdriver/http';
 declare let $: any;
 
 @Component({
@@ -11,13 +12,13 @@ declare let $: any;
 })
 
 export class PersonalComponent implements OnInit {
-  msg = new UserMessage(); //基本信息
-  mygoodslist = GoodsShort[100];      //我的商品
-  mycollectlist = GoodsShort[100];    //我收藏的商品
-  mymessagelist = MyMessage[100]; //我的消息
-  hero = Rank[20];             //等级排行榜
-  icare = User[100];   //我关注的和关注我的
-  carei = User[100];  //关注我的用户
+  msg = new UserMessage();
+  mygoodslist = GoodsShort[100];
+  mycollectlist = GoodsShort[100];
+  mymessagelist = MyMessage[100];
+  hero = Rank[20];
+  icare = User[100];
+  carei = User[100];
   show_no_goods = false;
   show_no_message = false;
   show_no_collect = false;
@@ -54,12 +55,17 @@ export class PersonalComponent implements OnInit {
     this.getcare();
   }
 
-  //get detail information 🍍🍈
-  getmymsg() {
+  //get detail information 🍍🍈🌽
+  getmymsg(laster?: boolean) {
     let postdata: RequestProto = {
       api: "mymsg",
       targetid: this.server.userid,
+      cachetime: 180,
+      cachekey: "mymsg_" + this.server.userid,
     };
+    if (laster) {
+      postdata.cachetime = 0;
+    }
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) { this.msg = result.data; }
       else {
@@ -70,20 +76,22 @@ export class PersonalComponent implements OnInit {
     });
   }
 
-  //get the list of user i care and which acre me🍍🍈 🍞
+  //get the list of user i care and which acre me🍍🍈🍞🌽
   getcare() {
     let postdata: RequestProto = {
       api: "mycare",
       targetid: this.server.userid,
+      cachetime: 300,
+      cachekey: "mycare_" + this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        let temp:User[] = result.data[0];
-        temp.forEach(row=> {
+        let temp: User[] = result.data[0];
+        temp.forEach(row => {
           row.headimg = this.server.changeImgUrl(row.headimg);
         });
         let temp2 = result.data[1];
-        temp2.forEach(row=> {
+        temp2.forEach(row => {
           row.headimg = this.server.changeImgUrl(row.headimg);
         });
         this.icare = temp;
@@ -94,17 +102,19 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log(error) });
   }
 
-  //get my goods information 🍍 🍉🍈 🍇🍏 🍞
+  //get my goods information 🍍 🍉🍈 🍇🍏 🍞🌽
   getmymgoods() {
     let postdata: RequestProto = {
       api: "mygoods",
       targetid: this.server.userid,
       offset: (this.mg_nowat - 1) * this.mg_maxrow,
       limit: this.mg_maxrow,
+      cachetime: 180,
     };
+    postdata.cachekey = "mygoods_" + postdata.userid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        let temp:GoodsShort[] = result.data;
+        let temp: GoodsShort[] = result.data;
         temp.forEach(row => {
           row.headimg = this.server.changeImgUrl(row.headimg);
         });
@@ -121,17 +131,19 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg" + error) });
   }
 
-  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞
+  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞🌽
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
       targetid: this.server.userid,
       offset: (this.mc_nowat - 1) * this.mc_maxrow,
       limit: this.mc_maxrow,
+      cachetime: 180,
     };
+    postdata.cachekey = "mycollect_" + postdata.targetid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        let temp:GoodsShort[] = result.data;
+        let temp: GoodsShort[] = result.data;
         temp.forEach(row => {
           row.headimg = this.server.changeImgUrl(row.headimg);
         });
@@ -150,14 +162,16 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg fail: " + error) });
   }
 
-  // get my mail message  🍍 🍉🍈 🍇 🍏 🍑
+  // get my mail message  🍍 🍉🍈 🍇 🍏 🍑🌽
   getmymessage() {
     let postdata: RequestProto = {
       api: "message",
       targetid: this.server.userid,
       offset: (this.msg_nowat - 1) * this.msg_maxrow,
       limit: this.msg_maxrow,
+      cachetime: 180,
     };
+    postdata.cachekey = "mymsgs_" + postdata.targetid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.mymessagelist = result.data;
@@ -192,7 +206,7 @@ export class PersonalComponent implements OnInit {
 
   //delete my upload goods 🍑
   deleteMyGoods(gid: string) {
-    if(!confirm("确定删除这个商品吗？")) return;
+    if (!confirm("确定删除这个商品吗？")) return;
     let postdata: RequestProto = {
       api: "deletemygoods",
       targetid: gid,
@@ -245,8 +259,8 @@ export class PersonalComponent implements OnInit {
   }
 
   //set a message as already read  🍞
-  setIsRead(index:number, id:string){
-    if(this.mymessagelist[index].state==1){
+  setIsRead(index: number, id: string) {
+    if (this.mymessagelist[index].state == 1) {
       return;
     }
     this.mymessagelist[index].state = 1;
@@ -256,8 +270,8 @@ export class PersonalComponent implements OnInit {
       userid: this.server.userid,
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
-      if(result.statuscode!=0){
-        this.app.showMsgBox(1,result.msg);
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(1, result.msg);
       }
     }, error => { console.log(error) });
 

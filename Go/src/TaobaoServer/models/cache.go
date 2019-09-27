@@ -1,8 +1,9 @@
 package models
 
 import (
+	"encoding/json"
 	"errors"
-	"strings"
+	"fmt"
 
 	"github.com/astaxie/beego/logs"
 
@@ -20,9 +21,12 @@ var (
 
 //global value
 var (
-	UseCache  bool  = false
-	NotInUsed error = errors.New("Cache function is not using")
-	IsExist   error = errors.New("The key is exist")
+	UseCache    bool  = false
+	NotInUsed   error = errors.New("Cache function is not using")
+	IsExist     error = errors.New("The key is exist")
+	NotExist    error = errors.New("Cache not exist")
+	NoCacheTime error = errors.New("CacheTime is invalid")
+	KeyNotFound error = errors.New("CacheKey not found")
 )
 
 //init redis
@@ -40,78 +44,96 @@ func initReids() error {
 }
 
 //note that it is forbiden to set a new value before time-out or delete the value
-func SetCache(value string, second int, tag ...string) error {
+func SetCache(req *RequestProto, any interface{}) error {
 	if !UseCache {
 		return NotInUsed
 	}
-	if second <= 0 {
-		return errors.New("Invalid value of second.")
+	if req.CacheTime <= 0 {
+		return NoCacheTime
 	}
-	if len(tag) == 0 {
-		return errors.New("No tag was given")
+	if req.CacheKey == "" {
+		return KeyNotFound
 	}
-	err, key := combineKey(tag...)
-	if err != nil {
-		return nil
+	var err error
+	//parse interface into string
+	value := parseToString(any)
+	if value == "" {
+		err = fmt.Errorf("Can't not parse interface %s to cache", req.CacheKey)
+		mlog.Error("%v", err)
+		return err
 	}
-	isExist, _ := RedisC.Do("exists", key).Int()
+	//check value if exist
+	isExist, _ := RedisC.Do("exists", req.CacheKey).Int()
 	if isExist == 1 {
 		return IsExist
 	}
-	err = RedisC.Do("set", key, value, "EX", second).Err()
+	//save to redis database
+	err = RedisC.Do("set", req.CacheKey, value, "EX", req.CacheTime).Err()
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Error("set cache fail: %v", err)
 		return err
 	}
+	logs.Warn("Set cache success! %s", req.CacheKey)
 	return nil
 }
 
-func GetCache(tag ...string) (error, string) {
+//get cache from redis
+func GetCache(req *RequestProto) (cache string, err error) {
 	if !UseCache {
-		return NotInUsed, ""
+		return "", NotInUsed
 	}
-	err, key := combineKey(tag...)
-	if err != nil {
-		mlog.Error("%v", err)
-		return err, ""
+	if req.CacheTime <= 0 {
+		return "", NoCacheTime
 	}
-	if isExist, err := RedisC.Do("exists", key).Bool(); err != nil {
-		return err, ""
+	if req.CacheKey == "" {
+		return "", KeyNotFound
+	}
+	//check if exist
+	if isExist, err := RedisC.Do("exists", req.CacheKey).Bool(); err != nil {
+		mlog.Error("check exist fail: %v", err)
+		return "", err
 	} else if !isExist {
-		return errors.New("value not exist"), ""
+		return "", NotExist
 	}
-	result, err := RedisC.Do("get", key).String()
+	//get value if is exist
+	result, err := RedisC.Do("get", req.CacheKey).String()
 	if err != nil {
-		mlog.Error("%v", err)
-		return err, ""
+		mlog.Error("get cache fail: %v", err)
+		return "", err
 	}
-	return nil, result
+	logs.Info("Get cache success! %s", req.CacheKey)
+	return result, nil
 }
 
-//note that it delete a value that not exist will return no error, because the value might be clear because of time-out
-func DelCache(tag ...string) error {
+//note that it delete a value that not exist will return no error,
+//because the value might be clear because of time-out
+func DelCache(req *RequestProto) error {
 	if !UseCache {
 		return NotInUsed
 	}
-	err, key := combineKey(tag...)
-	if err != nil {
-		mlog.Error("%v", err)
-		return err
+	if req.CacheTime <= 0 {
+		return NoCacheTime
 	}
-	if num, err := RedisC.Do("del", key).Int(); err != nil {
-		mlog.Error("%v", err)
+	if req.CacheKey == "" {
+		return KeyNotFound
+	}
+	if num, err := RedisC.Do("del", req.CacheKey).Int(); err != nil {
+		mlog.Error("delete cache fial:%v", err)
 		return err
 	} else if num > 1 {
-		logs.Warn("delete '%s' affect more than one!", key)
+		logs.Warn("delete '%s' affect more than one rows!", req.CacheKey)
 	}
 	return nil
 }
 
 //===================== tool function ================================
 
-func combineKey(tag ...string) (error, string) {
-	if len(tag) == 0 {
-		return errors.New("no argument was given"), ""
+//parse a obeject into json encoding string, return null string if error happend
+func parseToString(any interface{}) string {
+	bs, err := json.Marshal(any)
+	if err != nil {
+		mlog.Error("ParseToString fail: %v", err)
+		return ""
 	}
-	return nil, strings.Join(tag, "-")
+	return string(bs)
 }

@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/astaxie/beego/logs"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -170,7 +168,6 @@ func GetNavingMsg(uid string, c *MyStatus) error {
 	if err := o.Raw(`select * from v_navingmsg where id =?`, uid).QueryRow(&c); err != nil {
 		return err
 	}
-	logs.Info(c)
 	return nil
 }
 

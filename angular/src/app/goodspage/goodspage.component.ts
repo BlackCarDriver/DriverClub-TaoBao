@@ -35,11 +35,13 @@ export class GoodspageComponent implements OnInit {
 
     //######################## GetGoodsDeta() #######################################
 
-  //get mainly message of it goods 🍌🔥
+  //get mainly message of it goods 🍌🔥🌽
   getItPage(id: string) {
     let postdata : RequestProto = {
       api:"goodsmessage",
-      targetid:this.goodid,
+      targetid:id,
+      cachetime:60,
+      cachekey:"gitp_"+id,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if(result.statuscode!=0){ 
@@ -53,12 +55,17 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  // get comment data of it goods 🍌🔥
-  getComment(gid: string) {
+  // get comment data of it goods 🍌🔥🌽
+  getComment(gid: string, latest?: boolean) {
     let postdata : RequestProto = {
       api:"goodscomment",
-      targetid:this.goodid,
+      targetid:gid,
+      cachetime:60,
+      cachekey:"gscm_"+gid,
     };
+    if(latest==true){
+      postdata.cachetime = 0;
+    }
     this.server.GetGoodsDeta(postdata).subscribe(result=>{
       if(result.statuscode!=0){
         this.app.showMsgBox(-1, "获取评论数据失败，请稍后再试" , result.msg);
@@ -70,12 +77,14 @@ export class GoodspageComponent implements OnInit {
     });
   }
 
-  //get goods statement 🍌🔥🍈
+  //get goods statement 🍌🔥🍈🌽
   getStatement() {
     let postdata : RequestProto = {
       api:"usergoodsstate",
       targetid:this.goodid,
       userid:this.server.userid,
+      cachetime:60,
+      cachekey:"usgs_"+this.goodid+"_"+this.server.userid,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if (result.statuscode != 0) {
@@ -105,7 +114,7 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.app.showMsgBox(0, "点赞成功");
-        this.getStatement();
+        $("#like-btn").removeClass('btn-info');
       } else {
         this.app.showMsgBox(-1, "点赞失败，请稍后再试" , result.msg);
       }
@@ -127,8 +136,9 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
         this.app.showMsgBox(0, "收藏成功");
-        ;}else{
-        this.app.showMsgBox(-1, "收藏失败");
+        $("#collect-btn").removeClass('btn-info');
+        }else{
+        this.app.showMsgBox(-1, "收藏失败,请稍后再试");
       }
     },error=>{
       this.app.showMsgBox(-1, "请求收藏失败，请稍后再试" , error);
@@ -188,7 +198,7 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
         this.app.showMsgBox(0, "评论成功");
-        this.getComment(this.goodid);
+        this.getComment(this.goodid, true);
         $("#comment-area").val("");
       }else{
         this.app.showMsgBox(-1, "评论失败，请扫后再试" , result.msg);

@@ -111,6 +111,7 @@ export class NavigComponent implements OnInit {
       let postdata: RequestProto = {
         api: "naving",
         targetid: userid,
+        cachetime:120,
       };
       this.server.GetCredentMsg(postdata).subscribe(result => {
         if (result.statuscode == 0) {

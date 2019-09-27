@@ -50,7 +50,7 @@ export class HomepageComponent implements OnInit {
     this.set_mainbody_height();
   }
 
-  //get a page of goods list data 🍋🔥🍇
+  //get a page of goods list data 🍋🔥🍇🌽
   //note taht request protocal is write in server.service.ts
   GetGoods(){
     this.server.GetHomePageGoods(this.lookingtype, this.lookingtag, this.lookingpage).subscribe(
@@ -113,7 +113,7 @@ export class HomepageComponent implements OnInit {
           this.othertype  = this.typearray[6].list;  
       })
   }
-
+  
   //================= change page function =====================
   //display previous page
   prepage(){ 

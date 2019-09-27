@@ -13,9 +13,9 @@ export class ServerService {
   userid = "";    //this usrid only can be true usre id
   username = "";
   homepage_goods_perpage = 10;
-  private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  // private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  // private addr: string = "/localserver";
+  private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }
@@ -90,7 +90,7 @@ export class ServerService {
     //post a multipart/form-data, can not use json.stringfiy
     return this.http.post<ReplyProto>(url, postdata);
   }
-  //get information in personal page 🍍
+  //get information in personal page 🍍🌽
   GetMyMsg(request: RequestProto) {
     var url = this.addr + "/personal/data";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
@@ -105,14 +105,17 @@ export class ServerService {
     var url = this.addr + "/deleteapi";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //get homepage goods list data 🍋🍇
+  //get homepage goods list data 🍋🍇🌽
   GetHomePageGoods(type: string, tag: string, page: number) {
     let postdata: RequestProto = {
       api: "gethomepagegoods",
       offset: this.homepage_goods_perpage * (page - 1),
       limit: this.homepage_goods_perpage,
       data: { goodstype: type, goodstag: tag },
+      cachetime:60,
     };
+    let key = "ghpg_"+type+"_"+tag+"_"+postdata.offset+"_"+postdata.limit;
+    postdata.cachekey = key;
     var url = this.addr + "/homepage/goodsdata";
     return this.http.post<ReplyProto>(url, JSON.stringify(postdata));
   }

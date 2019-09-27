@@ -6,8 +6,7 @@ import (
 	"fmt"
 )
 
-//🌽
-//get myprofile data or other user profile data 🍋 🔥
+//get myprofile data or other user profile data 🍋🔥🌽
 //server for GetMyMsg() from frontend
 func (this *PersonalDataController) Post() {
 	postBody := md.RequestProto{}
@@ -31,6 +30,14 @@ func (this *PersonalDataController) Post() {
 		rlog.Error(response.Msg)
 		goto tail
 	}
+	//get data from cache
+	if cache, err := md.GetCache(&postBody); err != nil {
+		if err = json.Unmarshal([]byte(cache), &response); err != nil {
+			rlog.Error("Unmarshal cache fail:%v", err)
+		} else {
+			goto tail
+		}
+	}
 	//catch the unexpect panic
 	defer func() {
 		if err, ok := recover().(error); ok {
@@ -53,7 +60,6 @@ func (this *PersonalDataController) Post() {
 		} else {
 			response.Data = data
 		}
-		goto tail
 
 	case "mygoods": //my goods data 🍉
 		var data []md.GoodsShort
@@ -67,7 +73,6 @@ func (this *PersonalDataController) Post() {
 			response.Sum = md.CountMyCoods(targetid)
 		}
 		md.Uas1.Add(targetid) //user see himself personal page, active+1
-		goto tail
 
 	case "mycollect": //my collect goods data 🍉
 		var data []md.GoodsShort
@@ -80,7 +85,6 @@ func (this *PersonalDataController) Post() {
 			response.Rows = len(data)
 			response.Sum = md.CountMyCollect(targetid)
 		}
-		goto tail
 
 	case "message": //my receive messages 🍉🍏 🍞
 		var data []md.MyMessage
@@ -93,7 +97,6 @@ func (this *PersonalDataController) Post() {
 			response.Rows = len(data)
 			response.Sum = md.CountMyAllMsg(targetid)
 		}
-		goto tail
 
 	case "mycare": //get my favorite and who care me
 		var data [2][]md.UserShort
@@ -104,7 +107,6 @@ func (this *PersonalDataController) Post() {
 		} else {
 			response.Data = data
 		}
-		goto tail
 
 	case "naving": //get naving data
 		var data md.MyStatus
@@ -115,7 +117,6 @@ func (this *PersonalDataController) Post() {
 		} else {
 			response.Data = data
 		}
-		goto tail
 
 	case "othermsg": //other people profile data
 		var data md.UserMessage
@@ -130,7 +131,6 @@ func (this *PersonalDataController) Post() {
 		if err = md.UpdateUserVisit(targetid); err != nil {
 			rlog.Error("Update visit number fail: %v", err)
 		}
-		goto tail
 
 	case "getuserstatement": //the statement of user to user 🍉
 		tmp := md.UserState{Like: false, Concern: false}
@@ -149,12 +149,10 @@ func (this *PersonalDataController) Post() {
 			}
 			response.Data = tmp
 		}
-		goto tail
 
 	case "rank": //user rank
 		response.Data = md.UserRank
 		//TODO: make a function 🍉
-		goto tail
 
 	case "settingdata": //user message in the changemsg page 🍏
 		data := md.UserSetData{}
@@ -165,15 +163,14 @@ func (this *PersonalDataController) Post() {
 		} else {
 			response.Data = data
 		}
-		goto tail
-
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("Unsupose metho: %s", api)
 		rlog.Error(response.Msg)
 		goto tail
 	}
-
+	//save response to cache
+	md.SetCache(&postBody, &response)
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

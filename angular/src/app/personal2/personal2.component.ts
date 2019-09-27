@@ -33,11 +33,13 @@ export class Personal2Component implements OnInit {
     this.getStatement();
   }
 
-  //get some other message need to show in the page 🍍🔥🍈
+  //get some other message need to show in the page 🍍🔥🍈🌽
   getOtherMsg(uid: string) {
     let postdata : RequestProto = {
       api:"othermsg",
-      targetid:this.targetid,
+      targetid:uid,
+      cachetime:600,
+      cachekey:"otmsg_"+uid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode==0){
@@ -48,7 +50,30 @@ export class Personal2Component implements OnInit {
       }
     }, error=>{console.log("GetMymsg() fail" + error)});
   }
-
+  //get concern and like statement  🍉🍈🌽
+  getStatement(){
+    let postdata : RequestProto = {
+      api:"getuserstatement",
+      targetid:this.targetid,
+      userid:this.server.userid,
+      cachetime:600,
+      cachekey:"gusm_"+this.targetid+"_"+this.server.userid,
+    };
+    this.server.GetMyMsg(postdata).subscribe(result=>{
+      if(result.statuscode!=0){
+        this.app.showMsgBox(-1, "获取用户状态失败，请稍后再试", result.msg);
+      }else{
+        let state = {concern:false, like:false};
+        state = result.data;
+        this.is_concern = state.concern;
+        this.is_like = state.like;
+        if(this.is_concern) this.btn_concern_sho = "已关注";
+        if(this.is_like) this.btn_like_sho="已点赞";
+      }
+    },error=>{
+      console.log("getStatement() fail: "+error);
+    });
+  }
   // add a like to a user profile  🍍🔥🍈🍑
   updateLike() {
     if(this.server.IsNotLogin()){
@@ -70,7 +95,6 @@ export class Personal2Component implements OnInit {
       this.app.showMsgBox(-1, "请求错误，请稍后再试" , error);
     });
   }
-
   //add or remove a user from concern list 🍍🔥🍈🍑
   addConcern() {
     if(this.server.IsNotLogin()){
@@ -107,7 +131,6 @@ export class Personal2Component implements OnInit {
     }
    
   }
-
   //send a private message to owner 🍍🔥🍈
   sendMessage() {
     if(this.server.IsNotLogin()){
@@ -134,28 +157,4 @@ export class Personal2Component implements OnInit {
         this.app.showMsgBox(-1, "请求失败，请稍后再试",error);
     });
   }
-  
-  //get concern and like statement  🍉🍈
-  getStatement(){
-    let postdata : RequestProto = {
-      api:"getuserstatement",
-      targetid:this.targetid,
-      userid:this.server.userid,
-    };
-    this.server.GetMyMsg(postdata).subscribe(result=>{
-      if(result.statuscode!=0){
-        this.app.showMsgBox(-1, "获取用户状态失败，请稍后再试", result.msg);
-      }else{
-        let state = {concern:false, like:false};
-        state = result.data;
-        this.is_concern = state.concern;
-        this.is_like = state.like;
-        if(this.is_concern) this.btn_concern_sho = "已关注";
-        if(this.is_like) this.btn_like_sho="已点赞";
-      }
-    },error=>{
-      console.log("getStatement() fail: "+error);
-    });
-  }
-
 }
