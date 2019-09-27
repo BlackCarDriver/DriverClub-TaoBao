@@ -34,6 +34,7 @@ func init() {
 	mlog = logs.NewLogger()
 	mlog.SetLogger("file", `{"filename":"logs/models.log"}`)
 	mlog.EnableFuncCallDepth(true)
+	mlog.SetLevel(2)
 	mlog.Info("Router logs init success!")
 
 	//get database config

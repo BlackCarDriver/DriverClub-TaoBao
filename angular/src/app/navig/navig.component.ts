@@ -113,6 +113,7 @@ export class NavigComponent implements OnInit {
         targetid: userid,
         cachetime:120,
       };
+      postdata.cachekey = "nav_"+postdata.targetid;
       this.server.GetCredentMsg(postdata).subscribe(result => {
         if (result.statuscode == 0) {
           this.usermsg = result.data;

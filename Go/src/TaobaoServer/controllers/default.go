@@ -44,7 +44,7 @@ func init() {
 	rlog.SetLogger("file", `{"filename":"logs/router.log"}`)
 	rlog.EnableFuncCallDepth(true)
 	rlog.Info("Router logs init success!")
-	rlog.SetLogFuncCallDepth(3)
+	rlog.SetLogFuncCallDepth(2)
 	//read config from conf file
 	if iniconf, err := config.NewConfig("ini", "./conf/driver.conf"); err != nil {
 		rlog.Error("%v", err)

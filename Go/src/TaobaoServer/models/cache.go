@@ -27,6 +27,7 @@ var (
 	NotExist    error = errors.New("Cache not exist")
 	NoCacheTime error = errors.New("CacheTime is invalid")
 	KeyNotFound error = errors.New("CacheKey not found")
+	WornResult  error = errors.New("Cache is null")
 )
 
 //init redis
@@ -101,7 +102,9 @@ func GetCache(req *RequestProto) (cache string, err error) {
 		mlog.Error("get cache fail: %v", err)
 		return "", err
 	}
-	logs.Info("Get cache success! %s", req.CacheKey)
+	if result == "" {
+		return "", WornResult
+	}
 	return result, nil
 }
 

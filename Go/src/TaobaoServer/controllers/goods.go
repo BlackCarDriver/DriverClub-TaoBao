@@ -4,6 +4,8 @@ import (
 	md "TaobaoServer/models"
 	"encoding/json"
 	"fmt"
+
+	"github.com/astaxie/beego/logs"
 )
 
 //return homepage goods list data 🍋🔥🍇🌽
@@ -40,12 +42,15 @@ func (this *HPGoodsController) Post() {
 		goto tail
 	}
 	//get data from cache
-	if cache, err := md.GetCache(&postBody); err != nil {
+	if cache, err := md.GetCache(&postBody); err == nil {
 		if err = json.Unmarshal([]byte(cache), &response); err != nil {
-			rlog.Error("Unmarshal cache fail:%v", err)
+			rlog.Error("Unmarshal cache %s fail:%v", postBody.CacheKey, err)
 		} else {
+			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
+	} else {
+		logs.Error(err)
 	}
 	//get data from database
 	if sum, err := md.SelectHomePageGoods(goodstype, goodstag, postBody.Offset, postBody.Limit, &goodslist); err != nil {
@@ -91,12 +96,15 @@ func (this *GoodsDetailController) Post() {
 		goto tail
 	}
 	//get data from cache
-	if cache, err := md.GetCache(&postBody); err != nil {
+	if cache, err := md.GetCache(&postBody); err == nil {
 		if err = json.Unmarshal([]byte(cache), &response); err != nil {
-			rlog.Error("Unmarshal cache fail:%v", err)
+			rlog.Error("Unmarshal cache %s fail:%v", postBody.CacheKey, err)
 		} else {
+			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
+	} else {
+		logs.Error(err)
 	}
 	//catch the unexpect panic
 	defer func() {
