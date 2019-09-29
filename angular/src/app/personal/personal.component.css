@@ -44,6 +44,7 @@
 .rmlable {
     position: absolute;
     right: 0px;
+    top: 0px;
     font-size: 0.8em;
     opacity: 0.3;
     padding: 6px 10px;

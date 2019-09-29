@@ -1,4 +1,4 @@
-<div>
+<div class="window">
     <div class="container-fluid" style="max-width: 1340px; margin:0px auto">
         <div class="row path">
             <ol class="breadcrumb" style="margin: 5px;">
@@ -211,7 +211,7 @@
                                         <div class="row msg-head" [ngClass]="{'unread': rows.state==0}">
                                             <div [routerLink]="['/personals',rows.uid ]" class="tad" style="color: #337ab7;"> 
                                                 <span class="glyphicon glyphicon-user"></span>
-                                                {{rows.name}}{{rows.mid}}
+                                                {{rows.name}}
                                             </div>
                                             <div class="tad">
                                                 <span class="glyphicon glyphicon-time"></span>

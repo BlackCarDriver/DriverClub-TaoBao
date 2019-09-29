@@ -13,6 +13,7 @@ import { UploadgoodsComponent } from './uploadgoods/uploadgoods.component';
 import { GoodspageComponent } from './goodspage/goodspage.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { Personal2Component } from './personal2/personal2.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { Personal2Component } from './personal2/personal2.component';
     ChgmymsgComponent,
     UploadgoodsComponent,
     GoodspageComponent,
-    Personal2Component
+    Personal2Component,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

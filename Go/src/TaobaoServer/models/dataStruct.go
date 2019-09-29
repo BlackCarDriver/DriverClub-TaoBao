@@ -69,3 +69,8 @@ type T_message struct {
 	Time       time.Time `json:"time"`
 	State      int32     `json:"state"`
 }
+
+var HelloMsgToNewUser = `
+[系统消息] 欢迎并感谢你成为本站的会员！本站仍然在开发之中，很多地方有待完善，欢迎到反馈页面反馈问题以及向我发送私聊，
+我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！
+`

@@ -391,14 +391,14 @@ func CountUnreadMsg(uid string) int {
 	return userNumber
 }
 
-//count the specificed name numbers of other user  🍆
-func CountUserName(name, id string) int {
+//count the specificed name numbers of other user  🍖
+func CountUserName(name string) int {
 	o := orm.NewOrm()
 	userNumber := 0
-	err := o.Raw("select count(*) from t_user where name=? and id != ?", name, id).QueryRow(&userNumber)
+	err := o.Raw("select count(*) from t_user where name=?", name).QueryRow(&userNumber)
 	if err != nil {
 		mlog.Error("CountUserName fail: %v", err)
-		return 0
+		return -1
 	}
 	return userNumber
 }

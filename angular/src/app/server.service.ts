@@ -19,7 +19,6 @@ export class ServerService {
   constructor(
     private http: HttpClient,
   ) { }
-
   //====================================== public phsical function =================================
   //check whether the user is login, show the warm message if not 🍈
   IsNotLogin() {
@@ -192,7 +191,50 @@ export class ServerService {
     return JSON.parse(jsdata);
   }
 
+  //set up window height 🍖
+  setupHight(){
+    var hight = $(window).height();
+    $(".window").css("min-height", hight + "px");
+  }
 
+  //============ following function is relate to input checking ===========
+  //check the format of username 🍖
+  checkUerName(name:string){
+    if(name=="") return "用户名不能为空";
+    if(name.includes(" ")) return "用户名不能包含空格";
+    let namereg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/;
+    if( namereg.test(name) ==false){
+      return "用户名格式不正确,提示：不包含空格,符号,长度为2~15";
+    }
+    return "";
+  }
+  //check the format of password 🍖
+  checkPassword(pw:string){
+    if(pw=="") return "密码不能为空";
+    if(pw.includes(" ")) return "密码不能包含空格";
+    let passwordreg = /^[a-zA-Z._0-9]{6,20}$/;
+    if( passwordreg.test(pw) == false){
+     return "密码格式不正确,提示：6~20个字母或数字或._组成"
+    }
+    return ""
+  }
+  //check the format of a email 🍖
+  checkEmail(email:string){
+    if(email=="") return "邮箱不能为空";
+    if(email.includes(" ")) return "邮箱不能包含空格";
+    let regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
+    if(regex.test(email)==false){
+      return "邮箱格式不符合规则";
+    }
+    return ""
+  }
+  //check format of comfirm code 🍖
+  checkCode(code:string){
+    if(code=="") return "验证码不能为空";
+    let regex = /^[0-9]{6}$/;
+    if(regex.test(code)==false) return "验证码格式不正确";
+    return "";
+  }
   /*
   //save an object in localstroge by json format
   setLocalStorge(key:string, data :any){

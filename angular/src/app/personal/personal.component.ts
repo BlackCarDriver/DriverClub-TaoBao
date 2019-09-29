@@ -46,6 +46,7 @@ export class PersonalComponent implements OnInit {
     if (this.server.IsNotLogin()) {
       window.history.back();
     }
+    this.server.setupHight();
     // this.userid = this.server.Getusername();
     this.getmymsg();
     this.getmymgoods();
@@ -114,14 +115,19 @@ export class PersonalComponent implements OnInit {
     postdata.cachekey = "mygoods_" + postdata.userid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
+        console.log(result.data);
+        if (result.rows == 0){
+          this.show_no_goods = true;
+          return;
+        }
         let temp: GoodsShort[] = result.data;
+        //change image url to make it faster
         temp.forEach(row => {
           row.headimg = this.server.changeImgUrl(row.headimg);
         });
         this.mygoodslist = result.data;
         this.mg_sumpage = Math.ceil(result.sum / this.mg_maxrow);
-        if (result.rows == 0) this.show_no_goods = true;
-        else if (this.mg_sumpage > 1) {
+        if (this.mg_sumpage > 1) {
           this.mg_array = new Array;
           for (let i = 1; i <= this.mg_sumpage && i <= 9; i++) {
             this.mg_array.push(i);
@@ -131,7 +137,7 @@ export class PersonalComponent implements OnInit {
     }, error => { console.log("GetMyMsg" + error) });
   }
 
-  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞🌽
+  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞🌽🍖
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
@@ -143,13 +149,16 @@ export class PersonalComponent implements OnInit {
     postdata.cachekey = "mycollect_" + postdata.targetid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
-        let temp: GoodsShort[] = result.data;
-        temp.forEach(row => {
+          if (result.rows == 0) {
+            this.show_no_collect = true;
+            return;
+          }
+          let temp: GoodsShort[] = result.data;
+          temp.forEach(row => {
           row.headimg = this.server.changeImgUrl(row.headimg);
         });
         this.mycollectlist = temp;
-        if (result.rows == 0) this.show_no_collect = true;
-        else if (result.sum > 1) {
+       if (result.sum > 1) {
           this.mc_array = new Array;
           this.mc_sumpage = Math.ceil(result.sum / this.mc_maxrow);
           for (let i = 1; i <= this.mc_sumpage && i <= 9; i++) {

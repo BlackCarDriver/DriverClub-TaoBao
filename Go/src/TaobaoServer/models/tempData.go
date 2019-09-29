@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -30,13 +32,14 @@ var GoodsTypeTempDate = []GoodsType{
 //save top 10 user rank
 var UserRank []Rank
 
-//user active statistics
-var Uas1, Uas2 *ActiveNess
-
 //Refresh all temp data when start the process,🌰
 func initTempData() {
+	//Uas1 and Uas2 used to save the credits of users for a while
 	Uas1 = NewActiveNess()
 	Uas2 = NewActiveNess()
+	//the value in ComfirmCode will be save for half hour
+	ComfirmCode = NewTimeMap(30 * 60)
+
 	RefreshTypeTagDate()
 	UpdateUserRank()
 	go RunPreHour()
@@ -55,6 +58,9 @@ func UpdateUserRank() {
 }
 
 //==================== active defintion =======================
+//user active statistics
+var Uas1, Uas2 *ActiveNess
+
 //used to count the degree of user visit in a short time, It is what credits statics basis for 🌰
 type ActiveNess struct {
 	active map[string]int
@@ -82,6 +88,68 @@ func (a *ActiveNess) ReBuild() {
 }
 func (a *ActiveNess) GetMap() map[string]int {
 	return a.active
+}
+
+//========= datastruct for save the comfirm code for a while ============ 🍖
+//save the comfirm code
+var ComfirmCode *TimeMap
+
+//timeMap is a countainer that only save the data for a duration
+type TimeMap struct {
+	Map  map[string]time.Time
+	Life int
+}
+
+//create a timeMap
+func NewTimeMap(second int) *TimeMap {
+	var t *TimeMap = new(TimeMap)
+	t.Map = make(map[string]time.Time)
+	t.Life = second
+	return t
+}
+
+//save a key in the map for a while 🍖
+func (t *TimeMap) Add(val string) error {
+	if _, ok := t.Map[val]; ok {
+		err := fmt.Errorf("The value still exist: %s", val)
+		mlog.Error("%v", err)
+		return err
+	}
+	t.Map[val] = time.Now()
+	logs.Info("Save comfirm code: %s", val)
+	return nil
+}
+
+//judge if the key have out of data 🍖
+//return nil mean the key is found and not out of data
+func (t *TimeMap) Get(key string) error {
+	var err error
+	val, ok := t.Map[key]
+	if ok == false {
+		err = errors.New("验证码错误")
+		mlog.Info("%v", err)
+		return err
+	}
+	afterSecond := int(time.Since(val).Seconds())
+	if afterSecond > t.Life {
+		err = errors.New("验证码过期")
+		mlog.Info("%v", err)
+		return err
+	}
+	logs.Info("Get comfirm %s  afterSecond: %v", key, afterSecond)
+	return nil
+}
+
+//clear all key that already out of date 🍖
+func (t *TimeMap) Clear(key string) {
+	for k, v := range t.Map {
+		duration := time.Since(v)
+		logs.Warn("Comfirm code: %s \t\t\t %d", k, int(duration.Minutes()))
+		if int(duration.Seconds()) > t.Life {
+			mlog.Warn("timer key %s have been delete", k)
+			delete(t.Map, k)
+		}
+	}
 }
 
 //==================== Timmer Bus ===================================

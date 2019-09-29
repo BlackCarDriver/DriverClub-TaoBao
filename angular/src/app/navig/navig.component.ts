@@ -9,15 +9,6 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // import * as $ from 'jquery';
 declare let $: any;
 
-// regex of account name 
-const namereg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/;
-// regex of password
-const passwordreg = /^[a-zA-Z._0-9]{6,20}$/;
-
-// the return state 
-const scuess = 1;
-const enable = 2;
-const disable = -2;
 @Component({
   selector: 'app-navig',
   templateUrl: './navig.component.html',
@@ -75,29 +66,27 @@ export class NavigComponent implements OnInit {
       });
   }
   //=========================== safety verification ===================== 
-  // check the intput box content in login box 🍓
+  // check the intput box content in login box 🍓🍖
   // canll autotily after it have been change
   InitloginChech() {
-    $("#loginname").change(function () {
-      if (namereg.test($("#loginname").val()) == false) {
-        this.app.showMsgBox(1,"用户名格式不正确,提示：不包含空格,符号,长度为2~15");
-      }
-    });
-    $("#loginpassword").change(function () {
-      if (passwordreg.test($("#loginpassword").val()) == false) {
-        this.app.showMsgBox(1,"密码格式不正确,提示：6~20个字母或数字或._组成");
-      }
-    });
+    $("#loginname").change(this.checkname.bind(this));
+    $("#loginpassword").change(this.checkpassword.bind(this));
   }
-  //check the input of login input🍓
+  //check input username🍖
+  checkname(){
+    let res = this.server.checkUerName($("#loginname").val()); 
+    if (res!="") this.app.showMsgBox(1,res);
+  }
+  //check input password🍖
+  checkpassword(){
+    let res = this.server.checkPassword($("#loginpassword").val());
+    if (res!="")  this.app.showMsgBox(1,res);
+  }
+  //check the content of login input🍓🍖
   checkLogin() {
     let worngnum = 0;
-    if (namereg.test($("#loginname").val()) == false) {
-      worngnum++;
-    }
-    if (passwordreg.test($("#loginpassword").val()) == false) {
-      worngnum++;
-    }
+    if (this.server.checkUerName($("#loginname").val())!="")   worngnum++;
+    if (this.server.checkPassword($("#loginpassword").val()) != "")   worngnum++;
     return (worngnum == 0);
   }
 

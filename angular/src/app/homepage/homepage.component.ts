@@ -44,10 +44,10 @@ export class HomepageComponent implements OnInit {
   ) { }
  
   ngOnInit() {
+    this.server.setupHight();
     $(".goods-area").mouseenter(function(){ $('.gg').collapse('hide');})
     this.GetGoods();
     this.GetType();
-    this.set_mainbody_height();
   }
 
   //get a page of goods list data 🍋🔥🍇🌽
@@ -155,11 +155,6 @@ export class HomepageComponent implements OnInit {
     }
   }
 
-set_mainbody_height(){
-  var hight=  $(window).height();
-  $(".main-body").css("min-height",hight+"px");
-}
- 
 collapse(id:string){
     $('.collapse').collapse('hide');
     $(id).collapse('show');

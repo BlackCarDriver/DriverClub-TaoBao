@@ -40,8 +40,6 @@
 .main-body {
     min-height: 400px;
     min-width: var(--min-width);
-    margin-bottom: calc(-1*var(--footer-height));
-    padding-bottom: var(--footer-height);
 }
 
 .goodtype {

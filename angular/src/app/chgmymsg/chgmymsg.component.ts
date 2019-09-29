@@ -36,6 +36,7 @@ export class ChgmymsgComponent implements OnInit {
     if (this.server.IsNotLogin()) {
       window.history.back();
     }
+    this.server.setupHight();
     this.initImgInput();
     this.initSaveBtn();
     this.getmymsg();

@@ -43,7 +43,7 @@ export class UploadgoodsComponent implements OnInit {
       window.history.back();
       return;
     }
-
+    this.server.setupHight();
     this.initImgUpload();
     this.initEditer();
     this.GetType();

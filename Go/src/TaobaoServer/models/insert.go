@@ -15,12 +15,19 @@ const (
 	dfUserHeadimg = `https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a`
 	dfUserName    = `尊贵的用户`
 	dfGoodHeadimg = `https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/c62bcfccb5b0b9b7c8cbc132?t=1526199816`
+	masterId = "19070010"
 )
 
-//创建用户账号
-//id自动生成,注意在调用此函数前需要确保name,password,email非空
+//Create a account autoly by provided name, password and email 🍖
 func CreateAccount(user RegisterData) error {
 	o := orm.NewOrm()
+	//check the username again
+	if nameNumber := CountUserName(user.Name); nameNumber!= 0 {
+		err := fmt.Errorf("User name %s already have been used!", user.Name)
+		mlog.Error("%v",err)
+		return err
+	}
+	//make a userid by the following regular
 	userNumber := CountUser() + 1
 	t := time.Now()
 	userid := fmt.Sprintf("%02d%02d%04d", t.Year()%100, t.Month(), userNumber)
@@ -29,8 +36,13 @@ func CreateAccount(user RegisterData) error {
 	_, err := rawSeter.Exec()
 	if err != nil {
 		mlog.Error("%v",err)
+		return err
 	}
-	return err
+	//send user a private message
+	if err := SendSystemMsg(userid, HelloMsgToNewUser); err!= nil {
+		mlog.Error("%v",err)
+	}
+	return nil
 }
 
 //insert a good to database 🍋
@@ -85,7 +97,7 @@ func AddCollectRecord(uid, gid string) error {
 	return err
 }
 
-//发出私信，更新消息表
+//private message sending
 func AddUserMessage(uid, targetid, message string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, uid, targetid, message)
@@ -222,4 +234,16 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 	}
 	Uas2.Add(uid)
 	return nil
+}
+
+
+//send a system message to user 🍖
+func SendSystemMsg(uid, msg string) error {
+	o := orm.NewOrm()
+	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, masterId, uid, msg)
+	_, err := rawSeter.Exec()
+	if err != nil {
+		mlog.Error("%v",err)
+	}
+	return err
 }

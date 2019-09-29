@@ -77,6 +77,7 @@ func (this *PersonalDataController) Post() {
 			response.Rows = len(data)
 			response.Sum = md.CountMyCoods(targetid)
 		}
+		logs.Info("%v", response)
 		md.Uas1.Add(targetid) //user see himself personal page, active+1
 
 	case "mycollect": //my collect goods data 🍉
@@ -268,7 +269,7 @@ tail:
 	this.ServeJSON()
 }
 
-//login, regeist, comfirm code, change password... 🍏🍓🍄
+//login, regeist, comfirm code, change password... 🍏🍓🍄🍖
 func (this *EntranceController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -322,15 +323,65 @@ func (this *EntranceController) Post() {
 		}
 		goto tail
 
-	case "CheckRegister":
-		tregister := md.RegisterData{}
-		Parse(postBody.Data, &tregister)
-		err := md.CreateAccount(tregister)
-		if err != nil {
-			rlog.Error("%v", err)
+	case "getcomfirmcode": //comfrim the signup message form user and return a comfrim code 🍖
+		register := md.RegisterData{}
+		if err = Parse(postBody.Data, &register); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("Parse postbody fail: %v", err)
+			goto tail
 		}
-	case "confirmcode":
-		fmt.Println("confirmcode...")
+		logs.Info(register)
+		//TODO:check the postdata message
+		if md.CountUserName(register.Name) != 0 {
+			response.StatusCode = -6
+			response.Msg = "It name have been used, please try another one"
+			goto tail
+		}
+		code := GetRandomCode()
+		logs.Info(code)
+		register.Code = code
+		if err = SendConfrimEmail(register, md.CountUser()); err != nil {
+			response.StatusCode = -7
+			response.Msg = fmt.Sprintf("Send Email fail: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+		//save the code into timer map
+		keyData := fmt.Sprintf("%v", register)
+		logs.Info(keyData)
+		if err = md.ComfirmCode.Add(keyData); err != nil {
+			response.StatusCode = -8
+			response.Msg = fmt.Sprintf("Save comfirm code fail: %v", err)
+			logs.Error(response.Msg)
+			goto tail
+		}
+
+	case "comfirmAndRegisit": //vertify the comfirm code and create a new account if pass  🍖
+		register := md.RegisterData{}
+		if err = Parse(postBody.Data, &register); err != nil {
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("Parse postbody fail: %v", err)
+			goto tail
+		}
+		//TODO:check the postdata message
+		//check the comfirm code
+		keyData := fmt.Sprintf("%v", register)
+		logs.Info(keyData)
+		if err = md.ComfirmCode.Get(keyData); err != nil {
+			rlog.Warn("%v", err)
+			response.StatusCode = -10
+			response.Msg = fmt.Sprintf("验证失败：%v", err)
+			goto tail
+		}
+		//create a new account
+		register.Password = MD5Parse(register.Password)
+		if err = md.CreateAccount(register); err != nil {
+			rlog.Error("%v", err)
+			response.StatusCode = -11
+			response.Msg = fmt.Sprintf("：( 创建账号失败：%v, 请稍后重试", err)
+			goto tail
+		}
+		rlog.Info("New account have been create! %s", register.Name)
 	}
 	response.StatusCode = 0
 	response.Msg = "Success"

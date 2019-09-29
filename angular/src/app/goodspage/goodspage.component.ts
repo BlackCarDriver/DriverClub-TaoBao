@@ -28,6 +28,7 @@ export class GoodspageComponent implements OnInit {
       this.app.showMsgBox(-1, "无法获取商品ip,请刷新试试" );
       window.history.back();
     }
+    this.server.setupHight();
     this.getItPage(this.goodid);
     this.getComment(this.goodid);
     this.getStatement();

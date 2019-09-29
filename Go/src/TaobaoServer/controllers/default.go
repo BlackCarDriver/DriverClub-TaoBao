@@ -50,11 +50,19 @@ func init() {
 		rlog.Error("%v", err)
 		panic(err)
 	} else {
+		//images upload and saving config
 		imgPath = iniconf.String("imgPath")
 		imgUrlTP = iniconf.String("imgUrlTP")
 		if maxGoodsHeadImgSizekb, err = iniconf.Int64("maxGoodsHeadImgSizekb"); err != nil {
-			panic(err)
+			logs.Error(err)
+			maxGoodsHeadImgSizekb = 40
 		}
+		//email sending server config 🍖
+		stmpHost = iniconf.String("stmpHost")
+		myemail = iniconf.String("myemail")
+		mypassword = iniconf.String("mypassword")
+		stmpPort, _ = iniconf.Int("stmpPort")
+		sendEmail, _ = iniconf.Bool("sendEmail")
 	}
 	imgPath = strings.TrimRight(imgPath, `\`)
 	random = rand.New(rand.NewSource(time.Now().UnixNano()))
@@ -466,4 +474,15 @@ func CompressImg(source string, hight uint) error {
 func newName(name string) string {
 	dir, file := filepath.Split(name)
 	return fmt.Sprintf("%s_%s", dir, file)
+}
+
+//create a comfirm code made by six number
+func GetRandomCode() string {
+	str := "0123456789"
+	bytes := []byte(str)
+	result := []byte{}
+	for i := 0; i < 6; i++ {
+		result = append(result, bytes[random.Intn(len(bytes))])
+	}
+	return string(result)
 }

@@ -1,6 +1,7 @@
 <nav class="navbar navbar-inverse" style="border-radius: 0px;">
   <a class="navbar-brand" href="https://blackcardriver.cn/">
-    <span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+    <!-- <span class="glyphicon glyphicon-globe" aria-hidden="true"></span> -->
+    <span aria-hidden="true" style="font-size: 1.2em;  position: relative; top: -3px;">🚓</span>
     BlackCarDriver.cn
   </a>
   <div class="container-fluid">
@@ -18,7 +19,7 @@
         <li><a id="singin" (click)="showsinginbox()">登录/注册</a></li>
         <li class="dropdown" id="userbox">
           <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="user-toggle">
-            <span class="glyphicon glyphicon-user">{{usermsg.name}}<span class="caret"></span></span>
+            <span class="glyphicon glyphicon-user"> {{usermsg.name}}<span class="caret"></span></span>
           </a>
           <ul class="dropdown-menu" id="shortmsg">
             <div class="user">
@@ -55,13 +56,13 @@
       <div class="login-row">
         <div class="login-center-input">
           <span class="glyphicon glyphicon-user liico"></span>
-          <input id="loginname" class="g-input inputbox" type="text" name=""  value="" placeholder="ID、用户名、学号">
+          <input id="loginname" class="g-input inputbox" type="text" name="" maxlength="20"  value="" placeholder="ID、用户名、学号">
         </div>
       </div>
       <div class="login-row">
         <div class="login-center-input">
           <span class="glyphicon glyphicon-lock liico"></span>
-          <input id="loginpassword" type="password" class="g-input inputbox"  name="" value="" placeholder="密码">
+          <input id="loginpassword" type="password" class="g-input inputbox" maxlength="20" name="" value="" placeholder="密码">
         </div>
       </div>
       <div class="login-row">
@@ -72,7 +73,7 @@
         </span>
         <button type="button" class="loginbutton" (click)="loging()">登录</button>
       </div>
-      <span class="rg-tag"><a>前往注册</a></span>
+      <span class="rg-tag"><a routerLink="/signup">前往注册</a></span>
       <span class="rg-tag"><a>忘记密码</a></span>
       <button type="button" style="display: none" id="libox-hide" data-dismiss="modal"></button>
       <div style="height:2em"></div>
