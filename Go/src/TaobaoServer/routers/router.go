@@ -21,4 +21,6 @@ func init() {
 	beego.Router("/entrance", &controllers.EntranceController{})
 	beego.Router("/smallupdate", &controllers.UpdateController{})
 	beego.Router("/deleteapi", &controllers.DeleteController{})
+	beego.Router("/public", &controllers.PublicController{})
+	beego.Router("/postform", &controllers.PostFormController{})
 }

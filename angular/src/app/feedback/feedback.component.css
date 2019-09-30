@@ -1,0 +1,73 @@
+.fbbody {
+    background-size: cover;
+    display: flow-root;
+}
+.header h1 {
+    font-size: 4em;
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.41);
+}
+.fbbox {
+    margin: 2em auto;
+    width: 40%;
+    background: #fff;
+    padding: 2em;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(50, 50, 50, 0.4);
+    font-size: 15px;
+}
+.iprow {
+    margin-top: 1em;
+}
+.fbbox input, .fbbox select, .fbbox textarea {
+    width: 100%;
+    border: 1px dotted rgba(30, 136, 229, 1);
+    border-radius: 2px;
+    padding: 0.3em;
+    font-size: 1.1em;
+}
+.fbbox textarea {
+    resize: none;
+    height: 150px;
+}
+.fbbox label {
+    font-size: 1.2em !important;
+    color: rgba(30, 136, 229, 1);
+    display: block;
+    letter-spacing: 1px;
+    width: 100%;
+}
+#submit {
+    font-size: 1.2em;
+    padding: 0.6em;
+    display: block;
+    margin: 1em auto;
+    border: none;
+    width: 95%;
+    cursor: pointer;
+    background: rgba(30, 136, 229, 1);
+    color: white;
+}
+#submit:hover {
+    background: rgb(0, 54, 102);
+}
+#selectImg {
+    padding: 4px;
+    border: 1px dotted rgba(30, 136, 229, 1);
+    width: 5.5em;
+    border-radius: 3px;
+    text-align: center;
+    display: inline-block;
+}
+#selectImg:hover {
+    background-color: rgba(30, 136, 229, 1);
+    color: white;
+    cursor: pointer;
+    text-align: center;
+}
+@media(max-width:700px) {
+    .header h1{font-size: 2em;}
+    .fbbox{width: 90%;padding: 0.1em 1em;}
+    .iprow{margin-top: 1.5em;}
+}

@@ -1,0 +1,49 @@
+<div class="fbbody window">
+
+  <div class="header" style="text-align: center;">
+    <h1>问题反馈</h1>
+  </div>
+
+  <div></div>
+  <div class="fbbox">
+    <form (ngsubmit)="commit()" id="fbform" target="nm_iframe" method="POST" enctype="multipart/form-data">
+      <div class="iprow">
+        <label>问题类型</label>
+        <select id="fbtype" class="typeselect" style="-moz-appearance: none; ">
+          <option value="其他">其他</option>
+          <option value="注册登录">注册登录</option>
+          <option value="页面显示">页面显示</option>
+          <option value="数据错误">数据错误</option>
+          <option value="商品上传">商品上传</option>
+          <option value="信息修改">信息修改</option>
+          <option value="评论私信">评论私信</option>
+        </select>
+      </div>
+
+      <div class="iprow">
+        <label>问题位置</label>
+        <input type="text" name="Name" autocomplete="off" id="fblocation" placeholder="问题出现的页面和位置" pattern=".{5,100}" maxlength="290" required/>
+      </div>
+
+      <div class="iprow">
+        <label>你的邮箱</label>
+        <input type="email" name="Email" autocomplete="off" id="fbemail" placeholder="若需要回复请留下邮箱" maxlength="50">
+      </div>
+
+      <div class="iprow">
+        <label>上传截图</label>
+        <input type="file" name="screenshot" id="inputfile" style="display: none;" accept="image/png,image/jpg">
+        <label for="inputfile" id="selectImg" class="gradually">选择文件</label>
+        <p style="display: inline-block; margin-left:1em;">{{selectFileName}}</p>
+      </div>
+
+      <div class="iprow">
+        <label>详细描述</label>
+        <textarea id="fbdescribe" placeholder="请详细描述描述出现的错误，例如发生的经过" required maxlength="480"></textarea>
+      </div>
+      <button type="submit" id="submit" class="gradually" (click)="postFeedbackForm()">提交</button>
+    </form>
+    <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+  </div>
+
+</div>

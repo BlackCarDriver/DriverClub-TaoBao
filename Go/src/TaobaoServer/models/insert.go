@@ -236,7 +236,6 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 	return nil
 }
 
-
 //send a system message to user 🍖
 func SendSystemMsg(uid, msg string) error {
 	o := orm.NewOrm()
@@ -244,6 +243,25 @@ func SendSystemMsg(uid, msg string) error {
 	_, err := rawSeter.Exec()
 	if err != nil {
 		mlog.Error("%v",err)
+		return err
 	}
-	return err
+	return nil
+}
+
+//save a feedback record 🍗
+func AddFeedback(d *FeedBackData) error {
+	var err error 
+	if d == nil {
+		err = errors.New("Receive a nil pointer")
+		mlog.Error("%v",err)
+		return nil
+	}
+	insertTP := `INSERT INTO t_feedback(user_id, fb_location, 
+		fb_type, imgurl, describes, email)VALUES (?,?,?,?,?,?)`
+	o := orm.NewOrm()
+	if _, err = o.Raw(insertTP,d.UserId, d.Location, d.Type, d.Imgurl, d.Describes, d.Email).Exec();err != nil {
+		mlog.Error("%v",err)
+		return err
+	}
+	return nil
 }

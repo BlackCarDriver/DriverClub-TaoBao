@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -288,6 +290,30 @@ func ComfirmLogin(identifi, password string) (id string, err error) {
 		}
 	}
 	return id, err
+}
+
+//get feedback data, read at most 12 rows of feedback record from database  🍗
+//note that the limit of rows number is setting in the sql command
+func GetFeedBack(data *[]FeedBackData, offset int) error {
+	if offset < 0 {
+		err := fmt.Errorf("Offset smaller than 0!")
+		mlog.Error("%v", err)
+		return err
+	}
+	o := orm.NewOrm()
+	selectTP := `SELECT id, user_id as userid,
+	 fb_location as location,
+	 fb_type as fbtype, 
+	 imgurl, describes, 
+	 fb_time as "time", 
+	 fb_status as status, 
+	 email  FROM t_feedback order by fb_time desc limit 20 offset $1;`
+	if _, err := o.Raw(selectTP, offset).QueryRows(data); err != nil {
+		mlog.Error("%v", err)
+		return err
+	}
+	logs.Info(data)
+	return nil
 }
 
 //#################### count ###########################

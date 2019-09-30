@@ -160,3 +160,25 @@ func UpdateMessageState(mid string) error {
 	}
 	return nil
 }
+
+//update the state of feedback record 🍗
+func UpdateFeedbackState(fbid int) error {
+	if fbid < 0 {
+		err := errors.New("Receive id smaller than 0")
+		mlog.Error("%v", err)
+		return err
+	}
+	o := orm.NewOrm()
+	updateTP := `update t_feedback set fb_status=1 where id=$1`
+	if res, err := o.Raw(updateTP, fbid).Exec(); err != nil {
+		mlog.Error("%v", err)
+		return err
+	}else if af, err := res.RowsAffected(); err != nil {
+		mlog.Warn("%v", err)
+	} else if af == 0 {
+		err = fmt.Errorf("No row affected when update state of message %s", fbid)
+		mlog.Error("%v",err)
+		return err
+	}
+	return nil
+}

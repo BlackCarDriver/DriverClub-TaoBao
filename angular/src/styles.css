@@ -313,7 +313,7 @@ a:hover {
     /* backgroud-color */
     --liner-bc: linear-gradient(120deg, #3193e8, #337ab7);
     /*border-color*/
-    --thin-bdc: #ccc;
+    --thin-bdc:  #b7b7b77d;;
     --min-width: 300px;
     --footer-height:190px;
 }

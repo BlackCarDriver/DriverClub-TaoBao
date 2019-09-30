@@ -31,6 +31,7 @@ var (
 	imgPath               = ""
 	imgUrlTP              = ""
 	maxGoodsHeadImgSizekb = int64(0)
+	maxFeedbackImgSizekb  = int64(200)
 )
 
 //random seed
@@ -71,6 +72,9 @@ func init() {
 type TestController struct {
 	beego.Controller
 }
+type PublicController struct {
+	beego.Controller
+}
 type HPGoodsController struct {
 	beego.Controller
 }
@@ -99,6 +103,9 @@ type UpdateController struct {
 	beego.Controller
 }
 type DeleteController struct {
+	beego.Controller
+}
+type PostFormController struct {
 	beego.Controller
 }
 
@@ -344,6 +351,150 @@ func (this *DeleteController) Post() {
 		response.Msg = fmt.Sprintf("No such api: %s", api)
 		rlog.Error("%v", response.Msg)
 	}
+tail:
+	this.Data["json"] = response
+	this.ServeJSON()
+}
+
+//get of upload static data such as feedback message  🍗
+func (this *PublicController) Post() {
+	var postBody struct {
+		Api   string      `json:"api"`
+		Token string      `json:"token"`
+		Data  interface{} `json:"data"`
+	}
+	var response struct {
+		Status int         `json:"status"`
+		Msg    string      `json:"msg"`
+		Data   interface{} `json:"data"`
+	}
+	var err error
+	//parse request protocol
+	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
+		response.Status = -1
+		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		rlog.Error("%v", response.Msg)
+		goto tail
+	}
+	//switch to different function
+	switch postBody.Api {
+	case "getfeedback": //get user feedback data
+		var data []md.FeedBackData
+		offset := 0
+		if err = Parse(postBody.Data, &offset); err != nil {
+			response.Status = -2
+			response.Msg = fmt.Sprintf("Can not get offset: %v", err)
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
+		if err = md.GetFeedBack(&data, offset); err != nil {
+			response.Status = -3
+			response.Msg = fmt.Sprintf("get feedback data fail: %v", err)
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
+		response.Data = data
+	case "setisread": //update the state of a feedback record as is read
+		fbid := 0
+		if err = Parse(postBody.Data, &fbid); err != nil {
+			response.Status = -4
+			response.Msg = fmt.Sprintf("Can not get feedback id: %v", err)
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
+		if err = md.UpdateFeedbackState(fbid); err != nil {
+			response.Status = -5
+			response.Msg = fmt.Sprintf("Update state fail: %v", err)
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
+
+	case "addfeedback": //add a feedback record
+
+	case "staticdata": //get the static data
+	default:
+		response.Status = -99
+		response.Msg = fmt.Sprintf("Unsuppose API: %s", postBody.Api)
+		rlog.Error("%v", response.Msg)
+		goto tail
+	}
+	response.Status = 0
+tail:
+	this.Data["json"] = response
+	this.ServeJSON()
+}
+
+//Receive and handle multipart from request 🍗
+func (this *PostFormController) Post() {
+	postBody := md.RequestProto{}
+	response := md.ReplyProto{}
+	api := this.GetString("api")
+	if api == "" {
+		response.StatusCode = -1
+		response.Msg = fmt.Sprintf("Can't get api from from data")
+		rlog.Error(response.Msg)
+		goto tail
+	}
+	switch api {
+	case "feedback": //User feedback, save a record into database
+		data := md.FeedBackData{}
+		//get string value from postfrom
+		data.Type = this.GetString("fb_type")
+		data.Location = this.GetString("fb_location")
+		data.Email = this.GetString("email")
+		data.UserId = this.GetString("userid")
+		data.Describes = this.GetString("describes")
+		if data.Type == "" || data.Location == "" || data.Describes == "" {
+			response.StatusCode = -2
+			response.Msg = fmt.Sprintf("Can't get type or describtion in feedback data")
+			rlog.Warn(response.Msg)
+			goto tail
+		}
+		//get images from postform
+		if f, h, err := this.GetFile("images"); err == nil {
+			//check the size of upload images
+			rlog.Info("Upload images name:%s,  size:%d", h.Filename, h.Size)
+			if h.Size > maxFeedbackImgSizekb<<10 {
+				response.StatusCode = -3
+				response.Msg = fmt.Sprintf("Images size is too larger! feedback is cancel")
+				rlog.Error(response.Msg)
+				goto tail
+			}
+			//check and change the images name
+			h.Filename, err = CheckImgName(h.Filename)
+			if err != nil {
+				response.StatusCode = -4
+				response.Msg = fmt.Sprintf("Images type not right: %v", err)
+				rlog.Error("%v", response.Msg)
+				goto tail
+			}
+			defer f.Close()
+			//save the images into dist
+			savePath := fmt.Sprintf("%s/%s", imgPath, h.Filename)
+			if err = this.SaveToFile("images", savePath); err != nil {
+				response.StatusCode = -5
+				response.Msg = fmt.Sprintf("Can not save upload iamges: %v", err)
+				rlog.Error("%v", response.Msg)
+				goto tail
+			}
+			data.Imgurl = fmt.Sprintf(imgUrlTP, h.Filename)
+		} else {
+			logs.Error(err)
+		}
+		//save the record into database
+		if err := md.AddFeedback(&data); err != nil {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("Save to database fail: %v", err)
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
+	default:
+		response.StatusCode = -99
+		response.Msg = fmt.Sprintf("Unsuppose API: %s", postBody.Api)
+		rlog.Error("%v", response.Msg)
+		goto tail
+	}
+	response.StatusCode = 0
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

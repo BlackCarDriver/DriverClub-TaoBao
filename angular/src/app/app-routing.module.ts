@@ -7,6 +7,7 @@ import { UploadgoodsComponent } from '../app/uploadgoods/uploadgoods.component';
 import { GoodspageComponent } from '../app/goodspage/goodspage.component';
 import {Personal2Component} from '../app/personal2/personal2.component';
 import {RegisterComponent} from '../app/register/register.component';
+import {FeedbackComponent} from '../app/feedback/feedback.component';
 
 
 //import { from } from 'rxjs';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'personal', component: PersonalComponent},
   { path: 'signup', component: RegisterComponent},
   { path: 'resetpassword', component: RegisterComponent},
+  { path: 'feedback' , component :FeedbackComponent},
   { path: 'personals/:uid' , component :Personal2Component},
   { path: 'goodsdetail/:gid' , component:  GoodspageComponent },
   { path: '', redirectTo: 'homepage', pathMatch: 'full' },

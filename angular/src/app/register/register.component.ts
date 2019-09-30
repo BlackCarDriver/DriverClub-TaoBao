@@ -93,6 +93,7 @@ export class RegisterComponent implements OnInit {
         return;
       }
       this.app.showMsgBox(0, "注册成功！");
+      setTimeout(function(){window.history.back()},2000);
       //TODO: goto login page
     }, err=>{this.app.cFail(err);})
   }

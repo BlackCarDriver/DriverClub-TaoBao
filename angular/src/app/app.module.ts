@@ -14,6 +14,7 @@ import { GoodspageComponent } from './goodspage/goodspage.component';
 import { HttpClientModule }    from '@angular/common/http';
 import { Personal2Component } from './personal2/personal2.component';
 import { RegisterComponent } from './register/register.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RegisterComponent } from './register/register.component';
     UploadgoodsComponent,
     GoodspageComponent,
     Personal2Component,
-    RegisterComponent
+    RegisterComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

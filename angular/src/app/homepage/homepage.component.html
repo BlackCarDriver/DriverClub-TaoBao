@@ -1,4 +1,4 @@
-<div class="container" class="main-body window">
+<div class="container main-body window">
   <div class="headrow">
     <div class="row search-row">
       <form>
@@ -90,7 +90,7 @@
   <div class="goods-area g-bg-box">
     <div class="row goodrow"><!--goods list-->
       <div class="goods-box" *ngFor="let goods of goodsarray"  [routerLink]="['/goodsdetail', goods.id ]">
-        <img class="img-thumbnail" src={{goods.headimg}}>
+        <img src={{goods.headimg}} style="border-bottom: 1px solid #ddd;">
         <div class="row">
           <p class="good-name g-sharnk">{{goods.name}}</p>
         </div>

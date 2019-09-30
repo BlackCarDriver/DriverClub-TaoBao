@@ -138,7 +138,11 @@ export class ServerService {
     var url = this.addr + "/homepage/goodstypemsg";
     return this.http.get<GoodsType[]>(url);
   }
-
+  //request for postfrom api 🍗
+  postFormApi(form:FormData){
+    var url = this.addr + "/postform";
+    return this.http.post<ReplyProto>(url, form);
+  }
   // ==========================  the following function is related to cookie ==================================  
 
   //use to make the cookie can't be undestant directly
