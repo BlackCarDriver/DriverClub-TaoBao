@@ -1,28 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomepageComponent } from '../app/homepage/homepage.component';
-import { PersonalComponent} from '../app/personal/personal.component';
-import { ChgmymsgComponent } from '../app/chgmymsg/chgmymsg.component';
-import { UploadgoodsComponent } from '../app/uploadgoods/uploadgoods.component';
-import { GoodspageComponent } from '../app/goodspage/goodspage.component';
-import {Personal2Component} from '../app/personal2/personal2.component';
-import {RegisterComponent} from '../app/register/register.component';
-import {FeedbackComponent} from '../app/feedback/feedback.component';
 
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { UploadgoodsComponent } from './components/uploadgoods/uploadgoods.component';
 
 //import { from } from 'rxjs';
 
 const routes: Routes = [ 
   { path: 'homepage', component: HomepageComponent },
-  { path: 'changemsg' , component: ChgmymsgComponent},
-  { path: 'uploadgoods' , component: UploadgoodsComponent},
-  { path: 'personal', component: PersonalComponent},
-  { path: 'signup', component: RegisterComponent},
-  { path: 'resetpassword', component: RegisterComponent},
-  { path: 'feedback' , component :FeedbackComponent},
-  { path: 'personals/:uid' , component :Personal2Component},
-  { path: 'goodsdetail/:gid' , component:  GoodspageComponent },
+  { path: 'upload' , component :UploadgoodsComponent},
+  
+  { path: 'myself',  loadChildren: () => import('./login/login.module').then(mod => mod.LoginModule) },
+  { path: 'public',  loadChildren: () => import('./public/public.module').then(mod => mod.PublicModule) },
+  { path: 'message',  loadChildren: () => import('./message/message.module').then(mod => mod.MessageModule) },
+
   { path: '', redirectTo: 'homepage', pathMatch: 'full' },
+  // { path: '**', component: HomepageComponent  },  //TODO: page not found component
 ];
 
  

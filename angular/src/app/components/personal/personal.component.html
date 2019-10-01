@@ -19,8 +19,8 @@
                         <h4 style="color: #03A9F4;">{{msg.sign}}</h4>
                     </div>
                     <div class="col-md-2 col-sm-12" style="margin-bottom: 1em;">
-                        <a class="btn btn-primary btn-sm button1" routerLink="/changemsg">修改信息</a>
-                        <a class="btn btn-info btn-sm button1" routerLink="/uploadgoods">上传商品</a>
+                        <a class="btn btn-primary btn-sm button1" routerLink="myself/changemsg">修改信息</a>
+                        <a class="btn btn-info btn-sm button1" routerLink="myself/uploadgoods">上传商品</a>
                     </div>
                 </div>
 
@@ -141,7 +141,7 @@
                                         <span class="label label-default rmlable" (click)="deleteMyGoods(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}}>
                                         <div class="gname"
-                                            [routerLink]="['/goodsdetail',
+                                            [routerLink]="['/message/goodsdetail',
                                             rows.id]">{{rows.name}}</div>
                                     </li>
                                     <div class="nodata" *ngIf="show_no_goods"><p>暂时未有上传的商品</p></div>
@@ -168,7 +168,7 @@
                                     <li class="goods-box" style="height: unset;" *ngFor="let rows of mycollectlist">
                                         <span class="label label-default rmlable" (click)="cancelCollect(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}} alt="" class="goods-img">
-                                        <div class="gname g-sharnk"  [routerLink]="['/goodsdetail', rows.id]">{{rows.name}}
+                                        <div class="gname g-sharnk"  [routerLink]="['/message/goodsdetail', rows.id]">{{rows.name}}
                                             <span class="price">￥{{rows.price}}</span> 
                                         </div>
                                         <div class="titlebox g-sharnk">{{rows.title}}</div>
@@ -205,11 +205,11 @@
                                 
                                 <div class="row mymsg" *ngFor="let rows of mymessagelist; let i = index">
                                     <div class="msg-img-box">
-                                        <img  [routerLink]="['/personals',rows.uid ]" src={{rows.headimg}}>
+                                        <img  [routerLink]="['/message/personals',rows.uid ]" src={{rows.headimg}}>
                                     </div>
                                     <div class="msg-text-box" (click)="setIsRead(i, rows.mid)">
                                         <div class="row msg-head" [ngClass]="{'unread': rows.state==0}">
-                                            <div [routerLink]="['/personals',rows.uid ]" class="tad" style="color: #337ab7;"> 
+                                            <div [routerLink]="['/message/personals',rows.uid ]" class="tad" style="color: #337ab7;"> 
                                                 <span class="glyphicon glyphicon-user"></span>
                                                 {{rows.name}}
                                             </div>
@@ -226,7 +226,7 @@
                                             <span class="glyphicon glyphicon-trash"></span>
                                     </span>
                                     <span class="rpbtn label label-default">
-                                        <a style="color: white;" [routerLink]="['/personals',rows.uid ]">前往回复</a>
+                                        <a style="color: white;" [routerLink]="['/message/personals',rows.uid ]">前往回复</a>
                                     </span>
                                 </div>
                                 <div class="nodata" *ngIf="show_no_message"><p>暂时未有消息</p></div>
@@ -265,7 +265,7 @@
                     <div class="row">
                         <ul class="headimg-list">
                             <li class="headimg" *ngFor="let rows of icare">
-                                <a [routerLink]="[ '/personals', rows.id ]"><img src={{rows.headimg}}  title={{rows.name}}></a>
+                                <a [routerLink]="[ '/message/personals', rows.id ]"><img src={{rows.headimg}}  title={{rows.name}}></a>
                             </li>
                         </ul>
                     </div>
@@ -278,7 +278,7 @@
                     <div class="row">
                         <ul class="headimg-list">
                             <li class="headimg" *ngFor="let rows of carei">
-                                <a  [routerLink]="[ '/personals', rows.id ]"><img src={{rows.headimg}}
+                                <a  [routerLink]="[ '/message/personals', rows.id ]"><img src={{rows.headimg}}
                                         title={{rows.name}}></a>
                             </li>
                         </ul>
@@ -294,7 +294,7 @@
                 <div class="right-child rank-list">
                     <h3>用户排名榜</h3>
                     <ul *ngFor="let rows of hero">
-                        <li [routerLink]="['/personals', rows.userid ]" class="g-sharnk">
+                        <li [routerLink]="['/message/personals', rows.userid ]" class="g-sharnk">
                             <span>{{rows.rank}}</span>
                             <p>{{rows.name}}</p>
                         </li>

@@ -26,7 +26,7 @@
               "src/styles.css"
             ],
             "scripts": [
-              "src/plugin/jquery-3.2.1.slim.min.js", 
+              "src/assets/jquery-3.2.1.slim.min.js", 
               "src/assets/bootstrap.min.js"
             ]
           },

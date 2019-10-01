@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service';
-import { LoginData, MyStatus, RequertResult, RequestProto } from '../struct';
-import { AppComponent } from '../app.component';
+import { ServerService } from '../../server.service';
+import { LoginData, MyStatus, RequestProto } from '../../struct';
+import { AppComponent } from '../../app.component';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 // import * as $ from 'jquery';
 declare let $: any;
 

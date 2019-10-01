@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service';
-import { GoodsType, GoodSubType, UploadGoods } from '../struct';
-import { AppComponent } from '../app.component';
+import { ServerService } from '../../server.service';
+import { GoodsType, GoodSubType, UploadGoods } from '../../struct';
+import { AppComponent } from '../../app.component';
 
-import * as wangEditor from '../../assets/wangEditor.min.js';
+import * as wangEditor from '../../../assets/wangEditor.min.js';
 
 declare var $: any;
 
@@ -33,7 +33,7 @@ export class UploadgoodsComponent implements OnInit {
   newtagname = "";
   godostext = "";
 
-  constructor(
+  constructor( 
     private server: ServerService,
     private app: AppComponent,
   ) { }

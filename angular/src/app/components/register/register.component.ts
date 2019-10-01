@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service';
-import { AppComponent } from '../app.component';
-import { RequestProto } from '../struct';
+import { ServerService } from '../../server.service';
+import { AppComponent } from '../../app.component';
+import { RequestProto } from '../../struct';
 
 @Component({
   selector: 'app-register',

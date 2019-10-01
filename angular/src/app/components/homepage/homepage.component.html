@@ -89,7 +89,7 @@
 
   <div class="goods-area g-bg-box">
     <div class="row goodrow"><!--goods list-->
-      <div class="goods-box" *ngFor="let goods of goodsarray"  [routerLink]="['/goodsdetail', goods.id ]">
+      <div class="goods-box" *ngFor="let goods of goodsarray"  [routerLink]="['/message/goodsdetail', goods.id ]">
         <img src={{goods.headimg}} style="border-bottom: 1px solid #ddd;">
         <div class="row">
           <p class="good-name g-sharnk">{{goods.name}}</p>

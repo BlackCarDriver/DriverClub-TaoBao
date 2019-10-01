@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service';
-import { PersonalSetting, RequestProto } from '../struct';
-import { AppComponent } from '../app.component';
+import { ServerService } from '../../server.service';
+import { PersonalSetting, RequestProto } from '../../struct';
+import { AppComponent } from '../../app.component';
 
 declare var $: any;
 

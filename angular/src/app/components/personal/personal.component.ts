@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserMessage, GoodsShort, MyMessage, Rank, User, RequestProto } from '../struct';
-import { ServerService } from '../server.service';
-import { AppComponent } from '../app.component';
+import { UserMessage, GoodsShort, MyMessage, Rank, User, RequestProto } from '../../struct';
+import { ServerService } from '../../server.service';
+import { AppComponent } from '../../app.component';
 import { post } from 'selenium-webdriver/http';
 declare let $: any;
 

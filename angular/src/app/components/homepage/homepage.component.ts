@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from '../server.service';
-import { AppComponent } from '../app.component';
-import {  HomePageGoods,GoodsType,GoodSubType } from '../struct';
+import { ServerService } from '../../server.service';
+import { AppComponent } from '../../app.component';
+import {  HomePageGoods,GoodsType,GoodSubType } from '../../struct';
 
 // Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 // import * as bootstrap from 'bootstrap';

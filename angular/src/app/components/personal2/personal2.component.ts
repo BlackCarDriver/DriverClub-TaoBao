@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UserMessage, RequestProto } from '../struct';
-import { ServerService } from '../server.service';
-import { AppComponent } from '../app.component';
+import { UserMessage, RequestProto } from '../../struct';
+import { ServerService } from '../../server.service';
+import { AppComponent } from '../../app.component';
 
 @Component({
   selector: 'app-personal2',
