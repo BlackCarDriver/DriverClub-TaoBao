@@ -12,6 +12,7 @@ export class ServerService {
   //global variable 🍈
   userid = "";    //this usrid only can be true usre id
   username = "";
+  token = "";
   homepage_goods_perpage = 10;
   // private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
@@ -63,6 +64,7 @@ export class ServerService {
     let newUrl = imgUrl.slice(0,id+1) + "_" + imgUrl.slice(id+1);
     return newUrl;
   }
+
   //======================================= large  interface =============================================================
 
   //get all kind of data in goodspage 🍌
@@ -70,13 +72,15 @@ export class ServerService {
     var url = this.addr + "/goodsdeta";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //request to update some simple record such as collect number 🍍
+  //request to update some simple record such as collect number 🍍🍔
   SmallUpdate(request: RequestProto) {
+    request.token = this.token;
     var url = this.addr + "/smallupdate";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //request to update some complex message such as profile 🍍
+  //request to update some complex message such as profile 🍍🍔
   UpdateMessage(request: RequestProto) {
+    request.token = this.token;
     var url = this.addr + "/update";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
@@ -94,13 +98,16 @@ export class ServerService {
     var url = this.addr + "/personal/data";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //a little different from GetMyMsg 🍋
+  //a little different from GetMyMsg 🍋🍔
   GetCredentMsg(request: RequestProto) {
+    request.token = this.token;
     var url = this.addr + "/personal/data";
     return this.http.post<ReplyProto>(url, JSON.stringify(request), { withCredentials: true });
   }
-  //delete something  🍑
+  //delete something  🍑🍔
+  //request send to DeleteController
   DeleteMyData(request: RequestProto) {
+    request.token = this.token;
     var url = this.addr + "/deleteapi";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
@@ -118,11 +125,13 @@ export class ServerService {
     var url = this.addr + "/homepage/goodsdata";
     return this.http.post<ReplyProto>(url, JSON.stringify(postdata));
   }
-  //upload a good data 🍋
+  //upload a good data 🍋🍔
+  //request send to UploadGoodsController
   UploadGoodsData(data: UploadGoods) {
     var url = this.addr + "/upload/newgoods";
     let postdata: RequestProto = {
       api: "uploadgoodsdata",
+      token: this.token,
       data: JSON.stringify(data),
     };
     return this.http.post<ReplyProto>(url, JSON.stringify(postdata));
@@ -153,7 +162,6 @@ export class ServerService {
     }
     return escape(c);
   }
-
   //restore the string that after encryption 🍄
   decode(code: string) {
     code = unescape(code);

@@ -8,7 +8,7 @@ import (
 	"github.com/astaxie/beego/logs"
 )
 
-//return homepage goods list data 🍋🔥🍇🌽
+//return homepage goods list data 🍋🍇🌽
 func (this *HPGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -70,7 +70,7 @@ tail:
 	this.ServeJSON()
 }
 
-//get all kind of data in goodspage  🍌🔥🌽
+//get all kind of data in goodspage  🍌🌽
 //response for GetGoodsDeta() in fontend
 func (this *GoodsDetailController) Post() {
 	postBody := md.RequestProto{}
@@ -175,12 +175,13 @@ tail:
 	this.ServeJSON()
 }
 
-//user upload a goods 🍋🔥
+//user upload a goods 🍋🍔
 func (this *UploadGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
 	var goodsdata md.UploadGoodsData
 	var err error
+	var token string
 	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
@@ -205,6 +206,13 @@ func (this *UploadGoodsController) Post() {
 		rlog.Error(response.Msg)
 		goto tail
 	}
+	//check token
+	if token == "" || !CheckToken(goodsdata.UserId, token) {
+		rlog.Warn("User %s request upload goods with worng token", goodsdata.UserId)
+		response.StatusCode = -1000
+		response.Msg = "Token错误或过期,请重新登录！"
+		goto tail
+	}
 	//save to database
 	if err = md.CreateGoods(goodsdata); err != nil {
 		response.StatusCode = -3
@@ -221,7 +229,7 @@ tail:
 }
 
 //note that it is GET method
-//return goods type list and tag list 🍋🔥
+//return goods type list and tag list 🍋
 func (this *GoodsTypeController) Get() {
 	this.Data["json"] = &md.GoodsTypeTempDate
 	this.ServeJSON()

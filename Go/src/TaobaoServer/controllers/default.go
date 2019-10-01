@@ -58,6 +58,16 @@ func init() {
 			logs.Error(err)
 			maxGoodsHeadImgSizekb = 40
 		}
+		//get toeken key
+		tokenkey = iniconf.String("tokenkey")
+		if tokenkey == "" {
+			err = errors.New("Can't get tokenkey from config file")
+			logs.Error(err)
+			panic(err)
+		} else {
+			secretKey = []byte(tokenkey)
+		}
+
 		//email sending server config 🍖
 		stmpHost = iniconf.String("stmpHost")
 		myemail = iniconf.String("myemail")
@@ -178,15 +188,15 @@ tail:
 	this.ServeJSON()
 }
 
-//small update all kind of record such as like numbers, collect numbers 🍍
+//small update all kind of record such as like numbers, collect numbers 🍍🍔
 //response for SmallUpdate() in fontend
-//smallupdate
+//all request need token here
 func (this *UpdateController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
 	response.StatusCode = 0
 	var err error
-	var api, targetid, userid string
+	var api, targetid, userid, token string
 	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
@@ -197,6 +207,7 @@ func (this *UpdateController) Post() {
 	api = postBody.Api
 	userid = postBody.UserId
 	targetid = postBody.TargetId
+	token = postBody.Token
 	//check whether the data is complete
 	if api == "" || targetid == "" {
 		response.StatusCode = -2
@@ -204,8 +215,15 @@ func (this *UpdateController) Post() {
 		rlog.Error("%v", response.Msg)
 		goto tail
 	}
+	//check token
+	if token == "" || !CheckToken(userid, token) {
+		rlog.Warn("User %s request update %s with worng token", userid, api)
+		response.StatusCode = -1000
+		response.Msg = "Token错误或过期,请重新登录！"
+		goto tail
+	}
 	switch api {
-	case "likegoods": //add like to a goods 🔥
+	case "likegoods": //add like to a goods
 		err = md.AddGoodsLike(userid, targetid)
 		if err != nil {
 			response.StatusCode = -3
@@ -214,7 +232,7 @@ func (this *UpdateController) Post() {
 		}
 		goto tail
 
-	case "sendmessage": //send a private message to goods owner 🔥
+	case "sendmessage": //send a private message to goods owner
 		appendData := postBody.Data.(map[string]interface{})
 		message := ""
 		if message = appendData["message"].(string); message == "" {
@@ -230,7 +248,7 @@ func (this *UpdateController) Post() {
 		}
 		goto tail
 
-	case "addcollect": //add a goods to favorite	🔥
+	case "addcollect": //add a goods to favorite
 		if err = md.AddGoodsCollect(userid, targetid); err != nil {
 			response.StatusCode = -6
 			response.Msg = fmt.Sprintf("AddGoodsCollect() fail: %v", err)
@@ -239,7 +257,7 @@ func (this *UpdateController) Post() {
 		md.Uas2.Add(userid) //collect a goods, credits +1
 		goto tail
 
-	case "addcomment": // reviews a goods 🔥
+	case "addcomment": // reviews a goods
 		appendData := postBody.Data.(map[string]interface{})
 		comment := ""
 		if comment = appendData["comment"].(string); comment == "" {
@@ -288,14 +306,15 @@ tail:
 	this.ServeJSON()
 }
 
-//delete data such as collect's goods and user and receive message 🍑
+//delete data such as collect's goods and user and receive message 🍑🍔
+//all operation here neeed to vertify with token
 //DeleteMyData()
 func (this *DeleteController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
 	response.StatusCode = 0
 	var err error
-	var api, targetid, userid string
+	var api, targetid, userid, token string
 	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
@@ -306,11 +325,19 @@ func (this *DeleteController) Post() {
 	api = postBody.Api
 	userid = postBody.UserId
 	targetid = postBody.TargetId
+	token = postBody.Token
 	//check whether the data is complete
 	if api == "" || targetid == "" || userid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get targetid, userid, or api from request data")
 		rlog.Error("%v", response.Msg)
+		goto tail
+	}
+	//check token
+	if token == "" || !CheckToken(userid, token) {
+		rlog.Warn("User %s request delete %s with worng token", userid, api)
+		response.StatusCode = -1000
+		response.Msg = "Token错误或过期,请重新登录！"
 		goto tail
 	}
 	switch api {
@@ -543,9 +570,11 @@ func Parse(data interface{}, container interface{}) error {
 		rlog.Error("%v", err)
 		return err
 	}
-	err = json.Unmarshal(tdata, container)
-	rlog.Error("%v", err)
-	return err
+	if err = json.Unmarshal(tdata, container); err != nil {
+		rlog.Error("%v", err)
+		return err
+	}
+	return nil
 }
 
 //md5 encrypt

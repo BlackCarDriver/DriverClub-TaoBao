@@ -256,7 +256,7 @@ func AddFeedback(d *FeedBackData) error {
 		mlog.Error("%v",err)
 		return nil
 	}
-	insertTP := `INSERT INTO t_feedback(user_id, fb_location, 
+	insertTP := `insert into t_feedback(user_id, fb_location, 
 		fb_type, imgurl, describes, email)VALUES (?,?,?,?,?,?)`
 	o := orm.NewOrm()
 	if _, err = o.Raw(insertTP,d.UserId, d.Location, d.Type, d.Imgurl, d.Describes, d.Email).Exec();err != nil {

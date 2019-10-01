@@ -1,8 +1,4 @@
-2019/09/26 00:06:04.501 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:07:36.221 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:07:44.988 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:09:38.169 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:10:40.200 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:10:55.540 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:14:11.561 [I] [default.go:45]  Router logs init success!
-2019/09/26 00:15:13.411 [I] [default.go:45]  Router logs init success!
+2019/10/01 15:48:12.853 [I] [default.go:47]  Router logs init success!
+2019/10/01 15:50:35.968 [I] [default.go:47]  Router logs init success!
+2019/10/01 15:50:50.219 [I] [default.go:47]  Router logs init success!
+2019/10/01 15:51:08.477 [W] [default.go:220]  User 19070010 request update likegoods with worng token

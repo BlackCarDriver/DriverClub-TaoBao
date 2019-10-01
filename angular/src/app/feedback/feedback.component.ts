@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { ServerService } from '../server.service';
-import { RequestProto } from '../struct';
 
 @Component({
   selector: 'app-feedback',

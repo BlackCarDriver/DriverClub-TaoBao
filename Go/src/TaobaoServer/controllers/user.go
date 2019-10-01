@@ -77,7 +77,6 @@ func (this *PersonalDataController) Post() {
 			response.Rows = len(data)
 			response.Sum = md.CountMyCoods(targetid)
 		}
-		logs.Info("%v", response)
 		md.Uas1.Add(targetid) //user see himself personal page, active+1
 
 	case "mycollect": //my collect goods data 🍉
@@ -114,9 +113,23 @@ func (this *PersonalDataController) Post() {
 			response.Data = data
 		}
 
-	case "naving": //get naving data
+	case "naving": //get naving data 🍔
 		var data md.MyStatus
-		if err = md.GetNavingMsg(targetid, &data); err != nil {
+		userid := targetid
+		//check user token
+		if postBody.Token == "" {
+			rlog.Error("User %s request naving with null token", userid)
+			response.StatusCode = -1000
+			response.Msg = "获取Token失败,请重新登录"
+			goto tail
+		} else if !CheckToken(userid, postBody.Token) {
+			rlog.Warn("User %s request naving with worng token", userid)
+			response.StatusCode = -1000
+			response.Msg = "Token错误或过期,请重新登录！"
+			goto tail
+		}
+		//get and return naving data
+		if err = md.GetNavingMsg(userid, &data); err != nil {
 			response.StatusCode = -7
 			response.Msg = fmt.Sprintf("Can't get naving data: %v ", err)
 			rlog.Error(response.Msg)
@@ -182,13 +195,14 @@ tail:
 	this.ServeJSON()
 }
 
-//update personal message, such as base information, connect wags. 🍍
+//update personal message, such as base information, connect wags. 🍍🍔
 //server for UpdateMessage() in frontend
+//all function here need to vertiry with token
 func (this *UpdataMsgController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
 	response.StatusCode = 0
-	var api, userid string
+	var api, userid, token string
 	var err error
 	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
@@ -199,11 +213,19 @@ func (this *UpdataMsgController) Post() {
 	}
 	api = postBody.Api
 	userid = postBody.UserId
+	token = postBody.Token
 	//check that the data is complete
 	if api == "" || userid == "" {
 		response.StatusCode = -2
 		response.Msg = fmt.Sprintf("Can't get api or userid from request data")
 		rlog.Error(response.Msg)
+		goto tail
+	}
+	//check token
+	if token == "" || !CheckToken(userid, token) {
+		rlog.Warn("User %s request update %s with worng token", userid, api)
+		response.StatusCode = -1000
+		response.Msg = "Token错误或过期,请重新登录！"
 		goto tail
 	}
 	//catch the unexpect panic
@@ -292,16 +314,15 @@ func (this *EntranceController) Post() {
 		goto tail
 	}
 	switch api {
-	case "login": //login, note that the target id can be true id or name 🍓🍄
+	case "login": //login, note that the target id can be true id or name 🍓🍄🍔
 		//TODO: check to format of password
 		password := MD5Parse(postBody.Data.(string))
-		rlog.Info(password)
 		//TODO: check if the identifi is student number and vertify it
 
 		//check the account from database and get true id
 		tid, err := md.ComfirmLogin(targetid, password)
 		if err != nil {
-			rlog.Error("%v", err)
+			rlog.Warn("%v", err)
 			response.StatusCode = -3
 			if err == md.NoResultErr {
 				response.Msg = "没有此账号或密码错误"
@@ -320,6 +341,13 @@ func (this *EntranceController) Post() {
 		} else {
 			data.ID = tid
 			response.Data = data
+			if token := CreateToken(tid); token == "" {
+				response.StatusCode = -5
+				response.Msg = "Sorry, Create token fail!"
+				rlog.Error(response.Msg)
+			} else {
+				response.Msg = token
+			}
 		}
 		goto tail
 

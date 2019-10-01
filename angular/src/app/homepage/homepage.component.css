@@ -219,10 +219,12 @@
         width: 3.7em;
     }
     .good-name {
-        margin: 0;
-        position: absolute;
-        top: 4px;
-        left: 150px;
+        height: 1.3em;
+        margin: 0px 1em;
+        font-size: 1.2em;
+        color: #3f7ab7;
+        font-family: Monospace;
+        font-weight: 600;
     }
     .good-title {
         position: absolute;

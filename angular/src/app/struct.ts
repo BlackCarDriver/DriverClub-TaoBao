@@ -8,6 +8,7 @@ export class RequestProto {
     tag?: string;        //used as a key to get cache    
     cachetime?: number;  //how many second save in cache
     cachekey?:string;
+    token?:string;
     data?: any;
     offset?: number;
     limit?: number;

@@ -54,7 +54,7 @@ export class NavigComponent implements OnInit {
       $('#userbox').attr("style", "display:none;");
     }
   }
-    //hide login box
+  //hide login box
   hidelib(){
       this.server.getEle("libox-hide").click();
   }
@@ -62,7 +62,6 @@ export class NavigComponent implements OnInit {
   initNav(){
     $(".navbar-inverse").mouseleave(function(){
        $('#navhide').collapse('hide');
-      //  alert("hdfddf");
       });
   }
   //=========================== safety verification ===================== 
@@ -91,12 +90,13 @@ export class NavigComponent implements OnInit {
   }
 
   //========================= request function =====================
-  //load userid from cookie if it is not empty then  🍋🍇🍓🍄
+  //load userid from cookie if it is not empty then  🍋🍇🍓🍄🍔
   //select the style of nav according to login history
   setstate() {
     let userid = this.server.getCookie("ui");
     if (userid!="") {
       this.server.userid = userid;
+      this.server.token = this.server.getCookie("tk");
       let postdata: RequestProto = {
         api: "naving",
         targetid: userid,
@@ -107,8 +107,14 @@ export class NavigComponent implements OnInit {
         if (result.statuscode == 0) {
           this.usermsg = result.data;
           this.server.username = this.usermsg.name;
-          this.showStat(true);  //show user message in naving bar
-        } else {
+          this.showStat(true); 
+        } else if(result.statuscode==-1000){  //token was reject
+          this.app.showMsgBox(-1,result.msg);
+          this.server.clearAllCookie();
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }else{
           this.app.showMsgBox(-1, "获取登录数据失败,请稍后重试：" + result.msg);
         }
       }, error => { this.app.showMsgBox(-1, "GetMymsg fail:" + error) });
@@ -141,6 +147,7 @@ export class NavigComponent implements OnInit {
       this.server.userid = this.usermsg.id;
       console.log(this.server.userid);
       this.server.username = this.usermsg.name;
+      this.server.setCookie("tk", result.msg);
       this.server.setCookie("un", this.usermsg.name);
       this.server.setCookie("up",this.lidata.password);
       this.server.setCookie("ui",this.server.userid);

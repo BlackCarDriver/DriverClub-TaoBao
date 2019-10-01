@@ -110,6 +110,7 @@ a:hover {
     font-size: 1.1em;
     overflow: hidden;
     height: 286px;
+    background-color: #f5f5dc75;
 }
 
 .goods-box:hover {
