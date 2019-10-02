@@ -14,9 +14,9 @@ export class ServerService {
   username = "";
   token = "";
   homepage_goods_perpage = 10;
-  // private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  private addr: string = "/localserver";
+  // private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }
@@ -205,8 +205,8 @@ export class ServerService {
 
   //set up window height 🍖
   setupHight(){
-    var hight = $(window).height();
-    $(".window").css("min-height", hight + "px");
+  //  var hight = $(window).height();
+    //$(".window").css("min-height", hight-40 + "px");
   }
 
   //============ following function is relate to input checking ===========

@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.model = this.server.LastSection();
-    this.server.setupHight();
   }
 
   //send the input message to server and get a comfirm code🍖

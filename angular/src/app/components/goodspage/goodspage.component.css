@@ -1,58 +1,79 @@
-.main-body {
-    border: 1px solid var(--thin-bdc);
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 20px;
-    color: #6c6c6c;
+.midbox {
+    width: 80%;
+    margin: 0em auto;
 }
+
 .textpage {
     border-left-width: 5px;
     border-left-color: #5bc0de;
 }
+
 .gp-head {
     border-radius: 4px;
-    padding: 3px;
+    padding: 5px;
     margin-bottom: 20px;
 }
 
 .gp-img {
-    padding: 0px;
+    padding: 3px;
     height: 300px;
-    border-right: 2px solid #eaeaea;
+    background-color: #eee;
+    text-align: center;
 }
-.gp-img img{
+
+.gp-img img {
     width: auto;
     height: 100%;
 }
 
 .gp-mid {
-    padding: 1em;
+    padding: 0 1em;
 }
+
 .gp-right {
     margin-top: 10px;
 }
-.ptlable{
+
+.ptlable {
     padding: 10px 20px;
     border-radius: 4px;
 }
+
 .gp-mid-name {
     font-size: 2em;
     font-weight: bold;
+    background-color: #c0ffbc;
+    color: #076606;
 }
+
 .gp-mid-name::before {
     content: "名称： ";
     font-size: 14px;
 }
+
 .gp-mid-price {
     background-color: #ffe4e4;
     color: #ff554d;
     font-size: 2em;
     font-weight: 600;
 }
-.gp-mid-price::before{
+
+.gp-mid-price::before {
     content: "转让价：￥ ";
     font-size: 14px;
     font-weight: 500;
+}
+
+.gbbtton{
+    font-weight: 600;
+    font-family: Monospace;
+    border: none;
+    border-radius: 5px;
+    background-color: #17bcca;
+    color: white;
+}
+.gbbtton:hover{
+    color: #0e909b;
 }
 
 .gp-mid-desc {
@@ -61,45 +82,55 @@
     color: #0e909b;
     margin-top: 1em;
 }
-.gp-mid-desc::before{
+
+.gp-mid-desc::before {
     content: "标题： ";
     font-size: 12px;
 }
+
 .pg-mid-butrow {
     width: 100%;
     text-align: center;
-    margin-top: 1em;
+    margin: 0.3em;
 }
+
 .pg-mid-butrow button {
-    margin: 0px 0.5em;
+    margin: 0.5em;
     padding: 6px 10px;
 }
-.gp-mid-lbrow{
-    height: 2em; 
+
+.gp-mid-lbrow {
+    padding: 1em 0em;
 }
+
 .label {
     padding: 4px 6px;
     margin: 5px;
     font-size: 0.9em;
 }
+
 .nopadbtm {
     margin-bottom: 0px;
 }
-.gmag{
+
+.gmag {
     display: inline;
     font-size: 1.1em;
     color: #2f8199;
     font-weight: bold;
 }
-.list-group-item{
-    padding: 8px 10px; 
+
+.list-group-item {
+    padding: 8px 10px;
 }
+
 .send-text-box {
     width: 400px;
     height: 200px;
     padding: 6px;
     background-color: #d3dde6;
     margin: 5em auto;
+    text-align: center;
 }
 
 .send-text-box textarea {
@@ -109,20 +140,23 @@
 .send-text-box button {
     margin: 3px 1em;
 }
-.showbox{
+
+.showbox {
     overflow: hidden;
     border: 1px solid var(--thin-bdc);
     padding: 5px;
     border-radius: 5px;
 }
-.showbox img{
+
+.showbox img {
     width: 100% !important;
     height: auto !important;
 }
+
 .page-header {
     border-bottom: 1px solid #dbd4d4;
-    margin: 10px;
-    padding: 2px;
+    margin: 0.5em 0em;
+    padding: 5px;
     font-size: 2em;
 }
 
@@ -132,12 +166,14 @@
     border-bottom: 1px solid #dee7f0;
     padding: 2px;
 }
-.cm-head{
+
+.cm-head {
     height: 100%;
     float: left;
     width: 50px;
 }
-.msgbody{
+
+.msgbody {
     padding-left: 60px;
     margin-left: -50px;
     float: left;
@@ -145,7 +181,8 @@
     width: 100%;
     line-break: anywhere;
 }
-.userhead{
+
+.userhead {
     width: 50px;
     height: 50px;
     border-radius: 50px;
@@ -209,25 +246,33 @@
 }
 
 /* 🍅 */
+
 @media screen and (max-width:600px) {
-    .gp-head{
-        margin: 1em;
+    .gp-head {
+        margin: 0em;
     }
-    .gp-img img{
+    .gp-img img {
         width: 100%;
-        max-height:100% ;
+        max-height: 100%;
     }
-    .showbox{
+    .pg-mid-butrow{
+        margin: 0.5em 0.2em;
+    }
+    .showbox {
         overflow: scroll;
     }
     .com-time {
         font-size: 0.8em;
     }
-    .textpage{
-        margin: 3em 1em;
+    .textpage {
+        margin: 1em 0em;
         border-left-width: 0px;
     }
-    .send-text-box{
+    .send-text-box {
         width: 90%;
     }
+    .midbox{
+        width: 100%;
+    }
+    .gp-mid-name{font-size: 1.4em;}
 }

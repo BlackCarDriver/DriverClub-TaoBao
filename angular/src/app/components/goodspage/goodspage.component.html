@@ -1,93 +1,92 @@
-<div class="window">
-  <div class="container"><!--路径导航-->
-    <div class="row path">
-        <ol class="breadcrumb" style="margin: 0%;">
-            <li><a routerLink="/homepage">交易区</a></li>
-            <li class="active">商品{{goodid}}</li>
-        </ol>
-    </div>
-  
-  </div>
-  
-  <div class="container gp-head g-bg-box">
-    <div class="col-md-4 col-sm-12 gp-img"><img src={{goodsdt.headimg}}
-        alt="head-image of goods"></div>
-    <div class="col-md-5 col-sm-12 gp-mid">
-      <h4 class="gp-mid-name">{{goodsdt.name}}</h4>
-      <div class="gp-mid-lbrow">
-        <span class="label label-primary">类别：{{goodsdt.type}}</span>
-        <span class="label label-primary">标签：{{goodsdt.tag}}</span>
-      </div>
-      <h4 class="gp-mid-price ptlable g-sharnk">{{goodsdt.price}}</h4>
-      <div class="gp-mid-desc ptlable">
-        {{goodsdt.title}}
-      </div>
-      <div class="pg-mid-butrow">
-        <button type="button" class="btn btn-default btn-info" (click)="collect()" id="collect-btn">
-          <span class="glyphicon glyphicon-heart"></span>{{collectbtnshow}}</button>
-        <button type="button" class="btn btn-default btn-info" (click)="likeGoods()" id="like-btn">
-          <span class="glyphicon glyphicon-thumbs-up"></span>{{likebtnshow}}</button>
-        <button type="button" class="btn btn-default btn-info" data-toggle="modal"
-          data-target="#sendbox">
-          <span class="glyphicon glyphicon-comment"></span> 私聊
-        </button>
-        <!--模态框-->
-        <div class="modal fade" id="sendbox" tabindex="-1" role="dialog"
-          aria-labelledby="mySmallModalLabel">
-          <div class="modal-dialog modal-sm" role="document">
-            <div class="modal-content send-text-box">
-              <textarea id="messagesender" type="text" class="form-control"
-                placeholder="这里输入你想发送的信息..."></textarea>
-              <button type="button" class="btn btn-info" (click)="sendMessage()">私聊</button>
-              <button type="button" class="btn btn-info" data-dismiss="modal" id="sendcancel">取消</button>
-            </div>
+<div class="main-body">
+  <div class="midbox">
+
+        <div class="row path">
+            <ol class="breadcrumb" style="margin: 0%;">
+                <li><a routerLink="/homepage">交易区</a></li>
+                <li class="active">商品{{goodid}}</li>
+            </ol>
+        </div>
+      
+      <div class="container gp-head g-bg-box">
+        <div class="col-md-4 col-sm-12 gp-img"><img src={{goodsdt.headimg}}
+            alt="head-image of goods"></div>
+        <div class="col-md-5 col-sm-12 gp-mid">
+          <h4 class="gp-mid-name ptlable">{{goodsdt.name}}</h4>
+          <h4 class="gp-mid-price ptlable g-sharnk">{{goodsdt.price}}</h4>
+          <div class="gp-mid-desc ptlable">{{goodsdt.title}} </div>
+          <div class="gp-mid-lbrow">
+              <span class="label label-primary">类别：{{goodsdt.type}}</span>
+              <span class="label label-primary">标签：{{goodsdt.tag}}</span>
+          </div>
+          <div class="pg-mid-butrow">
+            <button type="button" class="gbbtton" (click)="collect()" id="collect-btn">
+              <span class="glyphicon glyphicon-heart"></span>{{collectbtnshow}}</button>
+            <button type="button" class="gbbtton" (click)="likeGoods()" id="like-btn">
+              <span class="glyphicon glyphicon-thumbs-up"></span>{{likebtnshow}}</button>
+            <button type="button" class="gbbtton" data-toggle="modal"
+              data-target="#sendbox">
+              <span class="glyphicon glyphicon-comment"></span> 私聊
+            </button>
+          </div>
+      
+        </div>
+        <div class="col-md-3 col-sm-12 gp-right">
+          <div class="list-group">
+            <a class="list-group-item disabled"><span class="glyphicon
+                glyphicon-pushpin"></span> 更多信息 </a>
+            <a class="list-group-item g-sharnk" [routerLink]="['/message/personals', goodsdt.userid ]">上传作者：<p class="gmag">{{goodsdt.username}}</p></a>
+            <a class="list-group-item g-sharnk">上传时间：<p class="gmag">{{goodsdt.time |
+                date:'yyyy-MM-dd hh:mm'}}</p></a>
+            <a class="list-group-item g-sharnk">浏览次数：<p class="gmag">{{goodsdt.visit}}</p></a>
+            <a class="list-group-item g-sharnk">点赞次数：<p class="gmag">{{goodsdt.like}}</p></a>
+            <a class="list-group-item g-sharnk">收藏次数：<p class="gmag">{{goodsdt.collect}}</p></a>
+            <a class="list-group-item g-sharnk">评论数量：<p class="gmag">{{goodsdt.talk}}</p></a>
           </div>
         </div>
       </div>
-  
-    </div>
-    <div class="col-md-3 col-sm-12 gp-right">
-      <div class="list-group">
-        <a class="list-group-item disabled"><span class="glyphicon
-            glyphicon-pushpin"></span> 更多信息 </a>
-        <a class="list-group-item g-sharnk" [routerLink]="['/message/personals', goodsdt.userid ]">上传作者：<p class="gmag">{{goodsdt.username}}</p></a>
-        <a class="list-group-item g-sharnk">上传时间：<p class="gmag">{{goodsdt.time |
-            date:'yyyy-MM-dd hh:mm'}}</p></a>
-        <a class="list-group-item g-sharnk">浏览次数：<p class="gmag">{{goodsdt.visit}}</p></a>
-        <a class="list-group-item g-sharnk">点赞次数：<p class="gmag">{{goodsdt.like}}</p></a>
-        <a class="list-group-item g-sharnk">收藏次数：<p class="gmag">{{goodsdt.collect}}</p></a>
-        <a class="list-group-item g-sharnk">评论数量：<p class="gmag">{{goodsdt.talk}}</p></a>
+      
+      <div class="container textpage g-bg-box" style="border-radius: 5px;">
+        <div class="page-header">详细描述</div>
+        <p class="showbox" id="text-targer"></p>
       </div>
-    </div>
-  </div>
-  
-  <div class="container main-body textpage g-bg-box">
-    <div class="page-header">商品描述</div>
-    <p class="showbox" id="text-targer"></p>
-  </div>
-  
-  <div class="container main-body  textpage g-bg-box">
-    <div class="page-header">商品评论</div>
-    <div class="comment-row row" *ngFor="let row of commentdata">
-      <div class="cm-head">
-        <div class="userhead" style="text-transform: uppercase" [ngStyle]="{'background-color': randomColor(row.username)}">
-          <a style="color:unset">{{row.username[0]}}</a>
+      
+      <div class="container textpage g-bg-box" style="margin-top: 2em; padding-bottom: 1em; border-radius: 5px;">
+        <div class="page-header">评论区</div>
+        <div class="comment-row row" *ngFor="let row of commentdata">
+          <div class="cm-head">
+            <div class="userhead" style="text-transform: uppercase" [ngStyle]="{'background-color': randomColor(row.username)}">
+              <a style="color:unset">{{row.username[0]}}</a>
+            </div>
+          </div>
+          <div class="msgbody">
+            <div class="comment-row-header">
+              <div class="com-user g-sharnk" [ngStyle]="{'color': randomColor(row.username)}">{{row.username}}</div><div
+                class="com-time g-sharnk">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
+            </div>
+            <div class="comment-text" style="line-break: anywhere;">
+              {{row.comment}}
+            </div>
+          </div>
+      
+        </div>
+        <div class="comment-pan">
+          <textarea class="com-input" id="comment-area"></textarea>
+          <button class="com-send" (click)="sendComment()">发送评论</button>
         </div>
       </div>
-      <div class="msgbody">
-        <div class="comment-row-header">
-          <div class="com-user g-sharnk" [ngStyle]="{'color': randomColor(row.username)}">{{row.username}}</div><div
-            class="com-time g-sharnk">{{row.time | date:'yyyy-MM-dd hh:mm'}}</div>
-        </div>
-        <div class="comment-text">
-          {{row.comment}}
-        </div>
-      </div>
-  
-    </div>
-    <div class="comment-pan">
-      <textarea class="com-input" id="comment-area"></textarea>
-      <button class="com-send" (click)="sendComment()">发送评论</button>
-    </div>
   </div>
 </div>
+
+            <!--模态框-->
+            <div class="modal fade" id="sendbox" tabindex="-1" role="dialog"
+              aria-labelledby="mySmallModalLabel">
+              <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content send-text-box">
+                  <textarea id="messagesender" type="text" class="form-control"
+                    placeholder="这里输入你想发送的信息..."></textarea>
+                  <button type="button" class="btn btn-info" (click)="sendMessage()">私聊</button>
+                  <button type="button" class="btn btn-info" data-dismiss="modal" id="sendcancel">取消</button>
+                </div>
+              </div>
+            </div>

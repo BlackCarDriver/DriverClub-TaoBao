@@ -1,8 +1,12 @@
-.content {
-    background: linear-gradient(to top, #000000, #434343);
-    padding-top: 3em;
-}
 
+.main-body{
+    margin: 0%;
+    border-radius: 0px;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    background: linear-gradient(to top, #000000, #434343);
+}
 .signupbox {
     height: 35em;
     width: 55em;

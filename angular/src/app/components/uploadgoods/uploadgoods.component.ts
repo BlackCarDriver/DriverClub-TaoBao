@@ -4,6 +4,7 @@ import { GoodsType, GoodSubType, UploadGoods } from '../../struct';
 import { AppComponent } from '../../app.component';
 
 import * as wangEditor from '../../../assets/wangEditor.min.js';
+// import * as wangEditor from 'https://unpkg.com/wangeditor/release/wangEditor.min.js';
 
 declare var $: any;
 
@@ -43,7 +44,6 @@ export class UploadgoodsComponent implements OnInit {
       window.history.back();
       return;
     }
-    this.server.setupHight();
     this.initImgUpload();
     this.initEditer();
     this.GetType();

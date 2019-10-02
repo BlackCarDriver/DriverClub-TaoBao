@@ -28,7 +28,6 @@ export class GoodspageComponent implements OnInit {
       this.app.showMsgBox(-1, "无法获取商品ip,请刷新试试" );
       window.history.back();
     }
-    this.server.setupHight();
     this.getItPage(this.goodid);
     this.getComment(this.goodid);
     this.getStatement();
@@ -92,8 +91,8 @@ export class GoodspageComponent implements OnInit {
         this.app.showMsgBox(-1, "获取商品状态失败，请稍后再试" , result.msg);
       } else {
         this.state = result.data;
-        if (this.state.collect) { $("#collect-btn").removeClass('btn-info'); this.collectbtnshow=" 已收藏 ";}
-        if (this.state.like) { $("#like-btn").removeClass('btn-info'); this.likebtnshow=" 已点赞 "}
+        if (this.state.collect) { $("#collect-btn").css("background-color", "#ff8655"); this.collectbtnshow=" 已收藏 ";}
+        if (this.state.like) { $("#like-btn").css("background-color", "#ff8655"); this.likebtnshow=" 已点赞 "}
       }
     }, err => {
       this.app.showMsgBox(-1, "获取数据失败，请稍后再试", err);
@@ -115,7 +114,7 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.app.showMsgBox(0, "点赞成功");
-        $("#like-btn").removeClass('btn-info');
+        $("#like-btn").css("background-color", "#ff8655");;
       } else {
         this.app.showMsgBox(-1, "点赞失败，请稍后再试" , result.msg);
       }
@@ -137,7 +136,7 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
         this.app.showMsgBox(0, "收藏成功");
-        $("#collect-btn").removeClass('btn-info');
+        $("#collect-btn").css("background-color", "#ff8655");
         }else{
         this.app.showMsgBox(-1, "收藏失败,请稍后再试");
       }
@@ -216,6 +215,8 @@ export class GoodspageComponent implements OnInit {
     return array[random%array.length];
   }
 }
+
+
 
 //detail data response from server
 class GoodsDetail {

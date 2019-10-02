@@ -44,7 +44,6 @@ export class HomepageComponent implements OnInit {
   ) { }
  
   ngOnInit() {
-    this.server.setupHight();
     $(".goods-area").mouseenter(function(){ $('.gg').collapse('hide');})
     this.GetGoods();
     this.GetType();

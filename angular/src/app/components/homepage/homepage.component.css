@@ -1,7 +1,7 @@
 .search-row {
-    height: 100px;
     text-align: center;
     padding: 30px;
+    width: 100%;
 }
 
 .search-input {
@@ -64,7 +64,6 @@
     font-weight: 600;
     cursor: pointer;
 }
-
 .well2 {
     padding: 15px 20px;
     background-color: var(--tmcl-1);
@@ -176,18 +175,27 @@
     .goods-area {
         width: 720px;
     }
+    .main-body{
+        margin: 1em 15px 4em 15px;
+    }
 }
 
 @media screen and (max-width:700px) {
     .goods-area {
         width: 490px;
     }
+    .search-input{
+        width: 300px;
+    }
 }
 
 @media screen and (max-width:600px) {
+    .search-row{
+        padding: 10px;
+    }
     .search-input-c {
         margin-right: 70px;
-        width: 240px;
+        width: 70%;
     }
     .search-bt-c {
         margin-left: -70px;
@@ -218,13 +226,17 @@
     .goods-price {
         width: 3.7em;
     }
+    .main-body{
+        margin: 1em 15px 4em 15px;
+    }
     .good-name {
-        height: 1.3em;
-        margin: 0px 1em;
+        height: 1.5em;
+        margin: 0px;
         font-size: 1.2em;
         color: #3f7ab7;
-        font-family: Monospace;
         font-weight: 600;
+        padding: 3px;
+        background: linear-gradient(to top, #fff0, #eee);
     }
     .good-title {
         position: absolute;

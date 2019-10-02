@@ -9,18 +9,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavigComponent } from './components/navig/navig.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-import { UploadgoodsComponent } from './components/uploadgoods/uploadgoods.component';
-
 import { HomepageComponent } from './components/homepage/homepage.component';
-
+import { Notfound1Component } from './components/notfound1/notfound1.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
-    UploadgoodsComponent,
     NavigComponent,
     FooterComponent,
+    Notfound1Component,
   ],
   imports: [
     BrowserModule,

@@ -1,13 +1,11 @@
-<div class="container main-body window">
+<div class="main-body">
   <div class="headrow">
     <div class="row search-row">
-      <form>
         <input id="searchgoods" type="text" class="search-input search-input-c"
           placeholder="搜索商品...">
         <button class="search-bt search-bt-c" type="button" (click)="SearchGoods()">
           <span class="glyphicon glyphicon-search"></span>
         </button>
-      </form>
     </div>
 
     <div class="row type-row"><!--type of goods-->
@@ -92,7 +90,7 @@
       <div class="goods-box" *ngFor="let goods of goodsarray"  [routerLink]="['/message/goodsdetail', goods.id ]">
         <img src={{goods.headimg}} style="border-bottom: 1px solid #ddd;">
         <div class="row">
-          <p class="good-name g-sharnk">{{goods.name}}</p>
+          <p class="good-name g-sharnk" style="font-family: Monospace;">{{goods.name}}</p>
         </div>
         <div class="row good-title">
           <p class="g-sharnk">{{goods.title}}</p>

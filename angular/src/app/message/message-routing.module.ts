@@ -8,6 +8,7 @@ import {Personal2Component} from '../components/personal2/personal2.component';
 const routes: Routes = [
   { path: 'goodsdetail/:gid' , component:GoodspageComponent },
   { path: 'personals/:uid' , component :Personal2Component},
+  { path: '', redirectTo: 'goodsdetail', pathMatch: 'full' },
 ];
 
 @NgModule({

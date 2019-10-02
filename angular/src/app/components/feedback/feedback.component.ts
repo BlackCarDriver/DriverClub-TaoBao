@@ -17,7 +17,6 @@ export class FeedbackComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.server.setupHight();
     this.initSelectImg();
   }
 

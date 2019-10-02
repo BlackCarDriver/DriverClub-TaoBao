@@ -1,0 +1,13 @@
+.box {
+    text-align: center;
+    color: #202020;
+    text-shadow: 20px 20px 3px #5a5a5e45;
+}
+
+.link {
+    font-size: 1.4em;
+    display: block;
+    margin: 1em auto;
+    z-index: 100;
+    cursor: pointer;
+}

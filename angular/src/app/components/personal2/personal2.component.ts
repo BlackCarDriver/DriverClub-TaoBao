@@ -28,7 +28,6 @@ export class Personal2Component implements OnInit {
       window.history.back();
       return;
     }
-    this.server.setupHight();
     this.myid = this.server.userid;
     this.getOtherMsg(this.targetid);
     this.getStatement();

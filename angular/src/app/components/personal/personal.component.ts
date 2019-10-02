@@ -46,7 +46,6 @@ export class PersonalComponent implements OnInit {
     if (this.server.IsNotLogin()) {
       window.history.back();
     }
-    this.server.setupHight();
     // this.userid = this.server.Getusername();
     this.getmymsg();
     this.getmymgoods();

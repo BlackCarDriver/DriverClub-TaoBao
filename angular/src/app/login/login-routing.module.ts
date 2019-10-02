@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PersonalComponent } from '../components/personal/personal.component';
 import { ChgmymsgComponent } from '../components/chgmymsg/chgmymsg.component';
-// import { UploadgoodsComponent } from '../components/uploadgoods/uploadgoods.component';
+import { UploadgoodsComponent } from '../components/uploadgoods/uploadgoods.component';
 
 const routes: Routes = [
   { path: 'myhome', component: PersonalComponent },
   { path: 'change', component: ChgmymsgComponent },
-  // { path: 'upload', component: UploadgoodsComponent },
+  { path: 'upload', component: UploadgoodsComponent },
+  { path: '', redirectTo: '/myhome', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -15,4 +16,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class LoginRoutingModule { }
- 
