@@ -38,7 +38,7 @@ func initTempData() {
 	Uas1 = NewActiveNess()
 	Uas2 = NewActiveNess()
 	//the value in ComfirmCode will be save for half hour
-	ComfirmCode = NewTimeMap(30 * 60)
+	ComfirmCode = NewTimeMap(60 * 30)
 
 	RefreshTypeTagDate()
 	UpdateUserRank()
@@ -141,7 +141,7 @@ func (t *TimeMap) Get(key string) error {
 }
 
 //clear all key that already out of date 🍖
-func (t *TimeMap) Clear(key string) {
+func (t *TimeMap) Clear() {
 	for k, v := range t.Map {
 		duration := time.Since(v)
 		logs.Warn("Comfirm code: %s \t\t\t %d", k, int(duration.Minutes()))
@@ -162,6 +162,7 @@ func RunPreHour() {
 		MainTainCredits()
 		Uas1.ReBuild()
 		Uas2.ReBuild()
+		ComfirmCode.Clear()
 		time.Sleep(10 * time.Second)
 		RefreshTypeTagDate()
 		time.Sleep(10 * time.Second)
@@ -176,6 +177,7 @@ func RunPreHour() {
 		MainTainGoodTalk()
 		time.Sleep(10 * time.Second)
 		UpdateUserRank()
+
 	}
 }
 

@@ -11,6 +11,19 @@ import (
 	"github.com/astaxie/beego/logs"
 )
 
+//the templace of the email that signUp and get comfirm code
+var signUpMailTP = `
+<div style="background-color:#4caf50;width: 400px;height30200px;padding: 10px;border-radius: 6px;font-weight: 500;margin: 20px;">
+🚂  🚃  🚄  🚅  🚆  🚇  🚈  🚉  🚊  🚝  🚞  🚋 🚲 🚜<br>
+你好！非常感谢你成为本站的第<span style=" color: #E91E63; font-weight: 600;">%d</span>个用户。<br>
+本站服务永久免费，并将不断完善和更新,努力为你提供更好的体验。欢迎向我提出改进建议和问题反馈！  :)<br>
+你刚刚注册的账号：<span style=" color: #E91E63; font-weight: 600;">%s </span> <br>
+验证码为：<span style=" color: #E91E63; font-weight: 600;">%s</span> <br>
+(30分钟内有效,若非本人操作,请忽略此邮件)<br>
+ 🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
+</div>
+`
+
 //config variable can read from config file
 var (
 	stmpHost   = ""
@@ -116,16 +129,3 @@ func SendMailUsingTLS(addr string, auth smtp.Auth, from string, to []string, msg
 	}
 	return c.Quit()
 }
-
-//the templace of the email that signUp and get comfirm code
-var signUpMailTP = `
-<div style="background-color:#4caf50;width: 400px;height30200px;padding: 10px;border-radius: 6px;font-weight: 500;margin: 20px;">
-🚂  🚃  🚄  🚅  🚆  🚇  🚈  🚉  🚊  🚝  🚞  🚋 🚲 🚜<br>
-你好！非常感谢你成为本站的第<span style=" color: #E91E63; font-weight: 600;">%d</span>个用户。<br>
-本站服务永久免费，并将不断完善和更新,努力为你提供更好的体验。欢迎向我提出改进建议和问题反馈！  :)<br>
-你刚刚注册的账号：<span style=" color: #E91E63; font-weight: 600;">%s </span> <br>
-验证码为：<span style=" color: #E91E63; font-weight: 600;">%s</span> <br>
-(30分钟内有效,若非本人操作,请忽略此邮件)<br>
- 🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
-</div>
-`

@@ -14,9 +14,9 @@ export class ServerService {
   username = "";
   token = "";
   homepage_goods_perpage = 10;
-  private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  // private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  // private addr: string = "/localserver";
+  private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }
@@ -65,8 +65,13 @@ export class ServerService {
     return newUrl;
   }
 
-  //======================================= large  interface =============================================================
+  //judge if the service is mobie phone or laptop
+  IsPhone(){
+    let width = document.body.clientWidth;
+    return width < 700;
+  }
 
+  //======================================= large  interface =============================================================
   //get all kind of data in goodspage 🍌
   GetGoodsDeta(request: RequestProto) {
     var url = this.addr + "/goodsdeta";
@@ -87,7 +92,8 @@ export class ServerService {
   //upload a images to server and receive a url to get it images 🍍🍆
   UploadImg(username: string, img: any) {
     var postdata = new FormData();
-    postdata.append("name", username);
+    postdata.append("userid", this.userid);
+    postdata.append("token", this.token);
     postdata.append("file", img)
     var url = this.rmaddr + "/upload/images"; //use remote host temply
     //post a multipart/form-data, can not use json.stringfiy
@@ -203,20 +209,30 @@ export class ServerService {
     return JSON.parse(jsdata);
   }
 
-  //set up window height 🍖
-  setupHight(){
-  //  var hight = $(window).height();
-    //$(".window").css("min-height", hight-40 + "px");
-  }
-
   //============ following function is relate to input checking ===========
-  //check the format of username 🍖
-  checkUerName(name:string){
+  //check the format of username 🍖🍚
+  checkUerName(name:string, canEmail?:boolean){
     if(name=="") return "用户名不能为空";
     if(name.includes(" ")) return "用户名不能包含空格";
     let namereg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/;
-    if( namereg.test(name) ==false){
+    if( namereg.test(name) ){
+      return ""
+    }else if (canEmail==false){
       return "用户名格式不正确,提示：不包含空格,符号,长度为2~15";
+    }
+    return this.checkEmail(name);
+  }
+  //check the format of goods name 🍚
+  checkGoodsName(name:string){
+    if(/^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/.test(name)==false){
+      return "商品名不可太长太短或包含空格"
+    }
+    return "";
+  }
+  //check the title of upload goods 🍚
+  checkGoodsTitle(title:string){
+    if(/^[\u4e00-\u9fa5_a-zA-Z0-9 ]{5,45}$/.test(title)==false){
+      return "商品标题不可太长太短或太短哦";
     }
     return "";
   }
@@ -245,6 +261,20 @@ export class ServerService {
     if(code=="") return "验证码不能为空";
     let regex = /^[0-9]{6}$/;
     if(regex.test(code)==false) return "验证码格式不正确";
+    return "";
+  }
+  //check goods comment format🍚
+  checkComment(cm:string) {
+    if (cm.length<=2 || cm.length>=200){
+        return "消息太长或为空";
+    }
+    return ""
+  }
+  //check user private message 🍚
+  checkMessage(msg:string) {
+    if(/^[\w\W]{2,150}$/.test(msg)==false){
+      return "信息太短或太长";
+    }
     return "";
   }
   /*

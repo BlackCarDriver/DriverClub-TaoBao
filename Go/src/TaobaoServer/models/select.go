@@ -1,6 +1,7 @@
 package models
 
 import (
+	tb "TaobaoServer/toolsbox"
 	"errors"
 	"fmt"
 
@@ -173,10 +174,15 @@ func GetNavingMsg(uid string, c *MyStatus) error {
 	return nil
 }
 
-//get comment data of a goods
+//get comment data of a goods🍚
 func GetGoodsComment(goodsid string, c *[]GoodsComment) error {
 	o := orm.NewOrm()
-	_, err := o.Raw(`select u.name as "username", c.time as "time", c.content as "comment" from t_user as u, t_comment as c where u.id=c.userid and c.goodsid=?`, goodsid).QueryRows(c)
+	if goodsid == "" {
+		return errors.New("Receive a null goodsid")
+	}
+	_, err := o.Raw(`select u.name as "username", 
+	c.time as "time", c.content as "comment" from t_user as u,
+	 t_comment as c where u.id=c.userid and c.goodsid=? order by time`, goodsid).QueryRows(c)
 	if err != nil {
 		mlog.Error("%v", err)
 		return err
@@ -246,7 +252,8 @@ func GetSettingMsg(uid string, c *UserSetData) error {
 	return nil
 }
 
-//comfirm the login request and return the true id 🍓🍄
+//comfirm the login request and return the true id 🍓🍄🍚
+//identifi can be: id, username, email
 //note that the password is md5 encoding
 func ComfirmLogin(identifi, password string) (id string, err error) {
 	if identifi == "" || password == "" {
@@ -256,40 +263,63 @@ func ComfirmLogin(identifi, password string) (id string, err error) {
 	}
 	count := 0
 	o := orm.NewOrm()
-	//use identifi as id firstly
-	if err := o.Raw("select count(*) from t_user where id=? and password=?", identifi, password).QueryRow(&count); err != nil {
-		mlog.Error("%v", err)
-		return "", err
-	} else {
-		if count == 1 {
-			return identifi, nil
-		} else if count > 1 {
-			err = errors.New("Find two account with same id!")
+	//use use identifi as id firstly
+	if tb.CheckUserID(identifi) {
+		if err := o.Raw("select count(*) from t_user where id=? and password=?", identifi, password).QueryRow(&count); err != nil {
+			mlog.Error("%v", err)
+			return "", err
+		} else {
+			if count == 1 {
+				return identifi, nil
+			} else if count > 1 {
+				err = errors.New("Find two user with same id!")
+				mlog.Critical("%v", err)
+				return "", err
+			}
+		}
+	}
+	//use user identifi as email
+	if tb.CheckEmail(identifi) {
+		if err := o.Raw("select count(*) from t_user where email=? and password=?", identifi, password).QueryRow(&count); err != nil {
 			mlog.Error("%v", err)
 			return "", err
 		}
-	}
-	//if no result with finding id, then use identfi as name and search again
-	if err := o.Raw("select count(*) from t_user where name=? and password=?", identifi, password).QueryRow(&count); err != nil {
-		mlog.Error("%v", err)
-		return "", err
-	} else {
 		if count == 1 { //find true user id
-			err = o.Raw("select id from t_user where name=? and password=?", identifi, password).QueryRow(&id)
+			err = o.Raw("select id from t_user where email=? and password=?", identifi, password).QueryRow(&id)
 			if err != nil {
 				mlog.Error("%v", err)
 				return "", err
 			}
 			return id, nil
 		} else if count > 1 {
-			err = errors.New("Find two account with same name!")
-			mlog.Error("%v", err)
+			err = errors.New("Find two user with same email and passwod!")
+			mlog.Critical("%v", err)
 			return "", err
-		} else if count == 0 {
-			return "", NoResultErr
 		}
 	}
-	return id, err
+	//use identifi as user name in the last
+	if tb.CheckUserName(identifi) {
+		if err := o.Raw("select count(*) from t_user where name=? and password=?", identifi, password).QueryRow(&count); err != nil {
+			mlog.Error("%v", err)
+			return "", err
+		} else {
+			if count == 1 { //find true user id
+				err = o.Raw("select id from t_user where name=? and password=?", identifi, password).QueryRow(&id)
+				if err != nil {
+					mlog.Error("%v", err)
+					return "", err
+				}
+				return id, nil
+			} else if count > 1 {
+				err = errors.New("Find two user with same name and password!")
+				mlog.Critical("%v", err)
+				return "", err
+			}
+			return "", NoResultErr
+		}
+
+	}
+	return "", NoResultErr
 }
 
 //get feedback data, read at most 12 rows of feedback record from database  🍗
@@ -346,7 +376,7 @@ func CountIcare(myid string) (int, error) {
 }
 
 //get the total number of user 🍏
-func CountUser() int {
+func CountTotalUser() int {
 	o := orm.NewOrm()
 	userNumber := 0
 	err := o.Raw("select count(*) from t_user").QueryRow(&userNumber)
@@ -418,6 +448,7 @@ func CountUnreadMsg(uid string) int {
 }
 
 //count the specificed name numbers of other user  🍖
+//return the numbers of user name or -1 which mean unexpect error happen
 func CountUserName(name string) int {
 	o := orm.NewOrm()
 	userNumber := 0
@@ -427,4 +458,16 @@ func CountUserName(name string) int {
 		return -1
 	}
 	return userNumber
+}
+
+//count the numbers of using email that have been registe  🍚
+func CountRegistEmail(email string) int {
+	o := orm.NewOrm()
+	number := 0
+	err := o.Raw("select count(*) from t_user where email=?", email).QueryRow(&number)
+	if err != nil {
+		mlog.Error("CountRegistEmail fail: %v", err)
+		return -1
+	}
+	return number
 }

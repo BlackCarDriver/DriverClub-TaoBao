@@ -19,29 +19,27 @@ export class UploadgoodsComponent implements OnInit {
   typelist = GoodSubType[100];
   headImgName = "未选择文件...";
   username = "username";
-  warnmsg = "";
   editor: any;
   //the following value will be send to server
   userid = "";
   goodsname = "名称未设置";
   title = "标题未设置";
-  headImgUrl = "https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/_2f6de585abe7baa7e5a4a7e78b82e9a38e5a"
+  headImgUrl = "https://img-blog.csdnimg.cn/20191003114954113.jpg"
   date = "";
-  price:number = 0.0;
+  price: number = 0.0;
   typename = "";
   tagname = "";
   usenewtag = false;
   newtagname = "";
   godostext = "";
 
-  constructor( 
+  constructor(
     private server: ServerService,
     private app: AppComponent,
   ) { }
 
   ngOnInit() {
     if (this.server.IsNotLogin()) {
-      window.history.back();
       return;
     }
     this.initImgUpload();
@@ -49,12 +47,16 @@ export class UploadgoodsComponent implements OnInit {
     this.GetType();
     this.date = this.server.formatDate();
     this.userid = this.server.userid;
-    if(this.server.username!="")  this.username = this.server.username;
+    if (this.server.username != "") this.username = this.server.username;
   }
 
   //=================== request server =======================
-  //upload select picture to server and get a url. 🍋🔥🍄
+  //upload select picture to server and get a url. 🍋🔥🍄🍚
+  //it function is called by a hidden button which will be clicked after image checking 
   uploadcover() {
+    if (this.server.IsNotLogin()) {
+      return;
+    }
     var files = $("#upload").prop('files');
     this.server.UploadImg("uploadname", files[0]).subscribe(result => {
       if (result.statuscode == 0) {
@@ -64,10 +66,15 @@ export class UploadgoodsComponent implements OnInit {
       this.app.showMsgBox(-1, "封面上传失败：" + result.msg);
     }, err => { this.app.cFail(err) });
   };
-  //upload a goods to server  🍋🍉🍄
+
+  //upload a goods to server  🍋🍉🍄🍚
   Upload() {
-    if (this.checkData() != true) {
-      this.app.showMsgBox(1, "商品描述有误:"+this.warnmsg);
+    if (this.server.IsNotLogin()) {
+      return;
+    }
+    let warn = this.checkData();
+    if (warn!="") {
+      this.app.showMsgBox(1, "商品描述有误:" + warn);
       return;
     }
     if ($("#check").prop("checked") == false) {
@@ -87,21 +94,23 @@ export class UploadgoodsComponent implements OnInit {
       tag: (this.usenewtag ? $("#newtypeinput").val() : this.tagname),
     };
     //note taht Request protocol is write in UploadGoodsData
-    this.server.UploadGoodsData(data).subscribe( result => {
-        if (result.statuscode != 0) {
-          this.app.showMsgBox(-1, "对不起,上传失败,请稍后再试试：" + result.msg);
-          return;
-        }
-        alert("上传成功");
-        this.app.showMsgBox(0, "上传成功");
-        window.history.back();
-      }, err => { this.app.cFail(err) });
+    this.server.UploadGoodsData(data).subscribe(result => {
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "对不起,上传失败,请稍后再试试：" + result.msg);
+        return;
+      }
+      alert("上传成功");
+      this.app.showMsgBox(0, "上传成功");
+      window.history.back();
+    }, err => { this.app.cFail(err) });
   }
+
   //get goods type list that need to show in select button. 🍋🍄
   GetType() {
     this.server.GetHomePageType().subscribe(
       result => { this.typearray = result; });
   }
+
   //=================== init component =================
   //deiter setting up : https://www.kancloud.cn/wangfupeng/wangeditor3/332599🍄
   initEditer() {
@@ -124,28 +133,31 @@ export class UploadgoodsComponent implements OnInit {
     this.editor.create();
     this.editor.txt.html('<p>请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接代替上传图片。</p>')
   }
-  //if images select was changed, then upload to server and get a visit url 🍄
+  //if images select was changed, then upload to server and get a visit url 🍄🍚
   initImgUpload() {
+    if (this.server.IsNotLogin()) {
+      return;
+    }
     $("#upload").change(function (evt) {
-      if ($(this).val() == '') return;
-      //check file size, max size is 100kb
-      var files = evt.currentTarget.files;
-      var filesize = files[0].size;
-      if (filesize > 102400) {
-        alert( "服务器配置太低，请上传低于100kb的图片，谢谢！");
-        return;
-      }
       //check the file type 
+      if ($(this).val() == '') return;
       var filename = $(this).val().replace(/.*(\/|\\)/, "");
       var filetype = filename.substring(filename.lastIndexOf("."), filename.length).toLowerCase();
       if (filetype != ".jpg" && filetype != ".png") {
-        alert("请上传 png 或 jpg 格式的图片, 谢谢！");
+        alert("请选择 png 或 jpg 格式的图片");
+        evt.currentTarget.files = "";
         return;
-      } else {
-        $("#filename").html(filename);
-        //begain to upload images
-        $("#uploadbtn").trigger("click");
       }
+      //check file size
+      var files = evt.currentTarget.files;
+      var filesize = files[0].size;
+      if (filesize > 1024 * 300) {
+        alert("由于本站宽带配置实在太低，请上传低于300kb的图片，谢谢！");
+        evt.currentTarget.files = "";
+        return;
+      }
+      $("#filename").html(filename);
+      $("#uploadbtn").trigger("click");
     });
   }
   //trigger to open the images select dialogue 
@@ -169,52 +181,46 @@ export class UploadgoodsComponent implements OnInit {
   }
 
   //=================== input checking =================
-  //check the upload goods data before send to server 🍄🍆
+  //check the upload goods data before send to server 🍄🍆🍚
   checkData() {
     if (this.headImgUrl == "") {
-      this.warnmsg = "未选择商品封面";
-      return false;
+      return  "未选择商品封面";
     }
-    if (this.goodsname == "" || this.goodsname=="名称未设置" || this.goodsname.length > 20) {
-      this.warnmsg = "商品名为空或太长";
-      return false
+    if (this.goodsname == "" || this.goodsname == "名称未设置") {
+      return "商品名为空或太长";
     }
-    if (this.title == "" || this.title=="标题未设置" || this.title.length>49) {
-      this.warnmsg = "商品标题太短或太长";
-      return false;
+    let err = this.server.checkGoodsName(this.goodsname);
+    if (err!=""){
+      return err;
+    }
+    if (this.title == "" || this.title == "标题未设置" || this.server.checkGoodsTitle(this.title)!="") {
+     return "商品标题不可太短或太长哦";
     }
     this.price = Math.floor(this.price * 10) / 10;
-    if (this.price <= 0 || this.price > 10000 || this.price==null) {
-      this.warnmsg = "请检查转让价格是否填写有误";
-      return false;
+    if (this.price <= 0 || this.price > 10000 || this.price == null) {
+      return"请检查转让价格是否填写有误";
     }
     if (this.typename == "") {
-      this.warnmsg = "请选择分类"
-      return false;
+      return"请选择分类"
     }
     if (this.usenewtag == true) {
       this.newtagname = $("#newtypeinput").val();
       if (this.newtagname.length == 0 || this.newtagname.length > 6) {
-        this.warnmsg = "请检查新标签名是否有误"
-        return false;
+       return"标签名不可太长或太短哦"
       }
     } else {
       if (this.tagname.length == 0) {
-        this.warnmsg = "请选择或新增一个标签";
-        return false;
+       return"请为商品选择或新增一个标签";
       }
     }
     this.godostext = this.editor.txt.html();
     if (this.godostext.length < 100) {
-      this.warnmsg = "页面的描述太简单了,请增加一些描述";
-      return false;
+     return"页面的描述太简单了,请增加一些描述";
     }
-    if (this.godostext.length > 300 * 1024) {
-      this.warnmsg = "对不起，描述页面超过300kb了，请删减一些内容";
-      return false;
+    if (this.godostext.length > 500 * 1024) {
+     return"对不起，描述页面超过 500kb 了，请删减一些内容";
     }
-    this.warnmsg = "";
-    return true;
+   return"";
   }
 
 

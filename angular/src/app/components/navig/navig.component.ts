@@ -54,14 +54,13 @@ export class NavigComponent implements OnInit {
     }
   }
   //hide login box
-  hidelib(){
-      this.server.getEle("libox-hide").click();
+  hidelib() {
+    this.server.getEle("libox-hide").click();
   }
-
-  initNav(){
-    $(".navbar-inverse").mouseleave(function(){
-       $('#navhide').collapse('hide');
-      });
+  initNav() {
+    $(".navbar-inverse").mouseleave(function () {
+      $('#navhide').collapse('hide');
+    });
   }
   //=========================== safety verification ===================== 
   // check the intput box content in login box 🍓🍖
@@ -71,21 +70,28 @@ export class NavigComponent implements OnInit {
     $("#loginpassword").change(this.checkpassword.bind(this));
   }
   //check input username🍖
-  checkname(){
-    let res = this.server.checkUerName($("#loginname").val()); 
-    if (res!="") this.app.showMsgBox(1,res);
+  checkname() {
+    let res = this.server.checkUerName($("#loginname").val());
+    if (res != "") this.app.showMsgBox(1, res);
   }
   //check input password🍖
-  checkpassword(){
+  checkpassword() {
     let res = this.server.checkPassword($("#loginpassword").val());
-    if (res!="")  this.app.showMsgBox(1,res);
+    if (res != "") this.app.showMsgBox(1, res);
   }
-  //check the content of login input🍓🍖
+  //check the content of login input🍓🍖🍚
   checkLogin() {
-    let worngnum = 0;
-    if (this.server.checkUerName($("#loginname").val())!="")   worngnum++;
-    if (this.server.checkPassword($("#loginpassword").val()) != "")   worngnum++;
-    return (worngnum == 0);
+    let err = this.server.checkUerName($("#loginname").val());
+    if (err != "") {
+      this.app.showMsgBox(1, err);
+      return false;
+    }
+    err = this.server.checkPassword($("#loginpassword").val());
+    if (err != "") {
+      this.app.showMsgBox(1, err);
+      return false;
+    }
+    return true;
   }
 
   //========================= request function =====================
@@ -93,66 +99,61 @@ export class NavigComponent implements OnInit {
   //select the style of nav according to login history
   setstate() {
     let userid = this.server.getCookie("ui");
-    if (userid!="") {
-      this.server.userid = userid;
-      this.server.token = this.server.getCookie("tk");
-      let postdata: RequestProto = {
-        api: "naving",
-        targetid: userid,
-        cachetime:120,
-      };
-      postdata.cachekey = "nav_"+postdata.targetid;
-      this.server.GetCredentMsg(postdata).subscribe(result => {
-        if (result.statuscode == 0) {
-          this.usermsg = result.data;
-          this.server.username = this.usermsg.name;
-          this.showStat(true); 
-        } else if(result.statuscode==-1000){  //token was reject
-          this.app.showMsgBox(-1,result.msg);
-          this.server.clearAllCookie();
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
-        }else{
-          this.app.showMsgBox(-1, "获取登录数据失败,请稍后重试：" + result.msg);
-        }
-      }, error => { this.app.showMsgBox(-1, "GetMymsg fail:" + error) });
-    }
+    if (userid == "") return;
+    this.server.userid = userid;
+    this.server.token = this.server.getCookie("tk");
+    let postdata: RequestProto = {
+      api: "naving",
+      targetid: userid,
+      cachetime: 120,
+    };
+    postdata.cachekey = "nav_" + postdata.targetid;
+    this.server.GetCredentMsg(postdata).subscribe(result => {
+      if (result.statuscode == 0) {
+        this.usermsg = result.data;
+        this.server.username = this.usermsg.name;
+        this.showStat(true);
+      } else if (result.statuscode == -1000) {  //token was reject
+        this.app.showMsgBox(-1, result.msg);
+        this.server.clearAllCookie();
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else {
+        this.app.showMsgBox(-1, "获取登录数据失败,请稍后重试：" + result.msg);
+      }
+    }, error => { this.app.showMsgBox(-1, "GetMymsg fail:" + error) });
   }
 
-  //user login, note that the username input can be id or username 🍓
-  loging() {
-    console.log(document.cookie);
+  //user login, note that the username input can be id or username and email🍓🍚
+  login() {
+    if (this.checkLogin() != true) {
+      return;
+    }
     this.lidata.name = $("#loginname").val();
     this.lidata.password = $("#loginpassword").val();
     this.setstate();
-    if (this.checkLogin() != true) {
-      this.app.showMsgBox(1,"输入的格式不正确,请检查");
-      return;
-    }
     let postdata: RequestProto = {
       api: "login",
       targetid: this.lidata.name, //note that it can be username or true id
-      data:this.lidata.password,
+      data: this.lidata.password,
     };
     this.server.Entrance(postdata).subscribe(result => {
-      if (result.statuscode!=0){
-        this.app.showMsgBox(-1, "登录失败："+result.msg);
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "登录失败：" + result.msg);
         return;
       }
       this.app.showMsgBox(0, "登录成功！");
+      setTimeout( function(){document.location.reload();}, 2000);
       this.hidelib();
       this.usermsg = result.data;
       this.server.userid = this.usermsg.id;
-      console.log(this.server.userid);
       this.server.username = this.usermsg.name;
       this.server.setCookie("tk", result.msg);
       this.server.setCookie("un", this.usermsg.name);
-      this.server.setCookie("up",this.lidata.password);
-      this.server.setCookie("ui",this.server.userid);
+      this.server.setCookie("up", this.lidata.password);
+      this.server.setCookie("ui", this.server.userid);
       this.showStat(true);
-      //TODO: save cookie
-     
     });
   }
 

@@ -26,33 +26,35 @@ export class GoodspageComponent implements OnInit {
     this.goodid = this.server.LastSection();
     if(this.goodid==""){
       this.app.showMsgBox(-1, "无法获取商品ip,请刷新试试" );
-      window.history.back();
+      return;
     }
     this.getItPage(this.goodid);
-    this.getComment(this.goodid);
-    this.getStatement();
   }
 
     //######################## GetGoodsDeta() #######################################
 
-  //get mainly message of it goods 🍌🔥🌽
+  //get mainly message of it goods 🍌🔥🌽🍚
   getItPage(id: string) {
     let postdata : RequestProto = {
       api:"goodsmessage",
       targetid:id,
-      cachetime:60,
+      cachetime:180,
       cachekey:"gitp_"+id,
     };
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if(result.statuscode!=0){ 
           this.app.showMsgBox(-1, "获取页面数据失败，请刷新试试" , result.msg );
-      }else{
-        this.goodsdt = result.data;
-        $("#text-targer").html(this.goodsdt.detail);
+          return;
       }
+      this.goodsdt = result.data;
+      $("#text-targer").html(this.goodsdt.detail);
     },err=>{
-        this.app.showMsgBox(-1, "请求失败，请稍后再试" , err);
+        this.app.cFail(err);
+        return;
     });
+    //get the comment message and user state after get goods success
+    this.getComment(this.goodid);
+    this.getStatement();
   }
 
   // get comment data of it goods 🍌🔥🌽
@@ -60,7 +62,7 @@ export class GoodspageComponent implements OnInit {
     let postdata : RequestProto = {
       api:"goodscomment",
       targetid:gid,
-      cachetime:60,
+      cachetime:300,
       cachekey:"gscm_"+gid,
     };
     if(latest==true){
@@ -69,33 +71,32 @@ export class GoodspageComponent implements OnInit {
     this.server.GetGoodsDeta(postdata).subscribe(result=>{
       if(result.statuscode!=0){
         this.app.showMsgBox(-1, "获取评论数据失败，请稍后再试" , result.msg);
-      }else{
-        this.commentdata = result.data;
+        return;
       }
-    }, err=>{
-      this.app.showMsgBox(-1, "请求失败，请稍后再试" , err);
-    });
+      this.commentdata = result.data;
+    }, err=>{ this.app.cFail(err); });
   }
 
   //get goods statement 🍌🔥🍈🌽
-  getStatement() {
+  getStatement(latest?: boolean) {
     let postdata : RequestProto = {
       api:"usergoodsstate",
       targetid:this.goodid,
       userid:this.server.userid,
-      cachetime:60,
+      cachetime:120,
       cachekey:"usgs_"+this.goodid+"_"+this.server.userid,
     };
+    if(latest==true) postdata.cachetime = 0;
     this.server.GetGoodsDeta(postdata).subscribe(result => {
       if (result.statuscode != 0) {
         this.app.showMsgBox(-1, "获取商品状态失败，请稍后再试" , result.msg);
-      } else {
-        this.state = result.data;
-        if (this.state.collect) { $("#collect-btn").css("background-color", "#ff8655"); this.collectbtnshow=" 已收藏 ";}
-        if (this.state.like) { $("#like-btn").css("background-color", "#ff8655"); this.likebtnshow=" 已点赞 "}
+        return;
       }
+      this.state = result.data;
+      if (this.state.collect) { $("#collect-btn").css("background-color", "#ff8655"); this.collectbtnshow=" 已收藏 ";}
+      if (this.state.like) { $("#like-btn").css("background-color", "#ff8655"); this.likebtnshow=" 已点赞 "}
     }, err => {
-      this.app.showMsgBox(-1, "获取数据失败，请稍后再试", err);
+      this.app.cFail(err);
     })
   }
 
@@ -114,12 +115,12 @@ export class GoodspageComponent implements OnInit {
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         this.app.showMsgBox(0, "点赞成功");
-        $("#like-btn").css("background-color", "#ff8655");;
+        $("#like-btn").css("background-color", "#ff8655");
       } else {
         this.app.showMsgBox(-1, "点赞失败，请稍后再试" , result.msg);
       }
-    },error=>{
-      this.app.showMsgBox(-1, "获取数据失败，请稍后再试" , error);
+    },err=>{
+      this.app.cFail(err);
     });
   }
 
@@ -140,20 +141,25 @@ export class GoodspageComponent implements OnInit {
         }else{
         this.app.showMsgBox(-1, "收藏失败,请稍后再试");
       }
-    },error=>{
-      this.app.showMsgBox(-1, "请求收藏失败，请稍后再试" , error);
+    },err=>{
+      this.app.cFail(err);
     });
   }
 
-  // user send a message to owner 🍍🔥🍈
+  // user send a message to owner 🍍🔥🍈🍚
   sendMessage() {
     if(this.server.IsNotLogin()){
       return;
     }
     let message = $("#messagesender").val().toString();
-    if (message.length==0 || message.length>200){
-      this.app.showMsgBox(1, "消息太长或为空");
-      $("#sendcancel").click();
+    let cerr = this.server.checkMessage(message);
+    if (cerr!=""){
+        this.app.showMsgBox(1, cerr);
+        $("#sendcancel").click();
+        return;
+    }
+    if(this.server.userid==this.goodsdt.userid){
+      this.app.showMsgBox(1,"抱歉，不能发消息给自己哦:}");
       return;
     }
     let postdata : RequestProto = {
@@ -172,20 +178,21 @@ export class GoodspageComponent implements OnInit {
           this.app.showMsgBox(-1, "发送失败" , result.msg);
           $("#sendcancel").click();
         }
-    },error=>{
-      this.app.showMsgBox(-1, "发送信息，请稍后再试" , error);
+    },err=>{
+      this.app.cFail(err);
       $("#sendcancel").click();
     });
   }
 
-  //user comment on a goods 🍍🔥🍈
+  //user comment on a goods 🍍🔥🍈🍚
   sendComment() {
     if(this.server.IsNotLogin()){
       return;
     }
     let comment = $("#comment-area").val().toString();
-    if (comment == "") {
-      this.app.showMsgBox(1, "发送内容不能为空");
+    let cerr = this.server.checkComment(comment);
+    if (cerr != "") {
+      this.app.showMsgBox(1, cerr);
       return;
     }
     let postdata : RequestProto = {
@@ -194,17 +201,16 @@ export class GoodspageComponent implements OnInit {
       targetid:this.goodid,
       data:{comment:comment},
     };
-    //todo:检查评论内容
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode==0){
         this.app.showMsgBox(0, "评论成功");
         this.getComment(this.goodid, true);
         $("#comment-area").val("");
       }else{
-        this.app.showMsgBox(-1, "评论失败，请扫后再试" , result.msg);
+        this.app.showMsgBox(-1, "评论失败，请稍后再试:" + result.msg);
       }
-    }, error=>{
-      this.app.showMsgBox(-1, "连接错误，请稍后再试" , error);
+    }, err=>{
+      this.app.cFail(err);
     });
   }
 
@@ -215,8 +221,6 @@ export class GoodspageComponent implements OnInit {
     return array[random%array.length];
   }
 }
-
-
 
 //detail data response from server
 class GoodsDetail {

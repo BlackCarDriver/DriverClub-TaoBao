@@ -2,6 +2,7 @@ package controllers
 
 import (
 	md "TaobaoServer/models"
+	tb "TaobaoServer/toolsbox"
 	"encoding/json"
 	"fmt"
 
@@ -49,8 +50,6 @@ func (this *HPGoodsController) Post() {
 			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
-	} else {
-		logs.Error(err)
 	}
 	//get data from database
 	if sum, err := md.SelectHomePageGoods(goodstype, goodstag, postBody.Offset, postBody.Limit, &goodslist); err != nil {
@@ -103,8 +102,6 @@ func (this *GoodsDetailController) Post() {
 			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
-	} else {
-		logs.Error(err)
 	}
 	//catch the unexpect panic
 	defer func() {
@@ -133,15 +130,22 @@ func (this *GoodsDetailController) Post() {
 		}
 		md.Uas1.Add(userid) //user see other goods
 
-	case "goodscomment": //comment or discuss date in goodsdetail page
+	case "goodscomment": //comment or discuss date in goodsdetail page 🍚
+		if goodId == "" {
+			response.StatusCode = -4
+			response.Msg = "获取商品ID失败"
+			rlog.Error(response.Msg)
+			goto tail
+		}
 		var comment []md.GoodsComment
 		if err := md.GetGoodsComment(goodId, &comment); err != nil {
 			response.StatusCode = -4
-			response.Msg = fmt.Sprintf("Get goods %s 's comment fail: %v", goodId, err)
+			response.Msg = fmt.Sprintf("获取商品数据失败：id '%s'  原因：' %v'", goodId, err)
 			rlog.Error(response.Msg)
-		} else {
-			response.Data = comment
+			goto tail
 		}
+		response.Data = comment
+		goto tail
 
 	case "usergoodsstate": //user state for specified goods in goodsdetail page
 		tmp := md.UserGoodsState{Like: false, Collect: false}
@@ -175,17 +179,17 @@ tail:
 	this.ServeJSON()
 }
 
-//user upload a goods 🍋🍔
+//user upload a goods in upload page 🍋🍔🍚
 func (this *UploadGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
 	var goodsdata md.UploadGoodsData
 	var err error
-	var token string
+	var token, reason string
 	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
-		response.Msg = fmt.Sprintf("Can not parse postbody: %v", err)
+		response.Msg = fmt.Sprintf("解析请求主体失败: %v", err)
 		rlog.Error(response.Msg)
 		goto tail
 	}
@@ -194,7 +198,7 @@ func (this *UploadGoodsController) Post() {
 		if err, ok := recover().(error); ok {
 			response.StatusCode = -99
 			response.Msg = fmt.Sprintf("Unexpect error happen, error: %v", err)
-			rlog.Error(response.Msg)
+			rlog.Critical("%s", response.Msg)
 			this.Data["json"] = response
 			this.ServeJSON()
 		}
@@ -202,16 +206,39 @@ func (this *UploadGoodsController) Post() {
 	//parse postBody.Data
 	if err := json.Unmarshal([]byte(postBody.Data.(string)), &goodsdata); err != nil {
 		response.StatusCode = -2
-		response.Msg = fmt.Sprintf("Marshal fail: %v", err)
+		response.Msg = fmt.Sprintf("解析主体数据失败: %v", err)
 		rlog.Error(response.Msg)
 		goto tail
 	}
 	//check token
+	token = postBody.Token
 	if token == "" || !CheckToken(goodsdata.UserId, token) {
 		rlog.Warn("User %s request upload goods with worng token", goodsdata.UserId)
 		response.StatusCode = -1000
-		response.Msg = "Token错误或过期,请重新登录！"
+		response.Msg = "Token 错误或过期,请重新登录！"
 		goto tail
+	}
+	//check goodsdata format
+	switch {
+	case goodsdata.UserId == "":
+		reason = "无效的用户ID"
+	case goodsdata.Imgurl == "":
+		reason = "无效的图片连接"
+	case !tb.CheckGoodsName(goodsdata.Name):
+		reason = "商品名称不通过"
+	case len(goodsdata.Text) < 5, len(goodsdata.Text) >= 45:
+		reason = "商品标题不通过"
+	case goodsdata.Price < 0 || goodsdata.Price > 10000:
+		reason = "商品专让价不通过"
+	case goodsdata.Type == "", goodsdata.Tag == "":
+		reason = "无法获取分类或标签数据"
+	case len(goodsdata.Text) > 500<<10:
+		reason = "商品描述的长度超过了500kb"
+	}
+	if reason != "" {
+		response.StatusCode = -3
+		response.Msg = reason
+		rlog.Error(response.Msg)
 	}
 	//save to database
 	if err = md.CreateGoods(goodsdata); err != nil {
@@ -222,7 +249,7 @@ func (this *UploadGoodsController) Post() {
 	}
 	response.StatusCode = 0
 	response.Msg = "Success!"
-	md.Uas2.Add(goodsdata.UserId) //upload goods scuess, credits+1
+	md.Uas2.Add(goodsdata.UserId)
 tail:
 	this.Data["json"] = response
 	this.ServeJSON()

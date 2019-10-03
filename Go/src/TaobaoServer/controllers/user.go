@@ -2,6 +2,7 @@ package controllers
 
 import (
 	md "TaobaoServer/models"
+	tb "TaobaoServer/toolsbox"
 	"encoding/json"
 	"fmt"
 
@@ -40,8 +41,6 @@ func (this *PersonalDataController) Post() {
 			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
-	} else {
-		logs.Info(err)
 	}
 	//catch the unexpect panic
 	defer func() {
@@ -53,65 +52,84 @@ func (this *PersonalDataController) Post() {
 			this.ServeJSON()
 		}
 	}()
-	// rlog.Info(api, "\t\t", targetid)
 	//handle the request
 	switch api {
-	case "mymsg": //my profile data
+	case "mymsg": //my user profile data, targetid mean userid 🍚
 		var data md.UserMessage
 		if err = md.GetUserData(targetid, &data); err != nil {
 			response.StatusCode = -3
-			response.Msg = fmt.Sprintf("Get user data fail: %v", err)
+			response.Msg = fmt.Sprintf("获取数据失败: %v", err)
 			rlog.Error(response.Msg)
+			goto tail
 		} else {
 			response.Data = data
 		}
 
-	case "mygoods": //my goods data 🍉
+	case "mygoods": //my user's goods data 🍉🍚
 		var data []md.GoodsShort
+		if postBody.Offset < 0 || postBody.Limit <= 0 {
+			response.StatusCode = -4
+			response.Msg = "非法的 offset 值或 limit 值"
+			rlog.Error(response.Msg)
+			goto tail
+		}
 		if err = md.GetMyGoods(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -4
-			response.Msg = fmt.Sprintf("Can't get goods data: %v ", err)
+			response.Msg = fmt.Sprintf("获取商品列表失败: %v ", err)
 			rlog.Error(response.Msg)
-		} else {
-			response.Data = data
-			response.Rows = len(data)
-			response.Sum = md.CountMyCoods(targetid)
+			goto tail
 		}
-		md.Uas1.Add(targetid) //user see himself personal page, active+1
+		response.Data = data
+		response.Rows = len(data)
+		response.Sum = md.CountMyCoods(targetid)
 
-	case "mycollect": //my collect goods data 🍉
+		md.Uas1.Add(targetid)
+
+	case "mycollect": //my collect goods data 🍉🍚
+		if postBody.Offset < 0 || postBody.Limit <= 0 {
+			response.StatusCode = -5
+			response.Msg = "非法的 offset 值或 limit 值"
+			rlog.Error(response.Msg)
+			goto tail
+		}
 		var data []md.GoodsShort
 		if err = md.GetMyCollectGoods(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -5
-			response.Msg = fmt.Sprintf("Can't get collect data: %v ", err)
+			response.Msg = fmt.Sprintf("获取收藏列表失败: %v ", err)
 			rlog.Error(response.Msg)
-		} else {
-			response.Data = data
-			response.Rows = len(data)
-			response.Sum = md.CountMyCollect(targetid)
+			goto tail
 		}
+		response.Data = data
+		response.Rows = len(data)
+		response.Sum = md.CountMyCollect(targetid)
 
-	case "message": //my receive messages 🍉🍏 🍞
+	case "message": //my receive messages 🍉🍏 🍞🍚
+		if postBody.Offset < 0 || postBody.Limit <= 0 {
+			response.StatusCode = -9
+			response.Msg = "非法的 offset 值或 limit 值"
+			rlog.Error(response.Msg)
+			goto tail
+		}
 		var data []md.MyMessage
 		if err = md.GetMyMessage(targetid, &data, postBody.Offset, postBody.Limit); err != nil {
 			response.StatusCode = -9
-			response.Msg = fmt.Sprintf("Can't get message data: %v ", err)
+			response.Msg = fmt.Sprintf("获取消息列表失败: %v ", err)
 			rlog.Error(response.Msg)
-		} else {
-			response.Data = data
-			response.Rows = len(data)
-			response.Sum = md.CountMyAllMsg(targetid)
+			goto tail
 		}
+		response.Data = data
+		response.Rows = len(data)
+		response.Sum = md.CountMyAllMsg(targetid)
 
-	case "mycare": //get my favorite and who care me
+	case "mycare": //get my care list and who care me
 		var data [2][]md.UserShort
 		if err = md.GetCareMeData(targetid, &data); err != nil {
 			response.StatusCode = -6
-			response.Msg = fmt.Sprintf("Can't get care data: %v ", err)
+			response.Msg = fmt.Sprintf("获取关注列表失败: %v ", err)
 			rlog.Error(response.Msg)
-		} else {
-			response.Data = data
+			goto tail
 		}
+		response.Data = data
 
 	case "naving": //get naving data 🍔
 		var data md.MyStatus
@@ -291,7 +309,7 @@ tail:
 	this.ServeJSON()
 }
 
-//login, regeist, comfirm code, change password... 🍏🍓🍄🍖
+//login, regeist, comfirm code, change password... 🍏🍓🍄🍖🍚
 func (this *EntranceController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -313,16 +331,38 @@ func (this *EntranceController) Post() {
 		rlog.Error(response.Msg)
 		goto tail
 	}
+	//catch the unexpect panic
+	defer func() {
+		if err, ok := recover().(error); ok {
+			response.StatusCode = -99
+			response.Msg = fmt.Sprintf("Unexpect error, api: %s , des: %v", api, err)
+			rlog.Error(response.Msg)
+			this.Data["json"] = response
+			this.ServeJSON()
+		}
+	}()
 	switch api {
-	case "login": //login, note that the target id can be true id or name 🍓🍄🍔
-		//TODO: check to format of password
-		password := MD5Parse(postBody.Data.(string))
-		//TODO: check if the identifi is student number and vertify it
-
+	case "login": //note that the target id can be true id or name or email🍓🍄🍔🍚
+		//user name format checking
+		if !tb.CheckUserName(targetid) && !tb.CheckEmail(targetid) {
+			rlog.Warn("User name '%s' unpass checking in login", targetid)
+			response.StatusCode = -3
+			response.Msg = "用户名、ID、或邮箱地址格式不对"
+			goto tail
+		}
+		//password format checking
+		password := postBody.Data.(string)
+		if !tb.CheckPassword(password) {
+			rlog.Warn("User %s password '%s' unpass checking in login", targetid, password)
+			response.StatusCode = -3
+			response.Msg = "密码格式错误"
+			goto tail
+		}
 		//check the account from database and get true id
+		password = MD5Parse(postBody.Data.(string))
 		tid, err := md.ComfirmLogin(targetid, password)
 		if err != nil {
-			rlog.Warn("%v", err)
+			rlog.Warn("ComfirmLogin fail: %v", err)
 			response.StatusCode = -3
 			if err == md.NoResultErr {
 				response.Msg = "没有此账号或密码错误"
@@ -332,81 +372,116 @@ func (this *EntranceController) Post() {
 			}
 			goto tail
 		}
-		//if the password is passed than return user data
+		//if the password is passed than response data is user naving data
 		var data md.MyStatus
 		if err = md.GetNavingMsg(tid, &data); err != nil {
 			response.StatusCode = -4
-			response.Msg = fmt.Sprintf("Can't get usre message: %v ", err)
+			response.Msg = fmt.Sprintf("Can't get usre naving data: %v ", err)
 			rlog.Error(response.Msg)
 		} else {
+			//create a token for user next times identify, token will place at response msg
 			data.ID = tid
 			response.Data = data
 			if token := CreateToken(tid); token == "" {
 				response.StatusCode = -5
 				response.Msg = "Sorry, Create token fail!"
-				rlog.Error(response.Msg)
+				rlog.Critical(response.Msg)
 			} else {
 				response.Msg = token
 			}
 		}
 		goto tail
 
-	case "getcomfirmcode": //comfrim the signup message form user and return a comfrim code 🍖
+	case "getcomfirmcode": //comfrim sign up data and return a comfrim code when user regiest  🍖🍚
 		register := md.RegisterData{}
 		if err = Parse(postBody.Data, &register); err != nil {
 			response.StatusCode = -5
-			response.Msg = fmt.Sprintf("Parse postbody fail: %v", err)
+			response.Msg = fmt.Sprintf("解析请求主体失败: %v", err)
 			goto tail
 		}
-		logs.Info(register)
-		//TODO:check the postdata message
+		//check username, password and email format
+		if !tb.CheckUserName(register.Name) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("用户名格式错误")
+			goto tail
+		}
+		if !tb.CheckEmail(register.Email) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("邮箱地址格式错误")
+			goto tail
+		}
+		if !tb.CheckPassword(register.Password) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("密码格式错误")
+			goto tail
+		}
+		//check the if the user name and email have been used
 		if md.CountUserName(register.Name) != 0 {
 			response.StatusCode = -6
-			response.Msg = "It name have been used, please try another one"
+			response.Msg = "这个用户名正在被使用，请更换一个哦"
 			goto tail
 		}
+		if md.CountRegistEmail(register.Email) != 0 {
+			response.StatusCode = -6
+			response.Msg = "这个邮箱地址已经被注册，请更换一个或重置密码"
+			goto tail
+		}
+		//send a comfirm code to user's email
 		code := GetRandomCode()
-		logs.Info(code)
+		logs.Debug(code)
 		register.Code = code
-		if err = SendConfrimEmail(register, md.CountUser()); err != nil {
+		if err = SendConfrimEmail(register, md.CountTotalUser()); err != nil {
 			response.StatusCode = -7
-			response.Msg = fmt.Sprintf("Send Email fail: %v", err)
-			logs.Error(response.Msg)
+			response.Msg = fmt.Sprintf("发送邮件失败:'%v' ,请稍后重试", err)
+			logs.Critical(response.Msg)
 			goto tail
 		}
-		//save the code into timer map
+		//save the comfirm code into timer map
 		keyData := fmt.Sprintf("%v", register)
-		logs.Info(keyData)
 		if err = md.ComfirmCode.Add(keyData); err != nil {
 			response.StatusCode = -8
-			response.Msg = fmt.Sprintf("Save comfirm code fail: %v", err)
-			logs.Error(response.Msg)
+			response.Msg = fmt.Sprintf("保存验证码失败, '%v' ,请稍后重试", err)
+			logs.Critical(response.Msg)
 			goto tail
 		}
 
-	case "comfirmAndRegisit": //vertify the comfirm code and create a new account if pass  🍖
+	case "comfirmAndRegisit": //vertify the comfirm code and create a new account if pass  🍖🍚
 		register := md.RegisterData{}
 		if err = Parse(postBody.Data, &register); err != nil {
 			response.StatusCode = -9
-			response.Msg = fmt.Sprintf("Parse postbody fail: %v", err)
+			response.Msg = fmt.Sprintf("解析请求体数据失败:' %v', 请稍后重试", err)
 			goto tail
 		}
-		//TODO:check the postdata message
+		//check user name, password and email format
+		if !tb.CheckUserName(register.Name) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("用户名格式错误")
+			goto tail
+		}
+		if !tb.CheckEmail(register.Email) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("邮箱地址格式错误")
+			goto tail
+		}
+		if !tb.CheckPassword(register.Password) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("密码格式错误")
+			goto tail
+		}
 		//check the comfirm code
 		keyData := fmt.Sprintf("%v", register)
-		logs.Info(keyData)
 		if err = md.ComfirmCode.Get(keyData); err != nil {
 			rlog.Warn("%v", err)
 			response.StatusCode = -10
 			response.Msg = fmt.Sprintf("验证失败：%v", err)
 			goto tail
 		}
-		//create a new account
+		//comfirm success, create a new account for user
 		register.Password = MD5Parse(register.Password)
 		if err = md.CreateAccount(register); err != nil {
 			rlog.Error("%v", err)
 			response.StatusCode = -11
-			response.Msg = fmt.Sprintf("：( 创建账号失败：%v, 请稍后重试", err)
+			response.Msg = fmt.Sprintf("💣 创建账号失败：%v, 请稍后重试", err)
 			goto tail
 		}
 		rlog.Info("New account have been create! %s", register.Name)

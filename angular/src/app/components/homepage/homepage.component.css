@@ -132,7 +132,7 @@
 }
 
 .next, .prev {
-    width: 70px;
+    width: 50px;
     font-weight: 400;
 }
 
@@ -281,7 +281,7 @@
         font-size: 0.9em;
     }
     .pagebox .pbform {
-        margin: 10px auto;
+        margin: 6px auto;
         float: unset;
     }
 }

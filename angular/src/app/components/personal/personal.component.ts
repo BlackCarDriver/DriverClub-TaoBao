@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { UserMessage, GoodsShort, MyMessage, Rank, User, RequestProto } from '../../struct';
 import { ServerService } from '../../server.service';
 import { AppComponent } from '../../app.component';
-import { post } from 'selenium-webdriver/http';
 declare let $: any;
 
 @Component({
@@ -44,18 +43,12 @@ export class PersonalComponent implements OnInit {
 
   ngOnInit() {
     if (this.server.IsNotLogin()) {
-      window.history.back();
+      return;
     }
-    // this.userid = this.server.Getusername();
     this.getmymsg();
-    this.getmymgoods();
-    this.getmycollect();
-    this.getmymessage();
-    this.getrank();
-    this.getcare();
   }
 
-  //get detail information 🍍🍈🌽
+  //get detail information 🍍🍈🌽🍚
   getmymsg(laster?: boolean) {
     let postdata: RequestProto = {
       api: "mymsg",
@@ -67,42 +60,45 @@ export class PersonalComponent implements OnInit {
       postdata.cachetime = 0;
     }
     this.server.GetMyMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) { this.msg = result.data; }
-      else {
-        this.app.showMsgBox(-1, "请求个人信息失败,请刷新试试", result.msg)
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "请求个人信息失败,请刷新试试:" + result.msg)
+        return;
       }
-    }, error => {
-      console.log("GetMyMsg() fail: " + error)
+      this.msg = result.data;
+    }, err => {
+      this.app.cFail(err);
+      return;
     });
+    this.getmymgoods();
+    this.getmycollect();
+    this.getmymessage();
+    this.getrank();
+    this.getcare();
   }
 
-  //get the list of user i care and which acre me🍍🍈🍞🌽
+  //get the list of user i care and which acre me🍍🍈🍞🌽🍚
   getcare() {
     let postdata: RequestProto = {
       api: "mycare",
       targetid: this.server.userid,
-      cachetime: 300,
+      cachetime: 600,
       cachekey: "mycare_" + this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
       if (result.statuscode == 0) {
         let temp: User[] = result.data[0];
-        temp.forEach(row => {
-          row.headimg = this.server.changeImgUrl(row.headimg);
-        });
+        temp.forEach(row => { row.headimg = this.server.changeImgUrl(row.headimg); });
         let temp2 = result.data[1];
-        temp2.forEach(row => {
-          row.headimg = this.server.changeImgUrl(row.headimg);
-        });
+        temp2.forEach(row => { row.headimg = this.server.changeImgUrl(row.headimg); });
         this.icare = temp;
         this.carei = temp2;
       } else {
-        this.app.showMsgBox(-1, "请求关注信息失败,请刷新试试", result.msg)
+        this.app.showMsgBox(-1, "请求关注信息失败,请刷新试试" + result.msg)
       }
-    }, error => { console.log(error) });
+    }, err => { this.app.cFail(err); });
   }
 
-  //get my goods information 🍍 🍉🍈 🍇🍏 🍞🌽
+  //get my goods information 🍍 🍉🍈 🍇🍏 🍞🌽🍚
   getmymgoods() {
     let postdata: RequestProto = {
       api: "mygoods",
@@ -113,30 +109,30 @@ export class PersonalComponent implements OnInit {
     };
     postdata.cachekey = "mygoods_" + postdata.userid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) {
-        console.log(result.data);
-        if (result.rows == 0){
-          this.show_no_goods = true;
-          return;
-        }
-        let temp: GoodsShort[] = result.data;
-        //change image url to make it faster
-        temp.forEach(row => {
-          row.headimg = this.server.changeImgUrl(row.headimg);
-        });
-        this.mygoodslist = result.data;
-        this.mg_sumpage = Math.ceil(result.sum / this.mg_maxrow);
-        if (this.mg_sumpage > 1) {
-          this.mg_array = new Array;
-          for (let i = 1; i <= this.mg_sumpage && i <= 9; i++) {
-            this.mg_array.push(i);
-          }
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "无法获取商品列表，请稍后再试:" + result.msg);
+        return;
+      }
+      if (result.rows == 0) {
+        this.show_no_goods = true;
+        return;
+      }
+      //change image url to make it load faster
+      let temp: GoodsShort[] = result.data;
+      temp.forEach(row => { row.headimg = this.server.changeImgUrl(row.headimg); });
+      this.mygoodslist = temp;
+      //change the page box
+      this.mg_sumpage = Math.ceil(result.sum / this.mg_maxrow);
+      if (this.mg_sumpage > 1) {
+        this.mg_array = new Array;
+        for (let i = 1; i <= this.mg_sumpage && i <= 9; i++) {
+          this.mg_array.push(i);
         }
       }
-    }, error => { console.log("GetMyMsg" + error) });
+    }, err => { this.app.cFail(err); });
   }
 
-  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞🌽🍖
+  //get my collect goods information 🍍 🍉 🍈 🍇🍏 🍞🌽🍖🍚
   getmycollect() {
     let postdata: RequestProto = {
       api: "mycollect",
@@ -147,69 +143,75 @@ export class PersonalComponent implements OnInit {
     };
     postdata.cachekey = "mycollect_" + postdata.targetid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) {
-          if (result.rows == 0) {
-            this.show_no_collect = true;
-            return;
-          }
-          let temp: GoodsShort[] = result.data;
-          temp.forEach(row => {
-          row.headimg = this.server.changeImgUrl(row.headimg);
-        });
-        this.mycollectlist = temp;
-       if (result.sum > 1) {
-          this.mc_array = new Array;
-          this.mc_sumpage = Math.ceil(result.sum / this.mc_maxrow);
-          for (let i = 1; i <= this.mc_sumpage && i <= 9; i++) {
-            this.mc_array.push(i);
-          }
-        }
-      } else {
-        this.app.showMsgBox(-1, "请求收藏数据失败,请刷新试试", result.msg)
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "获取收藏数据失败,请稍后再试：" + result.msg);
+        return;
       }
-    }, error => { console.log("GetMyMsg fail: " + error) });
+      if (result.rows == 0) {
+        this.show_no_collect = true;
+        return;
+      }
+      //change image url to make it load faster
+      let temp: GoodsShort[] = result.data;
+      temp.forEach(row => { row.headimg = this.server.changeImgUrl(row.headimg); });
+      this.mycollectlist = temp;
+      //change the page box display
+      if (result.sum > 1) {
+        this.mc_array = new Array;
+        this.mc_sumpage = Math.ceil(result.sum / this.mc_maxrow);
+        for (let i = 1; i <= this.mc_sumpage && i <= 9; i++) {
+          this.mc_array.push(i);
+        }
+      }
+    }, err => { this.app.cFail(err) });
   }
 
-  // get my mail message  🍍 🍉🍈 🍇 🍏 🍑🌽
+  // get my mail message  🍍 🍉🍈 🍇 🍏 🍑🌽🍚
   getmymessage() {
     let postdata: RequestProto = {
       api: "message",
       targetid: this.server.userid,
       offset: (this.msg_nowat - 1) * this.msg_maxrow,
       limit: this.msg_maxrow,
-      cachetime: 180,
+      cachetime: 300,
     };
     postdata.cachekey = "mymsgs_" + postdata.targetid + "_" + postdata.offset + "_" + postdata.limit;
     this.server.GetMyMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) {
-        this.mymessagelist = result.data;
-        if (result.rows == 0) this.show_no_message = true;
-        else if (result.sum > 1) {
-          this.msg_array = new Array;
-          this.msg_sumpage = Math.ceil(result.sum / this.msg_maxrow);
-          for (let i = 1; i <= this.msg_sumpage && i <= 9; i++) {
-            this.msg_array.push(i);
-          }
-        }
-      } else {
-        this.app.showMsgBox(-1, "请求私信数据失败,请刷新试试", result.msg);
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "请求消息数据失败,请刷新试试: " + result.msg);
+        return;
       }
-    }, error => { console.log("GetMyMsg() fail:" + error); });
+      this.mymessagelist = result.data;
+      if (result.rows == 0){
+        this.show_no_message = true;
+        return;
+      }
+      if (result.sum > 1) {
+        this.msg_array = new Array;
+        this.msg_sumpage = Math.ceil(result.sum / this.msg_maxrow);
+        for (let i = 1; i <= this.msg_sumpage && i <= 9; i++) {
+          this.msg_array.push(i);
+        }
+      }
+    }, err => { this.app.cFail(err)});
   }
 
-  //get users rank message  🍍🍈
+  //get users rank message  🍍🍈🍚
   getrank() {
+    if(this.server.IsPhone()){
+      return;
+    }
     let postdata: RequestProto = {
       api: "rank",
       targetid: this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) {
-        this.hero = result.data;
-      } else {
-        this.app.showMsgBox(-1, "请求排名数据失败,请刷新试试", result.msg);
-      }
-    }, error => { console.log("GetMyMsg() fail: " + error) });
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(-1, "获取请求排名数据失败,请刷新试试", result.msg);
+        return;
+      } 
+      this.hero = result.data;
+    }, err => { this.app.cFail(err); });
   }
 
   //delete my upload goods 🍑

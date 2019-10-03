@@ -10,35 +10,46 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-//一些数据库默认值
+//some default value of database
 const (
-	dfUserHeadimg = `https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/2f6de585abe7baa7e5a4a7e78b82e9a38e5a`
-	dfUserName    = `尊贵的用户`
-	dfGoodHeadimg = `https://gss0.bdstatic.com/6LZ1dD3d1sgCo2Kml5_Y_D3/sys/portrait/item/c62bcfccb5b0b9b7c8cbc132?t=1526199816`
+	dfUserHeadimg = `https://img-blog.csdnimg.cn/20191003114954113.jpg`
+	dfGoodHeadimg = `https://img-blog.csdnimg.cn/20191003114954113.jpg`
 	masterId = "19070010"
 )
 
-//Create a account autoly by provided name, password and email 🍖
+// some pulic message template
+const(
+	HelloMsgToNewUser = ` [系统消息] 欢迎并感谢你成为本站的会员！本站仍然在开发之中，很多地方有待完善，欢迎到反馈页面反馈问题以及向我发送私聊，
+我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！`
+)
+
+//Create a account autoly by provided name, password and email 🍖🍚
+//note that the password  should be md5 encoded
 func CreateAccount(user RegisterData) error {
 	o := orm.NewOrm()
-	//check the username again
+	//check the username and email again
 	if nameNumber := CountUserName(user.Name); nameNumber!= 0 {
 		err := fmt.Errorf("User name %s already have been used!", user.Name)
 		mlog.Error("%v",err)
 		return err
 	}
+	if emailNumber := CountRegistEmail(user.Email); emailNumber != 0 {
+		err := fmt.Errorf("Email %s already have been used!", user.Name)
+		mlog.Error("%v",err)
+		return err
+	} 
 	//make a userid by the following regular
-	userNumber := CountUser() + 1
+	userNumber := CountTotalUser() + 1
 	t := time.Now()
 	userid := fmt.Sprintf("%02d%02d%04d", t.Year()%100, t.Month(), userNumber)
 	rawSeter := o.Raw("insert into t_user(id, email, password, name, headimg) values(?,?,?,?,?)",
 		userid, user.Email, user.Password, user.Name, dfUserHeadimg)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("create new account fail: %v",err)
 		return err
 	}
-	//send user a private message
+	//send user a private message to user account
 	if err := SendSystemMsg(userid, HelloMsgToNewUser); err!= nil {
 		mlog.Error("%v",err)
 	}
@@ -85,7 +96,7 @@ func CreateGoods(goods UploadGoodsData) error {
 	return err
 }
 
-//某商品被收藏，记录收藏信息
+//goods collect by user
 func AddCollectRecord(uid, gid string) error {
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
@@ -97,8 +108,13 @@ func AddCollectRecord(uid, gid string) error {
 	return err
 }
 
-//private message sending
+//private message sending 🍚
 func AddUserMessage(uid, targetid, message string) error {
+	if uid=="" || targetid =="" || message == "" {
+		err := errors.New("get empty userid or message content")
+		mlog.Error("%v",err)
+		return err
+	}
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, uid, targetid, message)
 	_, err := rawSeter.Exec()
@@ -140,7 +156,7 @@ func AddGoodsCollect(uid, gid string) error {
 	return nil
 }
 
-//某人被关注，更新关注表
+//user concern by others
 func AddUserConcern(id1, id2 string) error {
 	o := orm.NewOrm()
 	var err error
@@ -195,10 +211,13 @@ func AddGoodsLike(uid, gid string) error {
 
 //save a user_like record
 func AddUserLike(uid1, uid2 string) error {
+	if uid1=="" || uid2 =="" {
+		err:= errors.New("uid or uid is null")
+		mlog.Error("%v",err)
+		return err
+	}
 	o := orm.NewOrm()
-	var err error
-	var result sql.Result
-	result, err = o.Raw(`INSERT INTO public.t_user_like(userid1, userid2)VALUES (?, ?)`, uid1, uid2).Exec()
+	result, err := o.Raw(`INSERT INTO public.t_user_like(userid1, userid2)VALUES (?, ?)`, uid1, uid2).Exec()
 	if err != nil {
 		mlog.Error("uid1: %s, uid2:%s, error:%v", uid1, uid2, err)
 		return err
@@ -219,9 +238,7 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 		return errors.New("Argument not right, get a empty id or comment content")
 	}
 	o := orm.NewOrm()
-	var err error
-	var result sql.Result
-	result, err = o.Raw(`INSERT INTO public.t_comment(userid, goodsid, content)VALUES (?, ?, ?)`, uid, gid, conetnt).Exec()
+	result, err := o.Raw(`INSERT INTO public.t_comment(userid, goodsid, content)VALUES (?, ?, ?)`, uid, gid, conetnt).Exec()
 	if err != nil {
 		mlog.Error("%v",err)
 		return err

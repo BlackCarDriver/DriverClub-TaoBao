@@ -48,7 +48,6 @@
 }
 
 /*login box */
-
 .modal-body {
     width: 30em;
     margin: 1em 0.5em;
@@ -122,7 +121,7 @@
     .public-box {
         width: 90%;
     }
-    .modal-body{
+    .modal-body {
         width: 25em;
     }
 }

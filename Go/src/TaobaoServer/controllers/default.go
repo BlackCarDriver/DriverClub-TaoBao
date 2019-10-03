@@ -2,6 +2,7 @@ package controllers
 
 import (
 	md "TaobaoServer/models"
+	tb "TaobaoServer/toolsbox"
 	"bufio"
 	"crypto/md5"
 	"encoding/hex"
@@ -13,6 +14,7 @@ import (
 	"image/png"
 	"io/ioutil"
 	"math/rand"
+	"mime/multipart"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -139,20 +141,38 @@ func (this *TestController) Get() {
 	this.TplName = "test.tpl"
 }
 
-//saved user's upload images into dist and return a url that get it images 🍍🌰
+//saved user's upload images into dist and return a url that get it images 🍍🌰🍚
 //response to UploadImg() in fontend
 ///upload/images
 func (this *UploadImagesController) Post() {
 	response := md.ReplyProto{}
+	var h *multipart.FileHeader
+	var f multipart.File
+	var err error
 	var savePath = ""
-	f, h, err := this.GetFile("file")
+	//only let sign in user upload images
+	userid := this.GetString("userid")
+	token := this.GetString("token")
+	if userid == "" || token == "" {
+		response.StatusCode = -1
+		response.Msg = "无法获取 userid 或 token"
+		goto tail
+	}
+	if !CheckToken(userid, token) {
+		response.StatusCode = -1
+		response.Msg = "Token 错误或已过期: %v"
+		rlog.Error("User '%s' upload image fail because token unpass ", userid)
+		goto tail
+	}
+	//get file from from data
+	f, h, err = this.GetFile("file")
 	if err != nil {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("Can not get file from request: %v", err)
 		rlog.Error("%v", response.Msg)
 		goto tail
 	}
-	//check the size of upload images
+	//check the size of upload images (300kb)
 	rlog.Info("Upload images name:%s,  size:%d", h.Filename, h.Size)
 	if h.Size > maxGoodsHeadImgSizekb<<10 {
 		response.StatusCode = -2
@@ -179,7 +199,7 @@ func (this *UploadImagesController) Post() {
 	}
 	//compress the image,
 	if err = CompressImg(savePath, 100); err != nil {
-		logs.Error(err)
+		rlog.Critical("images compress function fail:%v", err)
 	}
 	response.StatusCode = 0
 	response.Data = fmt.Sprintf(imgUrlTP, h.Filename)
@@ -232,54 +252,74 @@ func (this *UpdateController) Post() {
 		}
 		goto tail
 
-	case "sendmessage": //send a private message to goods owner
+	case "sendmessage": //send a private message to goods owner🍚
 		appendData := postBody.Data.(map[string]interface{})
-		message := ""
-		if message = appendData["message"].(string); message == "" {
+		if userid == targetid {
 			response.StatusCode = -4
-			response.Msg = "Can't get message on postbody"
+			response.Msg = "不能发消息给自己哦 :)"
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
+		message := ""
+		if message = appendData["message"].(string); tb.CheckMessage(message) {
+			response.StatusCode = -4
+			response.Msg = "消息格式不通过"
 			rlog.Error("%v", response.Msg)
 			goto tail
 		}
 		if err = md.AddUserMessage(userid, targetid, message); err != nil {
 			response.StatusCode = -5
-			response.Msg = fmt.Sprintf("AddUserMssage() fail: %v", err)
+			response.Msg = fmt.Sprintf("保存消息数据失败： %v", err)
 			rlog.Error("%v", response.Msg)
+			goto tail
 		}
 		goto tail
 
-	case "addcollect": //add a goods to favorite
+	case "addcollect": //add a goods to favorite🍚
+		if userid == "" || targetid == "" {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("读取用户id或目标id失败")
+			rlog.Error("%v", response.Msg)
+		}
 		if err = md.AddGoodsCollect(userid, targetid); err != nil {
 			response.StatusCode = -6
-			response.Msg = fmt.Sprintf("AddGoodsCollect() fail: %v", err)
+			response.Msg = fmt.Sprintf("更新数据库失败: %v", err)
 			rlog.Error("%v", response.Msg)
 		}
-		md.Uas2.Add(userid) //collect a goods, credits +1
+		md.Uas2.Add(userid)
 		goto tail
 
-	case "addcomment": // reviews a goods
+	case "addcomment": //user comment at a goods 🍚
 		appendData := postBody.Data.(map[string]interface{})
 		comment := ""
-		if comment = appendData["comment"].(string); comment == "" {
+		//read and check text data from request struct
+		if comment = appendData["comment"].(string); !tb.CheckComment(comment) {
 			response.StatusCode = -10
-			response.Msg = "Can't get comment on postbody"
+			response.Msg = "评论格式不不通过"
 			rlog.Error("%v", response.Msg)
 			goto tail
 		}
 		if err = md.AddGoodsComment(userid, targetid, comment); err != nil {
 			response.StatusCode = -11
-			response.Msg = fmt.Sprintf("AddGoodsComment() fail %v", err)
+			response.Msg = fmt.Sprintf("保存评论失败：%v", err)
 			rlog.Error("%v", response.Msg)
+			goto tail
 		}
 		goto tail
 
 	case "likeuser": //add a like to a user profile
+		if userid == "" || targetid == "" {
+			response.StatusCode = -7
+			response.Msg = fmt.Sprintf("无法读取用户id或目标id")
+			rlog.Error("%v", response.Msg)
+			goto tail
+		}
 		if err = md.AddUserLike(userid, targetid); err != nil {
 			response.StatusCode = -7
 			response.Msg = fmt.Sprintf("AddUserLike() fail: %v", err)
 			rlog.Error("%v", response.Msg)
+			goto tail
 		}
-		goto tail
 
 	case "addconcern": // add someone to favorite
 		if err = md.AddUserConcern(userid, targetid); err != nil {

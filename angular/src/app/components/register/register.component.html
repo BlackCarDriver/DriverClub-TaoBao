@@ -6,23 +6,23 @@
       <form name="register">
       <h4>用户名称</h4>
       <div class="row inputrow">
-        <input type="text" class="sginput" maxlength="20" pattern="^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$" name="username" id="username">
+        <input type="text" class="sginput" maxlength="30" pattern="^[^ ]{2,30}$" name="username" id="username" autocomplete="off">
       </div>
       <h4>{{model=='signup'?'设置密码':'新密码'}}</h4>
       <div class="row inputrow">
-        <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="password1">
+        <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="password1" autocomplete="off">
       </div>
       <h4>确认密码</h4>
       <div class="row inputrow">
-        <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="password2">
+        <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="password2" autocomplete="off">
       </div>
       <h4>邮箱地址</h4>
       <div class="row inputrow">
-        <input type="email" class="sginput" maxlength="30" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$" nam="email" id="email">
+        <input type="email" class="sginput" maxlength="30" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$" name="email" id="email" autocomplete="off">
       </div>
       <h4>验证码</h4>
       <div class="row inputrow">
-        <input type="text" class="sginput" style="margin-right: -90px;" name="comfirm" maxlength="10" pattern="^[0-9]{6}$" id="comfirmcode">
+        <input type="text" class="sginput" style="margin-right: -90px;" name="comfirm" maxlength="8" pattern="^[0-9]{6}$" id="comfirmcode" autocomplete="off">
         <span>
           <a (click)="getComfirmCode()" id="sendcode">{{sendMsg}}</a>
         </span>

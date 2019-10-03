@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-//######################################### 公用协议 ##########################################
+//######################################### public protocol ##########################################
 //public struct that used to request 🍌 🍉🍔
 type RequestProto struct {
 	Tag       string      `json:"tag"`
@@ -29,7 +29,7 @@ type ReplyProto struct {
 	Sum        int         `json:"sum"`
 }
 
-//########################################## 主页结构和模拟数据 ################################
+//########################################## homepage component ################################
 type Goods1 struct {
 	Userid   string    `json:"userid"`
 	Username string    `json:"username"`
@@ -43,26 +43,24 @@ type Goods1 struct {
 	Tag      string    `json:"tag"`
 }
 
-//主页获取商品封面数据时提供的信息
+//used when request a goods list
 type PostBody1 struct {
 	GoodsType  string `json:"goodstype"`
 	GoodsTag   string `json:"goodstag"`
 	GoodsIndex int    `json:"goodsindex"`
 }
 
-//商品分类
 type GoodsType struct {
 	Type string         `json:"type"`
 	List []GoodsSubType `json:"list"`
 }
 
-//分类中的标签
 type GoodsSubType struct {
 	Tag    string `json:"tag"`
 	Number int64  `json:"number"`
 }
 
-//########################################## 商品详情页面结构体和模拟数据 #################################################
+//########################################## goodspage component #################################################
 
 //goods data shown in goodsdetail page 🍉
 type GoodsDetail struct {
@@ -94,7 +92,6 @@ type GoodsPostBody struct {
 	DataType string `json:"datatype"`
 }
 
-//可用于更新点赞数，收藏表，和私信表
 type UpdatePostBody struct {
 	Tag      string `json:"tag"`
 	UserId   string `json:"userid"`
@@ -109,7 +106,7 @@ type UserGoodsState struct {
 	Collect bool `json:"collect"`
 }
 
-//########################################## 个人详情页结构体和模拟数据 #################################################
+//########################################## personal component #################################################
 type PersonalPostBody struct {
 	Name string `json:"name"`
 	Tag  string `json:"tag"`
@@ -182,15 +179,26 @@ type UserState struct {
 	Concern bool `json:"concern"`
 }
 
-//########################################## 修改信息页面数据结构和模拟数据 #################################################
-
-//修改数据请求的主体结构
+//########################################## chmymsg conpoment #################################################
 type UpdateBody struct {
 	UserId string      `json:"userid"`
 	Tag    string      `json:"tag"`
 	Data   interface{} `json:"data"`
 }
-
+type UserSetData struct {
+	Headimg  string `json:"headimg"`
+	Name     string `json:"name"`
+	Id       string `json:"id"`
+	Sex      string `json:"sex"`
+	Sign     string `json:"sign"`
+	Grade    string `json:"grade"`
+	Colleage string `json:"colleage"`
+	Major    string `json:"major"`
+	Dorm     string `json:"dorm"`
+	Emails   string `json:"emails"`
+	Qq       string `json:"qq"`
+	Phone    string `json:"phone"`
+}
 type UpdeteMsg struct {
 	Id         string `json:"id"`
 	Headimg    string `json:"headimg"`
@@ -216,7 +224,7 @@ func GetUpdateResult(status int, err error) UpdateResult {
 	return UpdateResult{Status: status, Describe: fmt.Sprint(err)}
 }
 
-//########################################## 上传商品页面数据结构和模拟数据 #################################################
+//########################################## upload component #################################################
 
 type UpLoadResult struct {
 	Status   int    `json:"status"`
@@ -242,24 +250,7 @@ func CreateUploadRes(status int, err error, imgurl string) UpLoadResult {
 	return UpLoadResult{status, fmt.Sprint(err), imgurl}
 }
 
-//########################################## 更新个人信息页面数据结构和模拟数据 #################################################
-
-type UserSetData struct {
-	Headimg  string `json:"headimg"`
-	Name     string `json:"name"`
-	Id       string `json:"id"`
-	Sex      string `json:"sex"`
-	Sign     string `json:"sign"`
-	Grade    string `json:"grade"`
-	Colleage string `json:"colleage"`
-	Major    string `json:"major"`
-	Dorm     string `json:"dorm"`
-	Emails   string `json:"emails"`
-	Qq       string `json:"qq"`
-	Phone    string `json:"phone"`
-}
-
-//########################################## 导航栏页面数据结构和模拟数据 #################################################
+//########################################## naving component #################################################
 
 type MyStatus struct {
 	ID         string    `json:"id"`
@@ -278,12 +269,7 @@ type EntranceBody struct {
 	Data   interface{} `json:"data"`
 }
 
-type LoginData struct {
-	Name     string `json:"name"`
-	Password string `json:"password"`
-}
-
-//注册账号时发来的结构体
+//used when sign up
 type RegisterData struct {
 	Name     string `json:"name"`
 	Password string `json:"password"`
@@ -291,10 +277,15 @@ type RegisterData struct {
 	Code     string `json:"code"`
 }
 
-//请求登录，注册，更换验证码时返回的结构
-type RequireResult struct {
-	Status   int    `json:"status"`
-	Describe string `json:"describe"`
+//##################### feedback component #############################
+type FeedBackData struct {
+	Id        int64     `json:"id"`
+	UserId    string    `json:"userid"`
+	Email     string    `json:"email"`
+	Time      time.Time `json:"time"`
+	Status    int64     `json:"status"`
+	Type      string    `json:"fbtype"`
+	Location  string    `json:"location"` //Where the problem occurred
+	Describes string    `json:"describes"`
+	Imgurl    string    `json:"imgurl"` //screenshot saving name
 }
-
-//#####################
