@@ -32,7 +32,7 @@ func (this *HPGoodsController) Post() {
 		rlog.Error(response.Msg)
 		goto tail
 	}
-	//get and chekc additional argument
+	//get and check additional argument
 	appendData = postBody.Data.(map[string]interface{})
 	goodstype = appendData["goodstype"].(string)
 	goodstag = appendData["goodstag"].(string)

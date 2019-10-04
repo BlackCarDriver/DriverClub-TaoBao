@@ -94,3 +94,12 @@ func CheckFeedbackDetail(describe string) bool {
 	}
 	return true
 }
+
+//check grade
+func CheckGrade(grade string) bool {
+	reg := regexp.MustCompile(`^20[1-3][0-9]$`)
+	if !reg.MatchString(grade) {
+		return false
+	}
+	return true
+}

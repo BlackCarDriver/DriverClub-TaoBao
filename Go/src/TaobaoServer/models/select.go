@@ -357,7 +357,7 @@ func CountCareMe(myid string) (int, error) {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_concern where id2 = ?", myid).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0, err
 	}
 	return userNumber, nil
@@ -369,7 +369,7 @@ func CountIcare(myid string) (int, error) {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_concern where id1 = ?", myid).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0, err
 	}
 	return userNumber, nil
@@ -381,7 +381,7 @@ func CountTotalUser() int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_user").QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0
 	}
 	return userNumber
@@ -393,7 +393,7 @@ func CountGoods() int {
 	goodsNumber := 0
 	err := o.Raw("select count(*) from t_goods").QueryRow(&goodsNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0
 	}
 	return goodsNumber
@@ -405,7 +405,7 @@ func CountMyCoods(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from v_mygoods where uid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0
 	}
 	return userNumber
@@ -417,7 +417,7 @@ func CountMyCollect(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_collect where userid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0
 	}
 	return userNumber
@@ -429,7 +429,7 @@ func CountMyAllMsg(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from v_mymessage where uid = ?", uid).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Critical("%v", err)
 		return 0
 	}
 	return userNumber
@@ -441,20 +441,35 @@ func CountUnreadMsg(uid string) int {
 	userNumber := 0
 	err := o.Raw("select count(*) from t_message where receiverid=? and state=0", uid).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("CountUnreadMsg fail: %v", err)
+		mlog.Critical("CountUnreadMsg fail: %v", err)
 		return 0
 	}
 	return userNumber
 }
 
-//count the specificed name numbers of other user  🍖
+//count the specificed name numbers of all user  🍖
 //return the numbers of user name or -1 which mean unexpect error happen
 func CountUserName(name string) int {
 	o := orm.NewOrm()
 	userNumber := 0
 	err := o.Raw("select count(*) from t_user where name=?", name).QueryRow(&userNumber)
 	if err != nil {
-		mlog.Error("CountUserName fail: %v", err)
+		mlog.Critical("CountUserName fail: %v", err)
+		return -1
+	}
+	return userNumber
+}
+
+//count the numbers of a name of ohter user name🍙
+func CountOtherUserName(name, myid string) int {
+	o := orm.NewOrm()
+	if name == "" || myid == "" {
+		return -1
+	}
+	userNumber := 0
+	err := o.Raw("select count(*) from t_user where name=? and id !=?", name, myid).QueryRow(&userNumber)
+	if err != nil {
+		mlog.Critical("CountOtherUserName fail: %v", err)
 		return -1
 	}
 	return userNumber
@@ -466,8 +481,66 @@ func CountRegistEmail(email string) int {
 	number := 0
 	err := o.Raw("select count(*) from t_user where email=?", email).QueryRow(&number)
 	if err != nil {
-		mlog.Error("CountRegistEmail fail: %v", err)
+		mlog.Critical("CountRegistEmail fail: %v", err)
 		return -1
 	}
 	return number
+}
+
+//count id number to judge wheteher it id is exist 🍙
+func CountUserId(id string) int {
+	o := orm.NewOrm()
+	number := 0
+	err := o.Raw("select count(*) from t_user where id=?", id).QueryRow(&number)
+	if err != nil {
+		mlog.Critical("CountUserId fail: %v", err)
+		return -1
+	}
+	return number
+}
+
+//#################### function relate to tempdata and maintain ####################
+
+//get the list of top 10 user's rank, data include id, name and credits
+func GetRankList(c *[]Rank) error {
+	o := orm.NewOrm()
+	if num, err := o.Raw(`select * from v_rank`).QueryRows(c); err != nil {
+		mlog.Error("%v", err)
+		return fmt.Errorf("Get user rank data error: %v", err)
+	} else if num == 0 {
+		err := fmt.Errorf("User rank result empty!")
+		mlog.Error("%v", err)
+		return err
+	}
+	return nil
+}
+
+//get all tag name and tag number of a type
+func GetTagsData(gtype string, tag *[]GoodsSubType) error {
+	if gtype == "" {
+		return errors.New("Receive a null gtype")
+	}
+	o := orm.NewOrm()
+	var tSubType []GoodsSubType
+	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 and state >=0 group by tag`, gtype).QueryRows(&tSubType)
+	if err != nil {
+		mlog.Error("get type and tag data fail: %v", err)
+		return err
+	}
+	if num == 0 {
+		err = fmt.Errorf("the result of seaching type %s empty!", gtype)
+		mlog.Error("%v", err)
+		return err
+	}
+	var sum int64 = 0
+	//add a new tag as "all"
+	for i := 0; i < len(tSubType); i++ {
+		sum += tSubType[i].Number
+	}
+	slice := make([]GoodsSubType, len(tSubType)+1)
+	copy(slice, []GoodsSubType{{"全部", sum}})
+	copy(slice[1:], tSubType)
+	*tag = make([]GoodsSubType, len(tSubType)+1)
+	copy(*tag, slice)
+	return nil
 }

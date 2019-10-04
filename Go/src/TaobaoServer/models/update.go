@@ -7,12 +7,18 @@ import (
 
 	"github.com/astaxie/beego/orm"
 )
+/*
+NOTE about goods state:
+1 is the default value
+-1 mean user remove the goods by hisself
+*/
 
-//update user base message 🍊 🍆🍖
-func UpdateUserBaseMsg(d UpdeteMsg) error {
+//update user base message 🍊 🍆🍖🍙
+func UpdateUserBaseMsg(d UpdeteMsg, tid string) error {
 	o := orm.NewOrm()
-	//check user name, can't be repeated
-	if nameNum := CountUserName(d.Name); nameNum!=0 {
+	//check user name, can't same with other people if name is changed
+	if nameNum := CountOtherUserName(d.Name, tid); nameNum!=0 {
+		logs.Error(nameNum)
 		err := fmt.Errorf("User name %s already have been used! Please change to another", d.Name)
 		mlog.Info("%v",err)
 		return err
@@ -176,7 +182,7 @@ func UpdateFeedbackState(fbid int) error {
 	}else if af, err := res.RowsAffected(); err != nil {
 		mlog.Warn("%v", err)
 	} else if af == 0 {
-		err = fmt.Errorf("No row affected when update state of message %s", fbid)
+		err = errors.New("No row affected when update state of message")
 		mlog.Error("%v",err)
 		return err
 	}

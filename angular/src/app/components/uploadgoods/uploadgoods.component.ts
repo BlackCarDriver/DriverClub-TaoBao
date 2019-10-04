@@ -133,32 +133,23 @@ export class UploadgoodsComponent implements OnInit {
     this.editor.create();
     this.editor.txt.html('<p>请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接代替上传图片。</p>')
   }
-  //if images select was changed, then upload to server and get a visit url 🍄🍚
+  //if images select was changed, then upload to server and get a visit url 🍄🍚🍙
   initImgUpload() {
     if (this.server.IsNotLogin()) {
       return;
     }
-    $("#upload").change(function (evt) {
-      //check the file type 
-      if ($(this).val() == '') return;
-      var filename = $(this).val().replace(/.*(\/|\\)/, "");
-      var filetype = filename.substring(filename.lastIndexOf("."), filename.length).toLowerCase();
-      if (filetype != ".jpg" && filetype != ".png") {
-        alert("请选择 png 或 jpg 格式的图片");
-        evt.currentTarget.files = "";
-        return;
+    $("#upload").change(function(){
+      let goodsImg:File = $("#upload").prop('files')[0];
+      let imgName = goodsImg.name;
+      if(imgName=="") return;
+      let err = this.server.checkImgFile(goodsImg);
+      if (err!="") {
+          alert(err);
+          return;
       }
-      //check file size
-      var files = evt.currentTarget.files;
-      var filesize = files[0].size;
-      if (filesize > 1024 * 300) {
-        alert("由于本站宽带配置实在太低，请上传低于300kb的图片，谢谢！");
-        evt.currentTarget.files = "";
-        return;
-      }
-      $("#filename").html(filename);
+      $("#filename").html(imgName);
       $("#uploadbtn").trigger("click");
-    });
+    }.bind(this));
   }
   //trigger to open the images select dialogue 
   selectImg() {

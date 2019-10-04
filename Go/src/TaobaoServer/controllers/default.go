@@ -503,8 +503,9 @@ func (this *PostFormController) Post() {
 		goto tail
 	}
 	switch api {
-	case "feedback": //User feedback, save a record into database
+	case "feedback": //User feedback, save a record into database  🍙
 		data := md.FeedBackData{}
+		reason := ""
 		//get string value from postfrom
 		data.Type = this.GetString("fb_type")
 		data.Location = this.GetString("fb_location")
@@ -515,6 +516,22 @@ func (this *PostFormController) Post() {
 			response.StatusCode = -2
 			response.Msg = fmt.Sprintf("Can't get type or describtion in feedback data")
 			rlog.Warn(response.Msg)
+			goto tail
+		}
+		switch {
+		case len(data.Type) > 15:
+			reason = "反馈类型不通过"
+		case len(data.Location) > 200:
+			reason = "报错位置超出长度"
+		case len(data.Describes) > 480:
+			reason = "反馈描述超出长度"
+		case data.Email != "" && !tb.CheckEmail(data.Email):
+			reason = "邮箱格式不通过"
+		}
+		if reason != "" {
+			response.StatusCode = -3
+			response.Msg = reason
+			rlog.Error(response.Msg)
 			goto tail
 		}
 		//get images from postform

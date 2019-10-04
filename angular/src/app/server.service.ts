@@ -14,9 +14,10 @@ export class ServerService {
   username = "";
   token = "";
   homepage_goods_perpage = 10;
-  // private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  imgMaxSize = 300 * 1024;
+  private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  private addr: string = "/localserver";
+  // private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }
@@ -70,7 +71,9 @@ export class ServerService {
     let width = document.body.clientWidth;
     return width < 700;
   }
-
+  gohome(){
+    document.location.href="/homepage";
+  }
   //======================================= large  interface =============================================================
   //get all kind of data in goodspage 🍌
   GetGoodsDeta(request: RequestProto) {
@@ -89,8 +92,9 @@ export class ServerService {
     var url = this.addr + "/update";
     return this.http.post<ReplyProto>(url, JSON.stringify(request));
   }
-  //upload a images to server and receive a url to get it images 🍍🍆
+  //upload a images to server and receive a url to get it images 🍍🍆🍙
   UploadImg(username: string, img: any) {
+    //check the name and type before send to server
     var postdata = new FormData();
     postdata.append("userid", this.userid);
     postdata.append("token", this.token);
@@ -273,7 +277,19 @@ export class ServerService {
   //check user private message 🍚
   checkMessage(msg:string) {
     if(/^[\w\W]{2,150}$/.test(msg)==false){
-      return "信息太短或太长";
+      return "消息太短或太长";
+    }
+    return "";
+  }
+  //check a image file
+  checkImgFile(img:File){
+    let filename = img.name.replace(/.*(\/|\\)/, "");
+    let filetype = filename.substring(filename.lastIndexOf("."), filename.length).toLowerCase();
+    if (filetype != ".jpg" && filetype != ".png") {
+      return "请选择 png 或 jpg 格式的图片";
+    }
+    if(img.size>this.imgMaxSize){
+      return "由于本站宽带配置实在太低，请上传低于300kb的图片 :("
     }
     return "";
   }

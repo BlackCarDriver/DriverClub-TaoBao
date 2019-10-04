@@ -34,7 +34,7 @@ export class ChgmymsgComponent implements OnInit {
 
   ngOnInit() {
     if (this.server.IsNotLogin()) {
-      window.history.back();
+      this.server.gohome();
     }
     this.initImgInput();
     this.initSaveBtn();
@@ -42,32 +42,23 @@ export class ChgmymsgComponent implements OnInit {
   }
 
   //==================== safe vertify ================
-  //check and upload user images and get the url link to it after select a images.
-  initImgInput(){
-      $("#uploadheadimg").change(function(evt) {
-        if ($(this).val() == '') {
-          return;
-        }
-        //check the file name and type
-        var filename = $(this).val().replace(/.*(\/|\\)/, "");
-        var pos = filename.lastIndexOf(".");
-        var filetype = filename.substring(pos, filename.length)
-        if (filetype != ".jpg" && filetype != ".png") {
-          alert("请上传 jpg 或 png 格式的图片")
-          return;
-        }
-        //check the image size
-        var files = evt.currentTarget.files;
-        var filesize = files[0].size;
-        if (filesize > 100 * 1024) {
-          alert( "请上传100kb 以下的图片");
-          return;
-        }
-        $("#upload").trigger("click");
-      });
+  //check and upload user images and get the url link to it after select a images. 🍙
+  initImgInput() {
+    $("#uploadheadimg").change(function () {
+      //check the file name and type
+      let goodsImg: File = $("#uploadheadimg").prop('files')[0];
+      let imgName = goodsImg.name;
+      if (imgName == "") return;
+      let err = this.server.checkImgFile(goodsImg);
+      if (err != "") {
+        alert(err);
+        return;
+      }
+      $("#upload").trigger("click");
+    }.bind(this));
   }
   //show the save button when input have been change 🍆
-  initSaveBtn(){
+  initSaveBtn() {
     $(".bip").change(function () {
       $("#savebtn1").removeClass("hidden");
     });
@@ -77,44 +68,50 @@ export class ChgmymsgComponent implements OnInit {
   }
 
   //===================== Request funciton ================
-  //get a user's base information   🍍🍈🍏🍆
+  //get a user's base information   🍍🍈🍏🍆🍚🍙
   getmymsg() {
+    if (this.server.userid == "") {
+      return;
+    }
     let postdata: RequestProto = {
       api: "settingdata",
       targetid: this.server.userid,
+      cachetime: 60,
+      cachekey: "setmsg_" + this.server.userid,
     };
     this.server.GetMyMsg(postdata).subscribe(result => {
-      if (result.statuscode == 0) {
-        this.userid = this.server.userid;
-        this.data = result.data;
-        this.headimgurl = this.data.headimg;
-        this.username = this.data.name;
-        this.usersex = this.data.sex;
-        this.sign = this.data.sign;
-        this.grade = this.data.grade;
-        this.dorm = this.data.dorm;
-        this.colleage = this.data.colleage;
-        this.email = this.data.emails;
-        this.qq = this.data.qq;
-        this.phone = this.data.phone;
-        this.major = this.data.major;
-        if (this.usersex == "GIRL") {
-          $("#girlbtn").removeClass("isnot");
-          $("#boybtn").addClass("isnot");
-          this.usersex = "GIRL";
-        } else {
-          $("#boybtn").removeClass("isnot");
-          $("#girlbtn").addClass("isnot");
-          this.usersex = "BOY";
-        }
-      } else {
-        this.app.showMsgBox(1, "请求失败,请稍后再试", result.msg);
+      if (result.statuscode != 0) {
+        this.app.showMsgBox(1, "获取我的信息失败,请稍后再试:" + result.msg);
+        return;
       }
-    }, error => { console.log(error) });
+      this.userid = this.server.userid;
+      this.data = result.data;
+      this.headimgurl = this.data.headimg;
+      this.username = this.data.name;
+      this.usersex = this.data.sex;
+      this.sign = this.data.sign;
+      this.grade = this.data.grade;
+      this.dorm = this.data.dorm;
+      this.colleage = this.data.colleage;
+      this.email = this.data.emails;
+      this.qq = this.data.qq;
+      this.phone = this.data.phone;
+      this.major = this.data.major;
+      if (this.usersex == "GIRL") {
+        $("#girlbtn").removeClass("isnot");
+        $("#boybtn").addClass("isnot");
+        this.usersex = "GIRL";
+      } else {
+        $("#boybtn").removeClass("isnot");
+        $("#girlbtn").addClass("isnot");
+        this.usersex = "BOY";
+      }
+    }, err => { this.app.cFail(err); });
   }
   //update a profile image and get it url after saved by server 🍍🍈
   //note that the it function is called autoly after the input checking is pass
   upload() {
+    if (this.server.userid == "") return
     var imgfiles = $("#uploadheadimg").prop('files');
     this.server.UploadImg(this.username, imgfiles[0]).subscribe(result => {
       if (result.statuscode == 0) {
@@ -130,23 +127,46 @@ export class ChgmymsgComponent implements OnInit {
           if (result.statuscode == 0) {
             this.app.showMsgBox(0, "修改成功");
           } else {
-            this.app.showMsgBox(-1, "修改失败，请稍后再试", result.msg);
+            this.app.showMsgBox(-1, "修改失败，请稍后再试：" + result.msg);
           }
-        }, error => { console.log("UpdateMessage() fail: " + error); });
+        }, err => { this.app.cFail(err); });
       } else {
-        this.app.showMsgBox(-1, "上传失败,请稍后再试", result.msg);
+        this.app.showMsgBox(-1, "上传失败,请稍后再试" + result.msg);
       }
-    }, error => { console.log("UploadImg() fail: " + error) });
+    }, err => { this.app.cFail(err); });
   }
-  //update user base message of profile  🍍🍈
+  //update user base message of profile  🍍🍈🍙
   ChangeBaseMsg() {
+    let err = "";
+    if (this.server.userid == "") return;
     this.data.name = $("#myname").val();
+    err = this.server.checkUerName(this.data.name);
+    if (err!=""){
+      this.app.showMsgBox(1,err);
+      return;
+    }
     this.data.sign = $("#mysign").val();
+    if (this.data.sign.length>50){
+      this.app.showMsgBox(1,"签名太长度超出限制哦")
+      return;
+    }
     this.data.sex = this.usersex;
     this.data.grade = this.grade;
     this.data.colleage = $("#mycolleage").val();
+    if (this.data.colleage.length>50){
+      this.app.showMsgBox(1,"学院名称长度超出限制哦")
+      return;
+    }
     this.data.dorm = $("#mydorm").val();
+    if (this.data.dorm.length>50){
+      this.app.showMsgBox(1,"宿舍位置长度超出限制哦")
+      return;
+    }
     this.data.major = $("#mymajor").val();
+    if (this.data.major.length>50){
+      this.app.showMsgBox(1,"专业名称长度超出限制哦")
+      return;
+    }
     let postdata: RequestProto = {
       api: "changemybasemsg",
       userid: this.server.userid,
@@ -157,15 +177,29 @@ export class ChgmymsgComponent implements OnInit {
         this.app.showMsgBox(0, "修改成功");
         $("#savebtn1").addClass("hidden");
       } else {
-        this.app.showMsgBox(-1, "修改失败，请稍后重试:"  + result.msg);
+        this.app.showMsgBox(-1, "修改失败，请稍后重试:" + result.msg);
       }
-    }, error => { console.log("UpdateMessage() fail: " + error); })
+    }, err => { this.app.cFail(err); })
   }
-  //update user's connect message of profile  🍍🍈
+  //update user's connect message of profile  🍍🍈🍙
   ChangeContact() {
+    if (this.server.userid == "") return;
     this.data.emails = $("#myemail").val();
+    let err = this.server.checkEmail(this.data.emails);
+    if (err!=""){
+      this.app.showMsgBox(1,err);
+      return;
+    }
     this.data.qq = $("#myqq").val();
+    if (this.data.qq.length>20){
+      this.app.showMsgBox(1,"qq 长度超出限制哦");
+      return;
+    }
     this.data.phone = $("#myphone").val();
+    if (this.data.phone.length>20){
+      this.app.showMsgBox(1,"电话号码长度超出限制哦");
+      return;
+    }
     let postdata: RequestProto = {
       api: "MyConnectMessage",
       userid: this.server.userid,
@@ -176,12 +210,9 @@ export class ChgmymsgComponent implements OnInit {
         this.app.showMsgBox(0, "修改成功");
         $("#savebtn2").addClass("hidden");
       } else {
-        this.app.showMsgBox(-1, "修改失败，请扫后再试", result.msg);
+        this.app.showMsgBox(-1, "修改失败，请扫后再试" + result.msg);
       }
-    }, error => {
-      this.app.showMsgBox(-1, "请求失败，请扫后再试", error);
-    }
-    )
+    })
   }
   //=================== called by element ==================
   setgrade(grade: number) {

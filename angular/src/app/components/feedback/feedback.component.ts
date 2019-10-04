@@ -20,50 +20,56 @@ export class FeedbackComponent implements OnInit {
     this.initSelectImg();
   }
 
-  //change the showing name after select a images
+  //change the showing name after select a images 🍙
   initSelectImg() {
     let input = this.server.getEle("inputfile");
     input.addEventListener('change', function () {
-      let fileName = $("#inputfile").val().toString();
-      //check the type of upload images
-      if (/(!?)^.*\.(jpg)|(png)|(jpeg)$/.test(fileName) == false) {
-        this.app.showMsgBox(1, "请上传png 或 jpg 格式的图片哦");
-        $("#inputfile").val("");
-        return false;
+      let img:File = $("#inputfile").prop('files')[0];
+      let err = this.server.checkImgFile(img);
+      if (err != "") {
+        alert(err);
+        return;
       }
-      //check the size of upload iamge
-      if ((<HTMLInputElement>document.getElementById('inputfile')).files[0].size > 200 << 10) {
-        this.app.showMsgBox(1, "网络压力大,请上传200kb以下的图片哦");
-        $("#inputfile").val("");
-        return false;
-      }
-      this.selectFileName = fileName;
+      this.selectFileName = img.name;
       return true;
     }.bind(this));
   }
-  //post feedback data to server to add a record
+
+  //post feedback data to server to add a record  🍙
   postFeedbackForm() {
     let fb_type = $("#fbtype").val().toString();
     let fb_location = $("#fblocation").val().toString();
+    if (fb_location.length>200) {
+      this.app.showMsgBox(1,"反馈位置描述超出限制哦 _(:з」∠)_")
+      return;
+    }
     let email = $("#fbemail").val().toString();
+    let err= this.server.checkEmail(email);
+    if (email !="" &&  err!="") {
+      this.app.showMsgBox(1,err);
+      return ;
+    }
     let fbdescribe = $("#fbdescribe").val().toString();
-    let image = (<HTMLInputElement>document.getElementById('inputfile')).files[0];
-    let userid = this.server.userid;
+    if (fbdescribe.length>480){
+      this.app.showMsgBox(1,"问题描述长度超出限制哦 _(:з」∠)_");
+      return;
+    }
     if (fb_type == "" || fb_location == "" || fbdescribe == "") {
       this.app.showMsgBox(1, "类型,位置,问题描述不能为空哦！");
       return;
     }
+    let image = (<HTMLInputElement>document.getElementById('inputfile')).files[0];
     let from = new FormData();
     from.append('api', "feedback");
     from.append('fb_type', fb_type);
     from.append('fb_location', fb_location);
     from.append('email', email);
-    from.append('userid', userid);
+    from.append('userid', this.server.userid);
     from.append('describes', fbdescribe);
     from.append('images', image);
     this.server.postFormApi(from).subscribe(result => {
       if (result.statuscode != 0) {
-        this.app.showMsgBox(-1, result.msg);
+        this.app.showMsgBox(-1, "反馈被拒绝："+result.msg);
         return;
       }
       this.app.showMsgBox(0, "Thank You! Feedback Success!");

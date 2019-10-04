@@ -5,6 +5,7 @@ import { AppComponent } from '../../app.component';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
+import { timeout } from 'q';
 // import * as $ from 'jquery';
 declare let $: any;
 
@@ -40,7 +41,8 @@ export class NavigComponent implements OnInit {
   logout() {
     if (confirm("你确定要清楚登录状态并退出此账号？")) {
       this.server.clearAllCookie();
-      window.location.reload();
+      document.location.href="/homepage";
+      setTimeout(()=>{document.location.reload()},2000);
     }
   }
   //decide the style of nav-user box

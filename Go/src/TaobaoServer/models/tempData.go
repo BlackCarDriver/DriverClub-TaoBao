@@ -6,8 +6,6 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/logs"
-
-	"github.com/astaxie/beego/orm"
 )
 
 /*
@@ -15,9 +13,54 @@ tempDate.go save some galbol data to avoid excessive database too frequently
 */
 //public varlue
 var (
-	RunHour = 0
+	RunHour = 0 //how many hours the backend already run
 )
 
+//Refresh all temp data when start the backend 🌰
+func initTempData() {
+	//Uas1 and Uas2 used to save the credits of users for a while
+	Uas1 = NewActiveNess()
+	Uas2 = NewActiveNess()
+	//the value in ComfirmCode will be save for half hour
+	ComfirmCode = NewTimeMap(60 * 30)
+
+	RefreshTypeTagData()
+	RefreshUserRank()
+
+	go RunPreHour()
+}
+
+func RunPreHour() {
+	for _ = range time.NewTicker(1 * time.Hour).C {
+		nowHour := time.Now().Hour()
+		RunHour++
+		mlog.Info("==========The % bus is going to start!=======", RunHour)
+		//refresh credits and clear activeness record each hour
+		MainTainCredits()
+		Uas1.ReBuild()
+		Uas2.ReBuild()
+		ComfirmCode.Clear()
+
+		RefreshTypeTagData()
+
+		MainTainGoodLike()
+		MainTainGoodCollect()
+		MainTainGoodTalk()
+
+		//refresh user rank one times each day
+		if nowHour == 0 {
+			mlog.Info("Begin to refresh user rank...")
+			RefreshUserRank()
+		}
+		//maintain level data and rank data three times each day
+		if nowHour%6 == 0 {
+			MainTainLevel()
+			MainTainRank()
+		}
+	}
+}
+
+//============ Goods Type ===============
 //save the goods type and tag data
 var GoodsTypeTempDate = []GoodsType{
 	{"学习用品", []GoodsSubType{}},
@@ -29,35 +72,23 @@ var GoodsTypeTempDate = []GoodsType{
 	{"其他", []GoodsSubType{}},
 }
 
-//save top 10 user rank
-var UserRank []Rank
-
-//Refresh all temp data when start the process,🌰
-func initTempData() {
-	//Uas1 and Uas2 used to save the credits of users for a while
-	Uas1 = NewActiveNess()
-	Uas2 = NewActiveNess()
-	//the value in ComfirmCode will be save for half hour
-	ComfirmCode = NewTimeMap(60 * 30)
-
-	RefreshTypeTagDate()
-	UpdateUserRank()
-	go RunPreHour()
-}
-
-func RefreshTypeTagDate() {
+func RefreshTypeTagData() {
 	for i := 0; i < len(GoodsTypeTempDate); i++ {
 		GetTagsData(GoodsTypeTempDate[i].Type, &GoodsTypeTempDate[i].List)
 	}
 }
 
-func UpdateUserRank() {
+//============ User Rank ==================
+//save top 10 user rank
+var UserRank []Rank
+
+func RefreshUserRank() {
 	if err := GetRankList(&UserRank); err != nil {
 		mlog.Error("%v", err)
 	}
 }
 
-//==================== active defintion =======================
+//===================== User active static ===========
 //user active statistics
 var Uas1, Uas2 *ActiveNess
 
@@ -90,7 +121,7 @@ func (a *ActiveNess) GetMap() map[string]int {
 	return a.active
 }
 
-//========= datastruct for save the comfirm code for a while ============ 🍖
+//============== Save some message for a limited time ============ 🍖
 //save the comfirm code
 var ComfirmCode *TimeMap
 
@@ -150,78 +181,4 @@ func (t *TimeMap) Clear() {
 			delete(t.Map, k)
 		}
 	}
-}
-
-//==================== Timmer Bus ===================================
-//to execute those timed job
-func RunPreHour() {
-	for _ = range time.NewTicker(1 * time.Hour).C {
-		RunHour++
-		mlog.Info("==========The % bus is going to start!=======", RunHour)
-		//refresh credits and clear activeness record each hour
-		MainTainCredits()
-		Uas1.ReBuild()
-		Uas2.ReBuild()
-		ComfirmCode.Clear()
-		time.Sleep(10 * time.Second)
-		RefreshTypeTagDate()
-		time.Sleep(10 * time.Second)
-		MainTainLevel()
-		time.Sleep(10 * time.Second)
-		MainTainRank()
-		time.Sleep(10 * time.Second)
-		MainTainGoodLike()
-		time.Sleep(10 * time.Second)
-		MainTainGoodCollect()
-		time.Sleep(10 * time.Second)
-		MainTainGoodTalk()
-		time.Sleep(10 * time.Second)
-		UpdateUserRank()
-
-	}
-}
-
-//==================== database select function ======================
-
-//get the list of top 10 user's rank, data include id, name and credits
-func GetRankList(c *[]Rank) error {
-	o := orm.NewOrm()
-	if num, err := o.Raw(`select * from v_rank`).QueryRows(c); err != nil {
-		mlog.Error("%v", err)
-		return fmt.Errorf("Get data error: %v", err)
-	} else if num == 0 {
-		err := fmt.Errorf("the result is empty!")
-		mlog.Error("%v", err)
-		return err
-	}
-	return nil
-}
-
-//get all tag name and tag number of a type
-func GetTagsData(gtype string, tag *[]GoodsSubType) error {
-	if gtype == "" {
-		return errors.New("Receive a null gtype")
-	}
-	o := orm.NewOrm()
-	var tSubType []GoodsSubType
-	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 group by tag`, gtype).QueryRows(&tSubType)
-	if err != nil {
-		mlog.Error("%v", err)
-		return err
-	}
-	if num == 0 {
-		err = fmt.Errorf("the result is empty!")
-		mlog.Warn("%v", err)
-		return err
-	}
-	var sum int64 = 0
-	for i := 0; i < len(tSubType); i++ {
-		sum += tSubType[i].Number
-	}
-	slice := make([]GoodsSubType, len(tSubType)+1)
-	copy(slice, []GoodsSubType{{"全部", sum}})
-	copy(slice[1:], tSubType)
-	*tag = make([]GoodsSubType, len(tSubType)+1)
-	copy(*tag, slice)
-	return nil
 }

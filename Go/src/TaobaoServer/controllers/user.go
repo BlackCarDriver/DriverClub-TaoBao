@@ -155,28 +155,30 @@ func (this *PersonalDataController) Post() {
 			response.Data = data
 		}
 
-	case "othermsg": //other people profile data
+	case "othermsg": //other people profile data  🍙
 		var data md.UserMessage
 		if err = md.GetUserData(targetid, &data); err != nil {
 			response.StatusCode = -8
-			response.Msg = fmt.Sprintf("Can't get user data: %v ", err)
+			response.Msg = fmt.Sprintf("获取用户数据失败: %v ", err)
 			rlog.Error(response.Msg)
 			goto tail
-		} else {
-			response.Data = data
 		}
 		if err = md.UpdateUserVisit(targetid); err != nil {
 			rlog.Error("Update visit number fail: %v", err)
 		}
+		response.Data = data
 
-	case "getuserstatement": //the statement of user to user 🍉
+	case "getuserstatement": //the statement of user to user 🍉🍙
 		tmp := md.UserState{Like: false, Concern: false}
 		if postBody.UserId == "" { // if user havn't login then return default date
 			response.Data = tmp
-		} else if res, err := md.GetUserStatement(postBody.UserId, targetid); err != nil {
+			goto tail
+		}
+		if res, err := md.GetUserStatement(postBody.UserId, targetid); err != nil {
 			response.StatusCode = -9
-			response.Msg = fmt.Sprintf("UserGoodsState fail: %v", err)
+			response.Msg = fmt.Sprintf("获取用户状态失败: %v", err)
 			rlog.Error(response.Msg)
+			goto tail
 		} else {
 			if res&1 != 0 {
 				tmp.Like = true
@@ -184,12 +186,11 @@ func (this *PersonalDataController) Post() {
 			if res&2 != 0 {
 				tmp.Concern = true
 			}
-			response.Data = tmp
 		}
+		response.Data = tmp
 
-	case "rank": //user rank
+	case "rank": //user rank message
 		response.Data = md.UserRank
-		//TODO: make a function 🍉
 
 	case "settingdata": //user message in the changemsg page 🍏
 		data := md.UserSetData{}
@@ -258,26 +259,63 @@ func (this *UpdataMsgController) Post() {
 	}()
 	//handle the request 🍆
 	switch api {
-	case "changemybasemsg": //base information of users
+	case "changemybasemsg": //base information of users 🍙
 		postData := md.UpdeteMsg{}
+		var reason string
 		if err = Parse(postBody.Data, &postData); err != nil {
 			response.StatusCode = -3
-			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
+			response.Msg = fmt.Sprintf("解析请求体失败: %v", err)
 			rlog.Error(response.Msg)
 			goto tail
 		}
-		if err = md.UpdateUserBaseMsg(postData); err != nil {
+		reason = ""
+		switch {
+		case !tb.CheckUserName(postData.Name):
+			reason = "用户名称不合规则"
+		case postData.Sex != "GIRL" && postData.Sex != "BOY":
+			reason = "性别信息不合规则"
+		case len(postData.Sign) > 50:
+			reason = "前面长度超出限制"
+		case !tb.CheckGrade(postData.Grade):
+			reason = "年级信息不合规则"
+		case len(postData.Colleage) > 50:
+			reason = "学院信息不合规则"
+		case len(postData.Major) > 50:
+			reason = "专业信息不合规则"
+		case len(postData.Dorm) > 50:
+			reason = "宿舍楼栋信息不合规则"
+		}
+		if reason != "" {
+			response.StatusCode = -4
+			response.Msg = reason
+			goto tail
+		}
+		if err = md.UpdateUserBaseMsg(postData, userid); err != nil {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Update message fail: %v", err)
 			rlog.Error(response.Msg)
 		}
 		goto tail
-	case "MyConnectMessage": //connect information
+	case "MyConnectMessage": //connect information update🍙
+		reason := ""
 		postData := md.UpdeteMsg{}
 		if err = Parse(postBody.Data, &postData); err != nil {
 			response.StatusCode = -5
-			response.Msg = fmt.Sprintf("Can't parse postbody data: %v", err)
+			response.Msg = fmt.Sprintf("无法解析请求体数据: %v", err)
 			rlog.Error(response.Msg)
+			goto tail
+		}
+		switch {
+		case !tb.CheckEmail(postData.Emails):
+			reason = "邮箱名称不合规则"
+		case len(postData.Qq) > 20:
+			reason = "qq信息不合规则"
+		case len(postData.Phone) > 20:
+			reason = "电话号码信息不合规则"
+		}
+		if reason != "" {
+			response.StatusCode = -6
+			response.Msg = reason
 			goto tail
 		}
 		if err = md.UpdateUserConnectMsg(postData); err != nil {

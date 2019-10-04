@@ -23,21 +23,26 @@ const(
 我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！`
 )
 
-//Create a account autoly by provided name, password and email 🍖🍚
+//Create a account autoly by provided name, password and email 🍖🍚🍙
 //note that the password  should be md5 encoded
 func CreateAccount(user RegisterData) error {
 	o := orm.NewOrm()
 	//check the username and email again
 	if nameNumber := CountUserName(user.Name); nameNumber!= 0 {
-		err := fmt.Errorf("User name %s already have been used!", user.Name)
+		err := fmt.Errorf("User name %s already have been used", user.Name)
 		mlog.Error("%v",err)
 		return err
 	}
 	if emailNumber := CountRegistEmail(user.Email); emailNumber != 0 {
-		err := fmt.Errorf("Email %s already have been used!", user.Name)
+		err := fmt.Errorf("Email %s already have been used", user.Name)
 		mlog.Error("%v",err)
 		return err
 	} 
+	if CountUserId(user.Name)!=0 {
+		err := fmt.Errorf("User name %s is same as a exist id", user.Name)
+		mlog.Error("%v",err)
+		return err
+	}
 	//make a userid by the following regular
 	userNumber := CountTotalUser() + 1
 	t := time.Now()
