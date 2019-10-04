@@ -15,9 +15,9 @@ export class ServerService {
   token = "";
   homepage_goods_perpage = 10;
   imgMaxSize = 300 * 1024;
-  private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  // private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  // private addr: string = "/localserver";
+  private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }

@@ -6,15 +6,86 @@ import (
 	"time"
 
 	"github.com/astaxie/beego/logs"
+	"github.com/astaxie/beego/orm"
 )
 
 /*
 tempDate.go save some galbol data to avoid excessive database too frequently
+the value with flag '👀' need to add some motier code around the functions
 */
-//public varlue
+//============== static data ======================== 🍙
 var (
-	RunHour = 0 //how many hours the backend already run
+	RunHour           = 0   //how many hours the backend already run
+	TotalGoodsNum     = 0   //total goods number (state not small than 0)
+	TotalTagNum       = 0   //total goods tag numbers
+	TotalUserNum      = 0   //user number
+	TotalGoodsPrice   = 0.0 //sum of all goods price（state not small than 0)
+	TotalCommendNum   = 0   //total times of goods's commend 👀
+	TotalPVMsgNum     = 0   //private message send times 👀
+	TotalDealNumber   = 0   //number os removed goods	👀
+	TotalDealPrice    = 0   //total price of removed goods	👀
+	TotalFBTimes      = 0   //total feedback times	👀
+	TodayNewUser      = 0   //how many user sign in today 👀
+	TodayNewGoods     = 0   //how many goods uploaded today 👀
+	TodayVStimes      = 0   //homepage visit times in last hour 👀
+	TodayRequestTimes = 0   //how many request today have response 👀
+	LastUpdateTime    = ""  //last time of the static data refreshtion
 )
+
+//struct of static data fontend interface need
+type Static struct {
+	Key   string      `json:"key"`
+	Value interface{} `json:"value"`
+}
+
+//the temp data return to fontend directly
+var StaticData []Static
+
+//update StaticData
+func RefreshStaticData() {
+	TotalGoodsNum = CountOnlineGoods()
+	TotalGoodsPrice = CountTotalPrice()
+	TotalTagNum = CountGoodsTag()
+	TotalUserNum = CountTotalUser()
+	TotalCommendNum = GetIntStaticData("TotalCommendNum")
+	TotalPVMsgNum = GetIntStaticData("TotalPVMsgNum")
+	TotalFBTimes = GetIntStaticData("TotalFBTimes")
+	TotalDealNumber = GetIntStaticData("TotalDealNumber")
+	TotalDealPrice = GetIntStaticData("TotalDealPrice")
+	LastUpdateTime = time.Now().Format("01-02 15:04")
+	StaticData = GetStaticData()
+}
+
+//update some static data when a new day start
+func UpdateStaticPreDay() {
+	TodayNewUser = 0
+	TodayNewGoods = 0
+	TodayVStimes = 0
+	TodayRequestTimes = 0
+}
+
+//Used to updata StaticData 🍙
+func GetStaticData() []Static {
+	var data = []Static{
+		{"在线商品数", TotalGoodsNum},
+		{"在线商品总价值", TotalGoodsPrice},
+		{"标签总数", TotalTagNum},
+		{"注册人数", TotalUserNum},
+		{"评论总次数", TotalCommendNum},
+		{"反馈总次数", TotalFBTimes},
+		{"成功交易次数", TotalDealNumber},
+		{"成功交易面额", TotalDealPrice},
+		{"今日新增用户", TodayNewUser},
+		{"今日新增商品", TodayNewGoods},
+		{"今日主页访问量", TodayVStimes},
+		{"今日处理请求总数", TodayRequestTimes},
+		{"本版本后端运行时长(h)", RunHour},
+		{"本统计信息更新时间", LastUpdateTime},
+	}
+	return data
+}
+
+//=======================================================================
 
 //Refresh all temp data when start the backend 🌰
 func initTempData() {
@@ -23,10 +94,11 @@ func initTempData() {
 	Uas2 = NewActiveNess()
 	//the value in ComfirmCode will be save for half hour
 	ComfirmCode = NewTimeMap(60 * 30)
-
+	//init static data
+	RefreshStaticData()
+	StaticData = GetStaticData()
 	RefreshTypeTagData()
 	RefreshUserRank()
-
 	go RunPreHour()
 }
 
@@ -47,10 +119,14 @@ func RunPreHour() {
 		MainTainGoodCollect()
 		MainTainGoodTalk()
 
-		//refresh user rank one times each day
+		RefreshStaticData()
+
 		if nowHour == 0 {
-			mlog.Info("Begin to refresh user rank...")
+			mlog.Info("Begin to start mid night clock...")
+			//refresh user rank one times each day
 			RefreshUserRank()
+			//reset some static data
+			UpdateStaticPreDay()
 		}
 		//maintain level data and rank data three times each day
 		if nowHour%6 == 0 {
@@ -180,5 +256,70 @@ func (t *TimeMap) Clear() {
 			mlog.Warn("timer key %s have been delete", k)
 			delete(t.Map, k)
 		}
+	}
+}
+
+//################### function relate to get and update static ####################🍙
+
+//add the init static data to database when first times run backend🍙
+//Usually it function only called one times!!!
+func InitStaticTable() {
+	var queryRows = []string{
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalCommendNum', 0)",
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalPVMsgNum', 0)",
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalDealNumber', 0)",
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalFBTimes', 0)",
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalDealPrice', 0)",
+	}
+	o := orm.NewOrm()
+	for _, row := range queryRows {
+		_, err := o.Raw(row).Exec()
+		if err != nil {
+			mlog.Error("Init static data fail: %s  ===> %v", row, err)
+		} else {
+			mlog.Info("Init static data success: %s", row)
+		}
+	}
+}
+
+//get interge tpye data from t_static table
+func GetIntStaticData(key string) int {
+	o := orm.NewOrm()
+	number := 0
+	err := o.Raw("select numberval from t_static where keyname=?", key).QueryRow(&number)
+	if err != nil {
+		mlog.Critical("Get Int StaticData fail: %v", err)
+		return -1
+	}
+	return number
+}
+
+//get string type data from t_static table
+func GetStrStaticData(key string) string {
+	o := orm.NewOrm()
+	str := ""
+	err := o.Raw("select stringval from t_static where keyname=?", key).QueryRow(&str)
+	if err != nil {
+		mlog.Critical("Get string StaticData fail: %v", err)
+		return ""
+	}
+	return str
+}
+
+//add change to value if fund the key
+func UpdateStaticIntData(key string, change int) {
+	o := orm.NewOrm()
+	_, err := o.Raw("update t_static set numberval= numberval+? where keyname=?", change, key).Exec()
+	if err != nil {
+		mlog.Error("try to update static fail: key=%s  change=%d", key, change)
+	}
+}
+
+//replay value with change if find the key
+func UpdateStaticStrData(key string, newStr string) {
+	o := orm.NewOrm()
+	_, err := o.Raw("update t_static set stringval=? where keyname=?", newStr, key).Exec()
+	if err != nil {
+		mlog.Error("try to update static fail: key=%s  newVal=%d", key, newStr)
 	}
 }

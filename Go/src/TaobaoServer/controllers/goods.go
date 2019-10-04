@@ -5,11 +5,9 @@ import (
 	tb "TaobaoServer/toolsbox"
 	"encoding/json"
 	"fmt"
-
-	"github.com/astaxie/beego/logs"
 )
 
-//return homepage goods list data 🍋🍇🌽
+//return homepage goods list data 🍋🍇🌽🍙
 func (this *HPGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -47,7 +45,6 @@ func (this *HPGoodsController) Post() {
 		if err = json.Unmarshal([]byte(cache), &response); err != nil {
 			rlog.Error("Unmarshal cache %s fail:%v", postBody.CacheKey, err)
 		} else {
-			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
 	}
@@ -63,8 +60,11 @@ func (this *HPGoodsController) Post() {
 	}
 	//save response to cache
 	md.SetCache(&postBody, &response)
-
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
+	md.TodayVStimes++
+
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -99,7 +99,6 @@ func (this *GoodsDetailController) Post() {
 		if err = json.Unmarshal([]byte(cache), &response); err != nil {
 			rlog.Error("Unmarshal cache %s fail:%v", postBody.CacheKey, err)
 		} else {
-			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
 	}
@@ -175,6 +174,8 @@ func (this *GoodsDetailController) Post() {
 	md.SetCache(&postBody, &response)
 
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -251,6 +252,8 @@ func (this *UploadGoodsController) Post() {
 	response.Msg = "Success!"
 	md.Uas2.Add(goodsdata.UserId)
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -258,6 +261,8 @@ tail:
 //note that it is GET method
 //return goods type list and tag list 🍋
 func (this *GoodsTypeController) Get() {
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = &md.GoodsTypeTempDate
 	this.ServeJSON()
 }

@@ -40,6 +40,37 @@ h1 {
     color: #c48424;
 }
 
+.msgbox {
+    min-height: 4em;
+    border-left: 7px solid #1a695e;
+    border-radius: 4px;
+    background-color: aliceblue;
+    padding: 0.4em 1em;
+}
+
+.datalist {
+    border-bottom: 1px solid #b9d2e88a;
+    margin-top: 0.5em;
+    list-style-type: none
+}
+
+.keyname {
+    color: #7fb5bd;
+    font-size: 1.2em;
+    display: inline-block;
+    width: 15em;
+}
+
+.keyname::after {
+    content: ":";
+}
+
+.value {
+    font-size: 1.1em;
+    color: #ee6700;
+    font-weight: 600;
+}
+
 @media screen and (max-width:700px) {
     .content {
         width: 90%;

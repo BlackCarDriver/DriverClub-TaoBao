@@ -134,6 +134,7 @@ func UpdateMyGoodsState(uid, gid string) error {
 		mlog.Error("%v", err)
 		return err
 	}
+	//update goods state to -1
 	if res, err := o.Raw("update t_goods set state = -1 where id = ?", gid).Exec(); err != nil {
 		mlog.Error("%v", err)
 		return err
@@ -144,6 +145,11 @@ func UpdateMyGoodsState(uid, gid string) error {
 		mlog.Error("%v", err)
 		return err
 	}
+	goodsPrice := 0
+	o.Raw("select price from t_goods where id=?", gid).QueryRow(&goodsPrice)
+	//update static data 👀
+	UpdateStaticIntData("TotalDealNumber",1)
+	UpdateStaticIntData("TotalDealPrice",goodsPrice) 
 	return nil
 }
 

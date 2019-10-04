@@ -280,7 +280,7 @@ type RegisterData struct {
 //##################### feedback component #############################
 type FeedBackData struct {
 	Id        int64     `json:"id"`
-	UserId    string    `json:"userid"`
+	Userid    string    `json:"userid"`
 	Email     string    `json:"email"`
 	Time      time.Time `json:"time"`
 	Status    int64     `json:"status"`

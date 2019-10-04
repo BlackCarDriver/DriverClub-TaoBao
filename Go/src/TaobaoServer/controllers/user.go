@@ -38,7 +38,6 @@ func (this *PersonalDataController) Post() {
 		if err = json.Unmarshal([]byte(cache), &response); err != nil {
 			rlog.Error("Unmarshal cache %s fail:%v", postBody.CacheKey, err)
 		} else {
-			logs.Info("Get cache %s success! ", postBody.CacheKey)
 			goto tail
 		}
 	}
@@ -210,6 +209,8 @@ func (this *PersonalDataController) Post() {
 	//save response to cache
 	md.SetCache(&postBody, &response)
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -343,6 +344,8 @@ func (this *UpdataMsgController) Post() {
 		rlog.Error(response.Msg)
 	}
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -523,10 +526,15 @@ func (this *EntranceController) Post() {
 			goto tail
 		}
 		rlog.Info("New account have been create! %s", register.Name)
+	case "staticdata": //get static data from about-page 🍙
+		response.Data = md.GetStaticData()
 	}
+
 	response.StatusCode = 0
 	response.Msg = "Success"
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }

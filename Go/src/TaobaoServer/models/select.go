@@ -5,8 +5,6 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/astaxie/beego/logs"
-
 	"github.com/astaxie/beego/orm"
 )
 
@@ -331,9 +329,10 @@ func GetFeedBack(data *[]FeedBackData, offset int) error {
 		return err
 	}
 	o := orm.NewOrm()
-	selectTP := `SELECT id, user_id as userid,
+	selectTP := `SELECT id, 
+	 user_id as "userid",
 	 fb_location as location,
-	 fb_type as fbtype, 
+	 fb_type as "type", 
 	 imgurl, describes, 
 	 fb_time as "time", 
 	 fb_status as status, 
@@ -342,7 +341,6 @@ func GetFeedBack(data *[]FeedBackData, offset int) error {
 		mlog.Error("%v", err)
 		return err
 	}
-	logs.Info(data)
 	return nil
 }
 
@@ -387,7 +385,7 @@ func CountTotalUser() int {
 	return userNumber
 }
 
-//get the total number of total upload goods
+//get the total number of total upload goods (all state)
 func CountGoods() int {
 	o := orm.NewOrm()
 	goodsNumber := 0
@@ -397,6 +395,42 @@ func CountGoods() int {
 		return 0
 	}
 	return goodsNumber
+}
+
+//count numbers of goods which can be showed to user🍙
+func CountOnlineGoods() int {
+	o := orm.NewOrm()
+	goodsNumber := 0
+	err := o.Raw("select count(*) from t_goods where state >= 0").QueryRow(&goodsNumber)
+	if err != nil {
+		mlog.Critical("%v", err)
+		return 0
+	}
+	return goodsNumber
+}
+
+//count numbers of goods tag (state >=0)🍙
+func CountGoodsTag() int {
+	o := orm.NewOrm()
+	goodsNumber := 0
+	err := o.Raw("select count(tag) from t_goods where state >=0").QueryRow(&goodsNumber)
+	if err != nil {
+		mlog.Critical("%v", err)
+		return 0
+	}
+	return goodsNumber
+}
+
+//count total price of goods that are selling🍙
+func CountTotalPrice() float64 {
+	o := orm.NewOrm()
+	var totalPrice float64 = 0.0
+	err := o.Raw("select sum(price) from t_goods where state >= 0").QueryRow(&totalPrice)
+	if err != nil {
+		mlog.Critical("%v", err)
+		return 0.0
+	}
+	return totalPrice
 }
 
 //count how many goods a user have upload 🍉🍆

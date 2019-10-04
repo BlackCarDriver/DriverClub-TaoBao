@@ -50,5 +50,12 @@
             <b>Why this website name is blackcardriver.cn?</b>
             <p>Don't think too mush, it is because I like it...</p>
         </div>
+        <div class="msgbox">
+            <h2>统计数据</h2>
+            <li *ngFor="let row of data" class="datalist">
+                <b class="keyname">{{row.key}}</b>
+                <span class="value">{{row.value}}</span>
+            </li>
+        </div>
     </div>
 </div>

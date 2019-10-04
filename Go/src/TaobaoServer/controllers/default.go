@@ -139,6 +139,8 @@ func (this *TestController) Get() {
 	tlog, _ = ParseFile("./logs/models.log")
 	this.Data["ModelsLog"] = strings.ReplaceAll(tlog, "[E]", "🍉")
 	this.TplName = "test.tpl"
+	//update static data 👀
+	md.TodayRequestTimes++
 }
 
 //saved user's upload images into dist and return a url that get it images 🍍🌰🍚
@@ -204,6 +206,8 @@ func (this *UploadImagesController) Post() {
 	response.StatusCode = 0
 	response.Data = fmt.Sprintf(imgUrlTP, h.Filename)
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -342,6 +346,8 @@ func (this *UpdateController) Post() {
 		rlog.Error("%v", response.Msg)
 	}
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -419,6 +425,8 @@ func (this *DeleteController) Post() {
 		rlog.Error("%v", response.Msg)
 	}
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
@@ -461,7 +469,7 @@ func (this *PublicController) Post() {
 			goto tail
 		}
 		response.Data = data
-	case "setisread": //update the state of a feedback record as is read
+	case "setfbisread": //update the state of a feedback record as is read
 		fbid := 0
 		if err = Parse(postBody.Data, &fbid); err != nil {
 			response.Status = -4
@@ -476,9 +484,9 @@ func (this *PublicController) Post() {
 			goto tail
 		}
 
-	case "addfeedback": //add a feedback record
+	case "staticdata": //get the static data 🍙
+		response.Data = md.StaticData
 
-	case "staticdata": //get the static data
 	default:
 		response.Status = -99
 		response.Msg = fmt.Sprintf("Unsuppose API: %s", postBody.Api)
@@ -487,11 +495,14 @@ func (this *PublicController) Post() {
 	}
 	response.Status = 0
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }
 
 //Receive and handle multipart from request 🍗
+//add feedback record is here
 func (this *PostFormController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -510,7 +521,7 @@ func (this *PostFormController) Post() {
 		data.Type = this.GetString("fb_type")
 		data.Location = this.GetString("fb_location")
 		data.Email = this.GetString("email")
-		data.UserId = this.GetString("userid")
+		data.Userid = this.GetString("userid")
 		data.Describes = this.GetString("describes")
 		if data.Type == "" || data.Location == "" || data.Describes == "" {
 			response.StatusCode = -2
@@ -580,6 +591,8 @@ func (this *PostFormController) Post() {
 	}
 	response.StatusCode = 0
 tail:
+	//update static data 👀
+	md.TodayRequestTimes++
 	this.Data["json"] = response
 	this.ServeJSON()
 }

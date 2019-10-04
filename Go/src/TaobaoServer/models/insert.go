@@ -14,11 +14,11 @@ import (
 const (
 	dfUserHeadimg = `https://img-blog.csdnimg.cn/20191003114954113.jpg`
 	dfGoodHeadimg = `https://img-blog.csdnimg.cn/20191003114954113.jpg`
-	masterId = "19070010"
+	masterId      = "19070010"
 )
 
 // some pulic message template
-const(
+const (
 	HelloMsgToNewUser = ` [系统消息] 欢迎并感谢你成为本站的会员！本站仍然在开发之中，很多地方有待完善，欢迎到反馈页面反馈问题以及向我发送私聊，
 我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！`
 )
@@ -28,19 +28,19 @@ const(
 func CreateAccount(user RegisterData) error {
 	o := orm.NewOrm()
 	//check the username and email again
-	if nameNumber := CountUserName(user.Name); nameNumber!= 0 {
+	if nameNumber := CountUserName(user.Name); nameNumber != 0 {
 		err := fmt.Errorf("User name %s already have been used", user.Name)
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	if emailNumber := CountRegistEmail(user.Email); emailNumber != 0 {
 		err := fmt.Errorf("Email %s already have been used", user.Name)
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
-	} 
-	if CountUserId(user.Name)!=0 {
+	}
+	if CountUserId(user.Name) != 0 {
 		err := fmt.Errorf("User name %s is same as a exist id", user.Name)
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	//make a userid by the following regular
@@ -51,13 +51,15 @@ func CreateAccount(user RegisterData) error {
 		userid, user.Email, user.Password, user.Name, dfUserHeadimg)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		mlog.Error("create new account fail: %v",err)
+		mlog.Error("create new account fail: %v", err)
 		return err
 	}
 	//send user a private message to user account
-	if err := SendSystemMsg(userid, HelloMsgToNewUser); err!= nil {
-		mlog.Error("%v",err)
+	if err := SendSystemMsg(userid, HelloMsgToNewUser); err != nil {
+		mlog.Error("%v", err)
 	}
+	//update static data 👀
+	TodayNewUser++
 	return nil
 }
 
@@ -75,7 +77,7 @@ func CreateGoods(goods UploadGoodsData) error {
 
 	err = o.Begin()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	_, err1 := insertGoods.Exec()
@@ -98,6 +100,8 @@ func CreateGoods(goods UploadGoodsData) error {
 		mlog.Info("Create Goods Scuueed!!")
 		err = o.Commit()
 	}
+	//update static data 👀
+	TodayNewGoods++
 	return err
 }
 
@@ -107,26 +111,27 @@ func AddCollectRecord(uid, gid string) error {
 	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 	}
-	Uas2.Add(uid) 	//user collect a goods, credits+1
+	Uas2.Add(uid) //user collect a goods, credits+1
 	return err
 }
 
 //private message sending 🍚
 func AddUserMessage(uid, targetid, message string) error {
-	if uid=="" || targetid =="" || message == "" {
+	if uid == "" || targetid == "" || message == "" {
 		err := errors.New("get empty userid or message content")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	o := orm.NewOrm()
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, uid, targetid, message)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 	}
-	Uas2.Add(uid) //user send message, credits+1
+	Uas2.Add(uid)                           //user send message, credits+1
+	UpdateStaticIntData("TotalPVMsgNum", 1) //👀
 	return err
 }
 
@@ -139,23 +144,23 @@ func AddGoodsCollect(uid, gid string) error {
 	err = o.Raw(`SELECT count(*) from t_collect where userid=? and goodsid=?`, uid, gid).QueryRow(&count)
 	if err != nil {
 		err := fmt.Errorf("Error when select: %s", err)
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	if count > 0 {
 		err := fmt.Errorf("You are already Collect it goods!")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	result, err = o.Raw(`INSERT INTO t_collect(userid, goodsid)VALUES (?, ?)`, uid, gid).Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -170,27 +175,27 @@ func AddUserConcern(id1, id2 string) error {
 	err = o.Raw(`SELECT count(*) FROM t_concern where id1=? and id2=?`, id1, id2).QueryRow(&count)
 	if err != nil {
 		err := fmt.Errorf("Error when select from t_concern: %s", err)
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	if count > 0 {
 		err := fmt.Errorf("You are already concern it user!")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	result, err = o.Raw(`INSERT INTO t_concern(id1, id2)VALUES (?, ?)`, id1, id2).Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	Uas2.Add(id1) //two user credits +1
-	Uas2.Add(id2) 
+	Uas2.Add(id2)
 	return nil
 }
 
@@ -207,7 +212,7 @@ func AddGoodsLike(uid, gid string) error {
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	Uas2.Add(uid)
@@ -216,9 +221,9 @@ func AddGoodsLike(uid, gid string) error {
 
 //save a user_like record
 func AddUserLike(uid1, uid2 string) error {
-	if uid1=="" || uid2 =="" {
-		err:= errors.New("uid or uid is null")
-		mlog.Error("%v",err)
+	if uid1 == "" || uid2 == "" {
+		err := errors.New("uid or uid is null")
+		mlog.Error("%v", err)
 		return err
 	}
 	o := orm.NewOrm()
@@ -230,7 +235,7 @@ func AddUserLike(uid1, uid2 string) error {
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	Uas2.Add(uid1)
@@ -245,16 +250,17 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 	o := orm.NewOrm()
 	result, err := o.Raw(`INSERT INTO public.t_comment(userid, goodsid, content)VALUES (?, ?, ?)`, uid, gid, conetnt).Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	effect, _ := result.RowsAffected()
 	if effect == 0 {
 		err := fmt.Errorf("No Roow Affected !")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	Uas2.Add(uid)
+	UpdateStaticIntData("TotalCommendNum", 1) //👀
 	return nil
 }
 
@@ -264,7 +270,7 @@ func SendSystemMsg(uid, msg string) error {
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, masterId, uid, msg)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return err
 	}
 	return nil
@@ -272,18 +278,19 @@ func SendSystemMsg(uid, msg string) error {
 
 //save a feedback record 🍗
 func AddFeedback(d *FeedBackData) error {
-	var err error 
+	var err error
 	if d == nil {
 		err = errors.New("Receive a nil pointer")
-		mlog.Error("%v",err)
+		mlog.Error("%v", err)
 		return nil
 	}
 	insertTP := `insert into t_feedback(user_id, fb_location, 
 		fb_type, imgurl, describes, email)VALUES (?,?,?,?,?,?)`
 	o := orm.NewOrm()
-	if _, err = o.Raw(insertTP,d.UserId, d.Location, d.Type, d.Imgurl, d.Describes, d.Email).Exec();err != nil {
-		mlog.Error("%v",err)
+	if _, err = o.Raw(insertTP, d.Userid, d.Location, d.Type, d.Imgurl, d.Describes, d.Email).Exec(); err != nil {
+		mlog.Error("%v", err)
 		return err
 	}
+	UpdateStaticIntData("TotalFBTimes", 1) //👀
 	return nil
 }
