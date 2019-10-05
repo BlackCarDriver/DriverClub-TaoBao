@@ -44,7 +44,10 @@ export class Personal2Component implements OnInit {
         this.app.showMsgBox(-1, "获取页面数据失败，请刷新试试", result.msg);
         return;
       }
-      this.data = result.data;
+      //compress images size
+      let temp:UserMessage = result.data;
+      temp.headimg = this.server.changeImgUrl(temp.headimg);
+      this.data = temp;
     }, err => { this.app.cFail(err); return; });
     this.getStatement();
   }
@@ -162,5 +165,8 @@ export class Personal2Component implements OnInit {
     }, error => {
      this.app.cFail(error);
     });
+  }
+  showimg(url:string){
+    this.app.ShowImg(url);
   }
 }

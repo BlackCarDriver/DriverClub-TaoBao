@@ -5,6 +5,8 @@ import (
 	tb "TaobaoServer/toolsbox"
 	"encoding/json"
 	"fmt"
+
+	"github.com/astaxie/beego/logs"
 )
 
 //return homepage goods list data 🍋🍇🌽🍙
@@ -56,6 +58,9 @@ func (this *HPGoodsController) Post() {
 	} else {
 		response.Data = goodslist
 		response.Rows = len(goodslist)
+		if response.Rows == 0 {
+			logs.Info("No goods result found: type:%s  tag:%s", goodstype, goodstag)
+		}
 		response.Sum = sum
 	}
 	//save response to cache

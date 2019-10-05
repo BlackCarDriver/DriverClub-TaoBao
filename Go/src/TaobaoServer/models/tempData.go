@@ -29,6 +29,8 @@ var (
 	TodayNewGoods     = 0   //how many goods uploaded today 👀
 	TodayVStimes      = 0   //homepage visit times in last hour 👀
 	TodayRequestTimes = 0   //how many request today have response 👀
+	TotalVisitTimes   = 0   //total homepage visit times 👀
+	TotalRequestTimes = 0   //total request times 👀
 	LastUpdateTime    = ""  //last time of the static data refreshtion
 )
 
@@ -47,21 +49,30 @@ func RefreshStaticData() {
 	TotalGoodsPrice = CountTotalPrice()
 	TotalTagNum = CountGoodsTag()
 	TotalUserNum = CountTotalUser()
+
 	TotalCommendNum = GetIntStaticData("TotalCommendNum")
 	TotalPVMsgNum = GetIntStaticData("TotalPVMsgNum")
 	TotalFBTimes = GetIntStaticData("TotalFBTimes")
 	TotalDealNumber = GetIntStaticData("TotalDealNumber")
 	TotalDealPrice = GetIntStaticData("TotalDealPrice")
+
+	TotalVisitTimes = GetIntStaticData("TotalVisitTimes")
+	TotalRequestTimes = GetIntStaticData("TotalRequestTimes")
+
 	LastUpdateTime = time.Now().Format("01-02 15:04")
 	StaticData = GetStaticData()
 }
 
 //update some static data when a new day start
 func UpdateStaticPreDay() {
+	UpdateStaticIntData("TotalVisitTimes", TodayVStimes)        //👀
+	UpdateStaticIntData("TotalRequestTimes", TodayRequestTimes) //👀
+	his := GetStaticData()
+	InsertToStatic("static_history", fmt.Sprintf("%#v", his))
+	TodayRequestTimes = 0
+	TodayVStimes = 0
 	TodayNewUser = 0
 	TodayNewGoods = 0
-	TodayVStimes = 0
-	TodayRequestTimes = 0
 }
 
 //Used to updata StaticData 🍙
@@ -77,7 +88,9 @@ func GetStaticData() []Static {
 		{"成功交易面额", TotalDealPrice},
 		{"今日新增用户", TodayNewUser},
 		{"今日新增商品", TodayNewGoods},
+		{"主页总访问量", TotalVisitTimes},
 		{"今日主页访问量", TodayVStimes},
+		{"总处理请求总数", TotalRequestTimes},
 		{"今日处理请求总数", TodayRequestTimes},
 		{"本版本后端运行时长(h)", RunHour},
 		{"本统计信息更新时间", LastUpdateTime},
@@ -85,7 +98,7 @@ func GetStaticData() []Static {
 	return data
 }
 
-//=======================================================================
+//================================= time bus ================================
 
 //Refresh all temp data when start the backend 🌰
 func initTempData() {
@@ -121,12 +134,19 @@ func RunPreHour() {
 
 		RefreshStaticData()
 
+		//execute add 0:00 to 1:00
 		if nowHour == 0 {
 			mlog.Info("Begin to start mid night clock...")
 			//refresh user rank one times each day
 			RefreshUserRank()
 			//reset some static data
 			UpdateStaticPreDay()
+			//add 50 credits to driver account each day
+			AwardDriver()
+		}
+		//update goods rank at 3:00
+		if nowHour == 3 {
+			MaintainGoodsState()
 		}
 		//maintain level data and rank data three times each day
 		if nowHour%6 == 0 {
@@ -164,7 +184,7 @@ func RefreshUserRank() {
 	}
 }
 
-//===================== User active static ===========
+//============================= User active static =============================
 //user active statistics
 var Uas1, Uas2 *ActiveNess
 
@@ -197,7 +217,7 @@ func (a *ActiveNess) GetMap() map[string]int {
 	return a.active
 }
 
-//============== Save some message for a limited time ============ 🍖
+//======================== Save some message for a limited time ===================== 🍖
 //save the comfirm code
 var ComfirmCode *TimeMap
 
@@ -264,14 +284,21 @@ func (t *TimeMap) Clear() {
 //add the init static data to database when first times run backend🍙
 //Usually it function only called one times!!!
 func InitStaticTable() {
+	o := orm.NewOrm()
+	number := 0
+	o.Raw("select count(*) from t_static where keyname='TotalCommendNum'").QueryRow(&number)
+	if number != 0 {
+		return
+	}
 	var queryRows = []string{
 		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalCommendNum', 0)",
 		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalPVMsgNum', 0)",
 		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalDealNumber', 0)",
 		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalFBTimes', 0)",
 		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalDealPrice', 0)",
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalVisitTimes', 0)",
+		"INSERT INTO public.t_static(keyname, numberval) VALUES ('TotalRequestTimes', 0)",
 	}
-	o := orm.NewOrm()
 	for _, row := range queryRows {
 		_, err := o.Raw(row).Exec()
 		if err != nil {
@@ -288,7 +315,7 @@ func GetIntStaticData(key string) int {
 	number := 0
 	err := o.Raw("select numberval from t_static where keyname=?", key).QueryRow(&number)
 	if err != nil {
-		mlog.Critical("Get Int StaticData fail: %v", err)
+		mlog.Critical("Get Int StaticData %s fail: %v", key, err)
 		return -1
 	}
 	return number
@@ -322,4 +349,13 @@ func UpdateStaticStrData(key string, newStr string) {
 	if err != nil {
 		mlog.Error("try to update static fail: key=%s  newVal=%d", key, newStr)
 	}
+}
+
+//add a record to t_static
+func InsertToStatic(key string, value string) {
+	o := orm.NewOrm()
+	if _, err := o.Raw("INSERT INTO public.t_static(keyname, stringval) VALUES (?, ?)", key, value).Exec(); err != nil {
+		mlog.Error("insert into t_static fail: %v", err)
+	}
+
 }

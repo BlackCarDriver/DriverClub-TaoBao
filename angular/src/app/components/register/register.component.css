@@ -1,5 +1,6 @@
 
 .main-body{
+    position: absolute;
     margin: 0%;
     border-radius: 0px;
     height: 100%;

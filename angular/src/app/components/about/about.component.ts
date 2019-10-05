@@ -28,7 +28,14 @@ export class AboutComponent implements OnInit {
           alert("获取统计数据失败:"+ result.msg);
           return;
         }
-        this.data = result.data;   
+        let temp:Map[] = result.data;
+        //only let those who have login to see the static data
+        if(this.server.userid==""){
+          temp.forEach(row => {
+              row.value = "(登录后可见)";
+          });
+        }
+        this.data = temp;   
       })
   }
 }

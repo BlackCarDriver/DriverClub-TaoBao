@@ -25,3 +25,12 @@
     </div>
   </div>
 </div>
+
+<!-- image model box -->
+<button id="showimg" data-toggle="modal" data-target="#imgbox" style="display: none;"></button>
+<div class="modal fade" aria-labelledby="mySmallModalLabel" id="imgbox">
+  <div class="imgbg">
+    <img src="{{imghref}}" alt="images">
+    <button (click)="closeimg()" class="closebtn">Close</button>
+  </div>
+</div>

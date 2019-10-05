@@ -288,7 +288,7 @@ a:hover {
 
 .msg-text-box .msg-body {
     color: #67646a;
-    padding: 2px;
+    padding: 5px;
     font-size: 1.2em;
 }
 
@@ -374,4 +374,8 @@ a:hover {
     .msg-text-box {
         padding-left: 0%;
     }
+    body{
+        font-size: 12px;
+    }
 }
+

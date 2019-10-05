@@ -265,7 +265,7 @@ func (this *UpdateController) Post() {
 			goto tail
 		}
 		message := ""
-		if message = appendData["message"].(string); tb.CheckMessage(message) {
+		if message = appendData["message"].(string); !tb.CheckMessage(message) {
 			response.StatusCode = -4
 			response.Msg = "消息格式不通过"
 			rlog.Error("%v", response.Msg)

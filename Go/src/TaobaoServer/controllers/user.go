@@ -427,11 +427,12 @@ func (this *EntranceController) Post() {
 				response.StatusCode = -5
 				response.Msg = "Sorry, Create token fail!"
 				rlog.Critical(response.Msg)
-			} else {
+			} else { //login success
+				md.UpdateLoginTime(tid)
 				response.Msg = token
+				goto tail //note that if not goto tail the msg of response will be rewiret!!!
 			}
 		}
-		goto tail
 
 	case "getcomfirmcode": //comfrim sign up data and return a comfrim code when user regiest  🍖🍚
 		register := md.RegisterData{}

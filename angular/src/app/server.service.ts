@@ -65,7 +65,11 @@ export class ServerService {
     let newUrl = imgUrl.slice(0,id+1) + "_" + imgUrl.slice(id+1);
     return newUrl;
   }
-
+  //restore the image url that after compress
+  restoreImg(imgUrl:string){
+    let newUrl = imgUrl.replace("/_","/");
+    return newUrl;
+  }
   //judge if the service is mobie phone or laptop
   IsPhone(){
     let width = document.body.clientWidth;

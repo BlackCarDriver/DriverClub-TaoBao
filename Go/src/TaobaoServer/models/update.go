@@ -181,7 +181,7 @@ func UpdateFeedbackState(fbid int) error {
 		return err
 	}
 	o := orm.NewOrm()
-	updateTP := `update t_feedback set fb_status=1 where id=$1`
+	updateTP := `update t_feedback set fb_status=1 where id=?`
 	if res, err := o.Raw(updateTP, fbid).Exec(); err != nil {
 		mlog.Error("%v", err)
 		return err
@@ -189,6 +189,22 @@ func UpdateFeedbackState(fbid int) error {
 		mlog.Warn("%v", err)
 	} else if af == 0 {
 		err = errors.New("No row affected when update state of message")
+		mlog.Error("%v",err)
+		return err
+	}
+	return nil
+}
+
+//update user's last login time 🍛
+func UpdateLoginTime(uid string) error {
+	o := orm.NewOrm()
+	if res, err := o.Raw(`update t_user set lasttime = now() where id = ?`, uid).Exec(); err != nil {
+		mlog.Error("%v", err)
+		return err
+	}else if af, err := res.RowsAffected(); err != nil {
+		mlog.Warn("%v", err)
+	} else if af == 0 {
+		err = errors.New("No row affected when update logintime")
 		mlog.Error("%v",err)
 		return err
 	}

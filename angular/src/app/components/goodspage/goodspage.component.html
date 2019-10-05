@@ -9,8 +9,9 @@
         </div>
       
       <div class="container gp-head g-bg-box">
-        <div class="col-md-4 col-sm-12 gp-img"><img src={{goodsdt.headimg}}
-            alt="head-image of goods"></div>
+        <div class="col-md-4 col-sm-12 gp-img">
+          <img src={{goodsdt.headimg}} alt="head-image of goods" (click)="display(goodsdt.headimg)">
+        </div>
         <div class="col-md-5 col-sm-12 gp-mid">
           <h4 class="gp-mid-name ptlable">{{goodsdt.name}}</h4>
           <h4 class="gp-mid-price ptlable g-sharnk">{{goodsdt.price}}</h4>

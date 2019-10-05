@@ -1,53 +1,65 @@
-.message{
+.message {
     padding: 10px 40px 10px 40px;
     margin: 10px auto;
     max-width: 800px;
 }
-.msg2{
+
+.msg2 {
     height: 30px;
 }
-.sign{
+
+.sign {
     color: #FFC107;
     font-size: x-large;
 }
-.head-img{
+
+.head-img {
     width: 120px;
     height: 120px;
     border-radius: 120px;
 }
-.name{
+
+.name {
     width: 60%;
     display: inline-block;
 }
-.sendmsg{
+
+.sendmsg {
     float: right;
     margin: 20px;
 }
-.send-text-box{
-    width: 400px; 
+
+.send-text-box {
     height: 200px;
     padding: 6px;
-    background-color: aliceblue;
+    background-color: #f0f0f0;
+    position: relative;
+    top: 4em;
 }
+
 .send-text-box textarea {
     height: 150px;
 }
-.send-text-box button{
+
+.send-text-box button {
     float: right;
     margin: 4px 10px;
     height: 30px;
 }
-.smallbtn{
+
+.smallbtn {
     color: aqua;
 }
-.ico2{
+
+.ico2 {
     color: #679BAA;
     font-size: 1.2em;
     margin: 10px;
     margin-left: 2em;
     cursor: pointer;
 }
-.already{
+
+.already {
     color: #F74B14;
     font-size: 1.4em;
     margin: 10px;
@@ -55,7 +67,7 @@
 }
 
 @media screen and (max-width:600px) {
-    .message{
+    .message {
         margin: 0;
         padding: 1em;
     }

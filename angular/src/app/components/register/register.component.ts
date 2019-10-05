@@ -21,6 +21,7 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.model = this.server.LastSection();
+    document.getElementById("gohome").click();
   }
 
   //send the input message to server and get a comfirm code🍖
@@ -91,8 +92,8 @@ export class RegisterComponent implements OnInit {
         this.app.showMsgBox(-1, result.msg)
         return;
       }
-      this.app.showMsgBox(0, "注册成功,即将前往登录页！");
-      setTimeout(function(){window.location.href='/homepage'},2000);
+      this.app.showMsgBox(0, "注册成功,即将刷新！");
+      document.location.reload();
     }, err=>{this.app.cFail(err);})
   }
   //================= element control function ======================

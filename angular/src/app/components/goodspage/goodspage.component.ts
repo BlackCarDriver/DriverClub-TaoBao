@@ -46,7 +46,9 @@ export class GoodspageComponent implements OnInit {
           this.app.showMsgBox(-1, "获取页面数据失败，请刷新试试" , result.msg );
           return;
       }
-      this.goodsdt = result.data;
+      let temp: GoodsDetail = result.data;
+      temp.headimg = this.server.changeImgUrl(temp.headimg);
+      this.goodsdt = temp;
       $("#text-targer").html(this.goodsdt.detail);
     },err=>{
         this.app.cFail(err);
@@ -175,7 +177,7 @@ export class GoodspageComponent implements OnInit {
           $("#sendcancel").click();
         }
         else{
-          this.app.showMsgBox(-1, "发送失败" , result.msg);
+          this.app.showMsgBox(-1, "发送失败："+  result.msg);
           $("#sendcancel").click();
         }
     },err=>{
@@ -219,6 +221,11 @@ export class GoodspageComponent implements OnInit {
     let array = ["#f9a0a0", "#ea7b7b", "7bd54d","#57d2b3","#2594c8","#b325c8","#c1578d", "#d52c43", "#d4e814"];
     let random = name.length * 47;
     return array[random%array.length];
+  }
+
+  //display images in modelbox
+  display(url:string){
+    this.app.ShowImg(url);
   }
 }
 

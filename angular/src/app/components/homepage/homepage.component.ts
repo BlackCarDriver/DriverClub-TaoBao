@@ -56,7 +56,7 @@ export class HomepageComponent implements OnInit {
       result=>{
         if(result.statuscode==0){
           if (result.rows==0){
-            this.app.showMsgBox(1,"没有找到数据！")
+            this.app.showMsgBox(1,"没有找到数据!")
           }
           let temp:HomePageGoods[] = result.data; //let homepage show those out-of-focu images
           temp.forEach(row => {
@@ -80,6 +80,7 @@ export class HomepageComponent implements OnInit {
   GetSpecalGoods(type :string, tag:string){
     this.lookingtype = type;
     this.lookingtag = tag;
+    this.lookingpage = 1;
     this.GetGoods();
   }
 
@@ -153,15 +154,11 @@ export class HomepageComponent implements OnInit {
       this.offsetpage = this.lookingpage - 3;
     }
   }
-
 collapse(id:string){
     $('.collapse').collapse('hide');
     $(id).collapse('show');
 }
-
 showsinginbox(){
     $("#exampleModal").modal('show');
 }
-  
-
 }

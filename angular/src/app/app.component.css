@@ -29,6 +29,28 @@
     color: white;
 }
 
+.imgbg img {
+    width: auto;
+    height: auto;
+    min-width: 300px;
+}
+
+#imgbox {
+    width: 95%;
+    margin: 2em auto;
+    text-align: center;
+}
+
+.closebtn {
+    position: absolute;
+    margin-left: -5em;
+    width: 5em;
+    border: none;
+    background-color: #0000006b;
+    height: 2em;
+    color: white;
+}
+
 @media screen and (max-width:600px) {
     .public-box {
         width: 90%;

@@ -47,7 +47,10 @@ export class PersonalComponent implements OnInit {
     }
     this.getmymsg();
   }
-
+  //show larger images 🍛
+  showimg(url:string){
+    this.app.ShowImg(url);
+  }
   //get detail information 🍍🍈🌽🍚
   getmymsg(laster?: boolean) {
     let postdata: RequestProto = {
@@ -64,7 +67,9 @@ export class PersonalComponent implements OnInit {
         this.app.showMsgBox(-1, "请求个人信息失败,请刷新试试:" + result.msg)
         return;
       }
-      this.msg = result.data;
+      let temp:UserMessage = result.data;
+      temp.headimg = this.server.changeImgUrl(temp.headimg);
+      this.msg = temp;
     }, err => {
       this.app.cFail(err);
       return;

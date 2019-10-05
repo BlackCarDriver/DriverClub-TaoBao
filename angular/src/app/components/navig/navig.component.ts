@@ -5,7 +5,6 @@ import { AppComponent } from '../../app.component';
 // import { LocalStorage } from '../localstorge';
 //  Property 'collapse' does not exist on type 'JQuery<HTMLElement>'....
 import * as bootstrap from 'bootstrap';
-import { timeout } from 'q';
 // import * as $ from 'jquery';
 declare let $: any;
 
@@ -18,7 +17,7 @@ declare let $: any;
 export class NavigComponent implements OnInit {
   lidata = new LoginData();
   usermsg = new MyStatus();
-
+  islogin = false;
   constructor(
     // private localdata: LocalStorage,
     private server: ServerService,
@@ -27,7 +26,6 @@ export class NavigComponent implements OnInit {
 
   ngOnInit() {
     this.InitloginChech();
-    this.showStat(false);
     this.setstate();
     this.initNav();
   }
@@ -43,16 +41,6 @@ export class NavigComponent implements OnInit {
       this.server.clearAllCookie();
       document.location.href="/homepage";
       setTimeout(()=>{document.location.reload()},2000);
-    }
-  }
-  //decide the style of nav-user box
-  showStat(islogin: boolean) {
-    if (islogin) {
-      $('#singin').attr("style", "display:none;");
-      $('#userbox').attr("style", "display:normal;");
-    } else {
-      $('#singin').attr("style", "display:normal;");
-      $('#userbox').attr("style", "display:none;");
     }
   }
   //hide login box
@@ -114,7 +102,7 @@ export class NavigComponent implements OnInit {
       if (result.statuscode == 0) {
         this.usermsg = result.data;
         this.server.username = this.usermsg.name;
-        this.showStat(true);
+        this.islogin = true;
       } else if (result.statuscode == -1000) {  //token was reject
         this.app.showMsgBox(-1, result.msg);
         this.server.clearAllCookie();
@@ -146,7 +134,6 @@ export class NavigComponent implements OnInit {
         return;
       }
       this.app.showMsgBox(0, "登录成功！");
-      setTimeout( function(){document.location.reload();}, 2000);
       this.hidelib();
       this.usermsg = result.data;
       this.server.userid = this.usermsg.id;
@@ -155,7 +142,8 @@ export class NavigComponent implements OnInit {
       this.server.setCookie("un", this.usermsg.name);
       this.server.setCookie("up", this.lidata.password);
       this.server.setCookie("ui", this.server.userid);
-      this.showStat(true);
+      this.islogin = true;
+      setTimeout( function(){document.location.reload();}, 2000);
     });
   }
 
