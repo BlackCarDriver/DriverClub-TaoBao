@@ -32,6 +32,8 @@ drop table t_goods_like;
 
 drop table t_message;
 
+drop table t_static;
+
 drop table t_upload;
 
 drop table t_user;
@@ -243,6 +245,31 @@ comment on column t_message.state is
 '状态';
 
 /*==============================================================*/
+/* Table: t_static                                              */
+/*==============================================================*/
+create table t_static (
+   keyname              character varying(50) null,
+   numberval            integer              null default '',
+   stringval            character varying(500) null default '0',
+   savetime             time                 null default 'now()'
+);
+
+comment on table t_static is
+'static data or used as map temply';
+
+comment on column t_static.keyname is
+'key name';
+
+comment on column t_static.numberval is
+'interger type value';
+
+comment on column t_static.stringval is
+'string type value';
+
+comment on column t_static.savetime is
+'insert or update time';
+
+/*==============================================================*/
 /* Table: t_upload                                              */
 /*==============================================================*/
 create table t_upload (
@@ -443,7 +470,7 @@ SELECT v_goodslist.uid AS userid,
     v_goodslist."time",
     v_goodslist.headimg
    FROM v_goodslist
-  WHERE (v_goodslist.state = 1)  
+  WHERE (v_goodslist.state >=0 1)  
   ORDER BY v_goodslist."time" DESC;
 
 /*==============================================================*/
@@ -499,7 +526,7 @@ SELECT u.id AS uid,
    FROM t_user u,
     t_goods g,
     t_upload p
-  WHERE (((p.userid) = (u.id)) AND ((p.goodsid) = (g.id)) AND (g.state = 1));
+  WHERE (((p.userid) = (u.id)) AND ((p.goodsid) = (g.id)) AND (g.state >=0 ));
 
 /*==============================================================*/
 /* View: v_mymessage                                            */

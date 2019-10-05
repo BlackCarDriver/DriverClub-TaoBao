@@ -32,7 +32,8 @@ func init() {
 	var err error
 	//setting up logger
 	mlog = logs.NewLogger()
-	mlog.SetLogger("file", `{"filename":"logs/models.log"}`)
+	mlog.SetLogger("file", `{"filename":"logs/models.log","daily":false,"maxsize":512000}`)
+
 	mlog.EnableFuncCallDepth(true)
 	mlog.SetLevel(2)
 	mlog.Info("Router logs init success!")

@@ -44,7 +44,7 @@ func init() {
 	logs.SetLogFuncCallDepth(3)
 	//make a logger specially used by router
 	rlog = logs.NewLogger()
-	rlog.SetLogger("file", `{"filename":"logs/router.log"}`)
+	rlog.SetLogger("file", `{"filename":"logs/router.log", "daily":false, "maxsize":512000}`)
 	rlog.EnableFuncCallDepth(true)
 	rlog.Info("Router logs init success!")
 	rlog.SetLogFuncCallDepth(2)

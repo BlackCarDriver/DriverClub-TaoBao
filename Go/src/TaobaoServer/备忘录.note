@@ -1,17 +1,6 @@
 
 ##################################### 备忘录 ###################################
-数据库修改：将用户性别默认值修改为大写的BOY
 
-新增一数据表：
-CREATE TABLE t_static (
-    keyname character varying(50) NOT NULL,
-    numberval integer not null default 0,
-    stringval character(500) not null default '',
-    savetime timestamp without time zone not null default now()
-)
-
-v_goodslist 修改为：  WHERE v_goodslist.state >= 0
-v_mygoods 修改：AND g.state > 1;
 
 ##################################### 支线任务 ###################################
 footer改成正确的信息
@@ -204,3 +193,4 @@ naving组件逻辑检查
 点击图片放大查看功能以及使用更略缩图
 司机账号自动加分加分彩蛋机制
 完成商品排序规则更新
+更新物理模型

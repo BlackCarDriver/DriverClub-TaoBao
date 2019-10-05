@@ -8,8 +8,7 @@ import (
 
 func init() {
 	//setting up logger
-	beego.SetLogger("file", `{"filename":"logs/default.log"}`)
-
+	beego.SetLogger("file", `{"filename":"logs/default.log","daily":false, "maxsize":512000}`)
 	beego.Router("/test", &controllers.TestController{})
 	beego.Router("/homepage/goodsdata", &controllers.HPGoodsController{})
 	beego.Router("/homepage/goodstypemsg", &controllers.GoodsTypeController{})
