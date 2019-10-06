@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit {
         return;
       }
       this.app.showMsgBox(0, "注册成功,即将前往主页！");
-      setTimeout(() => { document.location.href="/homepage/"; }, 3000);
+      setTimeout(() => { this.server.gohome(); }, 3000);
     }, err=>{this.app.cFail(err);})
   }
   //================= element control function ======================

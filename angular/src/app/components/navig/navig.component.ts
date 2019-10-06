@@ -40,8 +40,7 @@ export class NavigComponent implements OnInit {
   logout() {
     if (confirm("你确定要清楚登录状态并退出此账号？")) {
       this.server.clearAllCookie();
-      document.location.href="/homepage";
-      setTimeout(()=>{document.location.reload()},2000);
+      setTimeout(()=>{this.server.gohome()},2000);
     }
   }
   //hide login box

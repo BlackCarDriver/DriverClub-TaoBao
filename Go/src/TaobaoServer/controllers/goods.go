@@ -192,7 +192,7 @@ tail:
 	this.ServeJSON()
 }
 
-//user upload a goods in upload page 🍋🍔🍚
+//user upload a goods in upload page 🍋🍔🍚🍜
 func (this *UploadGoodsController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
@@ -204,6 +204,12 @@ func (this *UploadGoodsController) Post() {
 		response.StatusCode = -1
 		response.Msg = fmt.Sprintf("解析请求主体失败: %v", err)
 		rlog.Error(response.Msg)
+		goto tail
+	}
+	//prevent upload too many
+	if md.CheckFrequent(&postBody) {
+		response.StatusCode = -2
+		response.Msg = "操作太频繁，请稍后再试"
 		goto tail
 	}
 	//catch the unexpect panic

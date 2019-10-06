@@ -72,13 +72,13 @@ export class UploadgoodsComponent implements OnInit {
     if (this.server.IsNotLogin()) {
       return;
     }
+    if ($("#check").prop("checked") == false) {
+      this.app.showMsgBox(1, "请先了解上传规则");
+      return;
+    }
     let warn = this.checkData();
     if (warn!="") {
       this.app.showMsgBox(1, "商品描述有误:" + warn);
-      return;
-    }
-    if ($("#check").prop("checked") == false) {
-      this.app.showMsgBox(1, "请先了解上传规则");
       return;
     }
     let data: UploadGoods = {
@@ -93,6 +93,7 @@ export class UploadgoodsComponent implements OnInit {
       usenewtag: this.usenewtag,
       tag: (this.usenewtag ? $("#newtypeinput").val() : this.tagname),
     };
+    this.app.showMsgBox(1,"开始发送，请稍等！");
     //note taht Request protocol is write in UploadGoodsData
     this.server.UploadGoodsData(data).subscribe(result => {
       if (result.statuscode != 0) {

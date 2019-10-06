@@ -109,9 +109,9 @@ then
     --rm \
     --name market-server \
     -v $PWD/Go/src:/workplace \
-    -v $PWD/source:/home/ubuntu/DockerWorkPlace/Market/source \
+    -v /home/ubuntu/DockerWorkPlace/Market/source:/home/ubuntu/DockerWorkPlace/Market/source \
     --network market-net \
-    -it -p 4749:4747 \
+    -d -p 4749:4747 \
     alpine:latest \
     sh -c 'mv /workplace/main /workplace/TaobaoServer/main && cd /workplace/TaobaoServer && ./main'
 	

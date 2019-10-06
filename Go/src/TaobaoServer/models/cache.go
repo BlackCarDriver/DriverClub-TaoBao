@@ -130,6 +130,7 @@ func DelCache(req *RequestProto) error {
 }
 
 //check if a operation in request is too frequent 🍜
+//return true mean the operation is execute in near time
 func CheckFrequent(req *RequestProto) bool {
 	if req.CacheKey == "" || req.CacheTime <= 0 {
 		mlog.Error("CheckFrequent function receive a null cache_key")
@@ -153,4 +154,3 @@ func parseToString(any interface{}) string {
 	}
 	return string(bs)
 }
- 

@@ -61,7 +61,7 @@ func CheckComfirmCode(code string) bool {
 
 //goods title
 func CheckGoodsTitle(title string) bool {
-	reg := regexp.MustCompile(`^[\p{Han}_a-zA-Z0-9 ]{5,45}$`)
+	reg := regexp.MustCompile(`^.{5,45}$`)
 	if !reg.MatchString(title) {
 		return false
 	}

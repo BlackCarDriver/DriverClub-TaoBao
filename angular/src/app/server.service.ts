@@ -15,12 +15,21 @@ export class ServerService {
   token = "";
   homepage_goods_perpage = 10;
   imgMaxSize = 300 * 1024;
-  private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  // private addr: string = "/localserver";
+  
+  //release model
+  private basehref:string = "/market"  
+  private addr:string = "https://blackcardriver.cn/taobaoserver";
+
+  //dev model
+  // private basehref:string = "";         
+  // private addr:string =  "/localserver";
+  
+
   constructor(
     private http: HttpClient,
   ) { }
+
   //====================================== public phsical function =================================
   //check whether the user is login, show the warm message if not 🍈
   IsNotLogin() {
@@ -76,7 +85,7 @@ export class ServerService {
     return width < 700;
   }
   gohome(){
-    document.location.href="/homepage";
+    document.location.href= this.basehref + "/homepage";
   }
   //======================================= large  interface =============================================================
   //get all kind of data in goodspage 🍌
@@ -147,6 +156,8 @@ export class ServerService {
       api: "uploadgoodsdata",
       token: this.token,
       data: JSON.stringify(data),
+      cachekey:"uploadgood_"+this.userid,
+      cachetime:180,
     };
     return this.http.post<ReplyProto>(url, JSON.stringify(postdata));
   }
@@ -189,7 +200,7 @@ export class ServerService {
   setCookie(key: string, val: string) {
     var exp = new Date();
     exp.setTime(exp.getTime() + 1000 * 86400 * 180 );  //save the cookie for six month
-    document.cookie = key + "=" + this.encryption(val)+";expires=" + exp.toUTCString()+";path=/";
+    document.cookie = key + "=" + this.encryption(val)+";expires=" + exp.toUTCString()+";path="+this.basehref;
   }
   //get cookie by cookie name after decode 
   getCookie(name: string) {
@@ -205,9 +216,11 @@ export class ServerService {
   //clear all cookie 🍄
   clearAllCookie() {
     var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
+    let temp = "/"
+    if (this.basehref!="") temp = this.basehref;
     if (keys) {
       for (var i = keys.length; i--;)
-        document.cookie = keys[i] + '=0;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
+        document.cookie = keys[i] + '=0;expires=Thu, 01 Jan 1970 00:00:00 GMT;path='+temp;
     }
   }
 
@@ -221,7 +234,7 @@ export class ServerService {
   //check the format of username 🍖🍚
   checkUerName(name:string, canEmail?:boolean){
     if(name=="") return "用户名不能为空";
-    if(name.includes(" ")) return "用户名不能包含空格";
+    if(name.includes(" ")) return "用户名不能包含空格哦";
     let namereg = /^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/;
     if( namereg.test(name) ){
       return ""
@@ -233,13 +246,13 @@ export class ServerService {
   //check the format of goods name 🍚
   checkGoodsName(name:string){
     if(/^[\u4e00-\u9fa5_a-zA-Z0-9]{2,15}$/.test(name)==false){
-      return "商品名不可太长太短或包含空格"
+      return "商品名不可太长太短或包含空格和符号哦"
     }
     return "";
   }
   //check the title of upload goods 🍚
   checkGoodsTitle(title:string){
-    if(/^[\u4e00-\u9fa5_a-zA-Z0-9 ]{5,45}$/.test(title)==false){
+    if(title.length<5 || title.length>=45){
       return "商品标题不可太长太短或太短哦";
     }
     return "";
