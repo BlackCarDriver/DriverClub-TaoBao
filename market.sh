@@ -24,7 +24,7 @@ then
 	isngit=1
 	echo "going to npm install=>"
 	sudo docker run -it --rm \
-	-v $PWD/Angular:/workplace \
+	-v $PWD/angular:/workplace \
     blackcardriver2/mcis:ngcli \
 	sh -c 'cd /workplace && npm install --verbose'
 	if [ $? -ne 0 ]
@@ -43,7 +43,7 @@ then
 	isngbd=1
 	echo "going to build Angular project=>"
 	sudo docker run -it --rm \
-	-v $PWD/Angular:/workplace \
+	-v $PWD/angular:/workplace \
     blackcardriver2/mcis:ngcli \
 	sh -c 'cd /workplace && npm run-script build'
 	if [ $? -ne 0 ]
