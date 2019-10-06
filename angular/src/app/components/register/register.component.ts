@@ -92,8 +92,8 @@ export class RegisterComponent implements OnInit {
         this.app.showMsgBox(-1, result.msg)
         return;
       }
-      this.app.showMsgBox(0, "注册成功,即将刷新！");
-      document.location.reload();
+      this.app.showMsgBox(0, "注册成功,即将前往主页！");
+      setTimeout(() => { document.location.href="/homepage/"; }, 3000);
     }, err=>{this.app.cFail(err);})
   }
   //================= element control function ======================

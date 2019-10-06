@@ -155,6 +155,8 @@ export class Personal2Component implements OnInit {
       userid: this.server.userid,
       targetid: this.targetid,
       data: { message: message },
+      cachekey:"uspvmsg_"+this.server.userid,
+      cachetime:60,
     };
     this.server.SmallUpdate(postdata).subscribe(result => {
       if (result.statuscode == 0) {

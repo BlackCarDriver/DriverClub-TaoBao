@@ -129,6 +129,19 @@ func DelCache(req *RequestProto) error {
 	return nil
 }
 
+//check if a operation in request is too frequent 🍜
+func CheckFrequent(req *RequestProto) bool {
+	if req.CacheKey == "" || req.CacheTime <= 0 {
+		mlog.Error("CheckFrequent function receive a null cache_key")
+		return true
+	}
+	if _, err := GetCache(req); err == nil {
+		return true
+	}
+	SetCache(req, "haha")
+	return false
+}
+
 //===================== tool function ================================
 
 //parse a obeject into json encoding string, return null string if error happend
@@ -140,3 +153,4 @@ func parseToString(any interface{}) string {
 	}
 	return string(bs)
 }
+ 

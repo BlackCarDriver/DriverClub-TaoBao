@@ -344,6 +344,27 @@ func GetFeedBack(data *[]FeedBackData, offset int) error {
 	return nil
 }
 
+//get the state of a goods and return some statement if the goods can't be read 🍜
+func GetGoodsStat(gid string) string {
+	o := orm.NewOrm()
+	state := 0
+	if err := o.Raw("select state from t_goods where id = ?", gid).QueryRow(&state); err != nil {
+		mlog.Error("Search goods fail: %v", err)
+		return "找不到此商品"
+	}
+	switch {
+	case state > 0:
+		return ""
+	case state == -1:
+		return "该商品已被用户下架"
+	case state == -99:
+		return "该商品已被管理员删除"
+	case state < 0:
+		return "该商品已被删除"
+	}
+	return ""
+}
+
 //#################### count ###########################
 
 //get the user's number who car me

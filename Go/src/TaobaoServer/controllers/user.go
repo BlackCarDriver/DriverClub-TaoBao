@@ -147,7 +147,7 @@ func (this *PersonalDataController) Post() {
 		}
 		//get and return naving data
 		if err = md.GetNavingMsg(userid, &data); err != nil {
-			response.StatusCode = -7
+			response.StatusCode = -1000
 			response.Msg = fmt.Sprintf("Can't get naving data: %v ", err)
 			rlog.Error(response.Msg)
 		} else {
@@ -215,15 +215,16 @@ tail:
 	this.ServeJSON()
 }
 
-//update personal message, such as base information, connect wags. 🍍🍔
+//update personal message, such as base information, connect wags. 🍍🍔🍜
 //server for UpdateMessage() in frontend
 //all function here need to vertiry with token
 func (this *UpdataMsgController) Post() {
 	postBody := md.RequestProto{}
 	response := md.ReplyProto{}
 	response.StatusCode = 0
-	var api, userid, token string
+	var api, userid, token, cachekey string
 	var err error
+	var cacheTime int
 	//parse request protocol
 	if err = json.Unmarshal(this.Ctx.Input.RequestBody, &postBody); err != nil {
 		response.StatusCode = -1
@@ -234,13 +235,29 @@ func (this *UpdataMsgController) Post() {
 	api = postBody.Api
 	userid = postBody.UserId
 	token = postBody.Token
+	cachekey = postBody.CacheKey
+	cacheTime = postBody.CacheTime
 	//check that the data is complete
 	if api == "" || userid == "" {
 		response.StatusCode = -2
-		response.Msg = fmt.Sprintf("Can't get api or userid from request data")
+		response.Msg = "Can't get api or userid from request data"
 		rlog.Error(response.Msg)
 		goto tail
 	}
+	//check the cache to prevent operation too frequently
+	if cachekey == "" || cacheTime <= 0 {
+		response.StatusCode = -2
+		response.Msg = "Not found cachekey in request body"
+		rlog.Error(response.Msg)
+		goto tail
+	}
+	if fk := md.CheckFrequent(&postBody); fk { // operation too frequent
+		response.StatusCode = -2
+		response.Msg = "操作太频繁,请稍后再试"
+		rlog.Error(response.Msg)
+		goto tail
+	}
+
 	//check token
 	if token == "" || !CheckToken(userid, token) {
 		rlog.Warn("User %s request update %s with worng token", userid, api)
@@ -275,8 +292,8 @@ func (this *UpdataMsgController) Post() {
 			reason = "用户名称不合规则"
 		case postData.Sex != "GIRL" && postData.Sex != "BOY":
 			reason = "性别信息不合规则"
-		case len(postData.Sign) > 50:
-			reason = "前面长度超出限制"
+		case len(postData.Sign) > 100:
+			reason = "签名长度超出限制"
 		case !tb.CheckGrade(postData.Grade):
 			reason = "年级信息不合规则"
 		case len(postData.Colleage) > 50:
@@ -295,8 +312,9 @@ func (this *UpdataMsgController) Post() {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Update message fail: %v", err)
 			rlog.Error(response.Msg)
+			goto tail
 		}
-		goto tail
+
 	case "MyConnectMessage": //connect information update🍙
 		reason := ""
 		postData := md.UpdeteMsg{}
@@ -323,8 +341,9 @@ func (this *UpdataMsgController) Post() {
 			response.StatusCode = -6
 			response.Msg = fmt.Sprintf("Update connection message fail: %v", err)
 			rlog.Error(response.Msg)
+			goto tail
 		}
-		goto tail
+
 	case "MyHeadImage": //update profile picture
 		if postBody.Data.(string) == "" { //here imgurl save in data directrly
 			response.StatusCode = -9
@@ -336,13 +355,17 @@ func (this *UpdataMsgController) Post() {
 			response.StatusCode = -8
 			response.Msg = fmt.Sprintf("Update profile iamge fail, error:%v, uid:%s", err, userid)
 			rlog.Error(response.Msg)
+			goto tail
 		}
-		goto tail
+
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such method: %s", api)
 		rlog.Error(response.Msg)
+		goto tail
 	}
+	response.StatusCode = 0
+	response.Msg = "Success!"
 tail:
 	//update static data 👀
 	md.TodayRequestTimes++
@@ -419,6 +442,7 @@ func (this *EntranceController) Post() {
 			response.StatusCode = -4
 			response.Msg = fmt.Sprintf("Can't get usre naving data: %v ", err)
 			rlog.Error(response.Msg)
+			goto tail
 		} else {
 			//create a token for user next times identify, token will place at response msg
 			data.ID = tid
@@ -427,6 +451,7 @@ func (this *EntranceController) Post() {
 				response.StatusCode = -5
 				response.Msg = "Sorry, Create token fail!"
 				rlog.Critical(response.Msg)
+				goto tail
 			} else { //login success
 				md.UpdateLoginTime(tid)
 				response.Msg = token
@@ -460,7 +485,7 @@ func (this *EntranceController) Post() {
 		//check the if the user name and email have been used
 		if md.CountUserName(register.Name) != 0 {
 			response.StatusCode = -6
-			response.Msg = "这个用户名正在被使用，请更换一个哦"
+			response.Msg = "这个用户名已经被使用，请更换一个哦"
 			goto tail
 		}
 		if md.CountRegistEmail(register.Email) != 0 {

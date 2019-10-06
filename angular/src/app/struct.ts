@@ -96,6 +96,7 @@ export class MyMessage {
     content: string;
     mid: string;
     uid: string;
+    sid:string;
     state?:number;
 }
 

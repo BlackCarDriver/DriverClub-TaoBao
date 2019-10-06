@@ -25,8 +25,9 @@ export class NavigComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.InitloginChech();
+    let d = new Date(0).toUTCString();
     this.setstate();
+    this.InitloginChech();
     this.initNav();
   }
 
@@ -104,6 +105,7 @@ export class NavigComponent implements OnInit {
         this.server.username = this.usermsg.name;
         this.islogin = true;
       } else if (result.statuscode == -1000) {  //token was reject
+        this.server.clearAllCookie();
         this.app.showMsgBox(-1, result.msg);
         this.server.clearAllCookie();
         setTimeout(() => {
@@ -131,6 +133,7 @@ export class NavigComponent implements OnInit {
     this.server.Entrance(postdata).subscribe(result => {
       if (result.statuscode != 0) {
         this.app.showMsgBox(-1, "登录失败：" + result.msg);
+        this.server.clearAllCookie();
         return;
       }
       this.app.showMsgBox(0, "登录成功！");

@@ -1,3 +1,5 @@
+
+
 drop view v_rank;
 
 drop view v_navingmsg;
@@ -26,8 +28,6 @@ drop table t_concern;
 
 drop table t_feedback;
 
-drop table t_goods;
-
 drop table t_goods_like;
 
 drop table t_message;
@@ -36,9 +36,11 @@ drop table t_static;
 
 drop table t_upload;
 
-drop table t_user;
-
 drop table t_user_like;
+
+drop table t_goods;
+
+drop table t_user;
 
 /*==============================================================*/
 /* Table: t_collect                                             */
@@ -249,8 +251,8 @@ comment on column t_message.state is
 /*==============================================================*/
 create table t_static (
    keyname              character varying(50) null,
-   numberval            integer              null default '',
-   stringval            character varying(500) null default '0',
+   numberval            integer              null default '0',
+   stringval            character varying(500) null default '',
    savetime             time                 null default 'now()'
 );
 
@@ -427,7 +429,7 @@ SELECT g.id AS goodsid,
     g.tag,
     g.visit,
     g."like",
-    g.file AS detail，
+    g.file AS detail,
     g.collect,
 	 g.talk
    FROM t_goods g,
@@ -470,7 +472,7 @@ SELECT v_goodslist.uid AS userid,
     v_goodslist."time",
     v_goodslist.headimg
    FROM v_goodslist
-  WHERE (v_goodslist.state >=0 1)  
+  WHERE (v_goodslist.state >=0 )  
   ORDER BY v_goodslist."time" DESC;
 
 /*==============================================================*/
@@ -509,7 +511,7 @@ SELECT t_user.headimg,
     t_user.credits,
     t_user.visit,
     t_user.rank,
-    t_user.likes,
+    t_user.likes
    FROM t_user;
 
 /*==============================================================*/
@@ -532,7 +534,7 @@ SELECT u.id AS uid,
 /* View: v_mymessage                                            */
 /*==============================================================*/
 create or replace view v_mymessage as
-CREATE OR REPLACE VIEW public.v_mymessage AS
+
  SELECT u2.id as uid,
  	m.id as mid,
     m."time",

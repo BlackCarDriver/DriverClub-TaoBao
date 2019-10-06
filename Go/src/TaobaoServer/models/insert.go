@@ -14,7 +14,7 @@ import (
 const (
 	dfUserHeadimg = `https://img-blog.csdnimg.cn/20191003114954113.jpg`
 	dfGoodHeadimg = `https://img-blog.csdnimg.cn/20191003114954113.jpg`
-	masterId      = "19070010"
+	masterId      = "19100001"
 )
 
 // some pulic message template
@@ -23,7 +23,7 @@ const (
 我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！`
 )
 
-//Create a account autoly by provided name, password and email 🍖🍚🍙
+//Create a account autoly by provided name, password and email 🍖🍚🍙🍜
 //note that the password  should be md5 encoded
 func CreateAccount(user RegisterData) error {
 	o := orm.NewOrm()
@@ -47,8 +47,8 @@ func CreateAccount(user RegisterData) error {
 	userNumber := CountTotalUser() + 1
 	t := time.Now()
 	userid := fmt.Sprintf("%02d%02d%04d", t.Year()%100, t.Month(), userNumber)
-	rawSeter := o.Raw("insert into t_user(id, email, password, name, headimg) values(?,?,?,?,?)",
-		userid, user.Email, user.Password, user.Name, dfUserHeadimg)
+	rawSeter := o.Raw("insert into t_user(id, email, password, name, headimg, rank) values(?,?,?,?,?,?)",
+		userid, user.Email, user.Password, user.Name, dfUserHeadimg, userNumber)
 	_, err := rawSeter.Exec()
 	if err != nil {
 		mlog.Error("create new account fail: %v", err)

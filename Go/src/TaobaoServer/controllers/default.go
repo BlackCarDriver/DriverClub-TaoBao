@@ -256,7 +256,12 @@ func (this *UpdateController) Post() {
 		}
 		goto tail
 
-	case "sendmessage": //send a private message to goods owner🍚
+	case "sendmessage": //send a private message to goods owner🍚🍜
+		if md.CheckFrequent(&postBody) {
+			response.StatusCode = -4
+			response.Msg = "操作太频繁,请稍后再试哦 :)"
+			goto tail
+		}
 		appendData := postBody.Data.(map[string]interface{})
 		if userid == targetid {
 			response.StatusCode = -4
@@ -293,7 +298,12 @@ func (this *UpdateController) Post() {
 		md.Uas2.Add(userid)
 		goto tail
 
-	case "addcomment": //user comment at a goods 🍚
+	case "addcomment": //user comment at a goods 🍚🍜
+		if md.CheckFrequent(&postBody) {
+			response.StatusCode = -4
+			response.Msg = "操作太频繁,请稍后再试哦 :)"
+			goto tail
+		}
 		appendData := postBody.Data.(map[string]interface{})
 		comment := ""
 		//read and check text data from request struct
@@ -601,7 +611,7 @@ tail:
 
 //create a random string with length l
 func GetRandomString(l int) string {
-	str := "0123456789abcdefghijklmnopqrstuvwxyz_"
+	str := "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWSYZ"
 	bytes := []byte(str)
 	result := []byte{}
 	for i := 0; i < l; i++ {

@@ -205,11 +205,11 @@
                                 
                                 <div class="row mymsg" *ngFor="let rows of mymessagelist; let i = index">
                                     <div class="msg-img-box">
-                                        <img  [routerLink]="['/message/personals',rows.uid ]" src={{rows.headimg}}>
+                                        <img  [routerLink]="['/message/personals',rows.sid ]" src={{rows.headimg}}>
                                     </div>
                                     <div class="msg-text-box" (click)="setIsRead(i, rows.mid)">
                                         <div class="row msg-head" [ngClass]="{'unread': rows.state==0}">
-                                            <div [routerLink]="['/message/personals',rows.uid ]" class="tad" style="color: #337ab7;"> 
+                                            <div [routerLink]="['/message/personals',rows.sid ]" class="tad" style="color: #337ab7;"> 
                                                 <span class="glyphicon glyphicon-user"></span>
                                                 {{rows.name}}
                                             </div>
@@ -226,7 +226,7 @@
                                             <span class="glyphicon glyphicon-trash"></span>
                                     </span>
                                     <span class="rpbtn label label-default">
-                                        <a style="color: white;" [routerLink]="['/message/personals',rows.uid ]">前往回复</a>
+                                        <a style="color: white;" [routerLink]="['/message/personals',rows.sid ]">前往回复</a>
                                     </span>
                                 </div>
                                 <div class="nodata" *ngIf="show_no_message"><p>暂时未有消息</p></div>

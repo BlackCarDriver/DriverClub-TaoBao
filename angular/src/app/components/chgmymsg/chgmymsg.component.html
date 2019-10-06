@@ -2,7 +2,7 @@
     <div class="row path">
         <ol class="breadcrumb" style="margin: 0% auto; max-width: 650px;">
             <li><a  routerLink="/homepage">交易区</a></li>
-            <li *ngIf="userid!=''"><a routerLink="/personal">我的主页</a></li>
+            <li *ngIf="userid!=''"><a routerLink="/myself/myhome">我的主页</a></li>
             <li class="active">修改信息</li>
         </ol>
     </div>
@@ -18,8 +18,7 @@
         <div class="col-md-3 col-xs-12">
             <input type="file" class="hidden" id="uploadheadimg">
             <button id="upload" class="hidden" (click)="upload()"></button>
-            <button class="btn btn-info" (click)="selectImg()"><span
-                    class="glyphicon glyphicon-camera"></span> 修改头像</button>
+            <button class="btn btn-info" (click)="selectImg()"><span class="glyphicon glyphicon-camera"></span> 修改头像</button>
         </div>
     </div>
     <!-- base message -->

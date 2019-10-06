@@ -108,7 +108,7 @@ export class ChgmymsgComponent implements OnInit {
       }
     }, err => { this.app.cFail(err); });
   }
-  //update a profile image and get it url after saved by server 🍍🍈
+  //update a profile image and get it url after saved by server 🍍🍈🍜
   //note that the it function is called autoly after the input checking is pass
   upload() {
     if (this.server.userid == "") return
@@ -122,6 +122,8 @@ export class ChgmymsgComponent implements OnInit {
           api: "MyHeadImage",
           userid: this.server.userid,
           data: result.data,
+          cachekey: "chgheadimg_"+this.server.userid,
+          cachetime:60,
         };
         this.server.UpdateMessage(postdata).subscribe(result => {
           if (result.statuscode == 0) {
@@ -135,7 +137,7 @@ export class ChgmymsgComponent implements OnInit {
       }
     }, err => { this.app.cFail(err); });
   }
-  //update user base message of profile  🍍🍈🍙
+  //update user base message of profile  🍍🍈🍙🍜
   ChangeBaseMsg() {
     let err = "";
     if (this.server.userid == "") return;
@@ -171,6 +173,8 @@ export class ChgmymsgComponent implements OnInit {
       api: "changemybasemsg",
       userid: this.server.userid,
       data: this.data,
+      cachekey: "chgbsmsg"+this.server.userid,
+      cachetime:120,
     };
     this.server.UpdateMessage(postdata).subscribe(result => {
       if (result.statuscode == 0) {
@@ -181,7 +185,7 @@ export class ChgmymsgComponent implements OnInit {
       }
     }, err => { this.app.cFail(err); })
   }
-  //update user's connect message of profile  🍍🍈🍙
+  //update user's connect message of profile  🍍🍈🍙🍜
   ChangeContact() {
     if (this.server.userid == "") return;
     this.data.emails = $("#myemail").val();
@@ -204,6 +208,8 @@ export class ChgmymsgComponent implements OnInit {
       api: "MyConnectMessage",
       userid: this.server.userid,
       data: this.data,
+      cachekey: "chgctmsg"+this.server.userid,
+      cachetime:120,
     };
     this.server.UpdateMessage(postdata).subscribe(result => {
       if (result.statuscode == 0) {

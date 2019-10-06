@@ -120,6 +120,13 @@ func (this *GoodsDetailController) Post() {
 	//handle the request
 	switch api {
 	case "goodsmessage": // base message in goodsdetail page 🍄
+		//check the statement firstly🍜
+		statement := md.GetGoodsStat(goodId)
+		if statement != "" {
+			response.StatusCode = -3
+			response.Msg = statement
+			goto tail
+		}
 		var gooddata md.GoodsDetail
 		if err := md.GetGoodsById(goodId, &gooddata); err != nil {
 			response.StatusCode = -3

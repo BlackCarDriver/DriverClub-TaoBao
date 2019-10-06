@@ -15,9 +15,9 @@ export class ServerService {
   token = "";
   homepage_goods_perpage = 10;
   imgMaxSize = 300 * 1024;
-  // private addr: string  = "https://blackcardriver.cn/taobaoserver";
+  private addr: string  = "https://blackcardriver.cn/taobaoserver";
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
-  private addr: string = "/localserver";
+  // private addr: string = "/localserver";
   constructor(
     private http: HttpClient,
   ) { }
@@ -189,7 +189,7 @@ export class ServerService {
   setCookie(key: string, val: string) {
     var exp = new Date();
     exp.setTime(exp.getTime() + 1000 * 86400 * 180 );  //save the cookie for six month
-    document.cookie = key + "=" + this.encryption(val)+";expires=" + exp.toUTCString();
+    document.cookie = key + "=" + this.encryption(val)+";expires=" + exp.toUTCString()+";path=/";
   }
   //get cookie by cookie name after decode 
   getCookie(name: string) {
@@ -207,7 +207,7 @@ export class ServerService {
     var keys = document.cookie.match(/[^ =;]+(?=\=)/g);
     if (keys) {
       for (var i = keys.length; i--;)
-        document.cookie = keys[i] + '=0;expires=' + new Date(0).toUTCString()
+        document.cookie = keys[i] + '=0;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/';
     }
   }
 
