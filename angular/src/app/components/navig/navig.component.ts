@@ -107,9 +107,10 @@ export class NavigComponent implements OnInit {
         this.server.clearAllCookie();
         this.app.showMsgBox(-1, result.msg);
         this.server.clearAllCookie();
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        return;
+        // setTimeout(() => {
+        //   window.location.reload();
+        // }, 2000);
       } else {
         this.app.showMsgBox(-1, "获取登录数据失败,请稍后重试：" + result.msg);
       }

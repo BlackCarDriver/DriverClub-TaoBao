@@ -132,7 +132,7 @@ export class UploadgoodsComponent implements OnInit {
     ]
     this.editor.customConfig.zIndex = 1;
     this.editor.create();
-    this.editor.txt.html('<p>请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接代替上传图片。</p>')
+    this.editor.txt.html('<b style="color:#ff0000a6;">请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接代替上传图片。</b>')
   }
   //if images select was changed, then upload to server and get a visit url 🍄🍚🍙
   initImgUpload() {

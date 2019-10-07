@@ -495,8 +495,9 @@ func (this *PublicController) Post() {
 		}
 
 	case "staticdata": //get the static data 🍙
-		response.Data = md.StaticData
-
+		response.Data = md.GetStaticData()
+	case "savestatic": //update some static before close the process
+		md.UpdateStatic()
 	default:
 		response.Status = -99
 		response.Msg = fmt.Sprintf("Unsuppose API: %s", postBody.Api)

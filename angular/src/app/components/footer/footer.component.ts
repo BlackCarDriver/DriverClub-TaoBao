@@ -11,5 +11,8 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
   }
+  callegg(){
+    alert('欢迎投稿哦 😘');
+  }
 
 }

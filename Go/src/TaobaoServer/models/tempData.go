@@ -63,6 +63,12 @@ func RefreshStaticData() {
 	StaticData = GetStaticData()
 }
 
+//manually update before close the process
+func UpdateStatic() {
+	UpdateStaticIntData("TotalVisitTimes", TodayVStimes)        //👀
+	UpdateStaticIntData("TotalRequestTimes", TodayRequestTimes) //👀
+}
+
 //update some static data when a new day start
 func UpdateStaticPreDay() {
 	UpdateStaticIntData("TotalVisitTimes", TodayVStimes)        //👀
@@ -147,9 +153,6 @@ func RunPreHour() {
 		//update goods rank at 3:00
 		if nowHour == 3 {
 			MaintainGoodsState()
-		}
-		//maintain level data and rank data three times each day
-		if nowHour%6 == 0 {
 			MainTainLevel()
 			MainTainRank()
 		}
