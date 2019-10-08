@@ -31,12 +31,11 @@ var mlog *logs.BeeLogger
 func init() {
 	var err error
 	//setting up logger
+	logs.SetLogFuncCallDepth(3)
 	mlog = logs.NewLogger()
-	mlog.SetLogger("file", `{"filename":"logs/models.log","daily":false,"maxsize":512000}`)
-
+	mlog.SetLogger("file", `{"filename":"logs/model.log", "daily":false, "maxsize":512000}`)
 	mlog.EnableFuncCallDepth(true)
-	mlog.SetLevel(2)
-	mlog.Info("Router logs init success!")
+	mlog.Info("models logs init success!")
 
 	//get database config
 	iniconf, err := config.NewConfig("ini", "./conf/database.conf")

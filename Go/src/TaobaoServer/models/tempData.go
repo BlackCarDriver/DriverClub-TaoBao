@@ -133,7 +133,7 @@ func RunPreHour() {
 		ComfirmCode.Clear()
 
 		RefreshTypeTagData()
-
+		MainTainRank()
 		MainTainGoodLike()
 		MainTainGoodCollect()
 		MainTainGoodTalk()
@@ -154,7 +154,7 @@ func RunPreHour() {
 		if nowHour == 3 {
 			MaintainGoodsState()
 			MainTainLevel()
-			MainTainRank()
+
 		}
 	}
 }

@@ -81,11 +81,12 @@ func GetOwnerId(gid string) (string, error) {
 	}
 	o := orm.NewOrm()
 	userid := ""
-	err := o.Raw(`select userid from t_upload where  goodsid = ?`, gid).QueryRow(&userid)
+	err := o.Raw(`select userid from t_upload where goodsid = ?`, gid).QueryRow(&userid)
 	if err != nil {
 		mlog.Error("select userid from t_upload fail: %v", err)
 		return "", err
 	}
+	mlog.Info("Userid: %s", userid)
 	return userid, nil
 }
 

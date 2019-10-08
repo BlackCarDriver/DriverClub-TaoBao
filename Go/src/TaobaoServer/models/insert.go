@@ -21,11 +21,11 @@ const (
 const (
 	HelloMsgToNewUser = ` [系统消息] 欢迎并感谢你成为本站的会员！本站仍然在开发之中，很多地方有待完善，欢迎到反馈页面反馈问题以及向我发送私聊，
 我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！`
-	GoodsHanveBeenCollectTp = `[系统消息] 你的商品 %s 刚刚被用户 %s 收藏了哦！`
-	GoodsHanveBeenLikeTP    = `[系统消息] 你的商品 %s 刚刚被用户 %s 点赞了哦！`
-	GoodsHanveBeenTalkTP    = `[系统消息] 你的商品 %s 刚刚收到了来自用户 %s 的评论哦！`
-	UserHaveBeenConcernTP   = `[系统消息] 刚才 %s 在你的主页关注了你~`
-	UserHaveBeenLikeTP      = `[系统消息] 刚才 %s 在你的主页点赞了~`
+	GoodsHanveBeenCollectTp = `[系统消息] 你的商品 '%s' 刚刚被用户 '%s' 收藏了哦！`
+	GoodsHanveBeenLikeTP    = `[系统消息] 你的商品 '%s' 刚刚被用户 '%s' 点赞了哦！`
+	GoodsHanveBeenTalkTP    = `[系统消息] 你的商品 '%s' 刚刚收到了用户 '%s' 的评论哦！`
+	UserHaveBeenConcernTP   = `[系统消息] 刚才 '%s' 在你的主页关注了你~`
+	UserHaveBeenLikeTP      = `[系统消息] 刚才 '%s' 在你的主页为你点了赞！`
 )
 
 //Create a account autoly by provided name, password and email 🍖🍚🍙🍜
@@ -158,7 +158,7 @@ func AddGoodsCollect(uid, gid string) error {
 		return err
 	}
 	//send a message to owner of goods
-	if oid, err := GetOwnerId(gid); err != nil {
+	if oid, err := GetOwnerId(gid); err == nil {
 		msg := fmt.Sprintf(GoodsHanveBeenCollectTp, GetGNameById(gid), GetUNameById(uid))
 		err = SendSystemMsg(oid, msg)
 		if err != nil {
@@ -281,7 +281,7 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 		return err
 	}
 	//send a message to owner of goods
-	if oid, err := GetOwnerId(gid); err != nil {
+	if oid, err := GetOwnerId(gid); err == nil {
 		msg := fmt.Sprintf(GoodsHanveBeenTalkTP, GetGNameById(gid), GetUNameById(uid))
 		err = SendSystemMsg(oid, msg)
 		if err != nil {
@@ -299,8 +299,10 @@ func SendSystemMsg(uid, msg string) error {
 	rawSeter := o.Raw(`INSERT INTO public.t_message(senderid, receiverid, content) VALUES (?, ?, ?)`, masterId, uid, msg)
 	_, err := rawSeter.Exec()
 	if err != nil {
-		mlog.Error("%v", err)
+		mlog.Error("send system message fail: %v", err)
 		return err
+	}else{
+		mlog.Info("send system message success! :%s" ,msg)
 	}
 	return nil
 }
