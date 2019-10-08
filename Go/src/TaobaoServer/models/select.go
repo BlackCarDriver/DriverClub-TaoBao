@@ -57,6 +57,54 @@ func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]
 	return totalrows, err
 }
 
+//get user name by userid 🍠
+func GetUNameById(uid string) string {
+	if uid == "" {
+		return "unknow"
+	}
+	o := orm.NewOrm()
+	username := ""
+	err := o.Raw(`select name from t_user where id = ?`, uid).QueryRow(&username)
+	if err != nil {
+		mlog.Error("select name from t_user fail: %v", err)
+		return "unknow"
+	}
+	return username
+}
+
+//find owner id by goods id 🍠
+func GetOwnerId(gid string) (string, error) {
+	if gid == "" {
+		err := errors.New("Receive a null goods id")
+		mlog.Error("%v", err)
+		return "", err
+	}
+	o := orm.NewOrm()
+	userid := ""
+	err := o.Raw(`select userid from t_upload where  goodsid = ?`, gid).QueryRow(&userid)
+	if err != nil {
+		mlog.Error("select userid from t_upload fail: %v", err)
+		return "", err
+	}
+	return userid, nil
+}
+
+//get goods name by goods id 🍠
+func GetGNameById(gid string) string {
+	if gid == "" {
+		mlog.Error("Receive a null goods id")
+		return ""
+	}
+	o := orm.NewOrm()
+	name := ""
+	err := o.Raw(`select name from t_goods where id = ?`, gid).QueryRow(&name)
+	if err != nil {
+		mlog.Error("select name from t_goods fail: %v", err)
+		return "unknow"
+	}
+	return name
+}
+
 //get a goods detail message
 func GetGoodsById(gid string, c *GoodsDetail) error {
 	if gid == "" {

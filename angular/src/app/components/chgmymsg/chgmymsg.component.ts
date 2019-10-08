@@ -49,7 +49,7 @@ export class ChgmymsgComponent implements OnInit {
       let goodsImg: File = $("#uploadheadimg").prop('files')[0];
       let imgName = goodsImg.name;
       if (imgName == "") return;
-      let err = this.server.checkImgFile(goodsImg);
+      let err = this.server.checkImgFile(goodsImg, 500);
       if (err != "") {
         alert(err);
         return;

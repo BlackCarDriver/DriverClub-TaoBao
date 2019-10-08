@@ -42,6 +42,9 @@ export class UploadgoodsComponent implements OnInit {
     if (this.server.IsNotLogin()) {
       return;
     }
+    if (this.server.IsPhone()){
+      this.app.showMsgBox(1,"你好,本页面上传的图片将被限制大小,建议在电脑版上进行操作并通过截图的方式来降低图片封面的大小哦！");
+    }
     this.initImgUpload();
     this.initEditer();
     this.GetType();

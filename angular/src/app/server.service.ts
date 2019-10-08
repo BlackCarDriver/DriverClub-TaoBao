@@ -14,7 +14,7 @@ export class ServerService {
   username = "";
   token = "";
   homepage_goods_perpage = 10;
-  imgMaxSize = 300 * 1024;
+  imgMaxSize = 500;
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
   
   //release model
@@ -25,7 +25,6 @@ export class ServerService {
   // private basehref:string = "";         
   // private addr:string =  "/localserver";
   
-
   constructor(
     private http: HttpClient,
   ) { }
@@ -298,16 +297,23 @@ export class ServerService {
     }
     return "";
   }
-  //check a image file
-  checkImgFile(img:File){
+  //check a image file 🍠
+  checkImgFile(img:File, maxSize?:number){
     let filename = img.name.replace(/.*(\/|\\)/, "");
     let filetype = filename.substring(filename.lastIndexOf("."), filename.length).toLowerCase();
     if (filetype != ".jpg" && filetype != ".png") {
       return "请选择 png 或 jpg 格式的图片";
     }
-    if(img.size>this.imgMaxSize){
-      return "由于本站宽带配置实在太低，请上传低于300kb的图片 :("
+    if (maxSize>0){
+      if(img.size>this.imgMaxSize*1024){
+        return "由于本站宽带配置实在太低，请上传低于"+maxSize+"kb的图片 :("
+      }
+    }else{
+      if(img.size>this.imgMaxSize*1024){
+        return "由于本站宽带配置实在太低，请上传低于"+this.imgMaxSize+"kb的图片 :("
+      }
     }
+
     return "";
   }
   /*

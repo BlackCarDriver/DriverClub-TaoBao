@@ -21,6 +21,11 @@ const (
 const (
 	HelloMsgToNewUser = ` [系统消息] 欢迎并感谢你成为本站的会员！本站仍然在开发之中，很多地方有待完善，欢迎到反馈页面反馈问题以及向我发送私聊，
 我会认对待每一条建议和反馈，谢谢！ 让我们共同努力，将本站打造成一个实用和有趣的社区！`
+	GoodsHanveBeenCollectTp = `[系统消息] 你的商品 %s 刚刚被用户 %s 收藏了哦！`
+	GoodsHanveBeenLikeTP    = `[系统消息] 你的商品 %s 刚刚被用户 %s 点赞了哦！`
+	GoodsHanveBeenTalkTP    = `[系统消息] 你的商品 %s 刚刚收到了来自用户 %s 的评论哦！`
+	UserHaveBeenConcernTP   = `[系统消息] 刚才 %s 在你的主页关注了你~`
+	UserHaveBeenLikeTP      = `[系统消息] 刚才 %s 在你的主页点赞了~`
 )
 
 //Create a account autoly by provided name, password and email 🍖🍚🍙🍜
@@ -105,18 +110,6 @@ func CreateGoods(goods UploadGoodsData) error {
 	return err
 }
 
-//goods collect by user
-func AddCollectRecord(uid, gid string) error {
-	o := orm.NewOrm()
-	rawSeter := o.Raw(`INSERT INTO t_collect(userid, goodsid) VALUES (?, ?)`, uid, gid)
-	_, err := rawSeter.Exec()
-	if err != nil {
-		mlog.Error("%v", err)
-	}
-	Uas2.Add(uid) //user collect a goods, credits+1
-	return err
-}
-
 //private message sending 🍚
 func AddUserMessage(uid, targetid, message string) error {
 	if uid == "" || targetid == "" || message == "" {
@@ -135,12 +128,13 @@ func AddUserMessage(uid, targetid, message string) error {
 	return err
 }
 
-//user collect a goods, update t_user_collect
+//user collect a goods, update t_user_collect 🍠
 func AddGoodsCollect(uid, gid string) error {
 	o := orm.NewOrm()
 	var err error
 	var result sql.Result
 	count := 0
+	//check if collect before
 	err = o.Raw(`SELECT count(*) from t_collect where userid=? and goodsid=?`, uid, gid).QueryRow(&count)
 	if err != nil {
 		err := fmt.Errorf("Error when select: %s", err)
@@ -163,10 +157,19 @@ func AddGoodsCollect(uid, gid string) error {
 		mlog.Error("%v", err)
 		return err
 	}
+	//send a message to owner of goods
+	if oid, err := GetOwnerId(gid); err != nil {
+		msg := fmt.Sprintf(GoodsHanveBeenCollectTp, GetGNameById(gid), GetUNameById(uid))
+		err = SendSystemMsg(oid, msg)
+		if err != nil {
+			mlog.Error("send goods collect msg to user %s fail : %v", uid, err)
+		}
+	}
+	Uas2.Add(uid) //user collect a goods, credits+1
 	return nil
 }
 
-//user concern by others
+//user concern by others, id1 concern id2 🍠
 func AddUserConcern(id1, id2 string) error {
 	o := orm.NewOrm()
 	var err error
@@ -194,12 +197,17 @@ func AddUserConcern(id1, id2 string) error {
 		mlog.Error("%v", err)
 		return err
 	}
+	//tell user he or she have been concern by other
+	msg := fmt.Sprintf(UserHaveBeenConcernTP, GetUNameById(id1))
+	if SendSystemMsg(id2, msg); err != nil {
+		mlog.Error("send concern message fail: %v", err)
+	}
 	Uas2.Add(id1) //two user credits +1
 	Uas2.Add(id2)
 	return nil
 }
 
-//insert a goods_like record
+//insert a goods_like record 🍠
 func AddGoodsLike(uid, gid string) error {
 	o := orm.NewOrm()
 	var err error
@@ -215,11 +223,19 @@ func AddGoodsLike(uid, gid string) error {
 		mlog.Error("%v", err)
 		return err
 	}
+	//send a message to owner of goods
+	if oid, err := GetOwnerId(gid); err != nil {
+		msg := fmt.Sprintf(GoodsHanveBeenLikeTP, GetGNameById(gid), GetUNameById(uid))
+		err = SendSystemMsg(oid, msg)
+		if err != nil {
+			mlog.Error("send goods like msg to user: %v", err)
+		}
+	}
 	Uas2.Add(uid)
 	return nil
 }
 
-//save a user_like record
+//save a user_like record,uid1 like uid2 🍠
 func AddUserLike(uid1, uid2 string) error {
 	if uid1 == "" || uid2 == "" {
 		err := errors.New("uid or uid is null")
@@ -238,11 +254,16 @@ func AddUserLike(uid1, uid2 string) error {
 		mlog.Error("%v", err)
 		return err
 	}
+	//send a message to owner of goods
+	msg := fmt.Sprintf(UserHaveBeenLikeTP, GetUNameById(uid1))
+	if err := SendSystemMsg(uid2, msg); err != nil {
+		mlog.Error("send user like msg to fail: %v", err)
+	}
 	Uas2.Add(uid1)
 	return nil
 }
 
-//save a goods comment 🍉
+//save a goods comment 🍉🍠
 func AddGoodsComment(uid, gid, conetnt string) error {
 	if uid == "" || gid == "" || conetnt == "" {
 		return errors.New("Argument not right, get a empty id or comment content")
@@ -258,6 +279,14 @@ func AddGoodsComment(uid, gid, conetnt string) error {
 		err := fmt.Errorf("No Roow Affected !")
 		mlog.Error("%v", err)
 		return err
+	}
+	//send a message to owner of goods
+	if oid, err := GetOwnerId(gid); err != nil {
+		msg := fmt.Sprintf(GoodsHanveBeenTalkTP, GetGNameById(gid), GetUNameById(uid))
+		err = SendSystemMsg(oid, msg)
+		if err != nil {
+			mlog.Error("send goods talk msg to user: %v", err)
+		}
 	}
 	Uas2.Add(uid)
 	UpdateStaticIntData("TotalCommendNum", 1) //👀

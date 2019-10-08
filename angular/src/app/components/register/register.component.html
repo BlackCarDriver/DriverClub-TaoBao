@@ -1,4 +1,8 @@
-<div class="main-body">
+<div style="min-height: 50em">
+<div class="main-body" style="min-height: 50em;">
+  <div class="goback">
+    <a style="font-size: 1.2em; color: #ababab;" (click)="goback()">< 回首页</a>
+  </div>
   <div class="signupbox">
     <h2 *ngIf="model=='signup'">🌴注册账号🌴</h2>
     <h2 *ngIf="model=='resetpassword'">🌲重置密码🌲</h2>
@@ -33,4 +37,5 @@
     </form>
     </div>
   </div>
+</div>
 </div>

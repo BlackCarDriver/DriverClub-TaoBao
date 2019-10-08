@@ -25,7 +25,7 @@ export class FeedbackComponent implements OnInit {
     let input = this.server.getEle("inputfile");
     input.addEventListener('change', function () {
       let img:File = $("#inputfile").prop('files')[0];
-      let err = this.server.checkImgFile(img);
+      let err = this.server.checkImgFile(img, 1000);
       if (err != "") {
         alert(err);
         return;

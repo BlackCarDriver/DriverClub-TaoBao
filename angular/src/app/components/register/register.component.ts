@@ -23,7 +23,9 @@ export class RegisterComponent implements OnInit {
     this.model = this.server.LastSection();
     document.getElementById("gohome").click();
   }
-
+  goback(){
+    window.history.back();
+  }
   //send the input message to server and get a comfirm code🍖
   getComfirmCode() {
     if (this.wait != 120) {

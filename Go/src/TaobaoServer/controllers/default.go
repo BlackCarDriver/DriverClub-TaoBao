@@ -32,8 +32,10 @@ import (
 var (
 	imgPath               = ""
 	imgUrlTP              = ""
-	maxGoodsHeadImgSizekb = int64(0)
 	maxFeedbackImgSizekb  = int64(200)
+	maxGoodsHeadImgSizekb = int64(0)
+	imagesBigSize         = 0
+	imagesSmallSize       = 0
 )
 
 //random seed
@@ -57,8 +59,13 @@ func init() {
 		imgPath = iniconf.String("imgPath")
 		imgUrlTP = iniconf.String("imgUrlTP")
 		if maxGoodsHeadImgSizekb, err = iniconf.Int64("maxGoodsHeadImgSizekb"); err != nil {
-			logs.Error(err)
-			maxGoodsHeadImgSizekb = 40
+			rlog.Error("Get maxGoodsHeadImgSizekb fail: %v", err)
+		}
+		if imagesBigSize, err = iniconf.Int("imagesBigSize"); err != nil {
+			rlog.Error("Get imagesBigSize fail: %v", err)
+		}
+		if imagesSmallSize, err = iniconf.Int("imagesSmallSize"); err != nil {
+			rlog.Error("Get imagesSmallSize fail: %v", err)
 		}
 		//get toeken key
 		tokenkey = iniconf.String("tokenkey")
@@ -174,7 +181,7 @@ func (this *UploadImagesController) Post() {
 		rlog.Error("%v", response.Msg)
 		goto tail
 	}
-	//check the size of upload images (300kb)
+	//check the size of upload images (1024kb)
 	rlog.Info("Upload images name:%s,  size:%d", h.Filename, h.Size)
 	if h.Size > maxGoodsHeadImgSizekb<<10 {
 		response.StatusCode = -2
@@ -199,8 +206,12 @@ func (this *UploadImagesController) Post() {
 		rlog.Error("%v", response.Msg)
 		goto tail
 	}
-	//compress the image,
-	if err = CompressImg(savePath, 100); err != nil {
+	//compress the image and rename,
+	if err = CompressImg(savePath, uint(imagesSmallSize), true); err != nil {
+		rlog.Critical("images compress function fail:%v", err)
+	}
+	//compress the image and just make it smaller,
+	if err = CompressImg(savePath, uint(imagesBigSize), false); err != nil {
 		rlog.Critical("images compress function fail:%v", err)
 	}
 	response.StatusCode = 0
@@ -681,7 +692,7 @@ func ParseFile(path string) (text string, err error) {
 }
 
 //compress a jpg or png format image, the new images will be named autoly 🌆
-func CompressImg(source string, hight uint) error {
+func CompressImg(source string, hight uint, rename bool) error {
 	var err error
 	var file *os.File
 	reg, _ := regexp.Compile(`^.*\.((png)|(jpg))$`)
@@ -714,8 +725,11 @@ func CompressImg(source string, hight uint) error {
 		return err
 	}
 	resizeImg := resize.Resize(hight, 0, img, resize.Lanczos3)
-	newName := newName(source)
-	if outFile, err := os.Create(newName); err != nil {
+	var newpath string = source
+	if rename {
+		newpath = newName(source)
+	}
+	if outFile, err := os.Create(newpath); err != nil {
 		logs.Error(err)
 		return err
 	} else {
@@ -726,7 +740,7 @@ func CompressImg(source string, hight uint) error {
 			return err
 		}
 	}
-	abspath, _ := filepath.Abs(newName)
+	abspath, _ := filepath.Abs(newpath)
 	logs.Info("New imgs successfully save at: %s", abspath)
 	return nil
 }
