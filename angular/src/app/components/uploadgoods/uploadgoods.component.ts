@@ -40,6 +40,9 @@ export class UploadgoodsComponent implements OnInit {
 
   ngOnInit() {
     if (this.server.IsNotLogin()) {
+      setTimeout(() => {
+        window.history.back();
+      }, 1000);
       return;
     }
     if (this.server.IsPhone()){

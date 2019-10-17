@@ -33,7 +33,7 @@ export class ServerService {
   //check whether the user is login, show the warm message if not 🍈
   IsNotLogin() {
     if (this.userid == "") {
-      alert("你好，要先登录呦!");
+      alert("登录后采用使用哦!😱");
       return true;
     }
     return false;

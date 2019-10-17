@@ -362,3 +362,54 @@ func InsertToStatic(key string, value string) {
 	}
 
 }
+
+//=============== funciton about notification email receive =============  🍣
+//only those user with change more than 1 will reveive email notification when his reveive a private message.
+
+//check the setting of user whether receive email notification, return the times of recevie chance
+//return 0 if any error happen
+func GetRecevieChange(uid string) int {
+	if uid == "" {
+		return 0
+	}
+	change, err := GetIntCache("notifiChange_" + uid)
+	if err != nil {
+		return 0
+	}
+	return change
+}
+
+//decrease the times of receive email change
+func SubReceiveChance(uid string) {
+	if uid == "" {
+		return
+	}
+	key := "notifiChange_" + uid
+	if chance := GetRecevieChange(uid); chance <= 0 {
+		return
+	} else {
+		SetIntCache(key, chance-1, 6000000)
+	}
+}
+
+//add the times of reveive email chance after all change have been used
+func ResetReceiveChange(uid string) {
+	if uid == "" {
+		return
+	}
+	key := "notifiChange_" + uid
+	if chance := GetRecevieChange(key); chance > 0 {
+		return
+	} else {
+		SetIntCache(key, 3, 6000000)
+	}
+}
+
+//delete the cache of user receive email setting
+func DelReveiveChange(uid string) {
+	if uid == "" {
+		return
+	}
+	key := "notifiChange_" + uid
+	DelCacheByKey(key)
+}

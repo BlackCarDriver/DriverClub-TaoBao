@@ -12,6 +12,8 @@ declare let $: any;
 
 export class PersonalComponent implements OnInit {
   msg = new UserMessage();
+  emailChance = 0;
+  emailBtn = "开启邮箱通知";
   mygoodslist = GoodsShort[100];
   mycollectlist = GoodsShort[100];
   mymessagelist = MyMessage[100];
@@ -70,6 +72,11 @@ export class PersonalComponent implements OnInit {
       let temp:UserMessage = result.data;
       temp.headimg = this.server.changeImgUrl(temp.headimg);
       this.msg = temp;
+      //email notification setting 🍣
+      this.emailChance = result.rows;
+      if (this.emailChance!=0) {
+        this.emailBtn = "关闭邮箱通知";
+      }
     }, err => {
       this.app.cFail(err);
       return;
@@ -290,6 +297,44 @@ export class PersonalComponent implements OnInit {
       }
     }, error => { console.log(error) });
 
+  }
+
+  //update the setting of notification email receive 🍣
+  updateEmailReveive(){
+    if (this.server.IsNotLogin()){
+      return;
+    }
+    let postdata: RequestProto = {
+      userid: this.server.userid,
+      cachekey: "setemail"+this.server.userid,
+      cachetime:60,
+    };
+    if(this.emailChance==0){
+      postdata.api = "SetReceiveEmail";
+      if (!confirm("开启本功能后, 若收到其他用户的私信将会以邮箱的形式通知您,\
+      为了避免消息太多对用户造成骚扰，发送三次后需要重新到本页开启本功能，是否继续？")){
+        return;
+      }
+    }else{
+      if (!confirm("确认关闭邮箱通知功能？")){
+        return;
+      }
+      postdata.api = "cancelReceiveEmail";
+    }
+    this.server.UpdateMessage(postdata).subscribe(result => {
+      if (result.statuscode == 0) {
+        if(this.emailChance==0){
+          this.app.showMsgBox(0, "开启成功");
+          this.emailChance=3;
+        }else{
+          this.app.showMsgBox(0, "已关闭");
+          this.emailBtn = "开启邮箱通知";
+          this.emailChance=0;
+        }
+      } else {
+        this.app.showMsgBox(-1, "设置失败，请稍后重试:" + result.msg);
+      }
+    });
   }
   //#################### reference to pagebox #######################
 

@@ -293,6 +293,24 @@ func (this *UpdateController) Post() {
 			rlog.Error("%v", response.Msg)
 			goto tail
 		}
+		// if receiver accept email then send a notification email
+		go func() {
+			if chance := md.GetRecevieChange(targetid); chance > 0 {
+				targetEmail := md.GetEmailById(targetid)
+				if targetEmail == "" {
+					rlog.Error("get email of %s fail", targetid)
+				} else {
+					userName := md.GetUNameById(userid)
+					err = SendNotification(userName, targetEmail, message)
+					if err != nil {
+						rlog.Error("Send notification fail: %v", err)
+					} else {
+						rlog.Info("Send notification email success!")
+					}
+					md.SubReceiveChance(targetid)
+				}
+			}
+		}()
 		goto tail
 
 	case "addcollect": //add a goods to favorite🍚

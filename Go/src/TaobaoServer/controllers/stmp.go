@@ -3,6 +3,7 @@ package controllers
 import (
 	md "TaobaoServer/models"
 	"crypto/tls"
+	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -20,6 +21,16 @@ var signUpMailTP = `
 你刚刚注册的账号：<span style=" color: #E91E63; font-weight: 600;">%s </span> <br>
 验证码为：<span style=" color: #E91E63; font-weight: 600;">%s</span> <br>
 (30分钟内有效,若非本人操作,请忽略此邮件)<br>
+ 🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
+</div>
+`
+
+var notificationTP = `
+<div style="background-color:#68a8bb;width: 400px;height30200px;padding: 10px;border-radius: 6px;font-weight: 500;margin: 20px;">
+🚂  🚃  🚄  🚅  🚆  🚇  🚈  🚉  🚊  🚝  🚞  🚋 🚲 🚜<br>
+用户你好， 刚才用户 %s 向你发送了一条私信哦，内容如下：<br>
+<pre style="color: blueviolet;font-size: 1.2em;font-weight: 600;"> %s </pre>
+(若需要取消邮箱通知功能请到 "个人主页 -> 我的消息" 页面进行操作，感谢对本站的支持！) <br> 
  🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
 </div>
 `
@@ -59,6 +70,32 @@ func SendConfrimEmail(account md.RegisterData, index int) error {
 		return err
 	} else {
 		logs.Warn("Send comfirm email to %s success!", toEmail)
+		return nil
+	}
+}
+
+//send a notice email to user after user receive a private message 🍣
+func SendNotification(sender, toEmail, content string) error {
+	if !sendEmail {
+		return errors.New("Send email funciton is closed!")
+	}
+	header := make(map[string]string)
+	header["From"] = "BlackCarDriver.cn" + "<" + myemail + ">"
+	header["To"] = toEmail
+	header["Subject"] = "收到私信提醒"
+	header["Content-Type"] = "text/html; charset=UTF-8"
+	message := ""
+	for k, v := range header {
+		message += fmt.Sprintf("%s: %s\r\n", k, v)
+	}
+	message += "\r\n" + fmt.Sprintf(notificationTP, sender, content)
+	auth := createAutn()
+	err := SendMailUsingTLS(fmt.Sprintf("%s:%d", stmpHost, stmpPort), auth, myemail, []string{toEmail}, []byte(message))
+	if err != nil {
+		rlog.Error("Send email fall %v", err, 1)
+		return err
+	} else {
+		rlog.Warn("Send comfirm email to %s success!", toEmail)
 		return nil
 	}
 }

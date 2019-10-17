@@ -62,6 +62,7 @@ func (this *PersonalDataController) Post() {
 			goto tail
 		} else {
 			response.Data = data
+			response.Rows = md.GetRecevieChange(targetid) // user receive email chance save here 🍣
 		}
 
 	case "mygoods": //my user's goods data 🍉🍚
@@ -358,12 +359,19 @@ func (this *UpdataMsgController) Post() {
 			goto tail
 		}
 
+	case "SetReceiveEmail": // accept email notification after reveive a private message 🍣
+		md.ResetReceiveChange(userid)
+
+	case "cancelReceiveEmail": //cancel email notification server 🍣
+		md.DelReveiveChange(userid)
+
 	default:
 		response.StatusCode = -100
 		response.Msg = fmt.Sprintf("No such method: %s", api)
 		rlog.Error(response.Msg)
 		goto tail
 	}
+
 	response.StatusCode = 0
 	response.Msg = "Success!"
 tail:

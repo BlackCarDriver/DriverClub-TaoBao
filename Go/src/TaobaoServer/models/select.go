@@ -57,6 +57,21 @@ func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]
 	return totalrows, err
 }
 
+//get user regeist email by userid
+func GetEmailById(uid string) string {
+	if uid == "" {
+		return ""
+	}
+	o := orm.NewOrm()
+	email := ""
+	err := o.Raw(`select email from t_user where id = ?`, uid).QueryRow(&email)
+	if err != nil {
+		mlog.Error("select email from t_user fail: %v", err)
+		return ""
+	}
+	return email
+}
+
 //get user name by userid 🍠
 func GetUNameById(uid string) string {
 	if uid == "" {

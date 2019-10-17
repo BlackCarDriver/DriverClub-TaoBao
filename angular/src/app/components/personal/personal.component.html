@@ -202,7 +202,7 @@
 
                             <!--my message-->
                             <div class="tab-pane" id="panel-mymsg">
-                                
+                                <a class="btn btn-info btn-sm" (click)="updateEmailReveive()" [ngClass]="{'btn-warning': emailChance>0 }" style="margin-top: 4px;">{{emailBtn}}</a>
                                 <div class="row mymsg" *ngFor="let rows of mymessagelist; let i = index">
                                     <div class="msg-img-box">
                                         <img  [routerLink]="['/message/personals',rows.sid ]" src={{rows.headimg}}>

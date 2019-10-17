@@ -143,6 +143,68 @@ func CheckFrequent(req *RequestProto) bool {
 	return false
 }
 
+//==================== integer cache ===================  🍣
+//save a integer number to cache
+func SetIntCache(key string, val int, saveSecond int) error {
+	if !UseCache {
+		return NotInUsed
+	}
+	if saveSecond <= 0 {
+		return NoCacheTime
+	}
+	if key == "" {
+		return KeyNotFound
+	}
+	err := RedisC.Do("set", key, val, "EX", saveSecond).Err()
+	if err != nil {
+		mlog.Error("set cache fail: %v", err)
+		return err
+	}
+	logs.Warn("Set cache success! %s", key)
+	return nil
+}
+
+//get integer cache, return -1 if error happen
+func GetIntCache(key string) (int, error) {
+	if !UseCache {
+		return 0, NotInUsed
+	}
+	if key == "" {
+		return 0, KeyNotFound
+	}
+	//check if exist
+	if isExist, err := RedisC.Do("exists", key).Bool(); err != nil {
+		mlog.Error("check exist fail: %v", err)
+		return 0, err
+	} else if !isExist {
+		return 0, NotExist
+	}
+	//get integer value
+	result, err := RedisC.Do("get", key).Int()
+	if err != nil {
+		mlog.Error("get cache fail: %v", err)
+		return 0, err
+	}
+	return result, nil
+}
+
+//delete integer cache by key name
+func DelCacheByKey(key string) error {
+	if !UseCache {
+		return NotInUsed
+	}
+	if key == "" {
+		return KeyNotFound
+	}
+	if num, err := RedisC.Do("del", key).Int(); err != nil {
+		mlog.Error("delete cache fial:%v", err)
+		return err
+	} else if num > 1 {
+		logs.Warn("delete '%s' affect more than one rows!", key)
+	}
+	return nil
+}
+
 //===================== tool function ================================
 
 //parse a obeject into json encoding string, return null string if error happend

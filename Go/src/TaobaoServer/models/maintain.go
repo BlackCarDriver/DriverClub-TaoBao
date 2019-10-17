@@ -182,6 +182,7 @@ func MaintainGoodsState(){
 	}
 }
 
+
 //=============== tool function ================
 //It is the medhod how counting the level of user🌰
 func countLevel(greditInt int) int {

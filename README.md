@@ -6,30 +6,26 @@
 
 ## 简介
 
-这是一个正在开发的网络应用，目标是搭建一个为广大学生提供展示和推销闲置物品的平台以及锻炼独自架构项目的能力。本项目的思路来自于校园中众多的二手交易群，但是微信群中发布闲置物品的效率和交易率很低，搭建一个类似闲鱼的网站能够带来很多微信群聊不能提供的便利。
-
-## 特点
-
-- 个性化商品展示。
-- 商品评论，点赞，收藏。
-- 提供展示出售者联系方式的渠道，以及发送私信给出售者的功能。
-- 统计商品的点赞次数，浏览次数等信息。
-- 。。。。
-
-## 使用到和即将使用的知识或技术
-
-- Angular 
-- Jquery
-- Bootstrap
-- Golang 
-- Postgres
-- Radis
-- Jenkins
-- Nginx
-- Docker
-- Git
+广州大学二手交易区源码。访问网址：[https://blackcardriver.cn](https://blackcardriver.cn)
 
 
 
+![phone-homepage](./doc/images/homepage.jpg)
+
+![goodspage](./doc/images/goodspage.jpg)
+
+![profile](./doc/images/profile.jpg)
+
+## 知识栈
+
+- `Angular `
+- `Jquery`
+- `Bootstrap`
+- `Golang `
+- `Postgres`
+- `Radis`
+- `Jenkins`
+- `Nginx`
+- `Docker`
 
 
