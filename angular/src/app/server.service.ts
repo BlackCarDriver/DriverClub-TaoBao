@@ -33,7 +33,7 @@ export class ServerService {
   //check whether the user is login, show the warm message if not 🍈
   IsNotLogin() {
     if (this.userid == "") {
-      alert("登录后采用使用哦!😱");
+      alert("登录后才能使用哦!😱");
       return true;
     }
     return false;
@@ -268,11 +268,11 @@ export class ServerService {
   }
   //check the format of a email 🍖
   checkEmail(email:string){
-    if(email=="") return "邮箱不能为空";
-    if(email.includes(" ")) return "邮箱不能包含空格";
+    if(email=="") return "邮箱格式或用户名不能为空";
+    if(email.includes(" ")) return "邮箱格式或用户名不能包含空格";
     let regex = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/
     if(regex.test(email)==false){
-      return "邮箱格式不符合规则";
+      return "邮箱格式或用户名不合规则";
     }
     return ""
   }
