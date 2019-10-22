@@ -16,9 +16,9 @@ import (
 var signUpMailTP = `
 <div style="background-color:#4caf50;width: 400px;height30200px;padding: 10px;border-radius: 6px;font-weight: 500;margin: 20px;">
 🚂  🚃  🚄  🚅  🚆  🚇  🚈  🚉  🚊  🚝  🚞  🚋 🚲 🚜<br>
-你好！非常感谢你成为本站的第<span style=" color: #E91E63; font-weight: 600;">%d</span>个用户。<br>
+你好！非常感谢你注册成为本站第%d个会员。<br>
 本站服务永久免费，并将不断完善和更新,努力为你提供更好的体验。欢迎向我提出改进建议和问题反馈！  :)<br>
-你刚刚注册的账号：<span style=" color: #E91E63; font-weight: 600;">%s </span> <br>
+刚刚注册的账号：<span style=" color: #E91E63; font-weight: 600;">%s </span> <br>
 验证码为：<span style=" color: #E91E63; font-weight: 600;">%s</span> <br>
 (30分钟内有效,若非本人操作,请忽略此邮件)<br>
  🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
@@ -31,6 +31,15 @@ var notificationTP = `
 用户你好， 刚才用户 %s 向你发送了一条私信哦，内容如下：<br>
 <pre style="color: blueviolet;font-size: 1.2em;font-weight: 600;"> %s </pre>
 (若需要取消邮箱通知功能请到 "个人主页 -> 我的消息" 页面进行操作，感谢对本站的支持！) <br> 
+ 🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
+</div>
+`
+
+var resetPasswordTP = `
+<div style="background-color:#68a8bb;width: 400px;height30200px;padding: 10px;border-radius: 6px;font-weight: 500;margin: 20px;">
+🚂  🚃  🚄  🚅  🚆  🚇  🚈  🚉  🚊  🚝  🚞  🚋 🚲 🚜<br>
+用户你好， 当前正在进行的重置密码操作验证码为：<span style=" color: #E91E63; font-weight: 600;">%s</span><br>
+感谢你对本站的支持!<br> 
  🚌 🚍  🚎  🚏  🚐 🚑  🚒  🚓  🚔 🚕 🚖 🚗 🚘 🚚 🚛 <br>
 </div>
 `
@@ -96,6 +105,32 @@ func SendNotification(sender, toEmail, content string) error {
 		return err
 	} else {
 		rlog.Warn("Send comfirm email to %s success!", toEmail)
+		return nil
+	}
+}
+
+//send a resetpassword comfirm code to user 🍥
+func SendResetComfirm(toEmail, code string) error {
+	if !sendEmail {
+		return errors.New("Send email funciton is closed!")
+	}
+	header := make(map[string]string)
+	header["From"] = "BlackCarDriver.cn" + "<" + myemail + ">"
+	header["To"] = toEmail
+	header["Subject"] = "重置密码验证"
+	header["Content-Type"] = "text/html; charset=UTF-8"
+	message := ""
+	for k, v := range header {
+		message += fmt.Sprintf("%s: %s\r\n", k, v)
+	}
+	message += "\r\n" + fmt.Sprintf(resetPasswordTP, code)
+	auth := createAutn()
+	err := SendMailUsingTLS(fmt.Sprintf("%s:%d", stmpHost, stmpPort), auth, myemail, []string{toEmail}, []byte(message))
+	if err != nil {
+		rlog.Error("SendResetComfirm fall %v", err, 1)
+		return err
+	} else {
+		rlog.Warn("SendResetComfirm  to %s success!", toEmail)
 		return nil
 	}
 }

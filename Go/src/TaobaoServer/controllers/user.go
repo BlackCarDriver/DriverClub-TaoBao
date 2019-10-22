@@ -553,15 +553,114 @@ func (this *EntranceController) Post() {
 		}
 		//comfirm success, create a new account for user
 		register.Password = MD5Parse(register.Password)
-		if err = md.CreateAccount(register); err != nil {
+		if userid, err := md.CreateAccount(register); err != nil {
 			rlog.Error("%v", err)
 			response.StatusCode = -11
 			response.Msg = fmt.Sprintf("💣 创建账号失败：%v, 请稍后重试", err)
 			goto tail
+		} else {
+			//set receive Email as true by default 🍥
+			md.ResetReceiveChange(userid)
 		}
+
 		rlog.Info("New account have been create! %s", register.Name)
+
+	case "changepassword": //request to resetpassword 🍥
+		register := md.RegisterData{}
+		if err = Parse(postBody.Data, &register); err != nil {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("解析请求主体失败: %v", err)
+			goto tail
+		}
+		logs.Debug("%v", register)
+		//check email and password ormat
+		if !tb.CheckEmail(register.Email) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("邮箱地址格式错误")
+			goto tail
+		}
+		if !tb.CheckPassword(register.Password) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("密码格式错误")
+			goto tail
+		}
+		//check the if the email exist
+		if md.CountRegistEmail(register.Email) == 0 {
+			response.StatusCode = -6
+			response.Msg = "该邮箱未被注册哦！"
+			goto tail
+		}
+		//check if the password have change
+		if oldpw, err := md.GetMd5PasswordWithEmail(register.Email); err != nil {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("获取旧密码失败： %v", err)
+			goto tail
+		} else if MD5Parse(register.Password) == oldpw {
+			response.StatusCode = -6
+			response.Msg = "修改失败： 新旧密码一致，未作修改"
+			goto tail
+		}
+		//send reset password comfirm code to user email
+		code := GetRandomCode()
+		if err = SendResetComfirm(register.Email, code); err != nil {
+			response.StatusCode = -6
+			response.Msg = fmt.Sprintf("发送邮件失败：%v", err)
+			goto tail
+		}
+		logs.Debug(code)
+		register.Code = code
+		//save the comfirm code into timer map
+		keyData := fmt.Sprintf("reset-%v", register)
+		if err = md.ComfirmCode.Add(keyData); err != nil {
+			response.StatusCode = -8
+			response.Msg = fmt.Sprintf("保存验证码失败, '%v' ,请稍后重试", err)
+			logs.Critical(response.Msg)
+			goto tail
+		}
+
+	case "commitresetpw": //vertify the confirm code and change the password if pass 🍥
+		register := md.RegisterData{}
+		if err = Parse(postBody.Data, &register); err != nil {
+			response.StatusCode = -9
+			response.Msg = fmt.Sprintf("解析请求体数据失败:' %v', 请稍后重试", err)
+			goto tail
+		}
+		//check user email and password format
+		if !tb.CheckEmail(register.Email) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("邮箱地址格式错误")
+			goto tail
+		}
+		if !tb.CheckPassword(register.Password) {
+			response.StatusCode = -5
+			response.Msg = fmt.Sprintf("密码格式错误")
+			goto tail
+		}
+		//check comfirm code
+		keyData := fmt.Sprintf("reset-%v", register)
+		if err = md.ComfirmCode.Get(keyData); err != nil {
+			rlog.Warn("%v", err)
+			response.StatusCode = -10
+			response.Msg = fmt.Sprintf("验证失败：%v", err)
+			goto tail
+		}
+		//if comfirm pass, change the password of all account with it email
+		newPassword := MD5Parse(register.Password)
+		if err := md.UpdatePasswordByEmail(newPassword, register.Email); err != nil {
+			rlog.Error("%v", err)
+			response.StatusCode = -11
+			response.Msg = fmt.Sprintf("💣 修改密码失败：%v, 请稍后重试", err)
+			goto tail
+		}
+		rlog.Debug("User %s change email success!", register.Email)
+
 	case "staticdata": //get static data from about-page 🍙
 		response.Data = md.GetStaticData()
+
+	default:
+		response.StatusCode = -99
+		response.Msg = "not such api"
+		goto tail
 	}
 
 	response.StatusCode = 0

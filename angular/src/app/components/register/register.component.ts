@@ -98,6 +98,81 @@ export class RegisterComponent implements OnInit {
       setTimeout(() => { this.server.gohome(); }, 3000);
     }, err=>{this.app.cFail(err);})
   }
+
+  //================ functions of reset password ================== 🍥
+  //request to change a new password
+  rsgetComfirmCode(){
+    if (this.wait != 120) {
+      return;
+    }
+    this.pd.email = $("#rsemail").val().toString();
+    let  err = this.server.checkEmail(this.pd.email);
+    if (err != "") {
+      this.app.showMsgBox(1, "邮箱地址不合规则");
+      return;
+    }
+    this.pd.password = $("#rspassword1").val().toString();
+    err = this.server.checkPassword(this.pd.password);
+    if (err != "") {
+      this.app.showMsgBox(1, err);
+      return;
+    }
+    let password2 = $("#rspassword2").val().toString();
+    if (this.pd.password != password2) {
+      this.app.showMsgBox(1, "输入的两个密码不一致,请检查");
+      return;
+    }
+    let postdata: RequestProto = {
+      api: "changepassword",
+      targetid:this.pd.email, //not nessary
+      data: this.pd,
+    };
+    this.server.Entrance(postdata).subscribe(result=>{
+      if(result.statuscode!=0){
+        this.app.showMsgBox(1,"🙈 请求未成功："+result.msg);
+        return;
+      }
+      if (result.statuscode==0){
+        this.setUnchange();
+        this.startTimer();
+        this.isComfirm = true;
+        $("#rssendcode").addClass("noaction");
+        setTimeout(() => {
+          $("#rssendcode").removeClass("noaction");
+        }, 120000);
+        this.app.showMsgBox(0, "验证码已发出，30分钟内有效，请注意查收");
+        return;
+      }
+    }, err=>{ this.app.cFail(err); })
+  }
+
+  //commit the comfirm code of reset password
+  rsregister(){
+    if(!this.isComfirm){
+      this.app.showMsgBox(1,"请先填写好重置信息并获取验证码")
+      return;
+    }
+    this.pd.code = $('#rscomfirmcode').val().toString();
+    let err = this.server.checkCode(this.pd.code);
+    if (err!=""){
+      this.app.showMsgBox(1,err);
+      return;
+    }
+    let postdata: RequestProto = {
+      api: "commitresetpw",
+      targetid:this.pd.email,
+      data: this.pd,
+    };
+    this.server.Entrance(postdata).subscribe(result=>{
+      if (result.statuscode!=0){
+        this.app.showMsgBox(-1, result.msg)
+        return;
+      }
+      this.app.showMsgBox(0, "密码重置成功,即将前往主页！");
+      setTimeout(() => { this.server.gohome(); }, 3000);
+    }, err=>{this.app.cFail(err);})
+  }
+
   //================= element control function ======================
   //make the input can't changed after comfirm code sending is request🍖
   setUnchange() {

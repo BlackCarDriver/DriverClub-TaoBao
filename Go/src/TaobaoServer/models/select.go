@@ -429,6 +429,23 @@ func GetGoodsStat(gid string) string {
 	return ""
 }
 
+//get the md5 encoding password of a account with password  🍥
+func GetMd5PasswordWithEmail(email string) (string, error) {
+	var err error
+	var password string
+	if email == "" {
+		err = errors.New("Receive a null email")
+		mlog.Error("%v", err)
+	}
+	o := orm.NewOrm()
+	err = o.Raw(`select password from t_user where email = ? limit 1`, email).QueryRow(&password)
+	if err != nil {
+		mlog.Error("%v", err)
+		return "", err
+	}
+	return password, nil
+}
+
 //#################### count ###########################
 
 //get the user's number who car me

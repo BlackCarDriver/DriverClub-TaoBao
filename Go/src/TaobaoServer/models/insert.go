@@ -29,24 +29,25 @@ const (
 )
 
 //Create a account autoly by provided name, password and email 🍖🍚🍙🍜
+//if create account success, return userid 🍥
 //note that the password  should be md5 encoded
-func CreateAccount(user RegisterData) error {
+func CreateAccount(user RegisterData) (string, error ){
 	o := orm.NewOrm()
 	//check the username and email again
 	if nameNumber := CountUserName(user.Name); nameNumber != 0 {
 		err := fmt.Errorf("User name %s already have been used", user.Name)
 		mlog.Error("%v", err)
-		return err
+		return "", err
 	}
 	if emailNumber := CountRegistEmail(user.Email); emailNumber != 0 {
 		err := fmt.Errorf("Email %s already have been used", user.Name)
 		mlog.Error("%v", err)
-		return err
+		return "", err
 	}
 	if CountUserId(user.Name) != 0 {
 		err := fmt.Errorf("User name %s is same as a exist id", user.Name)
 		mlog.Error("%v", err)
-		return err
+		return "", err
 	}
 	//make a userid by the following regular
 	userNumber := CountTotalUser() + 1
@@ -57,7 +58,7 @@ func CreateAccount(user RegisterData) error {
 	_, err := rawSeter.Exec()
 	if err != nil {
 		mlog.Error("create new account fail: %v", err)
-		return err
+		return "", err
 	}
 	//send user a private message to user account
 	if err := SendSystemMsg(userid, HelloMsgToNewUser); err != nil {
@@ -65,7 +66,7 @@ func CreateAccount(user RegisterData) error {
 	}
 	//update static data 👀
 	TodayNewUser++
-	return nil
+	return userid, nil
 }
 
 //insert a good to database 🍋

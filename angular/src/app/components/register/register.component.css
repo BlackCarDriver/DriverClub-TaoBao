@@ -93,7 +93,7 @@
     line-height: 3em;
 }
 
-#sendcode {
+#sendcode, #rssendcode {
     border-left: 1px solid #7d7979;
     width: 90px;
 }

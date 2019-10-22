@@ -1,14 +1,13 @@
 <div class="main-body">
   <div class="midbox">
-
-        <div class="row path">
-            <ol class="breadcrumb" style="margin: 0%;">
-                <li><a routerLink="/homepage">交易区</a></li>
-                <li class="active">商品{{goodid}}</li>
-            </ol>
-        </div>
-      
+      <div style="height: 2em"></div>
       <div class="container gp-head g-bg-box">
+          <div class="row" style="position: relative; top: -2.5em;  height: 0; overflow: initial;">
+              <ol class="breadcrumb" style="margin: 0%;">
+                  <li><a routerLink="/homepage">交易区</a></li>
+                  <li class="active">商品{{goodid}}</li>
+              </ol>
+          </div>
         <div class="col-md-4 col-sm-12 gp-img">
           <img src={{goodsdt.headimg}} alt="head-image of goods" (click)="display(goodsdt.headimg)">
         </div>

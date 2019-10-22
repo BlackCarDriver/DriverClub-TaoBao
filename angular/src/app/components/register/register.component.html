@@ -7,12 +7,12 @@
     <h2 *ngIf="model=='signup'">🌴注册账号🌴</h2>
     <h2 *ngIf="model=='resetpassword'">🌲重置密码🌲</h2>
     <div class="rightbox">
-      <form name="register">
+      <form name="register" *ngIf="model=='signup'">
       <h4>用户名称</h4>
       <div class="row inputrow">
         <input type="text" class="sginput" maxlength="30" pattern="^[^ ]{2,30}$" name="username" id="username" autocomplete="off">
       </div>
-      <h4>{{model=='signup'?'设置密码':'新密码'}}</h4>
+      <h4>设置密码</h4>
       <div class="row inputrow">
         <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="password1" autocomplete="off">
       </div>
@@ -35,6 +35,33 @@
         <a (click)="register()">提交</a>
       </div>
     </form>
+
+    <form name="register" *ngIf="model=='resetpassword'">
+        <h4 style="margin-top: 2em;">邮箱地址</h4>
+        <div class="row inputrow">
+          <input type="email" class="sginput" maxlength="30" pattern="^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$" name="email" id="rsemail" autocomplete="off">
+        </div>
+        <h4>新密码</h4>
+        <div class="row inputrow">
+          <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="rspassword1" autocomplete="off">
+        </div>
+        <h4>确认密码</h4>
+        <div class="row inputrow">
+          <input type="password" class="sginput" maxlength="20" pattern="^[a-zA-Z._0-9]{6,20}$" name="password" id="rspassword2" autocomplete="off">
+        </div>
+      
+        <h4>验证码</h4>
+        <div class="row inputrow">
+          <input type="text" class="sginput" style="margin-right: -90px;" name="comfirm" maxlength="8" pattern="^[0-9]{6}$" id="rscomfirmcode" autocomplete="off">
+          <span>
+            <a (click)="rsgetComfirmCode()" id="rssendcode">{{sendMsg}}</a>
+          </span>
+        </div>
+        <div class="submit">
+          <a (click)="rsregister()">提交</a>
+        </div>
+      </form>
+      
     </div>
   </div>
 </div>

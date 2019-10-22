@@ -46,7 +46,7 @@ export class UploadgoodsComponent implements OnInit {
       return;
     }
     if (this.server.IsPhone()){
-      this.app.showMsgBox(1,"你好,本页面上传的图片将被限制大小,建议在电脑版上进行操作并通过截图的方式来降低图片封面的大小哦！");
+      this.app.showMsgBox(1,"你好,本页面上传的图片将被限制大小, 建议在电脑版上进行操作并通过截图的方式来降低图片封面的大小哦！");
     }
     this.initImgUpload();
     this.initEditer();
@@ -138,7 +138,10 @@ export class UploadgoodsComponent implements OnInit {
     ]
     this.editor.customConfig.zIndex = 1;
     this.editor.create();
-    this.editor.txt.html('<b style="color:#ff0000a6;">请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接代替上传图片。</b>')
+    this.editor.txt.html(
+    '\<div style="text-align: center; padding-top:1em;">\
+    <b style="color:rgb(139, 170, 74);">请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接或jpg格式截图代替上传高清照片。😟</b>\
+    </div>')
   }
   //if images select was changed, then upload to server and get a visit url 🍄🍚🍙
   initImgUpload() {

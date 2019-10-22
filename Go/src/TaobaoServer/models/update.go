@@ -210,3 +210,22 @@ func UpdateLoginTime(uid string) error {
 	}
 	return nil
 }
+
+//update user's password by registed email 🍥
+func UpdatePasswordByEmail(newPassword, email string) error {
+	o := orm.NewOrm()
+	if res, err := o.Raw(`update t_user set password = ? where email = ?`, newPassword, email).Exec(); err != nil {
+		mlog.Error("%v", err)
+		return err
+	}else if af, err := res.RowsAffected(); err != nil {
+		mlog.Warn("%v", err)
+		return err
+	} else if af == 0 {
+		err = errors.New("No row affected when UpdatePasswordByEmail")
+		mlog.Error("%v",err)
+		return err
+	}else if af > 1 {
+		err = fmt.Errorf("UpdatePasswordByEmail affected %d rows", af)
+	}
+	return nil
+}

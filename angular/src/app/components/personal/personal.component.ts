@@ -312,7 +312,7 @@ export class PersonalComponent implements OnInit {
     if(this.emailChance==0){
       postdata.api = "SetReceiveEmail";
       if (!confirm("开启本功能后, 若收到其他用户的私信将会以邮箱的形式通知您,\
-      为了避免消息太多对用户造成骚扰，发送三次后需要重新到本页开启本功能，是否继续？")){
+      为了避免消息太多打扰到用户，发送三次后需回到本页重新开启本功能，是否继续？")){
         return;
       }
     }else{

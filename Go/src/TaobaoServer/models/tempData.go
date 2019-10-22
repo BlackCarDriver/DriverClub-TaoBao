@@ -274,7 +274,7 @@ func (t *TimeMap) Get(key string) error {
 func (t *TimeMap) Clear() {
 	for k, v := range t.Map {
 		duration := time.Since(v)
-		logs.Warn("Comfirm code: %s \t\t\t %d", k, int(duration.Minutes()))
+		//logs.Warn("comfirm code cache table: %s \t %d", k, int(duration.Minutes()))
 		if int(duration.Seconds()) > t.Life {
 			mlog.Warn("timer key %s have been delete", k)
 			delete(t.Map, k)
