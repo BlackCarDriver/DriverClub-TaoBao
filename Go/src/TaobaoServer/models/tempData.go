@@ -162,13 +162,12 @@ func RunPreHour() {
 //============ Goods Type ===============
 //save the goods type and tag data
 var GoodsTypeTempDate = []GoodsType{
-	{"学习用品", []GoodsSubType{}},
-	{"体育用品", []GoodsSubType{}},
-	{"生活用品", []GoodsSubType{}},
-	{"电子产品", []GoodsSubType{}},
-	{"手工diy", []GoodsSubType{}},
-	{"虚拟商品", []GoodsSubType{}},
-	{"其他", []GoodsSubType{}},
+	{"二手商品", []GoodsSubType{}},
+	{"软件程序", []GoodsSubType{}},
+	{"学习资料", []GoodsSubType{}},
+	{"音乐视频", []GoodsSubType{}},
+	{"文章推送", []GoodsSubType{}},
+	{"其他资源", []GoodsSubType{}},
 }
 
 func RefreshTypeTagData() {

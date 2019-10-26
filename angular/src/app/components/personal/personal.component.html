@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-md-2 col-sm-12" style="margin-bottom: 1em;">
                         <a class="btn btn-primary btn-sm button1" routerLink="/myself/change">修改信息</a>
-                        <a class="btn btn-info btn-sm button1" routerLink="/myself/upload">上传商品</a>
+                        <a class="btn btn-info btn-sm button1" routerLink="/myself/upload">上传资源</a>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@
                     <div class="row swicth-box">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#panel-xxxs">详细信息</a></li>
-                            <li><a data-toggle="tab" href="#panel-mygoods">我的商品</a></li>
+                            <li><a data-toggle="tab" href="#panel-mygoods">我的资源</a></li>
                             <li><a data-toggle="tab" href="#panel-shouchang">我的收藏</a></li>
                             <li><a data-toggle="tab" href="#panel-mymsg">我的消息</a></li>
                         </ul>
@@ -118,7 +118,7 @@
                                                 | date:'yyyy-MM-dd hh:mm'}}</div>
                                         </div>
                                         <div class="row msg-box">
-                                            <div class="col-md-2 col-xs-3 msg">商品数量</div>
+                                            <div class="col-md-2 col-xs-3 msg">资源数量</div>
                                             <div class="col-md-10 col-xs-9 describ">{{msg.goodsnum}}</div>
                                         </div>
                                         <div class="row msg-box">
@@ -137,14 +137,12 @@
                             <!--my goods-->
                             <div class="tab-pane" id="panel-mygoods">
                                 <ul class="good-list">
-                                    <li class="goods-box" *ngFor="let rows of mygoodslist">
+                                    <li class="goods-box" *ngFor="let rows of mygoodslist" style="border: 1px solid #b9b8b7;">
                                         <span class="label label-default rmlable" (click)="deleteMyGoods(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}}>
-                                        <div class="gname"
-                                            [routerLink]="['/message/goodsdetail',
-                                            rows.id]">{{rows.name}}</div>
+                                        <div class="gname"  [routerLink]="['/message/goodsdetail', rows.id]">{{rows.name}}</div>
                                     </li>
-                                    <div class="nodata" *ngIf="show_no_goods"><p>暂时未有上传的商品</p></div>
+                                    <div class="nodata" *ngIf="show_no_goods"><p>暂时未有上传的资源</p></div>
                                 </ul>
                                 <!--分页框-->
                                 <div class="row textcenter" *ngIf="mg_sumpage>1">
@@ -165,7 +163,7 @@
                             <!--my collect-->
                             <div class="tab-pane" id="panel-shouchang">
                                 <ul class="good-list">
-                                    <li class="goods-box" style="height: unset;" *ngFor="let rows of mycollectlist">
+                                    <li class="goods-box" style="height: unset;" *ngFor="let rows of mycollectlist" style="border: 1px solid #b9b8b7;">
                                         <span class="label label-default rmlable" (click)="cancelCollect(rows.id)"><span class="glyphicon glyphicon-trash"></span></span>
                                         <img src={{rows.headimg}} alt="" class="goods-img">
                                         <div class="gname g-sharnk"  [routerLink]="['/message/goodsdetail', rows.id]">{{rows.name}}
@@ -174,7 +172,7 @@
                                         <div class="titlebox g-sharnk">{{rows.title}}</div>
                                     </li>
                                 </ul>
-                                <div class="nodata" *ngIf="show_no_collect"><p>暂时未有收藏物品</p></div>
+                                <div class="nodata" *ngIf="show_no_collect" ><p>暂时未有收藏物品</p></div>
                                 <!--分页框-->
                                 <div class="row textcenter" *ngIf="mc_sumpage>1">
                                     <nav aria-label="Page navigation">

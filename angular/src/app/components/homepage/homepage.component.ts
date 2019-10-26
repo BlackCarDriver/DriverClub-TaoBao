@@ -19,16 +19,17 @@ declare let $ : any;
 export class HomepageComponent implements OnInit {
   //mainly data, goodslist
   goodsarray = HomePageGoods[100];  
-  //goods type and tag list
-   typearray = GoodsType[10];
    //different tag in specified goods type
-   studytype = GoodSubType[100];
-   sporttype = GoodSubType[100];
-   daliytype = GoodSubType[100];
-   electritype = GoodSubType[100];
-   diytype = GoodSubType[100];
+   secondhandTags = GoodSubType[100];
+   packageTags = GoodSubType[100];
+   studyTags = GoodSubType[100];
+   mediaTags = GoodSubType[100];
+   mesageTags = GoodSubType[100];
    virtualtype = GoodSubType[100];
-   othertype = GoodSubType[100];
+   otherTags = GoodSubType[100];
+   allTags = GoodsType[600];
+   showingTag = GoodsType[600];
+
    //the tag, type and page user is looking 
    lookingtype = "all"; 
    lookingtag="all";
@@ -44,7 +45,7 @@ export class HomepageComponent implements OnInit {
   ) { }
  
   ngOnInit() {
-    $(".goods-area").mouseenter(function(){ $('.gg').collapse('hide');})
+    // $(".goods-area").mouseenter(function(){ $('.gg').collapse('hide');})
     this.GetGoods();
     this.GetType();
   }
@@ -65,7 +66,7 @@ export class HomepageComponent implements OnInit {
           this.goodsarray = temp;
           this.totalpage = Math.ceil(result.sum / this.server.homepage_goods_perpage);
           this.pageboxarray = new Array;
-          for (let i=1;i<=this.totalpage && i<=5 ;i++){
+          for (let i=1; i<=this.totalpage && i<=5 ;i++){
             this.pageboxarray.push(i);
           }
         }else{
@@ -101,19 +102,93 @@ export class HomepageComponent implements OnInit {
 
   //show the type and tag information into page
   GetType(){
+    let typearray = GoodsType[10];
     this.server.GetHomePageType().subscribe(
       result => {
-          this.typearray = result;
-          this.studytype = this.typearray[0].list;
-          this.sporttype  = this.typearray[1].list;
-          this.daliytype = this.typearray[2].list;
-          this.electritype = this.typearray[3].list;
-          this.diytype  = this.typearray[4].list;
-          this.virtualtype  = this.typearray[5].list;
-          this.othertype  = this.typearray[6].list;  
+          typearray = result;
+          this.secondhandTags = typearray[0].list; //二手商品
+          this.packageTags  = typearray[1].list;   //软件程序
+          this.studyTags = typearray[2].list;      //学习资料
+          this.mediaTags = typearray[3].list;      //音乐视频
+          this.mesageTags  = typearray[4].list;    //文章推送
+          this.otherTags  = typearray[5].list;     //其他资源
+          this.allTags = this.secondhandTags.concat(this.packageTags,this.studyTags, this.mediaTags, this.mesageTags, this.otherTags);
+          this.showingTag = this.allTags;
       })
   }
   
+  //display goods list of speficed type
+  selectType(typeid:string){
+    switch(typeid){
+      case "secondtype":
+          if (this.lookingtype=="二手商品"){
+            this.lookingtype = "all";
+            this.showingTag = this.allTags;
+          }else{
+            this.lookingtype = "二手商品";
+            this.showingTag = this.secondhandTags;
+          }
+          break;
+      case "packagetype":
+          if (this.lookingtype=="软件程序"){
+            this.lookingtype = "all";
+            this.showingTag = this.allTags;
+          }else{
+          this.lookingtype = "软件程序";
+          this.showingTag = this.packageTags;
+          }
+          break;
+      case "studytype":
+          if (this.lookingtype=="学习资料"){
+            this.lookingtype = "all";
+            this.showingTag = this.allTags;
+          }else{
+          this.lookingtype = "学习资料";
+          this.showingTag = this.studyTags;
+          }
+          break;
+      case "mediatype":
+          if (this.lookingtype=="音乐视频"){
+            this.lookingtype = "all";
+            this.showingTag = this.allTags;
+          }else{
+          this.lookingtype = "音乐视频";
+          this.showingTag = this.mediaTags;
+          }
+          break;
+      case "messagetype":
+          if (this.lookingtype=="消息推送"){
+            this.lookingtype = "all";
+            this.showingTag = this.allTags;
+          }else{
+          this.lookingtype = "消息推送";
+          this.showingTag = this.mediaTags;
+          }
+          break;
+      case "othertype":
+          if (this.lookingtype=="其他资源"){
+            this.lookingtype = "all";
+            this.showingTag = this.allTags;
+          }else{
+          this.lookingtype = "其他资源";
+          this.showingTag = this.otherTags;
+          }
+          break;
+    }
+    this.lookingtag = "all";
+    this.lookingpage  = 1;
+    this.offsetpage = 0;
+    this.GetGoods();
+  }
+
+  //get goods list by specified tag
+  selectTag(tagName:string) {
+    this.lookingtag = tagName;
+    this.lookingpage  = 1;
+    this.offsetpage = 0;
+    this.GetGoods();
+  }
+
   //================= change page function =====================
   //display previous page
   prepage(){ 
@@ -150,14 +225,14 @@ export class HomepageComponent implements OnInit {
   adjustPage(){
     this.server.totop();
     if(this.totalpage<=5) return;
-    if(this.lookingpage>3){
+    if(this.lookingpage<=3){
+      this.offsetpage = 0;
+    }
+    if(this.lookingpage >3 && this.totalpage - this.lookingpage>=2 ){
       this.offsetpage = this.lookingpage - 3;
     }
+
   }
-collapse(id:string){
-    $('.collapse').collapse('hide');
-    $(id).collapse('show');
-}
 showsinginbox(){
     $("#exampleModal").modal('show');
 }

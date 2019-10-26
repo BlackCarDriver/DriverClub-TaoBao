@@ -5,6 +5,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/astaxie/beego/logs"
+
 	"github.com/astaxie/beego/orm"
 )
 
@@ -13,21 +15,13 @@ var (
 	MutiRowsErr = errors.New("More than noe rows were found")
 )
 
-//get the goods list that need to show in homepage, return the total rows databse have 🍇
+//get the goods list that need to show in homepage, return the total rows databse have 🍇 🍱
 //note: v_goodslist only select goods with state = 1;
 func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]Goods1) (int, error) {
 	var err error
 	totalrows := 0
 	o := orm.NewOrm()
-	if gstype == "all" { // search all goods
-		if _, err = o.Raw(`select * from v_hpgoodslist offset ? limit ?`, offset, limit).QueryRows(g); err != nil {
-			mlog.Error("%v", err)
-			return 0, err
-		} else if err = o.Raw(`select count(*) from v_hpgoodslist`).QueryRow(&totalrows); err != nil {
-			mlog.Error("Can't not count total rows number: %v", err)
-		}
-		return totalrows, err
-	}
+	logs.Debug("type: %s,   tag:%s,  limit:%d,  offset:%d", gstype, tag, limit, offset)
 	if gstype == "like" { //search by input keyword
 		tag = fmt.Sprintf("%%%s%%", tag)
 		if _, err = o.Raw(`select distinct * from v_hpgoodslist where tag like ? or name like ? or title like ? offset ? limit ?`, tag, tag, tag, offset, limit).QueryRows(g); err != nil {
@@ -38,7 +32,25 @@ func SelectHomePageGoods(gstype string, tag string, offset int, limit int, g *[]
 		}
 		return totalrows, err
 	}
-	if tag == "全部" { //search by given type
+	if gstype == "all" && tag != "all" { // search by tag
+		if _, err = o.Raw(`select * from v_hpgoodslist where tag=? offset ? limit ?`, tag, offset, limit).QueryRows(g); err != nil {
+			mlog.Error("%v", err)
+			return 0, err
+		} else if err = o.Raw(`select count(*) from v_hpgoodslist where tag=?`, tag).QueryRow(&totalrows); err != nil {
+			mlog.Error("Can't not count total rows number: %v", err)
+		}
+		return totalrows, err
+	}
+	if gstype == "all" && tag == "all" { //search all goods
+		if _, err = o.Raw(`select * from v_hpgoodslist offset ? limit ?`, offset, limit).QueryRows(g); err != nil {
+			mlog.Error("%v", err)
+			return 0, err
+		} else if err = o.Raw(`select count(*) from v_hpgoodslist`).QueryRow(&totalrows); err != nil {
+			mlog.Error("Can't not count total rows number: %v", err)
+		}
+		return totalrows, err
+	}
+	if tag == "all" { //search by type
 		if _, err = o.Raw(`select * from v_hpgoodslist where type=? offset ? limit ?`, gstype, offset, limit).QueryRows(g); err != nil {
 			mlog.Error("%v", err)
 			return 0, err
@@ -651,14 +663,13 @@ func GetRankList(c *[]Rank) error {
 	return nil
 }
 
-//get all tag name and tag number of a type
+//get all tag name and tag number of a type 🍱
 func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 	if gtype == "" {
 		return errors.New("Receive a null gtype")
 	}
 	o := orm.NewOrm()
-	var tSubType []GoodsSubType
-	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 and state >=0 group by tag`, gtype).QueryRows(&tSubType)
+	num, err := o.Raw(`select tag, count(*) as number from t_goods where type = $1 and state >=0 group by tag`, gtype).QueryRows(tag)
 	if err != nil {
 		mlog.Error("get type and tag data fail: %v", err)
 		return err
@@ -668,15 +679,5 @@ func GetTagsData(gtype string, tag *[]GoodsSubType) error {
 		mlog.Error("%v", err)
 		return err
 	}
-	var sum int64 = 0
-	//add a new tag as "all"
-	for i := 0; i < len(tSubType); i++ {
-		sum += tSubType[i].Number
-	}
-	slice := make([]GoodsSubType, len(tSubType)+1)
-	copy(slice, []GoodsSubType{{"全部", sum}})
-	copy(slice[1:], tSubType)
-	*tag = make([]GoodsSubType, len(tSubType)+1)
-	copy(*tag, slice)
 	return nil
 }

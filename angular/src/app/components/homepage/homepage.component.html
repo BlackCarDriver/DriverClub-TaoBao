@@ -2,98 +2,47 @@
   <div class="headrow">
     <div class="row search-row">
         <input id="searchgoods" type="text" class="search-input search-input-c"
-          placeholder="搜索商品...">
+          placeholder="🔍 资源名、作者、标签...">
         <button class="search-bt search-bt-c" type="button" (click)="SearchGoods()">
-          <span class="glyphicon glyphicon-search"></span>
+          <!-- <span class="glyphicon glyphicon-search"></span> -->
+          <span>搜！</span>
         </button>
     </div>
 
     <div class="row type-row"><!--type of goods-->
-        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#study')">
-          学习用品
+        <a class="typelink-c" (click)="selectType('secondtype')" id="secondtype" [ngClass]="{'typelink-on': lookingtype=='二手商品'}">
+          💰 二手商品
         </a>
-        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#sport')">
-          体育用品
+        <a class="typelink-c" (click)="selectType('packagetype')" id="packagetype" [ngClass]="{'typelink-on': lookingtype=='软件程序'}">
+          💾 软件程序
         </a>
-        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#daliy')">
-          生活用品
+        <a class="typelink-c" (click)="selectType('studytype')" id="studytype" [ngClass]="{'typelink-on': lookingtype=='学习资料'}">
+          📚 学习资料
         </a>
-        <a class="typelink-c" data-toggle="collapse"
-          (click)="collapse('#electri')">
-          电子产品
+        <a class="typelink-c" (click)="selectType('mediatype')" id="mediatype" [ngClass]="{'typelink-on': lookingtype=='音乐视频'}">
+          📺 音乐视频
         </a>
-        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#diy')">
-          手工diy
+        <a class="typelink-c" (click)="selectType('messagetype')" id="messagetype" [ngClass]="{'typelink-on': lookingtype=='消息推送'}">
+          💬 消息推送
         </a>
-        <a class="typelink-c" data-toggle="collapse"
-          (click)="collapse('#virtual')">
-          虚拟商品
+        <a class="typelink-c" (click)="selectType('othertype')" id="othertype" [ngClass]="{'typelink-on': lookingtype=='其他资源'}">
+          💡 其他资源
         </a>
-        <a class="typelink-c" data-toggle="collapse" (click)="collapse('#other')">
-          其他
-        </a>
-
-        <div class="collapse gg" id="study">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of studytype"
-              (click)="GetSpecalGoods('学习用品', row.tag)">{{row.tag}}<span>({{row.number}})</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="collapse gg" id="sport">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of sporttype"
-              (click)="GetSpecalGoods('体育用品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
-          </div>
-        </div>
-
-        <div class="collapse gg" id="daliy">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of daliytype"
-              (click)="GetSpecalGoods('生活用品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
-          </div>
-        </div>
-
-        <div class="collapse gg" id="electri">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of electritype"
-              (click)="GetSpecalGoods('电子产品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
-          </div>
-        </div>
-        <div class="collapse gg" id="diy">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of diytype"
-              (click)="GetSpecalGoods('手工diy', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
-          </div>
-        </div>
-
-        <div class="collapse gg" id="virtual">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of virtualtype"
-              (click)="GetSpecalGoods('虚拟商品', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
-          </div>
-        </div>
-
-        <div class="collapse gg" id="other">
-          <div class="well2">
-            <a class="g-tag" *ngFor="let row of othertype"
-              (click)="GetSpecalGoods('其他', row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
-          </div>
-        </div>
     </div> <!--row type is over-->
-
   </div><!--container-fulid is over-->
 
-  <div class="goods-area g-bg-box">
+  <div class="goods-area">
     <div class="row goodrow"><!--goods list-->
+      <div class="goodstags">
+          <a class="g-tag" *ngFor="let row of showingTag" (click)="selectTag(row.tag)">{{row.tag}}<span>({{row.number}})</span></a>
+      </div>
       <div class="goods-box" *ngFor="let goods of goodsarray"  [routerLink]="['/message/goodsdetail', goods.id ]">
-        <img src={{goods.headimg}} style="border-bottom: 1px solid #ddd;">
+        <img src={{goods.headimg}}>
         <div class="row">
-          <p class="good-name g-sharnk" style="font-family: Monospace;">{{goods.name}}</p>
+          <p class="good-name g-sharnk">{{goods.name}}</p>
         </div>
         <div class="row good-title">
-          <p class="g-sharnk">{{goods.title}}</p>
+          {{goods.title}}
         </div>
         <div class="row">
           <div class="user-date g-sharnk">
@@ -102,7 +51,7 @@
               date:'yyyy-MM-dd' }}</p>
           </div>
           <div class="price-box">
-            <div class="goods-price g-sharnk">￥{{goods.price}}</div>
+            <div class="goods-price g-sharnk"><span style="font-size: 0.8em;">￥</span>{{goods.price}}</div>
           </div>
         </div>
       </div>
@@ -112,8 +61,8 @@
 
   <div class="pagebox">
     <div class="wraper">
-      <div class="inner">
-        <ul class="items">
+      <div class="inner" *ngIf="totalpage>1">
+        <ul class="items" style="margin: 0;">
           <li class="pitem prev" (click)="prepage()" *ngIf="lookingpage>1">上一页</li>
           <li class="pitem num" *ngFor="let row of pageboxarray"
            [ngClass]="{'active': row+offsetpage==lookingpage}" (click)="gotopage(row + offsetpage)">
@@ -121,12 +70,12 @@
           </li>
           <li class="pitem next" (click)="nextpage()" *ngIf="lookingpage<totalpage">下一页</li>
         </ul>
-        <div class="pbform">
+        <!-- <div class="pbform" >
           共 {{totalpage}} 页, 到第 
           <input class="pbinput" type="number" id="whichpage">
           页
           <button type="button" class="btn btn-default inputbtn" (click)="gotopage()">GO</button>
-        </div>
+        </div> -->
       </div>
     </div>
 

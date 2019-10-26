@@ -1,7 +1,8 @@
 .search-row {
     text-align: center;
-    padding: 30px;
+    padding: 7em 0em 2em;
     width: 100%;
+    background-color: #2bb1e2;
 }
 
 .search-input {
@@ -15,7 +16,7 @@
 .search-input-c {
     border: 3px solid var(--tmcl-1);
     margin-right: 80px;
-    width: 500px;
+    width: 400px;
     height: 40px;
 }
 
@@ -38,6 +39,7 @@
 }
 
 .main-body {
+    margin: 0em;
     min-height: 400px;
     min-width: var(--min-width);
 }
@@ -53,25 +55,53 @@
 
 .type-row {
     text-align: center;
-    margin-bottom: 10px;
-    padding: 0px 5px;
+    margin: 10px 0px 0px 0px;
 }
 
 .typelink-c {
-    line-height: 1.3em;
-    margin: 0px 15px;
-    font-size: 1.2em;
-    font-weight: 600;
     cursor: pointer;
+    font-size: 1.3em;
+    margin: 5px 0.5em;
+    padding: 4px 0.5em;
+    background-color: #fff;
+    color: #2bb1e2;
+    font-weight: 600;
+    border-radius: 5px;
 }
-.well2 {
+
+.typelink-on {
+    background-color: #3199bf;
+    color: #fff;
+}
+
+.goodstags {
     padding: 15px 20px;
     background-color: var(--tmcl-1);
 }
 
-.well2 span {
+.goodstags span {
     font-size: 0.8em;
     margin-left: 5px;
+}
+
+.goodstags {
+    background-color: #fff;
+    margin: 5px 15px;
+    padding: 8px 0px;
+    border-radius: 4px;
+    position: relative;
+    top: -0.5em;
+}
+
+.g-tag {
+    color: #2bb1e2;
+    font-size: 1.1em;
+    margin: 0px 8px;
+    cursor: pointer;
+}
+
+.g-tag:hover .g-tag:focus .g-tag:active {
+    color: #0036ff;
 }
 
 /*======== goods showing =======*/
@@ -90,7 +120,6 @@
 /*======== page box =======*/
 
 .pagebox {
-    margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
     height: 40px;
@@ -113,20 +142,21 @@
 .pagebox .num {
     font-size: 1.1em;
     font-weight: 600;
+    background-color: #fff;
 }
 
 .pitem {
-    height: 35px;
+    height: 30px;
+    width: 30px;
     line-height: 35px;
     margin: 4px;
-    border: solid 1px #dbdce1b0;
+    border-radius: 3px;
     cursor: pointer;
     display: inline-block;
-    width: 2.2em;
     color: var(--tmcl-2);
 }
 
-.pagebox .active, .pitem:hover {
+.pagebox .active {
     background-color: var(--tmcl-2);
     color: white;
 }
@@ -158,11 +188,6 @@
     padding: 3px 8px;
 }
 
-.headrow {
-    margin-bottom: 1em;
-    padding-bottom: 1em;
-}
-
 /* ########################################################## */
 
 @media screen and (max-width:1200px) {
@@ -175,8 +200,8 @@
     .goods-area {
         width: 720px;
     }
-    .main-body{
-        margin: 1em 15px 4em 15px;
+    .main-body {
+        margin: 0em;
     }
 }
 
@@ -184,15 +209,12 @@
     .goods-area {
         width: 490px;
     }
-    .search-input{
+    .search-input {
         width: 300px;
     }
 }
 
 @media screen and (max-width:600px) {
-    .search-row{
-        padding: 10px;
-    }
     .search-input-c {
         margin-right: 70px;
         width: 70%;
@@ -202,7 +224,7 @@
         width: 70px;
     }
     .typelink-c {
-        font-size: 1em;
+        font-size: 1.2em;
         font-weight: 500;
     }
     .goods-area {
@@ -210,59 +232,34 @@
         padding: 10px;
     }
     .goods-box {
-        --gbheight: 140px;
-        height: var(--gbheight);
+        --gbheight: 144px;
+        height: 140px;
+        padding: 0;
+        margin: 1em 0px 0px;
         width: 100%;
-        position: relative;
-        margin: 10px 0px;
-        overflow: hidden;
-        font-size: 1.1em;
+        padding-left: 144px;
     }
     .goods-box img {
         height: var(--gbheight);
         width: var(--gbheight);
-        float: left;
+        right: unset;
     }
-    .goods-price {
-        width: 3.7em;
+    .user-date {
+        top: unset;
+        left: unset;
+        padding-left: 15px;
     }
-    .main-body{
-        margin: 1em 15px 4em 15px;
+    .good-title {
+        line-height: 1.3em;
+        height: 4.2em;
+        font-size: 1.1em;
     }
     .good-name {
         height: 1.5em;
-        margin: 0px;
-        font-size: 1.2em;
-        color: #3f7ab7;
-        font-weight: 600;
-        padding: 3px;
-        background: linear-gradient(to top, #fff0, #eee);
+        font-size: 1.3em;
     }
-    .good-title {
-        position: absolute;
-        top: 30px;
-        padding: 0px 5px 0px 150px;
-        width: 100%;
-        margin: 0px;
-        text-align: left;
-        height: 70px;
-        overflow: hidden;
-    }
-    .good-title p {
-        white-space: pre-line;
-        text-overflow: inherit;
-    }
-    .user-date {
-        position: absolute;
-        top: 100px;
-        left: 140px;
-    }
-    .goods-price {
-        border-radius: 5px 0px 0px 0px;
-        padding: 4px;
-        position: absolute;
-        top: 105px;
-        right: 0px;
+    .main-body {
+        margin: 0em;
     }
     .pagebox {
         margin-bottom: 40px;
@@ -283,5 +280,8 @@
     .pagebox .pbform {
         margin: 6px auto;
         float: unset;
+    }
+    .goodstags {
+        margin: 0px;
     }
 }

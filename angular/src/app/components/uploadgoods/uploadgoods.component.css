@@ -11,7 +11,9 @@
     width: 80em;
     margin: 0 auto;
 }
-
+.panel-body{
+    padding: 10px 5px;
+}
 /* ============================== */
 
 .selectimg {
@@ -80,7 +82,7 @@
     display: inline-block;
 }
 .upload-rule li {
-    padding: 7px 15px;
+    font-size: 1.1em;
 }
 
 #toolbar-elem7607658618522664, #text-elem09615524365735562 {

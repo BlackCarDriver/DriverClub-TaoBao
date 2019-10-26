@@ -140,7 +140,7 @@ export class UploadgoodsComponent implements OnInit {
     this.editor.create();
     this.editor.txt.html(
     '\<div style="text-align: center; padding-top:1em;">\
-    <b style="color:rgb(139, 170, 74);">请在这里编辑你的商品页面，建议在电脑版上进行操作并尽量使用图片链接或jpg格式截图代替上传高清照片。😟</b>\
+    <b style="color:rgb(139, 170, 74);">在这里对将要资源进行描述, 建议在电脑版上进行操作并尽量使用图片链接或jpg格式截图代替上传高清照片。😟</b>\
     </div>')
   }
   //if images select was changed, then upload to server and get a visit url 🍄🍚🍙
