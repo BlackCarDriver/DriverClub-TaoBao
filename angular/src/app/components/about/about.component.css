@@ -1,6 +1,7 @@
 .window {
     color: #0b0a0ac7;
     font-family: initial;
+    background: url("../../../assets/bg.png") repeat;
 }
 
 .goback {

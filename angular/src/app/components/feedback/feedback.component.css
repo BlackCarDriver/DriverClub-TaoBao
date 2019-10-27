@@ -1,6 +1,7 @@
 .fbbody {
     background-size: cover;
     display: flow-root;
+    background: url("../../../assets/bg.png") repeat;
 }
 .header h1 {
     font-size: 4em;

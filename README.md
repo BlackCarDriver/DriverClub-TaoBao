@@ -1,14 +1,14 @@
 #  BlackCarDriver-TaoBao
 
-**校园二手交易平台项目**
+**司机俱乐部-——校友资源共享平台**
 
 ----------
 
 ## 简介
 
-广州大学二手交易区源码。访问网址：[https://blackcardriver.cn](https://blackcardriver.cn)
+本项目第一个版本主体为广大二手交易中心，发布3周后逐渐发现缺乏特色，定位不明确等问题。于是针对这些问题稍作修改，现在主体确定为校友资源分享平台。
 
-
+访问网址：[https://blackcardriver.cn](https://blackcardriver.cn)
 
 ![phone-homepage](./doc/images/homepage.jpg)
 
