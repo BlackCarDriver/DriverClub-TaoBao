@@ -18,12 +18,12 @@ export class ServerService {
   private rmaddr:string = "https://blackcardriver.cn/taobaoserver";
   
   //release model
-  private basehref:string = "/market"  
-  private addr:string = "https://blackcardriver.cn/taobaoserver";
+  // private basehref:string = "/market"  
+  // private addr:string = "https://blackcardriver.cn/taobaoserver";
 
   //dev model
-  // private basehref:string = "";         
-  // private addr:string =  "/localserver";
+  private basehref:string = "";         
+  private addr:string =  "/localserver";
   
   constructor(
     private http: HttpClient,
